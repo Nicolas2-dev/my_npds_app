@@ -11,11 +11,13 @@ use Symfony\Component\VarDumper\Cloner\VarCloner;
  */
 class Dumper
 {
+
     /**
-     * Dump a value with elegance.
+     * [dump description]
      *
-     * @param  mixed  $value
-     * @return void
+     * @param   [type]  $value  [$value description]
+     *
+     * @return  [type]          [return description]
      */
     public function dump($value)
     {

@@ -317,4 +317,5 @@ class TableBuilder
 
         $this->fields = array();
     }
+    
 }

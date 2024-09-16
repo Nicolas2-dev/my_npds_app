@@ -151,41 +151,6 @@ function abort($code = 404, $message = null)
 }
 
 /**
- * Site URL helper
- *
- * @param string $path
- * @return string
- */
-// function site_url($path = '/')
-// {
-//     return Config::get('app.url') .ltrim($path, '/');
-// }
-
-// String helpers.
-
-/**
- * Test for string starts with
- * @param $haystack
- * @param $needle
- * @return bool
- */
-// function str_starts_with($haystack, $needle)
-// {
-//     return (($needle === '') || (strpos($haystack, $needle) === 0));
-// }
-
-/**
- * Test for string ends with
- * @param $haystack
- * @param $needle
- * @return bool
- */
-// function str_ends_with($haystack, $needle)
-// {
-//     return (($needle === '') || (substr($haystack, - strlen($needle)) === $needle));
-// }
-
-/**
  * Class name helper
  * @param string $className
  * @return string

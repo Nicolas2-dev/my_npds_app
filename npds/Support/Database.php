@@ -12,6 +12,7 @@ use Npds\Database\Connection;
  */
 class Database
 {
+
     // The real Connection instance used.
     protected $connection = null;
 
@@ -193,4 +194,5 @@ class Database
             return call_user_func_array(array($this->connection, $method), $params);
         }
     }
+    
 }

@@ -11,6 +11,7 @@ use Npds\Config\Config;
  */
 class Manager
 {
+    
     /**
      * [$cache description]
      *

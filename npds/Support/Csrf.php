@@ -60,4 +60,5 @@ class Csrf
     {
         return ($_POST[$name] === Session::get($name));
     }
+    
 }

@@ -134,4 +134,5 @@ class Arr
             return is_object($value) ? $value->$key : $value[$key];
         }, $array);
     }
+    
 }

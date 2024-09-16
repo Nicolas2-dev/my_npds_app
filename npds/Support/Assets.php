@@ -133,4 +133,5 @@ class Assets
         $buffer = preg_replace(array('(;( )+)','(( )+;)'), ';', $buffer);
         return $buffer;
     }
+    
 }

@@ -11,9 +11,7 @@ use Npds\Config\Config;
 use \Closure;
 use \PDO;
 
-/**
- * Abstract Connection
- */
+
 abstract class Connection extends PDO
 {
     /** @var string The last executed Query is stored there */

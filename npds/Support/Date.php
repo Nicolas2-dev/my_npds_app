@@ -7,6 +7,7 @@ namespace Npds\Support;
  */
 class Date
 {
+
     /**
      * get the difference between 2 dates
      *
@@ -137,4 +138,5 @@ class Date
         $interval = $now->diff($date);
         return $interval->y;
     }
+    
 }
