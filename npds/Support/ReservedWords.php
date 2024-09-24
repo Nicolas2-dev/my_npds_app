@@ -2,8 +2,17 @@
 
 namespace Npds\Support;
 
+/**
+ * Undocumented class
+ */
 class ReservedWords
 {
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public static function getList()
     {
         return array(
@@ -86,4 +95,5 @@ class ReservedWords
             'numeric'
         );
     }
+    
 }

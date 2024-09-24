@@ -10,10 +10,11 @@ use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Mailer;
 use App\Modules\Npds\Support\Facades\Language;
 
-
+/**
+ * Undocumented class
+ */
 class Front extends FrontController
 {
-
 
     /**
      * [__construct description]

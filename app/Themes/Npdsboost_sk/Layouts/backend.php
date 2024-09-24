@@ -61,6 +61,12 @@ use Npds\Support\Profiler;
 <!-- Content Area -->
 <?= $content; ?>
 
+
+<?php if (isset($adminfoot)): ?>
+    <?= $adminfoot; ?>
+<?php endif; ?>
+
+
 <?php Theme::theme_footer($pdst)?>
 
 <!-- JS -->

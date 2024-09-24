@@ -4,11 +4,11 @@ return array(
 
     'dbhost'            => "localhost",
 
-    'dbuname'           => "npds16_dev",
+    'dbuname'           => "www.revolutionmini.local",
 
-    'dbpass'            => "npds16_dev",
+    'dbpass'            => "www.revolutionmini.local",
 
-    'dbname'            => "npds16_dev",
+    'dbname'            => "www.revolutionmini.local",
     
     'mysql_p'           => "1",
     

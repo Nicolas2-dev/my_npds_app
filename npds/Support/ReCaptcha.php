@@ -1,26 +1,45 @@
 <?php
 
-
 namespace Npds\Support;
 
 use Npds\Config;
 
 /**
- * ReCaptcha: Google Anti-spam protection for your website.
+ * Undocumented class
  */
 class ReCaptcha
 {
+
     /**
-     * Constant holding the API url.
+     * 
      */
     const GOOGLEHOST = 'https://www.google.com/recaptcha/api/siteverify';
 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private $recaptcha_sitekey;
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private $recaptcha_secret;
 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private $remoteip;
 
 
+    /**
+     * Undocumented function
+     */
     public function __construct()
     {
         $this->remoteip = $_SERVER['REMOTE_ADDR'];
@@ -30,10 +49,10 @@ class ReCaptcha
     }
 
     /**
-     * Compare given answer against the generated session.
+     * Undocumented function
      *
-     * @param  string $response
-     * @return boolean
+     * @param [type] $response
+     * @return void
      */
     public function checkResponse($response)
     {
@@ -53,4 +72,5 @@ class ReCaptcha
 
         return ($response['success'] === true);
     }
+    
 }

@@ -1,85 +1,107 @@
 <?php
+
 namespace Npds\Support;
 
 /**
- * JSMin.php - modified PHP implementation of Douglas Crockford's JSMin.
- *
- * <code>
- * $minifiedJs = JSMin::minify($js);
- * </code>
- *
- * This is a modified port of jsmin.c. Improvements:
- *
- * Does not choke on some regexp literals containing quote characters. E.g. /'/
- *
- * Spaces are preserved after some add/sub operators, so they are not mistakenly
- * converted to post-inc/dec. E.g. a + ++b -> a+ ++b
- *
- * Preserves multi-line comments that begin with /*!
- *
- * PHP 5 or higher is required.
- *
- * Permission is hereby granted to use this version of the library under the
- * same terms as jsmin.c, which has the following license:
- *
- * --
- * Copyright (c) 2002 Douglas Crockford  (www.crockford.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is furnished to do
- * so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * The Software shall be used for Good, not Evil.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- * --
- *
- * @package JSMin
- * @author Ryan Grove <ryan@wonko.com> (PHP port)
- * @author Steve Clay <steve@mrclay.org> (modifications + cleanup)
- * @author Andrea Giammarchi <http://www.3site.eu> (spaceBeforeRegExp)
- * @copyright 2002 Douglas Crockford <douglas@crockford.com> (jsmin.c)
- * @copyright 2008 Ryan Grove <ryan@wonko.com> (PHP port)
- * @license http://opensource.org/licenses/mit-license.php MIT License
- * @link http://code.google.com/p/jsmin-php/
+ * Undocumented class
  */
-
 class JSMin
 {
-    const ORD_LF            = 10;
-    const ORD_SPACE         = 32;
-    const ACTION_KEEP_A     = 1;
-    const ACTION_DELETE_A   = 2;
-    const ACTION_DELETE_A_B = 3;
-
-    protected $a           = "\n";
-    protected $b           = '';
-    protected $input       = '';
-    protected $inputIndex  = 0;
-    protected $inputLength = 0;
-    protected $lookAhead   = null;
-    protected $output      = '';
-    protected $lastByteOut  = '';
-    protected $keptComment = '';
 
     /**
-     * Minify Javascript.
+     * 
+     */
+    const ORD_LF            = 10;
+
+    /**
+     * 
+     */
+    const ORD_SPACE         = 32;
+
+    /**
+     * 
+     */
+    const ACTION_KEEP_A     = 1;
+
+    /**
+     * 
+     */
+    const ACTION_DELETE_A   = 2;
+
+    /**
+     * 
+     */
+    const ACTION_DELETE_A_B = 3;
+
+    /**
+     * Undocumented variable
      *
-     * @param string $js Javascript to be minified
+     * @var string
+     */
+    protected $a           = "\n";
+
+    /**
+     * Undocumented variable
      *
-     * @return string
+     * @var string
+     */
+    protected $b           = '';
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    protected $input       = '';
+
+    /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    protected $inputIndex  = 0;
+
+    /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    protected $inputLength = 0;
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    protected $lookAhead   = null;
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    protected $output      = '';
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    protected $lastByteOut  = '';
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    protected $keptComment = '';
+
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $js
+     * @return void
      */
     public static function minify($js)
     {
@@ -90,7 +112,9 @@ class JSMin
     }
 
     /**
-     * @param string $input
+     * Undocumented function
+     *
+     * @param [type] $input
      */
     public function __construct($input)
     {
@@ -98,9 +122,9 @@ class JSMin
     }
 
     /**
-     * Perform minification, return result
+     * Undocumented function
      *
-     * @return string
+     * @return void
      */
     public function min()
     {
@@ -158,12 +182,10 @@ class JSMin
     }
 
     /**
-     * ACTION_KEEP_A = Output A. Copy B to A. Get the next B.
-     * ACTION_DELETE_A = Copy B to A. Get the next B.
-     * ACTION_DELETE_A_B = Get the next B.
+     * Undocumented function
      *
-     * @param int $command
-     * @throws \Exception
+     * @param [type] $command
+     * @return void
      */
     protected function action($command)
     {
@@ -272,7 +294,9 @@ class JSMin
     }
 
     /**
-     * @return bool
+     * Undocumented function
+     *
+     * @return boolean
      */
     protected function isRegexpLiteral()
     {
@@ -311,10 +335,9 @@ class JSMin
     }
 
     /**
-     * Return the next character from stdin. Watch out for lookahead. If the character is a control character,
-     * translate it to a space or linefeed.
+     * Undocumented function
      *
-     * @return string
+     * @return void
      */
     protected function get()
     {
@@ -339,10 +362,10 @@ class JSMin
     }
 
     /**
-     * Does $a indicate end of input?
+     * Undocumented function
      *
-     * @param string $a
-     * @return bool
+     * @param [type] $a
+     * @return boolean
      */
     protected function isEOF($a)
     {
@@ -350,9 +373,9 @@ class JSMin
     }
 
     /**
-     * Get next char (without getting it). If is ctrl character, translate to a space or newline.
+     * Undocumented function
      *
-     * @return string
+     * @return void
      */
     protected function peek()
     {
@@ -361,11 +384,10 @@ class JSMin
     }
 
     /**
-     * Return true if the character is a letter, digit, underscore, dollar sign, or non-ASCII character.
+     * Undocumented function
      *
-     * @param string $c
-     *
-     * @return bool
+     * @param [type] $c
+     * @return boolean
      */
     protected function isAlphaNum($c)
     {
@@ -373,7 +395,9 @@ class JSMin
     }
 
     /**
-     * Consume a single line comment from input (possibly retaining it)
+     * Undocumented function
+     *
+     * @return void
      */
     protected function consumeSingleLineComment()
     {
@@ -392,9 +416,9 @@ class JSMin
     }
 
     /**
-     * Consume a multiple line comment from input (possibly retaining it)
+     * Undocumented function
      *
-     * @throws \Exception
+     * @return void
      */
     protected function consumeMultipleLineComment()
     {
@@ -426,9 +450,9 @@ class JSMin
     }
 
     /**
-     * Get the next character, skipping over comments. Some comments may be preserved.
+     * Undocumented function
      *
-     * @return string
+     * @return void
      */
     protected function next()
     {
@@ -447,4 +471,5 @@ class JSMin
         }
         return $get;
     }
+
 }

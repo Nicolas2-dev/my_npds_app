@@ -1,13 +1,13 @@
 <?php
 
-
 namespace Npds\view;
 
 use Npds\Support\Inflector;
 use Npds\Http\Response;
 
-
-
+/**
+ * Undocumented class
+ */
 class View
 {
 

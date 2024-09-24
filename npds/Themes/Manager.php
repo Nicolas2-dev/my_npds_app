@@ -1,12 +1,12 @@
 <?php
 
-
 namespace Npds\Themes;
 
 use Npds\Config\Config;
 
-
-
+/**
+ * Undocumented class
+ */
 class Manager
 {
     

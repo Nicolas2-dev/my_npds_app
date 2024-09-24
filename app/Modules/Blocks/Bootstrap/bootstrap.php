@@ -1,6 +1,5 @@
 <?php
 
-
 $configDir = dirname(dirname(__FILE__)) .DS;
 
 //

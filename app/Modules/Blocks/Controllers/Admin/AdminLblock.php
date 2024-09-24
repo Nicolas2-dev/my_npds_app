@@ -4,7 +4,9 @@ namespace App\Modules\Blocks\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
 
-
+/**
+ * Undocumented class
+ */
 class AdminLblock extends AdminController
 {
 

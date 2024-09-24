@@ -1,16 +1,16 @@
 <?php
 
-
 namespace Npds\ORM;
 
 use Npds\Database\Connection;
 use Npds\Database\Manager as Database;
-
 use Npds\ORM\Model;
 
 use PDO;
 
-
+/**
+ * Undocumented class
+ */
 class Builder
 {
     /**

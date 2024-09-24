@@ -5,7 +5,9 @@ namespace Npds\Foundation;
 use Npds\Config\Config;
 use RuntimeException;
 
-
+/**
+ * Undocumented class
+ */
 class AliasLoader
 {
 

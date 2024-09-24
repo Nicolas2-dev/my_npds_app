@@ -3,26 +3,28 @@
 namespace Npds\Support;
 
 /**
- * RainCaptcha: Anti-spam protection for your website.
+ * Undocumented class
  */
 class RainCaptcha
 {
+
     /**
-     * Constant holding the API url.
+     * 
      */
     const HOST = 'http://raincaptcha.driversworld.us/api/v1';
 
     /**
-     * Hold the session id.
+     * Undocumented variable
      *
-     * @var string
+     * @var [type]
      */
     private $sessionId;
 
+
     /**
-     * When class is called sessionId is stored or server settings are used for reference.
+     * Undocumented function
      *
-     * @param string $sessionId instance id
+     * @param [type] $sessionId
      */
     public function __construct($sessionId = null)
     {
@@ -34,9 +36,9 @@ class RainCaptcha
     }
 
     /**
-     * Generate an image for the captcha.
+     * Undocumented function
      *
-     * @return string the imaga
+     * @return void
      */
     public function getImage()
     {
@@ -44,10 +46,10 @@ class RainCaptcha
     }
 
     /**
-     * Compare given answer against the generated session.
+     * Undocumented function
      *
-     * @param  string $answer
-     * @return boolean
+     * @param [type] $answer
+     * @return void
      */
     public function checkAnswer($answer)
     {
@@ -60,4 +62,5 @@ class RainCaptcha
         }
         return $response === 'true';
     }
+    
 }

@@ -2,7 +2,6 @@
 
 namespace App\Modules\Npds\Support;
 
-
 /**
  * Debug class
  */

@@ -1,17 +1,18 @@
 <?php
 
-
 namespace Npds\Support;
 
 use Npds\Config;
 
 /**
- * Class PhpMailer, extends \PHPMailer for adding in the Config.
- *
- * @package Helpers
+ * Undocumented class
  */
 class PhpMailer extends \PHPMailer
 {
+
+    /**
+     * Undocumented function
+     */
     public function __construct()
     {
         parent::__construct();
@@ -42,4 +43,5 @@ class PhpMailer extends \PHPMailer
         // Let's make Tom even more happy!
         return null;
     }
+    
 }

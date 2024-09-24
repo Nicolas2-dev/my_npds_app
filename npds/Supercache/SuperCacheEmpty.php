@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Npds\Library\Supercache;
+namespace Npds\Supercache;
 
-use App\Modules\Npds\Contracts\SuperCacheEmptyInterface;
-
-
-class SuperCacheEmpty implements SuperCacheEmptyInterface
+/**
+ * Undocumented class
+ */
+class SuperCacheEmpty
 {
 
     /**

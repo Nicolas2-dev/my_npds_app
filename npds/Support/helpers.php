@@ -7,7 +7,6 @@ use Npds\Language\Language;
 use Npds\Support\Debug\Dumper;
 use Npds\Exceptions\Http\HttpException;
 
-
 /**
  * Get controller instance
  *
@@ -63,7 +62,7 @@ function render($view, array $data = array())
  */
 function site_url($path = '')
 {
-    return SITE_URL .ltrim($path, '/');
+    return Config::get('app.url').ltrim($path, '/');
 }
 
 /**

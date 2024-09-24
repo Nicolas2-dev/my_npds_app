@@ -1,25 +1,39 @@
 <?php
 
-
 namespace Npds\Events;
 
 use Npds\Core\Controller;
 use Npds\Events\Event;
 use Npds\Events\Listener;
 
-
-
+/**
+ * Undocumented class
+ */
 class Manager
 {
-    //
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private static $instance;
 
-    //
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
     private $events = array();
 
-    //
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
     private static $hookPath = 'Nova.Events.Manager.LegacyHook_';
 
+    
     /**
      * [__construct description]
      *

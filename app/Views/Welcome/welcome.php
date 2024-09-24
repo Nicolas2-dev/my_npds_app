@@ -11,6 +11,6 @@
 
 <p><?php echo $welcome_message ?></p>
 
-<a class="btn btn-md btn-success" href="<?php echo DIR;?>subpage">
+<a class="btn btn-md btn-success" href="<?= site_url('subpage'); ?>">
 	<?php echo __('Open subpage'); ?>
 </a>

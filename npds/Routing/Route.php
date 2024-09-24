@@ -1,9 +1,10 @@
 <?php
 
-
 namespace Npds\Routing;
 
-
+/**
+ * Undocumented class
+ */
 class Route
 {
     /**

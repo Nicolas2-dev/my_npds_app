@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Npds\ORM\Relation;
 
 use Npds\Database\Connection;
@@ -9,7 +8,9 @@ use Npds\ORM\Model;
 
 use \PDO;
 
-
+/**
+ * Undocumented class
+ */
 class Pivot extends Model
 {
     /**

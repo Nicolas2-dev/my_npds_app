@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Npds\Library;
+namespace Npds\Filesystem;
 
-use App\Modules\Npds\Contracts\FileInterface;
-
-
-class File implements FileInterface
+/**
+ * Undocumented class
+ */
+class File
 {
 
     /**

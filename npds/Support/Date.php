@@ -3,18 +3,18 @@
 namespace Npds\Support;
 
 /**
- * collection of methods for working with dates.
+ * Undocumented class
  */
 class Date
 {
 
     /**
-     * get the difference between 2 dates
+     * Undocumented function
      *
-     * @param  int $from start date
-     * @param  int $to   end date
-     * @param  string $type the type of difference to return
-     * @return string or array, if type is set then a string is returned otherwise an array is returned
+     * @param [type] $from
+     * @param [type] $to
+     * @param [type] $type
+     * @return void
      */
     public static function difference($from, $to, $type = null)
     {
@@ -30,16 +30,12 @@ class Date
     }
 
     /**
-     * Business Days
+     * Undocumented function
      *
-     * Get number of working days between 2 dates
-     *
-     * Taken from http://mugurel.sumanariu.ro/php-2/php-how-to-calculate-number-of-work-days-between-2-dates/
-     *
-     * @param  string     $startDate date in the format of Y-m-d
-     * @param  string     $endDate date in the format of Y-m-d
-     * @param  boolean  $weekendDays returns the number of weekends
-     * @return integer  returns the total number of days
+     * @param [type] $startDate
+     * @param [type] $endDate
+     * @param boolean $weekendDays
+     * @return void
      */
     public static function businessDays($startDate, $endDate, $weekendDays = false)
     {
@@ -73,13 +69,13 @@ class Date
     }
 
     /**
-    * get an array of dates between 2 dates (not including weekends)
-    *
-    * @param  date    $startDate start date
-    * @param  date    $endDate end date
-    * @param  integer $nonWork day of week(int) where weekend begins - 5 = fri -> sun, 6 = sat -> sun, 7 = sunday
-    * @return array   list of dates between $startDate and $endDate
-    */
+     * Undocumented function
+     *
+     * @param [type] $startDate
+     * @param [type] $endDate
+     * @param integer $nonWork
+     * @return void
+     */
     public static function businessDates($startDate, $endDate, $nonWork = 6)
     {
         $begin    = new \DateTime($startDate);
@@ -97,11 +93,11 @@ class Date
     }
 
     /**
-     * Takes a month/year as input and returns the number of days
-     * for the given month/year. Takes leap years into consideration.
-     * @param int $month
-     * @param int|string $year
-     * @return int
+     * Undocumented function
+     *
+     * @param integer $month
+     * @param string $year
+     * @return void
      */
     public static function daysInMonth($month = 0, $year = '')
     {
@@ -126,9 +122,10 @@ class Date
     }
 
     /**
-     * Get age from birthdate
-     * @param $birthDate int timestamp
-     * @return int number of years
+     * Undocumented function
+     *
+     * @param [type] $birthDate
+     * @return void
      */
     public static function ageFromBirthDate($birthDate)
     {

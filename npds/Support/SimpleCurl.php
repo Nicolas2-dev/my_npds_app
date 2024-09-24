@@ -1,22 +1,20 @@
 <?php
 
-
 namespace Npds\Support;
 
 /**
- * Sets some default functions and settings.
+ * Undocumented class
  */
 class SimpleCurl
 {
+
     /**
-    * Performs a get request on the chosen link and the chosen parameters
-    * in the array.
-    *
-    * @param string $url
-    * @param array $params
-    *
-    * @return string returns the content of the given url
-    */
+     * Undocumented function
+     *
+     * @param [type] $url
+     * @param array $params
+     * @return void
+     */
     public static function get($url, $params = array())
     {
         $url = $url . '?' . http_build_query($params, '', '&');
@@ -37,14 +35,12 @@ class SimpleCurl
     }
 
     /**
-    * Performs a post request on the chosen link and the chosen parameters
-    * in the array.
-    *
-    * @param string $url
-    * @param array $fields
-    *
-    * @return string returns the content of the given url after post
-    */
+     * Undocumented function
+     *
+     * @param [type] $url
+     * @param array $fields
+     * @return void
+     */
     public static function post($url, $fields = array())
     {
         $ch = curl_init();
@@ -67,14 +63,12 @@ class SimpleCurl
     }
 
     /**
-    * Performs a put request on the chosen link and the chosen parameters
-    * in the array.
-    *
-    * @param string $url
-    * @param array $fields
-    *
-    * @return string with the contents of the site
-    */
+     * Undocumented function
+     *
+     * @param [type] $url
+     * @param array $fields
+     * @return void
+     */
     public static function put($url, $fields = array())
     {
         $post_field_string = http_build_query($fields);
@@ -94,4 +88,5 @@ class SimpleCurl
 
         return $response;
     }
+    
 }

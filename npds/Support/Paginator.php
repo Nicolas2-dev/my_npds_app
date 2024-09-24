@@ -3,53 +3,52 @@
 namespace Npds\Support;
 
 /**
- * Split records into multiple pages.
+ * Undocumented class
  */
 class Paginator
 {
 
     /**
-     * Set the number of items per page.
+     * Undocumented variable
      *
-     * @var number
+     * @var [type]
      */
     private $perPage;
 
     /**
-     * Set get parameter for fetching the page number.
+     * Undocumented variable
      *
-     * @var string
+     * @var [type]
      */
     private $instance;
 
     /**
-     * Sets the page number.
+     * Undocumented variable
      *
-     * @var number
+     * @var [type]
      */
     private $page;
 
     /**
-     * Set the limit for the data source.
+     * Undocumented variable
      *
-     * @var string
+     * @var [type]
      */
     private $limit;
 
     /**
-     * Set the total number of records/items.
+     * Undocumented variable
      *
-     * @var number
+     * @var integer
      */
     private $totalRows = 0;
 
+
     /**
-     *  __construct
+     * Undocumented function
      *
-     *  Pass values when class is istantiated.
-     *
-     * @param number  $perPage  sets the number of iteems per page
-     * @param number  $instance sets the instance for the GET parameter
+     * @param [type] $perPage
+     * @param [type] $instance
      */
     public function __construct($perPage, $instance)
     {
@@ -59,11 +58,9 @@ class Paginator
     }
 
     /**
-     * getStart
+     * Undocumented function
      *
-     * Creates the starting point for limiting the dataset.
-     *
-     * @return number
+     * @return void
      */
     public function getStart()
     {
@@ -71,11 +68,9 @@ class Paginator
     }
 
     /**
-     * getInstance
+     * Undocumented function
      *
-     * Gets the current page number if needed anywhere in your application.
-     *
-     * @return number
+     * @return void
      */
     public function getInstance()
     {
@@ -83,11 +78,9 @@ class Paginator
     }
 
     /**
-     * setInstance
+     * Undocumented function
      *
-     * Sets the instance parameter, if numeric value is 0 then set to 1.
-     *
-     * @var number
+     * @return void
      */
     private function setInstance()
     {
@@ -96,11 +89,10 @@ class Paginator
     }
 
     /**
-     * setTotal
+     * Undocumented function
      *
-     * Collect a numberic value and assigns it to the totalRows.
-     *
-     * @param int $totalRows holds the total number of rows
+     * @param [type] $totalRows
+     * @return void
      */
     public function setTotal($totalRows)
     {
@@ -108,11 +100,9 @@ class Paginator
     }
 
     /**
-     * getLimit
+     * Undocumented function
      *
-     * Returns the limit for the data source, calling the getStart method and passing in the number of items perp page.
-     *
-     * @return string
+     * @return void
      */
     public function getLimit()
     {
@@ -120,33 +110,9 @@ class Paginator
     }
 
     /**
-     * getLimit2 and getPerPage are used together
-     * when using the Eloquent Query Builder
-     * for the skip and take parameters.
+     * Undocumented function
      *
-     * There are also other ORM's that need the skip and take
-     * parameters separated.
-     *
-     * Example in controller method calling model method:
-     *
-     * $data['pets'] = $this->pet->getPets($pages->getLimit2(), $pages->getPerPage(), $petSearch);
-     *
-     * Example model method using Eloquent Query Builder:
-     *
-     * public function getPets($offset = "", $rowsPerPage = "", $petSearch = "")
-     * {
-     *     $petsearch = $petsearch . "%";
-     *
-     *     return Capsule::table('pets')
-     *                     ->where('petName', 'like', $petsearch)
-     *                     ->orderBy('petName', 'asc')
-     *                     ->skip($offset)->take($rowsPerPage)->get();
-     * }
-     *
-     * Also see the file in the helpers folder page_eloq.md for more help.
-     *
-     * @var number
-     * @return number
+     * @return void
      */
     public function getLimit2()
     {
@@ -154,9 +120,9 @@ class Paginator
     }
 
     /**
-     * Get Per Page.
+     * Undocumented function
      *
-     * @return int returns the number of records per page.
+     * @return void
      */
     public function getPerPage()
     {
@@ -164,14 +130,11 @@ class Paginator
     }
 
     /**
-     * pageLinks
+     * Undocumented function
      *
-     * Create the html links for navigating through the dataset.
-     *
-     * @param string $path optionally set the path for the link
-     * @param string $ext optionally pass in extra parameters to the GET
-     *
-     * @return string returns the html menu
+     * @param string $path
+     * @param [type] $ext
+     * @return void
      */
     public function pageLinks($path = '?', $ext = null)
     {
@@ -253,4 +216,5 @@ class Paginator
 
         return $pagination;
     }
+    
 }

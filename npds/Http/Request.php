@@ -1,9 +1,10 @@
 <?php
 
-
 namespace Npds\Http;
 
-
+/**
+ * Undocumented class
+ */
 class Request
 {
 

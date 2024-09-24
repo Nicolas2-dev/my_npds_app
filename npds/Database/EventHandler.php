@@ -1,13 +1,15 @@
 <?php
 
-
 namespace Npds\Database;
 
 use Npds\Database\Query\Raw;
 
-
+/**
+ * Undocumented class
+ */
 class EventHandler
 {
+
     /**
      * @var array
      */
@@ -17,6 +19,7 @@ class EventHandler
      * @var array
      */
     protected $firedEvents = array();
+
 
     /**
      * @return array
@@ -103,4 +106,5 @@ class EventHandler
             }
         }
     }
+
 }

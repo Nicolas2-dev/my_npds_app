@@ -5,7 +5,6 @@ use App\Modules\Npds\Support\Sanitize;
 use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Npds\Support\Facades\Language;
 
-
 /**
  * Bloc principal
  * 

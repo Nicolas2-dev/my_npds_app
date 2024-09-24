@@ -3,7 +3,6 @@
 namespace Npds\Cache;
 
 use \phpFastCache;
-
 use Npds\Config\Config;
 
 /**

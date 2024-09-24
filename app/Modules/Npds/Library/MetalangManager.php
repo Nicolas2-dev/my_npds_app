@@ -2,15 +2,14 @@
 
 namespace App\Modules\Npds\Library;
 
-
-use App\Modules\Npds\Library\Supercache\SuperCacheEmpty;
-use App\Modules\Npds\Library\Supercache\SuperCacheManager;
-
+use function PHP81_BC\strftime;
+use Npds\Supercache\SuperCacheEmpty;
+use Npds\Supercache\SuperCacheManager;
 use App\Modules\Npds\Contracts\MetalangInterface;
 
-use function PHP81_BC\strftime;
-
-
+/**
+ * Undocumented class
+ */
 class MetalangManager implements MetalangInterface 
 {
 

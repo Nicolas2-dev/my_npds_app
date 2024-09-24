@@ -1,34 +1,35 @@
 <?php
 
-
 namespace Npds\Support;
 
 /**
- * Interact with remote FTP Server.
+ * Undocumented class
  */
 class Ftp
 {
+
     /**
-     * Hold the FTP connection.
+     * Undocumented variable
      *
-     * @var integer
+     * @var [type]
      */
     private $conn;
 
     /**
-     * Holds the path relative to the root of the server.
+     * Undocumented variable
      *
-     * @var string
+     * @var [type]
      */
     private $basePath;
 
+
     /**
-     * Open a FTP connection.
+     * Undocumented function
      *
-     * @param string $host the server address
-     * @param string $user username
-     * @param string $pass password
-     * @param string $base the public folder usually public_html or httpdocs
+     * @param [type] $host
+     * @param [type] $user
+     * @param [type] $pass
+     * @param [type] $base
      */
     public function __construct($host, $user, $pass, $base)
     {
@@ -43,7 +44,9 @@ class Ftp
     }
 
     /**
-     * Close the connection.
+     * Undocumented function
+     *
+     * @return void
      */
     public function close()
     {
@@ -51,9 +54,10 @@ class Ftp
     }
 
     /**
-     * Create a directory on the remote FTP server.
+     * Undocumented function
      *
-     * @param  string $dirToCreate name of the directory to create
+     * @param [type] $dirToCreate
+     * @return void
      */
     public function makeDirectory($dirToCreate)
     {
@@ -63,9 +67,10 @@ class Ftp
     }
 
     /**
-     * Delete directory from FTP server.
+     * Undocumented function
      *
-     * @param  string $dir foldr to delete
+     * @param [type] $dir
+     * @return void
      */
     public function deleteDirectory($dir)
     {
@@ -73,12 +78,11 @@ class Ftp
     }
 
     /**
-     * Set folder permission.
+     * Undocumented function
      *
-     * @param  string $folderChmod folder name
-     * @param  integer $permission permission value
-     *
-     * @return string              success message
+     * @param [type] $folderChmod
+     * @param [type] $permission
+     * @return void
      */
     public function folderPermission($folderChmod, $permission)
     {
@@ -88,12 +92,11 @@ class Ftp
     }
 
     /**
-     * Upload file to FTP server.
+     * Undocumented function
      *
-     * @param  string $remoteFile path and filename for remote file
-     * @param  string $localFile  local path to file
-     *
-     * @return string             message
+     * @param [type] $remoteFile
+     * @param [type] $localFile
+     * @return void
      */
     public function uploadFile($remoteFile, $localFile)
     {
@@ -105,12 +108,14 @@ class Ftp
     }
 
     /**
-     * Delete remove file.
+     * Undocumented function
      *
-     * @param  string $file path and filename
+     * @param [type] $file
+     * @return void
      */
     public function deleteFile($file)
     {
         ftp_delete($this->conn, $this->basePath.$file);
     }
+    
 }

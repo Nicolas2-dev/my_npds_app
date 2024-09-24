@@ -1,9 +1,10 @@
 <?php
 
-
 namespace Npds\Routing;
 
-
+/**
+ * Undocumented class
+ */
 class Url
 {
 
@@ -27,7 +28,7 @@ class Url
     public static function redirect($url = null, $fullpath = false)
     {
         if ($fullpath == true) {
-            $url = DIR . $url;
+            $url = APPPATH . $url;
         }
 
         header('Location: '.site_url($url));
@@ -70,9 +71,9 @@ class Url
      *
      * @return  [type]             [return description]
      */
-    public static function templatePath($custom = TEMPLATE)
+    public static function templatePath($custom = 'default')
     {
-        return DIR.'templates/'.$custom.'/assets/';
+        return WEBPATH.'app/themes/'.$custom.'/assets/';
 
     }
 
@@ -84,9 +85,9 @@ class Url
      *
      * @return  [type]             [return description]
      */
-    public static function relativeTemplatePath($custom = TEMPLATE)
+    public static function relativeTemplatePath($custom = 'default')
     {
-        return "templates/".$custom."/assets/";
+        return "app/themes/".$custom."/assets/";
     }
 
     /**

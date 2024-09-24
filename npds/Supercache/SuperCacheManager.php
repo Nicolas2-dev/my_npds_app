@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Modules\Npds\Library\Supercache;
-
-
+namespace Npds\Supercache;
 
 use Npds\Config\Config;
-use App\Modules\Npds\Contracts\SuperCacheManagerInterface;
 
-
-class SuperCacheManager implements SuperCacheManagerInterface
+/**
+ * Undocumented class
+ */
+class SuperCacheManager
 {
 
     /**

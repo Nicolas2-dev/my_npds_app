@@ -6,7 +6,9 @@ use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Css;
 use App\Modules\Npds\Support\Facades\Language;
 
-
+/**
+ * Undocumented class
+ */
 class Admin extends AdminController
 {
 

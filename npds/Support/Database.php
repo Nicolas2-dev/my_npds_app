@@ -6,26 +6,31 @@ use Npds\Database\Manager;
 use Npds\Database\Connection;
 
 /**
- * Extending PDO to use custom methods.
- *
- * @deprecated since v3.0
+ * Undocumented class
  */
 class Database
 {
 
-    // The real Connection instance used.
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     protected $connection = null;
 
     /**
-     * @var array Array of saved databases for reusing
+     * Undocumented variable
+     *
+     * @var array
      */
     protected static $instances = array();
 
+
     /**
-     * Static method get
+     * Undocumented function
      *
-     * @param  array $group
-     * @return \helpers\database
+     * @param boolean $linkName
+     * @return void
      */
     public static function get($linkName = false)
     {
@@ -49,15 +54,21 @@ class Database
         return $instance;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $linkName
+     */
     protected function __construct($linkName)
     {
         $this->connection = Manager::getConnection($linkName);
     }
 
     /**
-     * run raw sql queries
-     * @param  string $sql sql command
-     * @return return query
+     * Undocumented function
+     *
+     * @param [type] $sql
+     * @return void
      */
     public function raw($sql)
     {
@@ -65,12 +76,13 @@ class Database
     }
 
     /**
-     * method for selecting records from a database
-     * @param  string $sql       sql query
-     * @param  array  $array     named params
-     * @param  object $fetchMode
-     * @param  string $class     class name
-     * @return array            returns an array of records
+     * Undocumented function
+     *
+     * @param [type] $sql
+     * @param array $array
+     * @param [type] $fetchMode
+     * @param string $class
+     * @return void
      */
     public function select($sql, $array = array(), $fetchMode = PDO::FETCH_OBJ, $class = '')
     {
@@ -106,9 +118,11 @@ class Database
     }
 
     /**
-     * insert method
-     * @param  string $table table name
-     * @param  array $data  array of columns and values
+     * Undocumented function
+     *
+     * @param [type] $table
+     * @param [type] $data
+     * @return void
      */
     public function insert($table, $data)
     {
@@ -126,10 +140,12 @@ class Database
     }
 
     /**
-     * update method
-     * @param  string $table table name
-     * @param  array $data  array of columns and values
-     * @param  array $where array of columns and values
+     * Undocumented function
+     *
+     * @param [type] $table
+     * @param [type] $data
+     * @param [type] $where
+     * @return void
      */
     public function update($table, $data, $where)
     {
@@ -152,11 +168,12 @@ class Database
     }
 
     /**
-     * Delete method
+     * Undocumented function
      *
-     * @param  string $table table name
-     * @param  array $where array of columns and values
-     * @param  integer   $limit limit number of records
+     * @param [type] $table
+     * @param [type] $where
+     * @param integer $limit
+     * @return void
      */
     public function delete($table, $where, $limit = 1)
     {
@@ -174,8 +191,10 @@ class Database
     }
 
     /**
-     * truncate table
-     * @param  string $table table name
+     * Undocumented function
+     *
+     * @param [type] $table
+     * @return void
      */
     public function truncate($table)
     {
@@ -183,10 +202,11 @@ class Database
     }
 
     /**
-     * Provide direct access to any of \Npds\Database\Connection methods.
+     * Undocumented function
      *
-     * @param $name
-     * @param $params
+     * @param [type] $method
+     * @param [type] $params
+     * @return void
      */
     public function __call($method, $params = null)
     {

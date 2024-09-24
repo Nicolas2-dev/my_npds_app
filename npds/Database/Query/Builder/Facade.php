@@ -4,7 +4,9 @@ namespace Npds\Database\Query\Builder;
 
 use Npds\Database\Query\Builder as QueryBuilder;
 
-
+/**
+ * Undocumented class
+ */
 class Facade
 {
 

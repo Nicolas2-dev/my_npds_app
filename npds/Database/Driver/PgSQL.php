@@ -1,13 +1,14 @@
 <?php
 
-
 namespace Npds\Database\Driver;
 
 use Npds\Database\Connection;
 use Npds\Database\Manager;
 use Npds\Cache\Manager as CacheManager;
 
-
+/**
+ * Undocumented class
+ */
 class PgSQL extends Connection
 {
 

@@ -51,7 +51,6 @@ foreach (glob(APPPATH .'Config/*.php') as $path) {
     Config::set($key, require($path));
 }
 
-
 /** Load the database Configuration. */
 if (is_readable(APPPATH .'database.php')) {
     require APPPATH .'database.php';

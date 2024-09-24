@@ -8,7 +8,9 @@ use Npds\ORM\Model;
 use Npds\ORM\Relation;
 use Npds\ORM\Relation\Pivot as RelationPivot;
 
-
+/**
+ * Undocumented class
+ */
 class BelongsToMany extends Relation
 {
     /**

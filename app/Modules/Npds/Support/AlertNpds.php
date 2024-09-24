@@ -6,9 +6,8 @@ use Npds\view\View;
 use Npds\Config\Config;
 use Npds\Support\Facades\DB;
 
-
 /**
- * Debug class
+ * Undocumented class
  */
 class AlertNpds
 {

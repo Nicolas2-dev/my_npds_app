@@ -1,12 +1,13 @@
 <?php
 
-
 namespace Npds\Log;
 
 use Npds\Config\Config;
 use App\Support\Facades\Mailer;
 
-
+/**
+ * Undocumented class
+ */
 class Logger
 {
 

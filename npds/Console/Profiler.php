@@ -10,7 +10,6 @@ use Npds\Console\PdoDebugger;
 
 use \PDO;
 
-
 /**
  * [Profiler description]
  */

@@ -1,11 +1,12 @@
 <?php
 
-
 namespace Npds\Database\Query;
 
 use Npds\Database\Connection;
 
-
+/**
+ * Undocumented class
+ */
 class Objects
 {
 

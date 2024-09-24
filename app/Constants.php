@@ -5,20 +5,6 @@
  */
 define('ENVIRONMENT', 'development');
 
-/**
- * Define the complete site URL.
- */
-define('SITE_URL', 'http://www.lolo.local/');
-
-/**
- * Define relative base path.
- */
-define('DIR', '/');
-
-/**
- * Set the default template.
- */
-define('TEMPLATE', 'default');
 
 /**
  * Set a default language.

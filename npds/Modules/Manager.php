@@ -1,12 +1,12 @@
 <?php
 
-
 namespace Npds\Modules;
 
 use Npds\Config\Config;
 
-
-
+/**
+ * Undocumented class
+ */
 class Manager
 {
     
@@ -24,6 +24,8 @@ class Manager
         }
 
         foreach ($modules as $module) {
+
+            //
             $filePath = str_replace('/', DS, APPPATH.'Modules/'.$module.'/Bootstrap/bootstrap.php');
 
             if (!is_readable($filePath)) {
@@ -32,7 +34,6 @@ class Manager
 
             require $filePath;
 
-            //
             static::boot_config($module);
         }
     }

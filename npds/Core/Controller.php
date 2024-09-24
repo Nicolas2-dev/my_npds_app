@@ -1,54 +1,96 @@
 <?php
 
-
 namespace Npds\Core;
-
 
 use Npds\view\View;
 use Npds\Http\Response;
 
-
 /**
- * Core controller, all other controllers extend this base controller.
+ * Undocumented class
  */
 abstract class Controller
 {
-    // The Controller's instance.
+    
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private static $instance;
 
-    // The Controller's variables.
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
     protected $data = array();
 
-    // Module where the Controller is located.
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     protected $module = null;
 
-    //
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
     protected $params = array();
 
-    // Current called Method
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     protected $method;
 
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */ 
     protected $className;
 
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */ 
     protected $viewsPath;
 
-    // Theming support.
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
     protected $template = 'Default';
 
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
     protected $layout   = 'default';
 
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var boolean
+     */
     protected $autoRender = true;
 
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var boolean
+     */
     protected $useLayout  = false;
 
 
     /**
-     * Constructor
+     * Undocumented function
      */
     public function __construct()
     {
@@ -56,8 +98,9 @@ abstract class Controller
     }
 
     /**
-     * Get instance
-     * @return Controller
+     * Undocumented function
+     *
+     * @return void
      */
     public static function &getInstance()
     {
@@ -65,7 +108,9 @@ abstract class Controller
     }
 
     /**
-     * Set current instance into instance holder
+     * Undocumented function
+     *
+     * @return void
      */
     public function setInstance()
     {
@@ -73,9 +118,11 @@ abstract class Controller
     }
 
     /**
-     * Initialize the Controller.
+     * Undocumented function
      *
-     * @throws \Exception
+     * @param [type] $method
+     * @param array $params
+     * @return void
      */
     public function initialize($method, $params = array())
     {
@@ -105,9 +152,12 @@ abstract class Controller
         $this->viewsPath = APPPATH .$viewsPath .DS;
     }
 
-   /**
-     * Execute the requested Controller Method.
-     * @return bool
+    /**
+     * Undocumented function
+     *
+     * @param [type] $method
+     * @param array $params
+     * @return void
      */
     public function execute($method, $params = array())
     {
@@ -130,7 +180,9 @@ abstract class Controller
     }
 
     /**
-     * @return bool
+     * Undocumented function
+     *
+     * @return void
      */
     protected function before()
     {
@@ -138,8 +190,10 @@ abstract class Controller
     }
 
     /**
-     * @param $result
-     * @return bool
+     * Undocumented function
+     *
+     * @param [type] $result
+     * @return void
      */
     protected function after($result)
     {
@@ -169,9 +223,10 @@ abstract class Controller
     }
 
     /**
-     * Auto render
-     * @param null|bool $value
-     * @return bool
+     * Undocumented function
+     *
+     * @param [type] $value
+     * @return void
      */
     protected function autoRender($value = null)
     {
@@ -183,9 +238,10 @@ abstract class Controller
     }
 
     /**
-     * Use Layouts
-     * @param null|bool $value
-     * @return bool
+     * Undocumented function
+     *
+     * @param [type] $value
+     * @return void
      */
     protected function useLayout($value = null)
     {
@@ -197,9 +253,10 @@ abstract class Controller
     }
 
     /**
-     * Data
-     * @param string $name
-     * @return array|null
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @return void
      */
     public function data($name = null)
     {
@@ -213,10 +270,11 @@ abstract class Controller
     }
 
     /**
-     * Set data, will be available in the View.
+     * Undocumented function
      *
-     * @param string $name Key
-     * @param mixed $value Value
+     * @param [type] $name
+     * @param [type] $value
+     * @return void
      */
     protected function set($name, $value = null)
     {
@@ -235,8 +293,10 @@ abstract class Controller
     }
 
     /**
-     * Set title, shorthand for set('title', $title);
-     * @param $title
+     * Undocumented function
+     *
+     * @param [type] $title
+     * @return void
      */
     protected function title($title)
     {
@@ -249,7 +309,9 @@ abstract class Controller
     }
 
     /**
-     * @return null
+     * Undocumented function
+     *
+     * @return void
      */
     public function module()
     {
@@ -257,7 +319,9 @@ abstract class Controller
     }
 
     /**
-     * @return mixed
+     * Undocumented function
+     *
+     * @return void
      */
     public function method()
     {
@@ -265,7 +329,9 @@ abstract class Controller
     }
 
     /**
-     * @return array
+     * Undocumented function
+     *
+     * @return void
      */
     public function params()
     {
@@ -273,7 +339,9 @@ abstract class Controller
     }
 
     /**
-     * @return mixed
+     * Undocumented function
+     *
+     * @return void
      */
     public function viewsPath()
     {
@@ -281,7 +349,9 @@ abstract class Controller
     }
 
     /**
-     * @return string
+     * Undocumented function
+     *
+     * @return void
      */
     public function template()
     {
@@ -289,7 +359,9 @@ abstract class Controller
     }
 
     /**
-     * @return string
+     * Undocumented function
+     *
+     * @return void
      */
     public function layout()
     {

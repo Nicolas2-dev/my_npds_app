@@ -1,16 +1,25 @@
 <?php
 
-
 namespace Npds\Events;
 
-
+/**
+ * Undocumented class
+ */
 class Event
 {
 
-    //
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private $name;
 
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private $params;
 
 

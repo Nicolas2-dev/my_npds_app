@@ -1,19 +1,19 @@
 <?php
 
-
 namespace Npds\Support;
 
 /**
- * Contains methods for converting number formats and getting a percentage.
+ * Undocumented class
  */
 class Number
 {
+
     /**
-     * Formats a number to start with 0 useful for mobile numbers.
+     * Undocumented function
      *
-     * @param  number $number the number
-     * @param number|string $prefix the number should start with
-     * @return string the formatted number
+     * @param [type] $number
+     * @param string $prefix
+     * @return void
      */
     public static function format($number, $prefix = '4')
     {
@@ -45,12 +45,11 @@ class Number
     }
 
     /**
-     * Returns the percentage.
+     * Undocumented function
      *
-     * @param  number $val1 start number
-     * @param  number $val2 end number
-     *
-     * @return string       returns the percentage
+     * @param [type] $val1
+     * @param [type] $val2
+     * @return void
      */
     public static function percentage($val1, $val2)
     {
@@ -64,10 +63,11 @@ class Number
     }
 
     /**
-     * returns the human readable size
-     * @param  numeric $bytes size number
-     * @param  numeric $decimals number of number
-     * @return string       returns the human readable size
+     * Undocumented function
+     *
+     * @param [type] $bytes
+     * @param integer $decimals
+     * @return void
      */
     public static function humanSize($bytes, $decimals = 2)
     {
@@ -75,4 +75,5 @@ class Number
         $factor = floor((strlen($bytes) - 1) / 3);
         return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
     }
+    
 }

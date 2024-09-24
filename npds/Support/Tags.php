@@ -1,19 +1,18 @@
 <?php
 
-
 namespace Npds\Support;
 
 /**
- * Collection of useful methods.
+ * Undocumented class
  */
 class Tags
 {
+
     /**
-     * Clean function to convert data into an array.
+     * Undocumented function
      *
-     * @param  string $data contains the options.
-     *
-     * @return array array of option and values.
+     * @param [type] $data
+     * @return void
      */
     public static function clean($data)
     {
@@ -40,11 +39,10 @@ class Tags
     }
 
     /**
-     * Get
+     * Undocumented function
      *
-     * @param  string $string content to scan
-     *
-     * @return string returns modified content
+     * @param [type] $string
+     * @return void
      */
     public static function get($string)
     {
@@ -175,4 +173,5 @@ class Tags
         return $string;
 
     }
+    
 }

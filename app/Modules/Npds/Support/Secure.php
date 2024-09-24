@@ -5,7 +5,9 @@ namespace App\Modules\Npds\Support;
 use Npds\Config\Config;
 use App\Modules\npds\Contracts\SecureInterface;
 
-
+/**
+ * Undocumented class
+ */
 class Secure implements SecureInterface
 {
 

@@ -2,13 +2,18 @@
 
 namespace Npds\Support;
 
-
 use Npds\Routing\Url;
 
+/**
+ * Undocumented class
+ */
 class Assets
 {
+
     /**
-     * @var array Asset templates
+     * Undocumented variable
+     *
+     * @var [type]
      */
     protected static $templates = array
     (
@@ -17,10 +22,11 @@ class Assets
     );
 
     /**
-     * Common templates for assets.
+     * Undocumented function
      *
-     * @param string|array $files
-     * @param string       $template
+     * @param [type] $files
+     * @param [type] $template
+     * @return void
      */
     protected static function resource($files, $template)
     {
@@ -36,11 +42,13 @@ class Assets
     }
 
     /**
-     * load js scripts
-     * @param  String|array  $files      paths to file/s
-     * @param  boolean       $cache      if set to true a cache will be created and serverd
-     * @param  boolean       $refresh    if true the cache will be updated
-     * @param  string        $cachedMins minutes to hold the cache
+     * Undocumented function
+     *
+     * @param [type] $files
+     * @param boolean $cache
+     * @param boolean $refresh
+     * @param string $cachedMins
+     * @return void
      */
     public static function js($files, $cache = false, $refresh = false, $cachedMins = '1440')
     {
@@ -55,22 +63,24 @@ class Assets
             static::resource($files, $type);
         } else {
             if ($refresh == false && file_exists($path) && (filemtime($path) > (time() - 60 * $cachedMins))) {
-                static::resource(DIR.$path, $type);
+                static::resource(WEBPATH.$path, $type);
             } else {
                 $source = static::collect($files, $type);
                 $source = JsMin::minify($source);// Minify::js($source);
                 file_put_contents($path, $source);
-                static::resource(DIR.$path, $type);
+                static::resource(WEBPATH.$path, $type);
             }
         }
     }
 
     /**
-     * load css scripts
-     * @param  String|array  $files      paths to file/s
-     * @param  boolean       $cache      if set to true a cache will be created and serverd
-     * @param  boolean       $refresh    if true the cache will be updated
-     * @param  string        $cachedMins minutes to hold the cache
+     * Undocumented function
+     *
+     * @param [type] $files
+     * @param boolean $cache
+     * @param boolean $refresh
+     * @param string $cachedMins
+     * @return void
      */
     public static function css($files, $cache = false, $refresh = false, $cachedMins = '1440')
     {
@@ -85,16 +95,23 @@ class Assets
             static::resource($files, $type);
         } else {
             if ($refresh == false && file_exists($path) && (filemtime($path) > (time() - 60 * $cachedMins))) {
-                static::resource(DIR.$path, $type);
+                static::resource(WEBPATH.$path, $type);
             } else {
                 $source = static::collect($files, $type);
                 $source = static::compress($source);
                 file_put_contents($path, $source);
-                static::resource(DIR.$path, $type);
+                static::resource(WEBPATH.$path, $type);
             }
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $files
+     * @param [type] $type
+     * @return void
+     */
     private static function collect($files, $type)
     {
         $content = null;
@@ -121,6 +138,12 @@ class Assets
         return $content;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $buffer
+     * @return void
+     */
     private static function compress($buffer)
     {
         /* remove comments */

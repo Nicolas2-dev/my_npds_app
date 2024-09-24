@@ -4,13 +4,17 @@ namespace App\Modules\Npds\Support;
 
 use Npds\Config\Config;
 
-
 /**
  * Counter class
  */
 class Counter
 {
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public static function update()
     {
         global $admin;

@@ -2,7 +2,9 @@
 
 namespace Npds\Database\Query;
 
-
+/**
+ * Undocumented class
+ */
 class Raw
 {
 

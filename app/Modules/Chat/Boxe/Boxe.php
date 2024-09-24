@@ -34,6 +34,8 @@ function makeChatBox($pour)
     $auto = Block::autorisation_block('params#' . $pour);
     $dimauto = count($auto);
 
+    $chat_box = [];
+
     if ($dimauto <= 1) {
         $counter = DB::table('chatbox')->select('message')->where('id', $auto[0])->count()-6;
 

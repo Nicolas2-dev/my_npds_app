@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Npds\Database;
 
 use Npds\Database\Statement;
@@ -11,39 +10,68 @@ use Npds\Config\Config;
 use \Closure;
 use \PDO;
 
-
+/**
+ * Undocumented class
+ */
 abstract class Connection extends PDO
 {
-    /** @var string The last executed Query is stored there */
-    protected $lastSqlQuery = null;
-
-    /** @var string Return type. */
-    protected $returnType = 'assoc';
-
-    /** @var array Config from the user's app config. */
-    protected $config;
-
-    /** @var int Counting how much queries have been executed in total. */
-    protected $queryCount = 0;
-
-    /** @var array Store the tables column details. */
-    protected static $tables = array();
-
-     /** @var array Store the executed queries, into Profiling mode. */
-    protected $queries = array();
-
-    /** @var EventHandler */
-    protected $eventHandler;
 
     /**
-     * MySQLEngine constructor.
-     * Please use the Factory to maintain instances of the drivers.
+     * Undocumented variable
      *
-     * @param $dsn
-     * @param $config array
+     * @var [type]
+     */
+    protected $lastSqlQuery = null;
+
+    /**
+     * Undocumented variable
      *
+     * @var string
+     */
+    protected $returnType = 'assoc';
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    protected $config;
+
+    /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    protected $queryCount = 0;
+
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
+    protected static $tables = array();
+
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
+    protected $queries = array();
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    protected $eventHandler;
+
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $dsn
+     * @param array $config
      * @param array $options
-     * @throws \Exception
      */
     public function __construct($dsn, array $config, array $options = array())
     {
@@ -80,21 +108,24 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get the name of the driver
-     * @return string
+     * Undocumented function
+     *
+     * @return void
      */
     abstract public function getDriverName();
 
     /**
-     * Get driver code, used in config as driver string.
-     * @return string
+     * Undocumented function
+     *
+     * @return void
      */
     abstract public function getDriverCode();
 
     /**
-     * Set/Get the fetching return type.
-     * @param null $type
-     * @return string
+     * Undocumented function
+     *
+     * @param [type] $type
+     * @return void
      */
     public function returnType($type = null)
     {
@@ -106,8 +137,9 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get configuration for instance
-     * @return array
+     * Undocumented function
+     *
+     * @return void
      */
     public function getOptions()
     {
@@ -115,8 +147,9 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get native connection. Could be PDO.
-     * @return PDO
+     * Undocumented function
+     *
+     * @return void
      */
     public function getLink()
     {
@@ -124,8 +157,9 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get Fluent Based query builder.
-     * @return \Npds\Database\Query\Builder
+     * Undocumented function
+     *
+     * @return void
      */
     public function getQueryBuilder()
     {
@@ -133,8 +167,9 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get the Event Handler instance.
-     * @return \Npds\Database\EventHandler
+     * Undocumented function
+     *
+     * @return void
      */
     public function getEventHandler()
     {
@@ -142,11 +177,10 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get fetch method and validate class if exists.
+     * Undocumented function
      *
-     * @param int $returnType PDO Fetch Method type
-     * @return int fetch method
-     * @throws \Exception
+     * @param [type] $returnType
+     * @return void
      */
     public static function getFetchMethod($returnType)
     {
@@ -179,6 +213,14 @@ abstract class Connection extends PDO
         return array($fetchMethod, $fetchClass);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param string $query
+     * @param integer|null $method
+     * @param mixed ...$fetchModeArgs
+     * @return void
+     */
     public function query(string $query, ?int $method = null, mixed ...$fetchModeArgs)
     {
         $start = microtime(true);
@@ -194,6 +236,12 @@ abstract class Connection extends PDO
         return $result;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $query
+     * @return void
+     */
     public function exec($query): int|false
     {
         $start = microtime(true);
@@ -207,7 +255,11 @@ abstract class Connection extends PDO
     }
 
     /**
-     * @return Statement
+     * Undocumented function
+     *
+     * @param string $sql
+     * @param array $options
+     * @return void
      */
     public function prepare(string $sql, array $options = []): Statement|false
     {
@@ -221,13 +273,11 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Basic execute statement. Only for queries with no binding parameters
-     * This method is not SQL Injection safe! Please remember to don't use this with dynamic content!
-     * This will only return an array or boolean. Depends on your operation and if fetch is on.
+     * Undocumented function
      *
-     * @param $sql
-     * @param $fetch
-     * @return mixed
+     * @param [type] $sql
+     * @param boolean $fetch
+     * @return void
      */
     public function raw($sql, $fetch = false)
     {
@@ -257,13 +307,12 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Basic execute statement. Only for queries with no binding parameters
-     * This method is not SQL Injection safe! Please remember to don't use this with dynamic content!
-     * This will only return an array or boolean. Depends on your operation and if fetch is on.
+     * Undocumented function
      *
-     * @param $sql
-     * @param null|int $returnType
-     * @return \PDOStatement
+     * @param [type] $sql
+     * @param [type] $returnType
+     * @param boolean $useLogging
+     * @return void
      */
     public function rawQuery($sql, $returnType = null, $useLogging = true)
     {
@@ -297,15 +346,12 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Prepare the query and return a prepared statement.
-     * Optional bind is available.
+     * Undocumented function
      *
-     * @param string $sql Query
-     * @param array $params optional binding values
-     * @param array $paramTypes Types, optional
-     * @return \PDOStatement|mixed
-     *
-     * @throws \Exception
+     * @param [type] $sql
+     * @param array $params
+     * @param array $paramTypes
+     * @return void
      */
     public function rawPrepare($sql, $params = array(), array $paramTypes = array())
     {
@@ -331,15 +377,13 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Fetch associative array
+     * Undocumented function
      *
-     * @param string $statement
+     * @param [type] $statement
      * @param array $params
      * @param array $paramTypes
-     *
-     * @return array|mixed
-     *
-     * @throws \Exception
+     * @param boolean $fetchAll
+     * @return void
      */
     public function fetchAssoc($statement, array $params = array(), array $paramTypes = array(), $fetchAll = false)
     {
@@ -347,15 +391,13 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Fetch array
+     * Undocumented function
      *
-     * @param string $statement
+     * @param [type] $statement
      * @param array $params
      * @param array $paramTypes
-     *
-     * @return array|mixed
-     *
-     * @throws \Exception
+     * @param boolean $fetchAll
+     * @return void
      */
     public function fetchArray($statement, array $params = array(), array $paramTypes = array(), $fetchAll = false)
     {
@@ -363,15 +405,13 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Fetch object
+     * Undocumented function
      *
-     * @param string $statement
+     * @param [type] $statement
      * @param array $params
      * @param array $paramTypes
-     *
-     * @return array|mixed
-     *
-     * @throws \Exception
+     * @param boolean $fetchAll
+     * @return void
      */
     public function fetchObject($statement, array $params = array(), array $paramTypes = array(), $fetchAll = false)
     {
@@ -379,15 +419,14 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Fetch class
+     * Undocumented function
      *
-     * @param string $statement
+     * @param [type] $statement
      * @param array $params
      * @param array $paramTypes
-     * @param null $returnType
-     * @param bool $fetchAll
-     * @return array|mixed
-     * @throws \Exception
+     * @param [type] $returnType
+     * @param boolean $fetchAll
+     * @return void
      */
     public function fetchClass($statement, array $params = array(), array $paramTypes = array(), $returnType = null, $fetchAll = false)
     {
@@ -401,13 +440,13 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Prepares and executes an SQL query and returns the result as an associative array.
+     * Undocumented function
      *
-     * @param string $sql The SQL query.
-     * @param array $params The query parameters.
+     * @param [type] $sql
+     * @param array $params
      * @param array $paramTypes
-     * @param null $returnType
-     * @return array
+     * @param [type] $returnType
+     * @return void
      */
     public function fetchAll($sql, array $params = array(), $paramTypes = array(), $returnType = null)
     {
@@ -415,16 +454,14 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Execute Select Query, bind values into the $sql query. And give optional method and class for fetch result
-     * The result MUST be an array!
+     * Undocumented function
      *
-     * @param string $sql
+     * @param [type] $sql
      * @param array $params
      * @param array $paramTypes
-     * @param null $returnType Customized method for fetching, null for engine default or config default.
-     * @param bool $fetchAll Ask the method to fetch all the records or not.
-     * @return array|null
-     * @throws \Exception
+     * @param [type] $returnType
+     * @param boolean $fetchAll
+     * @return void
      */
     public function select($sql, array $params = array(), array $paramTypes = array(), $returnType = null, $fetchAll = false)
     {
@@ -460,13 +497,13 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Convenience method for fetching one record.
+     * Undocumented function
      *
-     * @param string $sql
+     * @param [type] $sql
      * @param array $params
      * @param array $paramTypes
-     * @param null $returnType
-     * @return array|false|null|object
+     * @param [type] $returnType
+     * @return void
      */
     public function selectOne($sql, array $params = array(), array $paramTypes = array(), $returnType = null)
     {
@@ -474,13 +511,13 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Convenience method for fetching all records.
+     * Undocumented function
      *
-     * @param string $sql
+     * @param [type] $sql
      * @param array $params
-     * @param array $paramTypes Types of parameters, leave empty to auto detect
-     * @param null $returnType
-     * @return array|false|null
+     * @param array $paramTypes
+     * @param [type] $returnType
+     * @return void
      */
     public function selectAll($sql, array $params = array(), array $paramTypes = array(), $returnType = null)
     {
@@ -488,16 +525,12 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Execute insert query, will automatically build query for you.
+     * Undocumented function
      *
-     * @param string $table Table to execute the insert.
-     * @param array $data Represents one record, could also have multidimensional arrays inside to insert
-     *                    multiple rows in one call. The engine must support this! Check manual!
-     * @param array $paramTypes Types of parameters, leave empty to auto detect
-     * @param bool $transaction Use PDO Transaction. If one insert will fail we will rollback immediately. Default false.
-     * @return int|bool|array Could be false on error, or one single id inserted, or an array of inserted id's.
-     *
-     * @throws \Exception
+     * @param [type] $table
+     * @param array $data
+     * @param array $paramTypes
+     * @return void
      */
     public function insert($table, array $data, array $paramTypes = array())
     {
@@ -520,15 +553,13 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Execute update query, will automatically build query for you.
+     * Undocumented function
      *
-     * @param string $table Table to execute the statement.
-     * @param array $data The updated array, will map into an update statement.
-     * @param array $where Use key->value like column->value for where mapping.
-     * @param array $paramTypes Types, empty array for guessing.
-     * @return int|bool
-     *
-     * @throws \Exception
+     * @param [type] $table
+     * @param array $data
+     * @param array $where
+     * @param array $paramTypes
+     * @return void
      */
     public function update($table, array $data, array $where, array $paramTypes = array())
     {
@@ -551,14 +582,12 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Execute Delete statement, this will automatically build the query for you.
+     * Undocumented function
      *
-     * @param string $table Table to execute the statement.
-     * @param array|string $where Use a string or key->value like column->value for where mapping.
-     * @param array $paramTypes Types, empty array for guessing.
-     * @return bool|int Row Count, number of deleted rows, or false on failure.
-     *
-     * @throws \Exception
+     * @param [type] $table
+     * @param array $where
+     * @param array $paramTypes
+     * @return void
      */
     public function delete($table, array $where, array $paramTypes = array())
     {
@@ -580,8 +609,12 @@ abstract class Connection extends PDO
     }
 
     /**
-     * A generic Query execution which return \Npds\Database\Statement or false when fail.
-     * This method is useful to build the 'select' commands.
+     * Undocumented function
+     *
+     * @param [type] $query
+     * @param array $params
+     * @param array $paramTypes
+     * @return void
      */
     public function executeQuery($query, array $params = array(), array $paramTypes = array())
     {
@@ -613,8 +646,12 @@ abstract class Connection extends PDO
     }
 
     /**
-     * A generic Update execution which return affected rows count or false when fail.
-     * This method is useful to build the 'insert', 'update' and 'delete' commands.
+     * Undocumented function
+     *
+     * @param [type] $query
+     * @param array $params
+     * @param array $paramTypes
+     * @return void
      */
     public function executeUpdate($query, array $params = array(), array $paramTypes = array())
     {
@@ -646,16 +683,12 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Binds a set of parameters, some or all of which are typed with a PDO binding type, to a given statement.
+     * Undocumented function
      *
-     * @param \Npds\Database\Statement $stmt   The statement to bind the values to.
-     * @param array                    $params The map/list of named/positional parameters.
-     * @param array                    $types  The parameter types (PDO binding types).
-     *
+     * @param [type] $stmt
+     * @param array $params
+     * @param array $paramTypes
      * @return void
-     *
-     * @internal Duck-typing used on the $stmt parameter to support driver statements as well as
-     *           raw PDOStatement instances.
      */
     private function bindTypedValues($stmt, array $params, array $paramTypes = array())
     {
@@ -677,12 +710,11 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Extract ordered type list from two associate key lists of data and types.
+     * Undocumented function
      *
      * @param array $params
-     * @param array $types
-     *
-     * @return array
+     * @param array $paramTypes
+     * @return void
      */
     private function extractTypeValues(array $params, array $paramTypes)
     {
@@ -696,15 +728,11 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Quote escape a string for using in a query.
+     * Undocumented function
      *
-     * WARNING: You can better prepare a query and bind values in that way.
-     * This method could not be always safe.
-     *
-     * @param $string String to be escaped
-     * @param int $paramType Optional parameter type.
-     *
-     * @return string|false Quoted string or false on failure.
+     * @param [type] $string
+     * @param [type] $paramType
+     * @return void
      */
     public function escape($string, $paramType = PDO::PARAM_STR)
     {
@@ -712,25 +740,18 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Truncate table
-     * @param  string $table table name
-     * @return int number of rows affected
+     * Undocumented function
+     *
+     * @param [type] $table
+     * @return void
      */
     abstract public function truncate($table);
 
     /**
-     * Executes a function in a transaction.
+     * Undocumented function
      *
-     * The function gets passed this Connection instance as an (optional) parameter.
-     *
-     * If an exception occurs during execution of the function or transaction commit,
-     * the transaction is rolled back and the exception re-thrown.
-     *
-     * @param \Closure $closure The function to execute transactionally.
-     *
+     * @param Closure $closure
      * @return void
-     *
-     * @throws \Exception
      */
     public function transactional(Closure $closure)
     {
@@ -748,18 +769,18 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get the columns info for the specified Database Table.
+     * Undocumented function
      *
-     * @param  string $table table name
-     * @return array  Returns the Database Table fields info
+     * @param [type] $table
+     * @return void
      */
     abstract public function getTableFields($table);
 
     /**
-     * Get the columns names and types for the specified Database Table.
+     * Undocumented function
      *
-     * @param  string $table table name
-     * @return array  Returns the Database Table field types
+     * @param [type] $table
+     * @return void
      */
     public function getTableBindTypes($table)
     {
@@ -775,14 +796,10 @@ abstract class Connection extends PDO
         return $result;
     }
 
-    //--------------------------------------------------------------------
-    // Debugging and Profiling Methods
-    //--------------------------------------------------------------------
-
     /**
-     * Get total executed queries.
+     * Undocumented function
      *
-     * @return int
+     * @return void
      */
     public function getTotalQueries()
     {
@@ -790,7 +807,9 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Upper the counter.
+     * Undocumented function
+     *
+     * @return void
      */
     public function countIncomingQuery()
     {
@@ -798,7 +817,12 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Log a SQL Query.
+     * Undocumented function
+     *
+     * @param [type] $sql
+     * @param integer $start
+     * @param array $params
+     * @return void
      */
     function logQuery($sql, $start = 0, array $params = array())
     {
@@ -829,9 +853,9 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get the executed queries array.
+     * Undocumented function
      *
-     * @return array
+     * @return void
      */
     public function getExecutedQueries()
     {
@@ -839,9 +863,9 @@ abstract class Connection extends PDO
     }
 
     /**
-     * Get the last executed query.
+     * Undocumented function
      *
-     * @return array
+     * @return void
      */
     public function getLastQuery()
     {

@@ -6,9 +6,12 @@ namespace Npds\Core;
 use Npds\Database\Connection;
 use Npds\Database\Manager as Database;
 
-
+/**
+ * Undocumented class
+ */
 abstract class Model
 {
+    
     /**
      * [$db description]
      *

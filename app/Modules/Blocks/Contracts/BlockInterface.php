@@ -2,7 +2,9 @@
 
 namespace App\Modules\Blocks\Contracts;
 
-
+/**
+ * Undocumented interface
+ */
 interface BlockInterface {
 
     /**

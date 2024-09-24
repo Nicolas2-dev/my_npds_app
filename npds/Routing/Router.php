@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Npds\Routing;
 
 use Npds\view\View;
@@ -13,7 +12,9 @@ use Npds\Console\Console;
 use Npds\Core\Controller;
 use Npds\Support\Inflector;
 
-
+/**
+ * Undocumented class
+ */
 class Router
 {
 

@@ -1,18 +1,31 @@
 <?php
 
-
 namespace Npds\Events;
 
-
+/**
+ * Undocumented class
+ */
 class Listener
 {
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private $name;
 
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */ 
     private $callback;
 
-    // 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
     private $priority;
 
 

@@ -11,7 +11,7 @@ return array(
     /**
      * The Website URL.
      */
-    'url' => 'http://www.lolo.local/',
+    'url' => 'http://www.revolutionmini.local/',
 
     /**
      * Website Name.

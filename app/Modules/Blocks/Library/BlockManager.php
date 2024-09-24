@@ -2,14 +2,15 @@
 
 namespace App\Modules\Blocks\Library;
 
-
+use Npds\Supercache\SuperCacheEmpty;
+use Npds\Supercache\SuperCacheManager;
 use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Npds\Support\Facades\Language;
 use App\Modules\Blocks\Contracts\BlockInterface;
-use App\Modules\Npds\Library\Supercache\SuperCacheEmpty;
-use App\Modules\Npds\Library\Supercache\SuperCacheManager;
 
-
+/**
+ * Undocumented class
+ */
 class BlockManager implements BlockInterface 
 {
 
@@ -508,8 +509,6 @@ class BlockManager implements BlockInterface
      */
     public function block_pdst($pdst)
     {
-        
-
         /*
         Nomination des div par l'attribut id:
         col_princ contient le contenu principal

@@ -2,7 +2,9 @@
 
 namespace Npds\Http;
 
-
+/**
+ * Undocumented class
+ */
 class Response
 {
     /**

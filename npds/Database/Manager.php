@@ -1,28 +1,43 @@
 <?php
 
-
 namespace Npds\Database;
 
 use Npds\Config\Config;
 use Npds\Database\Connection;
 
+/**
+ * Undocumented class
+ */
 abstract class Manager
 {
-    const DRIVER_MYSQL  = "MySQL";
-    const DRIVER_PGSQL  = "PgSQL";
-    const DRIVER_SQLITE = "SQLite";
 
-    /** @var Connection[] Connection instances */
-    private static $instances = array();
+    /**
+     * 
+     */
+    const DRIVER_MYSQL  = "MySQL";
+
+    /**
+     * 
+     */
+    const DRIVER_PGSQL  = "PgSQL";
+
+    /**
+     * 
+     */
+    const DRIVER_SQLITE = "SQLite";
 
 
     /**
-     * Get instance of the database engine you prefer.
-     * Please use the constants in this class as a driver parameter
+     * @var array
+     */
+    private static $instances = array();
+
+  
+    /**
+     * Undocumented function
      *
-     * @param $linkName string Name of the connection provided in the configuration
-     * @return Connection|\PDO|null
-     * @throws \Exception
+     * @param string $linkName
+     * @return void
      */
     public static function getConnection($linkName = 'default')
     {
@@ -72,9 +87,11 @@ abstract class Manager
         // Return instance
         return $connection;
     }
-
+   
     /**
-     * Clear all connections, usefull in tests.
+     * Method clearConnections
+     *
+     * @return void
      */
     public static function clearConnections()
     {
@@ -84,4 +101,5 @@ abstract class Manager
 
         static::$instances = array();
     }
+
 }

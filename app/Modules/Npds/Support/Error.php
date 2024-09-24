@@ -5,7 +5,6 @@ namespace App\Modules\Npds\Support;
 use Npds\Config\Config;
 use App\Modules\Npds\Support\Contracts\ErrorInterface;
 
-
 /**
  * Error class
  */

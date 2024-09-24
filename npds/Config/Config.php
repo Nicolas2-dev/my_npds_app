@@ -2,7 +2,6 @@
 
 namespace Npds\Config;
 
-
 /**
  * [Config description]
  */

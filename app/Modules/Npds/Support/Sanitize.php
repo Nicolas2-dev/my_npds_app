@@ -4,7 +4,9 @@ namespace App\Modules\Npds\Support;
 
 use App\Modules\Npds\Contracts\SanitizeInterface;
 
-
+/**
+ * Undocumented class
+ */
 class Sanitize implements SanitizeInterface
 {
 

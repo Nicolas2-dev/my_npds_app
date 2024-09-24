@@ -2,7 +2,6 @@
 
 namespace Npds\Console;
 
-
 /**
  * [PdoDebugger description]
  */

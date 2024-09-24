@@ -1,11 +1,12 @@
 <?php
 
-
 namespace Npds\Database\Query\Builder;
 
 use Npds\Database\Query\Builder as BaseBuilder;
 
-
+/**
+ * Undocumented class
+ */
 class Join extends BaseBuilder
 {
 

@@ -1,12 +1,10 @@
 <?php
 
-
 namespace Npds\ORM;
 
 use Npds\Support\Inflector;
 use Npds\Database\Connection;
 use Npds\Database\Manager as Database;
-
 use Npds\ORM\Builder;
 use Npds\ORM\Relation\HasOne;
 use Npds\ORM\Relation\HasMany;
@@ -16,9 +14,12 @@ use Npds\ORM\Relation\Pivot;
 
 use PDO;
 
-
+/**
+ * Undocumented class
+ */
 class Model
 {
+    
     /**
      * [$className description]
      *

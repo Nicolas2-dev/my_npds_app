@@ -1,16 +1,22 @@
 <?php
 
-
 namespace Npds\Support;
 
 use Npds\Database\Manager as Database;
 use Npds\Database\Connection;
-
 use Npds\Config\config;
 
+/**
+ * Undocumented class
+ */
 class Profiler
 {
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public static function report()
     {
         $options = Config::get('profiler');
@@ -41,4 +47,5 @@ class Profiler
 
         return $retval;
     }
+    
 }

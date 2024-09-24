@@ -1,22 +1,21 @@
 <?php
 
-
 namespace Npds\Database\Query;
 
 use Npds\Database\Connection;
 use Npds\Database\Exception;
 use Npds\Database\Manager as Database;
-
 use Npds\Database\Query\Raw;
 use Npds\Database\Query\Adapter;
 use Npds\Database\Query\Objects as QueryObject;
 use Npds\Database\Query\Builder\Join as JoinBuilder;
 use Npds\Database\Query\Builder\Transaction;
 use Npds\Database\Query\Builder\TransactionHaltException;
-
 use PDO;
 
-
+/**
+ * Undocumented class
+ */
 class Builder
 {
 

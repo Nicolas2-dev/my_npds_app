@@ -1,15 +1,17 @@
 <?php
 
-
 namespace Npds\Language;
 
 use Npds\Support\Inflector;
 use Npds\Config\Config;
 use Npds\Error\Error;
 
-
+/**
+ * Undocumented class
+ */
 class Language
 {
+    
     /**
      * [$code description]
      *

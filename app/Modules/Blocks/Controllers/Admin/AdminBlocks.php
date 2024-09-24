@@ -5,7 +5,9 @@ namespace App\Modules\Blocks\Controllers\Admin;
 use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Css;
 
-
+/**
+ * Undocumented class
+ */
 class AdminBlock extends AdminController
 {
 

@@ -4,6 +4,9 @@ namespace Npds\Support\Facades;
 
 use Npds\Database\Query\Builder as QueryBuilder;
 
+/**
+ * Undocumented class
+ */
 class DB
 {
     /**

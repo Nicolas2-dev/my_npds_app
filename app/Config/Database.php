@@ -9,10 +9,10 @@ return array(
         'config' => array(
             'host'        => 'localhost',
             'port'        => 3306,        // Not required, default is 3306
-            'dbname'      => 'npds16_dev',
-            'user'        => 'npds16_dev',
-            'password'    => 'npds16_dev',
-            'charset'     => 'utf8',      // Not required, default and recommended is utf8.
+            'dbname'      => 'www.revolutionmini.local',
+            'user'        => 'www.revolutionmini.local',
+            'password'    => 'www.revolutionmini.local',
+            'charset'     => 'utf8mb4',      // Not required, default and recommended is utf8.
             'return_type' => 'assoc',     // Not required, default is 'assoc'.
             'compress'    => false        // Changing to true will hugely improve the persormance on remote servers.
         )

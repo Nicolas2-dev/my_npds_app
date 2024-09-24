@@ -1,12 +1,13 @@
 <?php
 
-
 namespace Npds\Database\Query\Builder;
 
 use Npds\Database\Query\Builder as BaseBuilder;
 use Npds\Database\Query\Builder\TransactionHaltException;
 
-
+/**
+ * Undocumented class
+ */
 class Transaction extends BaseBuilder
 {
 

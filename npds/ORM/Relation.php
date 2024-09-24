@@ -1,13 +1,15 @@
 <?php
 
-
 namespace Npds\ORM;
 
 use Npds\ORM\Model;
 
-
+/**
+ * Undocumented class
+ */
 abstract class Relation
 {
+    
     /**
      * [$className description]
      *

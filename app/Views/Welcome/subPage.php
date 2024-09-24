@@ -11,6 +11,6 @@
 
 <p><?php echo $welcome_message ?></p>
 
-<a class="btn btn-md btn-success" href="<?php echo DIR;?>">
+<a class="btn btn-md btn-success" href="<?php site_url(); ?>">
 	<?php echo __('Home'); ?>
 </a>

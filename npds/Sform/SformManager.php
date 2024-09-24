@@ -1,67 +1,131 @@
 <?php
 
-namespace App\Modules\Npds\Library\Sform;
+namespace Npds\Sform;
 
-
-use App\Modules\Npds\Contracts\SformInterface;
-
-
-class SformManager implements SformInterface
+/**
+ * Undocumented class
+ */
+class SformManager
 {
 
-
+    /**
+     * 
+     */
     const CRLF = "\n";
 
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
+    public  $form_fields = array(); 
 
-    var $form_fields = array(); // form fields
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public  $title; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public  $mess; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public  $form_title; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public  $form_id;  
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public  $form_method; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public  $form_key; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public  $form_key_value; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    public  $form_key_status = 'open'; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    public  $submit_value = ''; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    public  $form_password_access = ''; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
+    public  $answer = array(); 
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    public  $form_check = 'true'; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public  $url; 
+
+    /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    public  $field_size = 50; 
 
 
-    var $title; // form title
-
-
-    var $mess; // obligatoire message
-
-
-    var $form_title; // form title
-
-
-    var $form_id;  // Form id (for custom css) Jireck add
-
-
-    var $form_method; // form method (Post or Get)
-
-
-    var $form_key; // form key (for mysql stockage)
-
-
-    var $form_key_value; // value of the form key (for mysql stockage)
-
-
-    var $form_key_status = 'open'; // Status of the key (open or close)
-
-
-    var $submit_value = ''; // the name off all submit buttons of the form
-
-
-    var $form_password_access = ''; // Protect the data with a password
-
-
-    var $answer = array(); // answer table
-
-
-    var $form_check = 'true'; // sring which will be inserted into javascript check function
-
-
-    var $url; // path at 'action' option of form
-
-
-    var $field_size = 50; // Value of the size attribute of a form-field
-
-
-    /**************************************************************************************/
-    // Interrogate the object for identify the position of an item
-    // public void
-    function interro_fields($ibid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $ibid
+     * @return void
+     */
+    public function interro_fields($ibid)
     {
         $number = "no";
 
@@ -77,7 +141,14 @@ class SformManager implements SformInterface
         return $number;
     }
 
-    function interro_array($ibid0, $ibid1)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $ibid0
+     * @param [type] $ibid1
+     * @return void
+     */
+    public function interro_array($ibid0, $ibid1)
     {
         $number = 'no';
 
@@ -91,74 +162,101 @@ class SformManager implements SformInterface
         return $number;
     }
 
-    /**************************************************************************************/
-    // Change the default (50) value for the html attribute SIZE of form-field
-    // public void
-    function add_form_field_size($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_form_field_size($en)
     {
         $this->field_size = $en;
     }
 
-    /**************************************************************************************/
-    // add title of <form> / This is also the id_form field in the database (unique)
-    // public void
-    function add_form_title($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_form_title($en)
     {
         $this->form_title = $en;
     }
 
-    /**************************************************************************************/
-    // add id of <form> // Jireck add
-    // public void
-    function add_form_id($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_form_id($en)
     {
         $this->form_id = $en;
     }
 
-    /**************************************************************************************/
-    // add method of <form action=> Get or Post
-    // public void
-    function add_form_method($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_form_method($en)
     {
         $this->form_method = $en;
     }
 
-    /**************************************************************************************/
-    // add form check after submit for obligatory fields
-    // public void
-    function add_form_check($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_form_check($en)
     {
         $this->form_check = $en;
     }
 
-    /**************************************************************************************/
-    // add the return url after action
-    // public void
-    function add_url($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_url($en)
     {
         $this->url = $en;
     }
 
-    /**************************************************************************************/
-    // designate a specfific field off the form as key in the DB
-    // public void
-    function add_key($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_key($en)
     {
         $this->form_key = $en;
     }
 
-    /**************************************************************************************/
-    // add the name for all submit buttons of <form>
-    // public void
-    function add_submit_value($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_submit_value($en)
     {
         $this->submit_value = $en;
     }
 
-    /**************************************************************************************/
-    // Lock the Key of <form> for disable edit
-    // public void
-    function key_lock($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function key_lock($en)
     {
         if ($en == 'open') {
             $this->form_key_status = 'open';
@@ -167,18 +265,31 @@ class SformManager implements SformInterface
         }
     }
 
-    /**************************************************************************************/
-    // add mess
-    // public void
-    function add_mess($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_mess($en)
     {
         $this->mess = $en;
     }
 
-    /**************************************************************************************/
-    // add fields text,hidden,textarea,password,submit,reset,email
-    // public void
-    function add_field($name, $en, $value = '', $type = 'text', $obligation = false, $size = '50', $diviseur = '5', $ctrl = '')
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $en
+     * @param string $value
+     * @param string $type
+     * @param boolean $obligation
+     * @param string $size
+     * @param string $diviseur
+     * @param string $ctrl
+     * @return void
+     */
+    public function add_field($name, $en, $value = '', $type = 'text', $obligation = false, $size = '50', $diviseur = '5', $ctrl = '')
     {
         if ($type == 'submit') {
             $name = $this->submit_value;
@@ -196,10 +307,17 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add field checkbox
-    // public void
-    function add_checkbox($name, $en, $value = '', $obligation = false, $checked = false)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $en
+     * @param string $value
+     * @param boolean $obligation
+     * @param boolean $checked
+     * @return void
+     */
+    public function add_checkbox($name, $en, $value = '', $obligation = false, $checked = false)
     {
         $this->form_fields[count($this->form_fields)] = array(
             'name' => $name,
@@ -211,10 +329,18 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add field select
-    // public void
-    function add_select($name, $en, $values, $obligation = false, $size = 1, $multiple = false)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $en
+     * @param [type] $values
+     * @param boolean $obligation
+     * @param integer $size
+     * @param boolean $multiple
+     * @return void
+     */
+    public function add_select($name, $en, $values, $obligation = false, $size = 1, $multiple = false)
     {
         $this->form_fields[count($this->form_fields)] = array(
             'name' => $name,
@@ -227,10 +353,16 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add field radio
-    // public void
-    function add_radio($name, $en, $values, $obligation = false)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $en
+     * @param [type] $values
+     * @param boolean $obligation
+     * @return void
+     */
+    public function add_radio($name, $en, $values, $obligation = false)
     {
         $this->form_fields[count($this->form_fields)] = array(
             'name' => $name,
@@ -241,10 +373,19 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add fields date or stamp : date field of type date, stamp hidden field value timestamp
-    // public void
-    function add_date($name, $en, $value, $type = 'date', $modele = 'm/d/Y', $obligation = false, $size = '10')
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $en
+     * @param [type] $value
+     * @param string $type
+     * @param string $modele
+     * @param boolean $obligation
+     * @param string $size
+     * @return void
+     */
+    public function add_date($name, $en, $value, $type = 'date', $modele = 'm/d/Y', $obligation = false, $size = '10')
     {
         $this->form_fields[count($this->form_fields)] = array(
             'name' => $name,
@@ -258,18 +399,24 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add title of the HTML tab
-    // public void
-    function add_title($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_title($en)
     {
         $this->title = $en;
     }
 
-    /**************************************************************************************/
-    // add comment into HTML tab
-    // public void
-    function add_comment($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_comment($en)
     {
         $this->form_fields[count($this->form_fields)] = array(
             'en' => $en,
@@ -277,10 +424,13 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add extra into HTML tab (link html tags ...)
-    // public void
-    function add_extra($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_extra($en)
     {
         $this->form_fields[count($this->form_fields)] = array(
             'en' => $en,
@@ -288,10 +438,13 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add extra into HTML tab (link html tags ...) print in form but not in response
-    // public void
-    function add_extra_hidden($en)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_extra_hidden($en)
     {
         $this->form_fields[count($this->form_fields)] = array(
             'en' => $en,
@@ -299,10 +452,12 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add Q_spambot mainfile fonction
-    // public void
-    function add_Qspam()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function add_Qspam()
     {
         $this->form_fields[count($this->form_fields)] = array(
             'en' => "",
@@ -310,10 +465,15 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add field EXTENDER javas only for select field, html for all fields except radio
-    // public void
-    function add_extender($name, $javas, $html)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $javas
+     * @param [type] $html
+     * @return void
+     */
+    public function add_extender($name, $javas, $html)
     {
         $this->form_fields[count($this->form_fields)] = array(
             'name' => $name . "extender",
@@ -322,10 +482,16 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // add upload field (only for design, no upload mechanism is inside sform)
-    // public void
-    function add_upload($name, $en, $size = '50', $file_size = '')
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $en
+     * @param string $size
+     * @param string $file_size
+     * @return void
+     */
+    public function add_upload($name, $en, $size = '50', $file_size = '')
     {
         $this->form_fields[count($this->form_fields)] = array(
             'name' => $name,
@@ -337,10 +503,13 @@ class SformManager implements SformInterface
         );
     }
 
-    /**************************************************************************************/
-    // print <form> into html output / IF no method (form_method) is affected : the <form>  </form> is not write (useful to insert SFORM in existing form)
-    // public string
-    function print_form($bg)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $bg
+     * @return void
+     */
+    public function print_form($bg)
     {
         if (isset($this->form_id)) {
             $id_form = 'id="' . $this->form_id . '"';
@@ -756,10 +925,12 @@ class SformManager implements SformInterface
         return $str;
     }
 
-    /**************************************************************************************/
-    // return ALL FIELDS as HIDDEN
-    // public string
-    function print_form_hidden()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function print_form_hidden()
     {
         $str = '';
 
@@ -781,10 +952,12 @@ class SformManager implements SformInterface
         return $str;
     }
 
-    /**************************************************************************************/
-    // make the answer array
-    // private string
-    function make_response()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function make_response()
     {
         for ($i = 0; $i < count($this->form_fields); $i++) {
             $this->answer[$i] = '';
@@ -892,9 +1065,13 @@ class SformManager implements SformInterface
         }
     }
 
-    /**************************************************************************************/
-    // Read Data structure and build a plain-text response
-    function write_sform_data($response)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $response
+     * @return void
+     */
+    public function write_sform_data($response)
     {
         $content = "<CONTENTS>\n";
 
@@ -909,9 +1086,14 @@ class SformManager implements SformInterface
         return addslashes($content);
     }
 
-    /**************************************************************************************/
-    // Read Data structure and build the Internal Data Structure
-    function read_load_sform_data($line, $op)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $line
+     * @param [type] $op
+     * @return void
+     */
+    public function read_load_sform_data($line, $op)
     {
         if ((!stristr($line, "<CONTENTS>")) and (!stristr($line, "</CONTENTS>"))) {
             // Premier tag
@@ -1022,13 +1204,15 @@ class SformManager implements SformInterface
         return $op;
     }
 
-    /*
-  print html response
-  $bg      => Class for TR or TD
-  $retour  => Comment for the link at the end of the page OR ="not_echo" for not 'echo' the reply but return in a string !
-  $action  => url to go
-  */
-    function aff_response($bg, $retour = '', $action = '')
+    /**
+     * Undocumented function
+     *
+     * @param [type] $bg
+     * @param string $retour
+     * @param string $action
+     * @return void
+     */
+    public function aff_response($bg, $retour = '', $action = '')
     {
         // modif Field en lieu et place des $GLOBALS ....
         settype($str, 'string');
@@ -1156,9 +1340,16 @@ class SformManager implements SformInterface
         }
     }
 
-    /**************************************************************************************/
-    // Control the respect of Data Type
-    function control($name, $nom, $valeur, $controle)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $nom
+     * @param [type] $valeur
+     * @param [type] $controle
+     * @return void
+     */
+    public function control($name, $nom, $valeur, $controle)
     {
 
         $i = $this->interro_fields($name);
@@ -1240,8 +1431,14 @@ class SformManager implements SformInterface
         }
     }
 
-    /**************************************************************************************/
-    function error($ibid, $car)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $ibid
+     * @param [type] $car
+     * @return void
+     */
+    public function error($ibid, $car)
     {
         echo '<div class="alert alert-danger">' . aff_langue($ibid) . ' =&#62; <span>' . stripslashes($car) . '</span></div>';
 
@@ -1257,10 +1454,16 @@ class SformManager implements SformInterface
         include("footer.php");
     }
 
-    /**************************************************************************************/
-    // Mysql Interface
-    // If the first char of $mess_ok is : ! => the button is hidden
-    function sform_browse_mysql($pas, $mess_passwd, $mess_ok, $presentation = '')
+    /**
+     * Undocumented function
+     *
+     * @param [type] $pas
+     * @param [type] $mess_passwd
+     * @param [type] $mess_ok
+     * @param string $presentation
+     * @return void
+     */
+    public function sform_browse_mysql($pas, $mess_passwd, $mess_ok, $presentation = '')
     {
         $result = sql_query("SELECT key_value, passwd FROM sform WHERE id_form='" . $this->form_title . "' AND id_key='" . $this->form_key . "' ORDER BY key_value ASC");
         
@@ -1314,8 +1517,13 @@ class SformManager implements SformInterface
         echo "</td></tr></table></form>";
     }
 
-    /**************************************************************************************/
-    function sform_read_mysql($clef)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $clef
+     * @return void
+     */
+    public function sform_read_mysql($clef)
     {
         if ($clef != '') {
 
@@ -1338,8 +1546,13 @@ class SformManager implements SformInterface
         }
     }
 
-    /**************************************************************************************/
-    function sform_insert_mysql($response)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $response
+     * @return void
+     */
+    pubic function sform_insert_mysql($response)
     {
         $content = $this->write_sform_data($response);
 
@@ -1352,7 +1565,7 @@ class SformManager implements SformInterface
     }
 
     /**************************************************************************************/
-    function sform_delete_mysql()
+    public function sform_delete_mysql()
     {
         $sql = "DELETE FROM sform WHERE id_form='" . $this->form_title . "' AND id_key='" . $this->form_key . "' AND key_value='" . $this->form_key_value . "'";
         
@@ -1361,8 +1574,13 @@ class SformManager implements SformInterface
         }
     }
 
-    /**************************************************************************************/
-    function sform_modify_mysql($response)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $response
+     * @return void
+     */
+    public function sform_modify_mysql($response)
     {
         $content = $this->write_sform_data($response);
 
@@ -1373,8 +1591,13 @@ class SformManager implements SformInterface
         }
     }
 
-    /**************************************************************************************/
-    function sform_read_mysql_XML($clef)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $clef
+     * @return void
+     */
+    public function sform_read_mysql_XML($clef)
     {
         if ($clef != "") {
             $clef = urldecode($clef);
@@ -1397,8 +1620,13 @@ class SformManager implements SformInterface
         }
     }
 
-    /**************************************************************************************/
-    function sform_XML_tag($value)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $value
+     * @return void
+     */
+    public function sform_XML_tag($value)
     {
         foreach ($value as $num => $val) {
             if ($val['type'] == 'complete') { // open, complete, close
@@ -1445,4 +1673,5 @@ class SformManager implements SformInterface
             }
         }
     }
+
 }

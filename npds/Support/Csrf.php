@@ -1,38 +1,20 @@
 <?php
 
-
 namespace Npds\Support;
 
 use Npds\Net\Session;
 
 /**
- * Instructions:
- * At the top of the controller where the other "use" statements are place:
- * use Helpers\Csrf;
- *
- * Just prior to rendering the view for adding or editing data create the CSRF token:
- * $data['csrf_token'] = Csrf::makeToken();
- * $this->view->renderTemplate('header', $data);
- * $this->view->render('pet/edit', $data, $error); // as an example
- * $this->view->renderTemplate('footer', $data);
- *
- * At the bottom of your form, before the submit button put:
- * <input type="hidden" name="csrf_token" value="<?= $data['csrf_token']; ?>" />
- *
- * These lines need to be placed in the controller action to validate CSRF token submitted with the form:
- * if (!Csrf::isTokenValid()) {
- *      Url::redirect('admin/login'); // or wherever you want to redirect to.
- *    }
- * And that's all
+ * Undocumented class
  */
 class Csrf
 {
+
     /**
-     * get CSRF token and generate a new one if expired
+     * Undocumented function
      *
-     * @access public
-     * @static static method
-     * @return string
+     * @param string $name
+     * @return void
      */
     public static function makeToken($name = 'csrfToken')
     {
@@ -50,11 +32,10 @@ class Csrf
     }
 
     /**
-     * checks if CSRF token in session is same as in the form submitted
+     * Undocumented function
      *
-     * @access public
-     * @static static method
-     * @return bool
+     * @param string $name
+     * @return boolean
      */
     public static function isTokenValid($name = 'csrfToken')
     {

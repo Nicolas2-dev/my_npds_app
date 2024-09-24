@@ -1,19 +1,18 @@
 <?php
 
-
 namespace Npds\Support;
 
 /**
- * Collection of methods for working with documents.
+ * Undocumented class
  */
 class Document
 {
+
     /**
-     * group types into collections, its purpose is to assign the passed extension to the suitable group
+     * Undocumented function
      *
-     * @param  string $extension file extension
-     *
-     * @return string            group name
+     * @param [type] $extension
+     * @return void
      */
     public static function getFileType($extension)
     {
@@ -46,12 +45,11 @@ class Document
     }
 
     /**
-     * Create a human friendly measure of the size provided.
+     * Undocumented function
      *
-     * @param  integer  $bytes     file size
-     * @param  integer $precision precision to be used
-     *
-     * @return string             size with measure
+     * @param [type] $bytes
+     * @param integer $precision
+     * @return void
      */
     public static function formatBytes($bytes, $precision = 2)
     {
@@ -67,25 +65,10 @@ class Document
     }
 
     /**
-     * Converts a human readable file size value to a number of bytes that it
-     * represents. Supports the following modifiers: K, M, G and T.
-     * Invalid input is returned unchanged.
+     * Undocumented function
      *
-     * Example:
-     * <code>
-     * $config->getBytesSize(10);          // 10
-     * $config->getBytesSize('10b');       // 10
-     * $config->getBytesSize('10k');       // 10240
-     * $config->getBytesSize('10K');       // 10240
-     * $config->getBytesSize('10kb');      // 10240
-     * $config->getBytesSize('10Kb');      // 10240
-     * // and even
-     * $config->getBytesSize('   10 KB '); // 10240
-     * </code>
-     *
-     * @param number|string $value
-     *
-     * @return number
+     * @param [type] $value
+     * @return void
      */
     public static function getBytesSize($value)
     {
@@ -109,11 +92,10 @@ class Document
     }
 
     /**
-     * Return the bytes file of a folder.
+     * Undocumented function
      *
-     * @param string $path
-     *
-     * @return string
+     * @param [type] $path
+     * @return void
      */
     public static function getFolderSize($path)
     {
@@ -124,11 +106,10 @@ class Document
     }
 
     /**
-     * Return the file type based on the filename provided.
+     * Undocumented function
      *
-     * @param  string $file
-     *
-     * @return string
+     * @param [type] $file
+     * @return void
      */
     public static function getExtension($file)
     {
@@ -136,11 +117,10 @@ class Document
     }
 
     /**
-     * Remove extension of file.
+     * Undocumented function
      *
-     * @param  string  $file filename and extension
-     *
-     * @return string file name missing extension
+     * @param [type] $file
+     * @return void
      */
     public static function removeExtension($file)
     {

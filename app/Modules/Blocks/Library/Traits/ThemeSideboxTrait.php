@@ -4,7 +4,9 @@ namespace App\Modules\Blocks\Library\Traits;
 
 use App\Modules\Npds\Support\Facades\Metalang;
 
-
+/**
+ * Undocumented trait
+ */
 trait ThemeSideboxTrait
 {
 
@@ -24,23 +26,23 @@ trait ThemeSideboxTrait
     
         $theme = with(get_instance())->template();
 
-        if (file_exists(app_path("Themes/" . $theme . "/Fragments/bloc-right.html")) and ($bloc_side == "RIGHT")) {
-            $inclusion = app_path('Themes/' . $theme . '/Fragments/bloc-right.html');
+        if (file_exists(theme_path($theme . "/Fragments/bloc-right.php")) and ($bloc_side == "RIGHT")) {
+            $inclusion = theme_path($theme . '/Fragments/bloc-right.php');
         }
     
-        if (file_exists(app_path("Themes/" . $theme . "/Fragments/bloc-left.html")) and ($bloc_side == "LEFT")) {
-            $inclusion = app_path('Themes/' . $theme . '/Fragments/bloc-left.html');
+        if (file_exists(theme_path($theme . "/Fragments/bloc-left.php")) and ($bloc_side == "LEFT")) {
+            $inclusion = theme_path($theme . '/Fragments/bloc-left.php');
         }
     
         if (!$inclusion) {
-            if (file_exists(app_path("Themes/" . $theme . "/Fragments/bloc.html"))) {
-                $inclusion = app_path('Themes/' . $theme . '/Fragments/bloc.html');
+            if (file_exists(theme_path($theme . "/Fragments/bloc.php"))) {
+                $inclusion = theme_path($theme . '/Fragments/bloc.php');
 
-            } elseif (file_exists(app_path("Themes/default/Fragments/bloc.html"))) {
-                $inclusion = app_path('Themes/default/Fragments/bloc.html');
+            } elseif (file_exists(module_path("Themes/Views/Fragments/bloc.php"))) {
+                $inclusion = module_path('Themes/Views/Fragments/bloc.php');
                 
             } else {
-                echo 'bloc.html manquant / not find !<br />';
+                echo 'bloc.php manquant / not find !<br />';
                 die();
             }
         }

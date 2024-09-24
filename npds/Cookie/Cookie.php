@@ -2,12 +2,12 @@
 
 namespace Npds\Cookie;
 
-
 /**
  * [Cookie description]
  */
 class Cookie
 {
+
     /**
      * [FOURYEARS description]
      *

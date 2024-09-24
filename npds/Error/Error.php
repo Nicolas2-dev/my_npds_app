@@ -1,11 +1,13 @@
 <?php
 
-
 namespace Npds\Error;
 
-
+/**
+ * Undocumented class
+ */
 class Error
 {
+    
     /**
      * [display description]
      *

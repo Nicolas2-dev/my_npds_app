@@ -6,7 +6,9 @@ use App\Modules\Npds\Support\Sanitize;
 use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Css;
 
-
+/**
+ * Undocumented class
+ */
 class AdminaBlock extends AdminController
 {
 

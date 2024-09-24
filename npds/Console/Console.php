@@ -2,7 +2,6 @@
 
 namespace Npds\Console;
 
-
 /**
  * [Console description]
  */

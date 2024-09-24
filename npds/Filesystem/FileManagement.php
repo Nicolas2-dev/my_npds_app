@@ -1,13 +1,11 @@
 <?php
 
+namespace Npds\Filesystem;
 
-namespace App\Modules\Npds\Library;
-
-
-use App\Modules\Npds\Contracts\FileManagementInterface;
-
-
-class FileManagement implements FileManagementInterface
+/**
+ * Undocumented class
+ */
+class FileManagement
 {
 
     /**

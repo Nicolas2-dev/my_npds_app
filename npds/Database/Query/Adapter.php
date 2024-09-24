@@ -1,15 +1,15 @@
 <?php
 
-
 namespace Npds\Database\Query;
 
 use Npds\Database\Connection;
 use Npds\Database\Exception;
-
 use Npds\Database\Query\Builder\NestedCriteria;
 use Npds\Database\Query\Raw;
 
-
+/**
+ * Undocumented class
+ */
 abstract class Adapter
 {
     /**

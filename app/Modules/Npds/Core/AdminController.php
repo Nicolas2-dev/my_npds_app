@@ -242,7 +242,7 @@ class AdminController extends BaseController
             $img_adm = '';
         }
     
-        $entete_adm = '<div id="adm_workarea" class="adm_workarea">' . "\n" . '   <h2><a href="' . site_url($furlscript) . '" >' . $img_adm . '&nbsp;' . $this->f_titre . '</a></h2>';
+        $entete_adm = '<div id="message"></div><div id="adm_workarea" class="adm_workarea">' . "\n" . '   <h2><a href="' . site_url($furlscript) . '" >' . $img_adm . '&nbsp;' . $this->f_titre . '</a></h2>';
         
         //echo $entete_adm;
 

@@ -1,20 +1,19 @@
 <?php
 
-
 namespace Npds\Support;
 
 /**
- * Collection of array methods.
+ * Undocumented class
  */
 class Arr
 {
+    
     /**
-     * Sets an array value.
+     * Undocumented function
      *
-     * @param array  $array
-     * @param string $path
-     * @param mixed  $value
-     *
+     * @param array $array
+     * @param [type] $path
+     * @param [type] $value
      * @return void
      */
     public static function set(array &$array, $path, $value)
@@ -31,12 +30,11 @@ class Arr
     }
 
     /**
-     * Search for an array value. Returns TRUE if the array key exists and FALSE if not.
+     * Undocumented function
      *
-     * @param array  $array
-     * @param string $path
-     *
-     * @return bool
+     * @param array $array
+     * @param [type] $path
+     * @return boolean
      */
     public static function has(array $array, $path)
     {
@@ -52,13 +50,12 @@ class Arr
     }
 
     /**
-     * Returns value from array
+     * Undocumented function
      *
-     * @param array  $array
-     * @param string $path
-     * @param mixed  $default
-     *
-     * @return array|null
+     * @param array $array
+     * @param [type] $path
+     * @param [type] $default
+     * @return void
      */
     public static function get(array $array, $path, $default = null)
     {
@@ -74,12 +71,11 @@ class Arr
     }
 
     /**
-     * Remove an array value.
+     * Undocumented function
      *
-     * @param   array  $array Array you want to modify
-     * @param   string $path  Array path
-     *
-     * @return  boolean
+     * @param array $array
+     * @param [type] $path
+     * @return void
      */
     public static function remove(array &$array, $path)
     {
@@ -97,11 +93,10 @@ class Arr
     }
 
     /**
-     * Returns a random value from an array.
+     * Undocumented function
      *
-     * @param   array $array Array you want to pick a random value from
-     *
-     * @return  mixed
+     * @param array $array
+     * @return void
      */
     public static function rand(array $array)
     {
@@ -109,11 +104,10 @@ class Arr
     }
 
     /**
-     * Returns TRUE if the array is associative and FALSE if not.
+     * Undocumented function
      *
-     * @param   array $array Array to check
-     *
-     * @return  boolean
+     * @param array $array
+     * @return boolean
      */
     public static function isAssoc(array $array)
     {
@@ -121,12 +115,11 @@ class Arr
     }
 
     /**
-     * Returns the values from a single column of the input array, identified by the key.
+     * Undocumented function
      *
-     * @param   array  $array Array to pluck from
-     * @param   string $key   Array key
-     *
-     * @return  array
+     * @param array $array
+     * @param [type] $key
+     * @return void
      */
     public static function value(array $array, $key)
     {

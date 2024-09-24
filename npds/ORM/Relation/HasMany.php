@@ -1,12 +1,13 @@
 <?php
 
-
 namespace Npds\ORM\Relation;
 
 use Npds\ORM\Model;
 use Npds\ORM\Relation;
 
-
+/**
+ * Undocumented class
+ */
 class HasMany extends Relation
 {
     /**

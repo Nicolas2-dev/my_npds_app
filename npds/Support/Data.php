@@ -1,17 +1,18 @@
 <?php
 
-
 namespace Npds\Support;
 
 /**
- * Common data lookup methods.
+ * Undocumented class
  */
 class Data
 {
+
     /**
-     * print_r call wrapped in pre tags
+     * Undocumented function
      *
-     * @param  string $data or array $data
+     * @param [type] $data
+     * @return void
      */
     public static function pr($data)
     {
@@ -21,9 +22,10 @@ class Data
     }
 
     /**
-     * var_dump call
+     * Undocumented function
      *
-     * @param  string $data or array $data
+     * @param [type] $data
+     * @return void
      */
     public static function vd($data)
     {
@@ -31,10 +33,10 @@ class Data
     }
 
     /**
-     * strlen call - count the lengh of the string.
+     * Undocumented function
      *
-     * @param  string $data
-     * @return string return the count
+     * @param [type] $data
+     * @return void
      */
     public static function sl($data)
     {
@@ -42,10 +44,10 @@ class Data
     }
 
     /**
-     * strtoupper - convert string to uppercase.
+     * Undocumented function
      *
-     * @param  string $data
-     * @return string
+     * @param [type] $data
+     * @return void
      */
     public static function stu($data)
     {
@@ -53,10 +55,10 @@ class Data
     }
 
     /**
-     * strtolower - convert string to lowercase.
+     * Undocumented function
      *
-     * @param  string $data
-     * @return string
+     * @param [type] $data
+     * @return void
      */
     public static function stl($data)
     {
@@ -64,10 +66,10 @@ class Data
     }
 
     /**
-     * ucwords - the first letter of each word to be a capital.
+     * Undocumented function
      *
-     * @param  string $data
-     * @return string
+     * @param [type] $data
+     * @return void
      */
     public static function ucw($data)
     {
@@ -75,10 +77,10 @@ class Data
     }
 
     /**
-     * key - this will generate a 32 character key
+     * Undocumented function
      *
-     * @param int $length
-     * @return string
+     * @param integer $length
+     * @return void
      */
     public static function createKey($length = 32)
     {
@@ -86,7 +88,7 @@ class Data
         $key = "";
 
         for ($i = 0; $i < $length; $i++) {
-            $key .= $chars{rand(0, strlen($chars) - 1)};
+            $key .= $chars.rand(0, strlen($chars) - 1);
         }
 
         return $key;

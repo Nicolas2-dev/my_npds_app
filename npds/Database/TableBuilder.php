@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Npds\Database;
 
 use Npds\Database\Manager as Database;
-
 use \PDO;
 
 /**
@@ -38,50 +36,61 @@ use \PDO;
 class TableBuilder
 {
     /**
-     * @const int AUTO_INCREMENT    AUTO_INCREMENT flat
-     * @const int CURRENT_TIMESTAMP Default type CURRENT_TIMESTAMP
+     * 
      */
     const AUTO_INCREMENT = 1;
+
+    /**
+     * 
+     */
     const CURRENT_TIMESTAMP = 2;
 
     /**
-     * @var Engine A database instance
+     * Undocumented variable
+     *
+     * @var [type]
      */
     protected $db;
 
     /**
-     * @var string Compiled SQL query
+     * Undocumented variable
+     *
+     * @var string
      */
     private $sql = '';
 
     /**
-     * Name
+     * Undocumented variable
      *
-     * @var string $name   Table name
+     * @var string
      */
     private $name = '';
 
     /**
-     * fields
+     * Undocumented variable
      *
-     * @var array  $fields Table fields
+     * @var array
      */
     private $fields = array();
 
     /**
-     * pk
+     * Undocumented variable
      *
-     * @var string $pk Primary key field
+     * @var string
      */
     private $pk = '';
 
     /**
-     * @var boolean Prevents errors in case if table already exists
+     * Undocumented variable
+     *
+     * @var boolean
      */
     private $notExists = false;
 
     /**
-     * @var array Type aliases
+     * Undocumented variable
+     *
+     * @var [type]
      */
     private static $typeAliases = array (
         'int'         => 'INT(11)',
@@ -89,13 +98,13 @@ class TableBuilder
         'description' => 'TINYTEXT'
     );
 
+
     /**
-     * Set alias.
-     * Alias is just a way to simplify datatype of field in expression.
-     * You probably don't want to write a lot of times INT(11), so you can add 'int' alias 'INT(11)'
+     * Undocumented function
      *
-     * @param string $aliasName - Name of the Alias
-     * @param string $aliasType - Type of the Alias
+     * @param [type] $aliasName
+     * @param [type] $aliasType
+     * @return void
      */
     public static function setAlias($aliasName, $aliasType)
     {
@@ -103,14 +112,10 @@ class TableBuilder
     }
 
     /**
-     * Table builder constructor.
-     * Database class initialization, don't create too many instances of table builder,
-     * because it will create many database instances which will decrease performance.
-     * By default this class would create a `id` field INT(11) NOT null AUTO_INCREMENT PRIMARY KEY, unless
-     * you'll set second parameter false.
+     * Undocumented function
      *
-     * @param PDO|null $db - PDO instance (it can be a \helper\database instance)
-     * @param boolean  $id - A flag to add or not to add `id` field automatically
+     * @param \PDO $db
+     * @param boolean $id
      */
     public function __construct(\PDO $db = null, $id = true)
     {
@@ -125,10 +130,10 @@ class TableBuilder
     }
 
     /**
-     * Private utility for converting constants into strings.
+     * Undocumented function
      *
-     * @param int|array $constant - Constant(s) to convert
-     * @return string
+     * @param [type] $constant
+     * @return void
      */
     private function getOptions($constant)
     {
@@ -152,12 +157,13 @@ class TableBuilder
     }
 
     /**
-     * Add a field to table definition.
+     * Undocumented function
      *
-     * @param string    $field   - Field name
-     * @param string    $type    - Type of the field, for types, please visit CREATE TABLE page for reference
-     * @param boolean   $null    - NOT null or null
-     * @param array|int $options - Options, it's either array of constants or just one constant
+     * @param [type] $field
+     * @param [type] $type
+     * @param boolean $null
+     * @param integer $options
+     * @return void
      */
     public function addField($field, $type, $null = false, $options = 0)
     {
@@ -180,9 +186,10 @@ class TableBuilder
     }
 
     /**
-     * Sets 'IF NOT EXISTS' property
+     * Undocumented function
      *
-     * @param boolean $boolean
+     * @param [type] $boolean
+     * @return void
      */
     public function setNotExists($boolean)
     {
@@ -190,10 +197,10 @@ class TableBuilder
     }
 
     /**
-     * Set Primary Key field
+     * Undocumented function
      *
-     * @param string $field - Field which you want to set a primary key
-     * @return boolean
+     * @param [type] $field
+     * @return void
      */
     public function setPK($field)
     {
@@ -207,9 +214,10 @@ class TableBuilder
     }
 
     /**
-     * Set name of table
+     * Undocumented function
      *
-     * @param string $name - A name for database
+     * @param [type] $name
+     * @return void
      */
     public function setName($name)
     {
@@ -219,11 +227,11 @@ class TableBuilder
     }
 
     /**
-     * Adding default field for specific field.
-     * Note: to add CURRENT_TIMESTAMP, use addField method and $options argument!
+     * Undocumented function
      *
-     * @param string $field - Field that need default value
-     * @param mixed  $value - Value that you want to add
+     * @param [type] $field
+     * @param [type] $value
+     * @return void
      */
     public function setDefault($field, $value)
     {
@@ -235,8 +243,9 @@ class TableBuilder
     }
 
     /**
-     * Procedure for generating SQL code from input data.
-     * The most nasty part of the class, procedural generation of query.
+     * Undocumented function
+     *
+     * @return void
      */
     public function generateSQL()
     {
@@ -270,9 +279,9 @@ class TableBuilder
     }
 
     /**
-     * Get SQL, if you might need it.
+     * Undocumented function
      *
-     * @return string
+     * @return void
      */
     public function getSQL()
     {
@@ -284,10 +293,10 @@ class TableBuilder
     }
 
     /**
-     * Creates table
+     * Undocumented function
      *
-     * @param boolean $reset - A flag to reset whole set of data.
-     * @return boolean
+     * @param boolean $reset
+     * @return void
      */
     public function create($reset = true)
     {
@@ -305,8 +314,9 @@ class TableBuilder
     }
 
     /**
-     * Resets the properties of tableBuilder class so
-     * you could build another table.
+     * Undocumented function
+     *
+     * @return void
      */
     public function reset()
     {

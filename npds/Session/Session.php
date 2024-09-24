@@ -1,9 +1,10 @@
 <?php
 
-
 namespace Npds\Session;
 
-
+/**
+ * Undocumented class
+ */
 class Session
 {
 
@@ -213,8 +214,8 @@ class Session
                 $alertIcon = 'info';
         }
 
-        return "<div class='alert alert-".$alertType." alert-dismissable'>
-                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+        return "<div class='alert alert-".$alertType." align-items-center alert-dismissible fade show' role='alert'>
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     <i class='fa fa-".$alertIcon."'></i> ".$alertText."
                 </div>";
     }

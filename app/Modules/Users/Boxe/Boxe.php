@@ -88,7 +88,7 @@ function online()
         View::make('Modules/Users/Views/Boxe/Boxe_Online',
             [
                 'user'              => $user,
-                'count_msg'         => ($count_pmsg->priv_msg()->count() ?: 0),
+                'count_msg'         => ($user ? $count_pmsg->priv_msg()->count() : 0),
                 'username'          => $username,
                 'guest_online_num'  => $query->where('guest', 1)->count(),
                 'member_online_num' => $query->where('guest', 0)->count(),
