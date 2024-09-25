@@ -51,22 +51,22 @@ class FrontSearch extends FrontController
             $result = sql_query("SELECT topicimage, topictext FROM topics WHERE topicid='$topic'");
             list($topicimage, $topictext) = sql_fetch_row($result);
         } else {
-            $topictext = translate("Tous les sujets");
+            $topictext = __d('search', 'Tous les sujets');
             $topicimage = "all-topics.gif";
         }
         
         settype($type, 'string');
         
         if ($type == 'users')
-            echo '<h2 class="mb-3">' . translate("Rechercher dans la base des utilisateurs") . '</h2><hr />';
+            echo '<h2 class="mb-3">' . __d('search', 'Rechercher dans la base des utilisateurs') . '</h2><hr />';
         elseif ($type == 'sections')
-            echo '<h2 class="mb-3">' . translate("Rechercher dans les rubriques") . '</h2><hr />';
+            echo '<h2 class="mb-3">' . __d('search', 'Rechercher dans les rubriques') . '</h2><hr />';
         elseif ($type == 'reviews')
-            echo '<h2 class="mb-3">' . translate("Rechercher dans les critiques") . '</h2><hr />';
+            echo '<h2 class="mb-3">' . __d('search', 'Rechercher dans les critiques') . '</h2><hr />';
         elseif ($type == 'archive')
-            echo '<h2 class="mb-3">' . translate("Rechercher dans") . ' <span class="text-lowercase">' . translate("Archives") . '</span></h2><hr />';
+            echo '<h2 class="mb-3">' . __d('search', 'Rechercher dans') . ' <span class="text-lowercase">' . __d('search', 'Archives') . '</span></h2><hr />';
         else
-            echo '<h2 class="mb-3">' . translate("Rechercher dans") . ' ' . aff_langue($topictext) . '</h2><hr />';
+            echo '<h2 class="mb-3">' . __d('search', 'Rechercher dans') . ' ' . aff_langue($topictext) . '</h2><hr />';
         
         echo '<form action="search.php" method="get">';
             /*
@@ -89,7 +89,7 @@ class FrontSearch extends FrontController
         echo '
             <div class="mb-3">
                 <select class="form-select" name="topic">
-                    <option value="">' . translate("Tous les sujets") . '</option>';
+                    <option value="">' . __d('search', 'Tous les sujets') . '</option>';
         
         $sel = '';
         while (list($topicid, $topics) = sql_fetch_row($toplist)) {
@@ -106,7 +106,7 @@ class FrontSearch extends FrontController
             </div>
             <div class="mb-3">
                 <select class="form-select" name="category">
-                    <option value="0">' . translate("Articles") . '</option>';
+                    <option value="0">' . __d('search', 'Articles') . '</option>';
         
         $catlist = sql_query("SELECT catid, title FROM stories_cat ORDER BY title");
         
@@ -131,7 +131,7 @@ class FrontSearch extends FrontController
         echo '
             <div class="mb-3">
                 <select class="form-select" name="author">
-                    <option value="">' . translate("Tous les auteurs") . '</option>';
+                    <option value="">' . __d('search', 'Tous les auteurs') . '</option>';
         
         settype($author, 'string');
         
@@ -174,12 +174,12 @@ class FrontSearch extends FrontController
         echo '
                 <div class="mb-3">
                     <select class="form-select" name="days">
-                        <option ' . $sel1 . ' value="0">' . translate("Tous") . '</option>
-                        <option ' . $sel2 . ' value="7">1 ' . translate("semaine") . '</option>
-                        <option ' . $sel3 . ' value="14">2 ' . translate("semaines") . '</option>
-                        <option ' . $sel4 . ' value="30">1 ' . translate("mois") . '</option>
-                        <option ' . $sel5 . ' value="60">2 ' . translate("mois") . '</option>
-                        <option ' . $sel6 . ' value="90">3 ' . translate("mois") . '</option>
+                        <option ' . $sel1 . ' value="0">' . __d('search', 'Tous') . '</option>
+                        <option ' . $sel2 . ' value="7">1 ' . __d('search', 'semaine') . '</option>
+                        <option ' . $sel3 . ' value="14">2 ' . __d('search', 'semaines') . '</option>
+                        <option ' . $sel4 . ' value="30">1 ' . __d('search', 'mois') . '</option>
+                        <option ' . $sel5 . ' value="60">2 ' . __d('search', 'mois') . '</option>
+                        <option ' . $sel6 . ' value="90">3 ' . __d('search', 'mois') . '</option>
                     </select>
                 </div>';
         
@@ -198,29 +198,29 @@ class FrontSearch extends FrontController
                 <div class="mb-3">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="sto" name="type" value="stories" ' . $sel1 . ' />
-                        <label class="form-check-label" for="sto">' . translate("Articles") . '</label>
+                        <label class="form-check-label" for="sto">' . __d('search', 'Articles') . '</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="arc" name="type" value="archive" ' . $sel6 . ' />
-                        <label class="form-check-label" for="arc">' . translate("Archives") . '</label>
+                        <label class="form-check-label" for="arc">' . __d('search', 'Archives') . '</label>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="sec" name="type" value="sections" ' . $sel3 . ' />
-                        <label class="form-check-label" for="sec">' . translate("Rubriques") . '</label>
+                        <label class="form-check-label" for="sec">' . __d('search', 'Rubriques') . '</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="use" name="type" value="users" ' . $sel4 . ' />
-                        <label class="form-check-label" for="use">' . translate("Utilisateurs") . '</label>
+                        <label class="form-check-label" for="use">' . __d('search', 'Utilisateurs') . '</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="rev" name="type" value="reviews" ' . $sel5 . ' />
-                        <label class="form-check-label" for="rev">' . translate("Critiques") . '</label>
+                        <label class="form-check-label" for="rev">' . __d('search', 'Critiques') . '</label>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <input class="btn btn-primary" type="submit" value="' . translate("Recherche") . '" />
+                    <input class="btn btn-primary" type="submit" value="' . __d('search', 'Recherche') . '" />
                 </div>
             </form>';
         
@@ -296,7 +296,7 @@ class FrontSearch extends FrontController
                 <table id ="search_result" data-toggle="table" data-striped="true" data-mobile-responsive="true" data-icons-prefix="fa" data-icons="icons">
                     <thead>
                         <tr>
-                        <th data-sortable="true">' . translate("Résultats") . '</th>
+                        <th data-sortable="true">' . __d('search', 'Résultats') . '</th>
                         </tr>
                     </thead>
                     <tbody>';
@@ -324,7 +324,7 @@ class FrontSearch extends FrontController
         
                 echo '
                     <tr>
-                       <td><span>[' . ($i + 1) . ']</span>&nbsp;' . translate("Contribution de") . ' <a href="user.php?op=userinfo&amp;uname=' . $tab_sid[$i]['informant'] . '">' . $tab_sid[$i]['informant'] . '</a> :<br /><strong><a href="' . $furl . '">' . aff_langue($tab_sid[$i]['title']) . '</a></strong><br /><span>' . translate("Posté par ") . '<a href="' . $tab_sid[$i]['url'] . '" >' . $tab_sid[$i]['aid'] . '</a></span> ' . translate("le") . ' ' . $datetime . '</td>
+                       <td><span>[' . ($i + 1) . ']</span>&nbsp;' . __d('search', 'Contribution de') . ' <a href="user.php?op=userinfo&amp;uname=' . $tab_sid[$i]['informant'] . '">' . $tab_sid[$i]['informant'] . '</a> :<br /><strong><a href="' . $furl . '">' . aff_langue($tab_sid[$i]['title']) . '</a></strong><br /><span>' . __d('search', 'Posté par ') . '<a href="' . $tab_sid[$i]['url'] . '" >' . $tab_sid[$i]['aid'] . '</a></span> ' . __d('search', 'le') . ' ' . $datetime . '</td>
                     </tr>';
             }
         
@@ -335,17 +335,17 @@ class FrontSearch extends FrontController
             if ($x == 0) {
                 echo '
                     <div class="alert alert-danger lead" role="alert">
-                        <i class="fa fa-exclamation-triangle fa-lg me-2"></i>' . translate("Aucune correspondance à votre recherche n'a été trouvée") . ' !
+                        <i class="fa fa-exclamation-triangle fa-lg me-2"></i>' . __d('search', 'Aucune correspondance à votre recherche n\'a été trouvée') . ' !
                     </div>';
             }
         
             $prev = ($min - $offset);
         
-            echo '<br /><p align="left">(' . translate("Total") . ' : ' . $x . ')&nbsp;&nbsp;';
+            echo '<br /><p align="left">(' . __d('search', 'Total') . ' : ' . $x . ')&nbsp;&nbsp;';
         
             if ($prev >= 0) {
                 echo '<a href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $prev . '&amp;query=' . $query . '&amp;type=' . $type . '&amp;category=' . $category . '&amp;member=' . $member . '&amp;days=' . $days . '">';
-                echo $offset . ' ' . translate("réponses précédentes") . '</a>';
+                echo $offset . ' ' . __d('search', 'réponses précédentes') . '</a>';
             }
         
             if ($min + $increment < $x) {
@@ -353,7 +353,7 @@ class FrontSearch extends FrontController
                     echo "&nbsp;|&nbsp;";
         
                 echo "<a href=\"search.php?author=$author&amp;topic=$t&amp;min=$max&amp;query=$query&amp;type=$type&amp;category=$category&amp;member=$member&amp;days=$days\">";
-                echo translate("réponses suivantes") . "</a>";
+                echo __d('search', 'réponses suivantes') . "</a>";
             }
         
             echo '</p>';
@@ -372,7 +372,7 @@ class FrontSearch extends FrontController
                 <table id ="search_result" data-toggle="table" data-striped="true" data-icons-prefix="fa" data-icons="icons">
                     <thead>
                         <tr>
-                        <th data-sortable="true">' . translate("Résultats") . '</th>
+                        <th data-sortable="true">' . __d('search', 'Résultats') . '</th>
                         </tr>
                     </thead>
                     <tbody>';
@@ -382,7 +382,7 @@ class FrontSearch extends FrontController
         
                     echo '
                     <tr>
-                       <td><a href="' . $furl . '">' . $title . '</a> ' . translate("par") . ' <i class="fa fa-user text-muted"></i>&nbsp;' . $reviewer . '</td>
+                       <td><a href="' . $furl . '">' . $title . '</a> ' . __d('search', 'par') . ' <i class="fa fa-user text-muted"></i>&nbsp;' . $reviewer . '</td>
                     </tr>';
                     $x++;
                 }
@@ -392,7 +392,7 @@ class FrontSearch extends FrontController
                 </table>';
         
             } else
-                echo '<div class="alert alert-danger lead">' . translate("Aucune correspondance à votre recherche n'a été trouvée") . '</div>';
+                echo '<div class="alert alert-danger lead">' . __d('search', 'Aucune correspondance à votre recherche n\'a été trouvée') . '</div>';
         
             $prev = $min - $offset;
         
@@ -402,11 +402,11 @@ class FrontSearch extends FrontController
                         <li class="page-item disabled"><a class="page-link" href="#">' . $nrows . '</a></li>';
         
             if ($prev >= 0) {
-                echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $prev . '&amp;query=' . $query . '&amp;type=' . $type . '" >' . $offset . ' ' . translate("réponses précédentes") . '</a></li>';
+                echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $prev . '&amp;query=' . $query . '&amp;type=' . $type . '" >' . $offset . ' ' . __d('search', 'réponses précédentes') . '</a></li>';
             }
         
             if ($x >= ($offset - 1)) {
-                echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $max . '&amp;query=' . $query . '&amp;type=' . $type . '" >' . translate("réponses suivantes") . '</a></li>';
+                echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $max . '&amp;query=' . $query . '&amp;type=' . $type . '" >' . __d('search', 'réponses suivantes') . '</a></li>';
             }
         
             echo '
@@ -428,7 +428,7 @@ class FrontSearch extends FrontController
                 <table id ="search_result" data-toggle="table" data-striped="true" data-icons-prefix="fa" data-icons="icons">
                     <thead>
                         <tr>
-                        <th data-sortable="true">' . translate("Résultats") . '</th>
+                        <th data-sortable="true">' . __d('search', 'Résultats') . '</th>
                         </tr>
                     </thead>
                     <tbody>';
@@ -446,7 +446,7 @@ class FrontSearch extends FrontController
                         $furl = "sections.php?op=viewarticle&amp;artid=$artid";
                         echo '
                         <tr>
-                        <td><a href="' . $furl . '">' . aff_langue($title) . '</a> ' . translate("dans la sous-rubrique") . ' <a href="' . $surl . '">' . aff_langue($row2['secname']) . '</a></td>
+                        <td><a href="' . $furl . '">' . aff_langue($title) . '</a> ' . __d('search', 'dans la sous-rubrique') . ' <a href="' . $surl . '">' . aff_langue($row2['secname']) . '</a></td>
                         </tr>';
                         $x++;
                     }
@@ -457,9 +457,9 @@ class FrontSearch extends FrontController
                 </table>';
         
                 if ($x == 0)
-                    echo '<div class="alert alert-danger lead">' . translate("Aucune correspondance à votre recherche n'a été trouvée") . '</div>';
+                    echo '<div class="alert alert-danger lead">' . __d('search', 'Aucune correspondance à votre recherche n\'a été trouvée') . '</div>';
             } else
-                echo '<div class="alert alert-danger lead">' . translate("Aucune correspondance à votre recherche n'a été trouvée") . '</div>';
+                echo '<div class="alert alert-danger lead">' . __d('search', 'Aucune correspondance à votre recherche n\'a été trouvée') . '</div>';
         
             $prev = $min - $offset;
         
@@ -469,10 +469,10 @@ class FrontSearch extends FrontController
                         <li class="page-item disabled"><a class="page-link" href="#">' . $nrows . '</a></li>';
         
             if ($prev >= 0)
-                echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $prev . '&amp;query=' . $query . '&amp;type=' . $type . '">' . $offset . ' ' . translate("réponses précédentes") . '</a></li>';
+                echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $prev . '&amp;query=' . $query . '&amp;type=' . $type . '">' . $offset . ' ' . __d('search', 'réponses précédentes') . '</a></li>';
             
             if ($x >= ($offset - 1))
-                echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $max . '&amp;query=' . $query . '&amp;type=' . $type . '">' . translate("réponses suivantes") . '</a></li>';
+                echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $max . '&amp;query=' . $query . '&amp;type=' . $type . '">' . __d('search', 'réponses suivantes') . '</a></li>';
             
             echo '
                     </ul>
@@ -495,7 +495,7 @@ class FrontSearch extends FrontController
                     <table id ="search_result" data-toggle="table" data-striped="true" data-icons-prefix="fa" data-icons="icons">
                         <thead>
                             <tr>
-                            <th data-sortable="true">' . translate("Résultats") . '</th>
+                            <th data-sortable="true">' . __d('search', 'Résultats') . '</th>
                             </tr>
                         </thead>
                         <tbody>';
@@ -504,7 +504,7 @@ class FrontSearch extends FrontController
                         $furl = "user.php?op=userinfo&amp;uname=$uname";
         
                         if ($name == '') 
-                            $name = translate("Aucun nom n'a été entré");
+                            $name = __d('search', 'Aucun nom n\'a été entré');
         
                         echo '
                         <tr>
@@ -518,7 +518,7 @@ class FrontSearch extends FrontController
                 </table>';
         
                 } else
-                    echo '<div class="alert alert-danger lead" role="alert">' . translate("Aucune correspondance à votre recherche n'a été trouvée") . '</div>';
+                    echo '<div class="alert alert-danger lead" role="alert">' . __d('search', 'Aucune correspondance à votre recherche n\'a été trouvée') . '</div>';
         
                 $prev = $min - $offset;
         
@@ -528,10 +528,10 @@ class FrontSearch extends FrontController
                         <li class="page-item disabled"><a class="page-link" href="#">' . $nrows . '</a></li>';
         
                 if ($prev >= 0)
-                    echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $prev . '&amp;query=' . $query . '&amp;type=' . $type . '">' . $offset . ' ' . translate("réponses précédentes") . '</a></li>';
+                    echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $prev . '&amp;query=' . $query . '&amp;type=' . $type . '">' . $offset . ' ' . __d('search', 'réponses précédentes') . '</a></li>';
                 
                 if ($x >= ($offset - 1))
-                    echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $max . '&amp;query=' . $query . '&amp;type=' . $type . '" >' . translate("réponses suivantes") . '</a></li>';
+                    echo '<li class="page-item"><a class="page-link" href="search.php?author=' . $author . '&amp;topic=' . $t . '&amp;min=' . $max . '&amp;query=' . $query . '&amp;type=' . $type . '" >' . __d('search', 'réponses suivantes') . '</a></li>';
                 
                 echo '
                     </ul>

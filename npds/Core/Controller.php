@@ -256,7 +256,7 @@ abstract class Controller
      * Undocumented function
      *
      * @param [type] $name
-     * @return void
+     * @return array
      */
     public function data($name = null)
     {
@@ -331,7 +331,7 @@ abstract class Controller
     /**
      * Undocumented function
      *
-     * @return void
+     * @return array
      */
     public function params()
     {

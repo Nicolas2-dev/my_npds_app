@@ -30,7 +30,7 @@
                 <p id="bl_messageModalContent"></p>
                 <form class="mt-3" id="bl_messageModalForm" action="" method="POST">
                     <input type="hidden" name="id" id="bl_messageModalId" value="0" />
-                    <button type="submit" class="btn btn btn-primary btn-sm">'<?= translate("Confirmer la lecture") ; ?></button>
+                    <button type="submit" class="btn btn btn-primary btn-sm"><?= translate("Confirmer la lecture") ; ?></button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -49,7 +49,7 @@
             $("#bl_messageModalForm").attr("action", "<?= site_url('admin.php?op=alerte_update'); ?>");
 
             $.ajax({
-                url: "<?= site_url('admin.php?op=alerte_api'); ?>",
+                url: "<?= site_url('api/alerte'); ?>",
                 method: "POST",
                 data: {
                     id: id
@@ -62,7 +62,7 @@
 
                     $("#bl_messageModalLabel").html(JSON.parse(fretour_h));
                     $("#bl_messageModalContent").html(JSON.parse(fnom_affich));
-                    $("#bl_messageModalIcon").html('<img src="<?= site_url('assets/images/admin/'); ?>+JSON.parse(ficone)+.png" />');
+                    $("#bl_messageModalIcon").html('<img src="<?= site_url('assets/images/admin/'); ?>' + JSON.parse(ficone) + '.png" />');
                 }
             });
         });

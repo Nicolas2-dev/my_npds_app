@@ -2,6 +2,7 @@
 
 namespace App\Modules\Pollbooth\Controllers\Admin;
 
+use Npds\Config\Config;
 use App\Modules\Npds\Core\AdminController;
 
 
@@ -87,7 +88,7 @@ class AdminPolls extends AdminController
     // public function __construct()
     // {
         // $f_meta_nom = 'create';
-        // $f_titre = adm_translate("Les sondages");
+        // $f_titre = __d('pollbooth', 'Les sondages');
         
         // //==> controle droit
         // admindroits($aid, $f_meta_nom);
@@ -134,14 +135,14 @@ class AdminPolls extends AdminController
     
         echo '
             <hr />
-                <h3 class="mb-3">' . adm_translate("Liste des sondages") . '</h3>
+                <h3 class="mb-3">' . __d('pollbooth', 'Liste des sondages') . '</h3>
                 <table id="tad_pool" data-toggle="table" data-striped="true" data-show-toggle="true" data-search="true" data-mobile-responsive="true" data-buttons-class="outline-secondary" data-icons="icons" data-icons-prefix="fa">
                 <thead>
                     <tr>
                     <th class="n-t-col-xs-1" data-sortable="true" data-halign="center" data-align="right">ID</th>
-                    <th data-sortable="true" data-halign="center">' . adm_translate("Intitulé du Sondage") . '</th>
-                    <th class="n-t-col-xs-2" data-sortable="true" data-halign="center" data-align="right">' . adm_translate("Vote") . '</th>
-                    <th class="n-t-col-xs-2" data-halign="center" data-align="center">' . adm_translate("Fonctions") . '</th>
+                    <th data-sortable="true" data-halign="center">' . __d('pollbooth', 'Intitulé du Sondage') . '</th>
+                    <th class="n-t-col-xs-2" data-sortable="true" data-halign="center" data-align="right">' . __d('pollbooth', 'Vote') . '</th>
+                    <th class="n-t-col-xs-2" data-halign="center" data-align="center">' . __d('pollbooth', 'Fonctions') . '</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -155,8 +156,8 @@ class AdminPolls extends AdminController
                     <td>' . aff_langue($object["pollTitle"]) . '</td>
                     <td>' . $object["voters"] . '</td>
                     <td>
-                        <a href="admin.php?op=editpollPosted&amp;id=' . $object["pollID"] . '"><i class="fa fa-edit fa-lg" title="' . adm_translate("Editer ce sondage") . '" data-bs-toggle="tooltip"></i></a>
-                        <a href="admin.php?op=removePosted&amp;id=' . $object["pollID"] . '"><i class="fas fa-trash fa-lg text-danger ms-2" title="' . adm_translate("Effacer ce sondage") . '" data-bs-toggle="tooltip"></i></a>
+                        <a href="admin.php?op=editpollPosted&amp;id=' . $object["pollID"] . '"><i class="fa fa-edit fa-lg" title="' . __d('pollbooth', 'Editer ce sondage') . '" data-bs-toggle="tooltip"></i></a>
+                        <a href="admin.php?op=removePosted&amp;id=' . $object["pollID"] . '"><i class="fas fa-trash fa-lg text-danger ms-2" title="' . __d('pollbooth', 'Effacer ce sondage') . '" data-bs-toggle="tooltip"></i></a>
                     </td>
                     </tr>';
     
@@ -168,13 +169,13 @@ class AdminPolls extends AdminController
                 </tbody>
             </table>
             <hr />
-            <h3 class="mb-3">' . adm_translate("Créer un nouveau Sondage") . '</h3>
+            <h3 class="mb-3">' . __d('pollbooth', 'Créer un nouveau Sondage') . '</h3>
             <form id="pollssondagenew" action="admin.php" method="post">
                 <input type="hidden" name="op" value="createPosted" />
                 <div class="form-floating mb-3">
                     <input class="form-control" type="text" id="pollTitle" name="pollTitle" id="pollTitle" maxlength="100" required="required" />
-                    <label for="pollTitle">' . adm_translate("Intitulé du Sondage") . '</label>
-                    <span class="help-block">' . adm_translate("S.V.P. entrez chaque option disponible dans un seul champ") . '</span>
+                    <label for="pollTitle">' . __d('pollbooth', 'Intitulé du Sondage') . '</label>
+                    <span class="help-block">' . __d('pollbooth', 'S.V.P. entrez chaque option disponible dans un seul champ') . '</span>
                     <span class="help-block text-end"><span id="countcar_pollTitle"></span></span>
                 </div>';
     
@@ -186,7 +187,7 @@ class AdminPolls extends AdminController
             echo '
                 <div class="form-floating mb-3">
                     <input class="form-control" type="text" id="optionText' . $i . '" name="optionText[' . $i . ']" maxlength="255" ' . $requi . ' />
-                    <label for="optionText' . $i . '">' . adm_translate("Option") . ' ' . $i . '</label>
+                    <label for="optionText' . $i . '">' . __d('pollbooth', 'Option') . ' ' . $i . '</label>
                     <span class="help-block text-end"><span id="countcar_optionText' . $i . '"></span></span>
                 </div>';
         }
@@ -194,10 +195,10 @@ class AdminPolls extends AdminController
         echo '
                 <div class="form-check form-check-inline mb-3">
                     <input class="form-check-input" type="checkbox" id="poll_type" name="poll_type" value="1" />
-                    <label class="form-check-label" for="poll_type">' . adm_translate("Seulement aux membres") . '</label>
+                    <label class="form-check-label" for="poll_type">' . __d('pollbooth', 'Seulement aux membres') . '</label>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-primary">' . adm_translate("Créer") . '</button>
+                    <button type="submit" class="btn btn-primary">' . __d('pollbooth', 'Créer') . '</button>
                 </div>
             </form>';
     
@@ -240,9 +241,9 @@ class AdminPolls extends AdminController
     {
         echo '
         <hr />
-        <h3 class="mb-3">' . adm_translate("Retirer un Sondage existant") . '</h3>
-        <span class="help-block">' . adm_translate("S.V.P. Choisissez un sondage dans la liste suivante.") . '</span>
-        <p align="center"><span class="text-danger">' . adm_translate("ATTENTION : Le Sondage choisi va être supprimé IMMEDIATEMENT de la base de données !") . '</span></p>
+        <h3 class="mb-3">' . __d('pollbooth', 'Retirer un Sondage existant') . '</h3>
+        <span class="help-block">' . __d('pollbooth', 'S.V.P. Choisissez un sondage dans la liste suivante.') . '</span>
+        <p align="center"><span class="text-danger">' . __d('pollbooth', 'ATTENTION : Le Sondage choisi va être supprimé IMMEDIATEMENT de la base de données !') . '</span></p>
         ';
     
         echo '
@@ -252,7 +253,7 @@ class AdminPolls extends AdminController
                 <thead>
                     <tr>
                     <th></th>
-                    <th data-sortable="true">' . adm_translate("Intitulé du Sondage") . '</th>
+                    <th data-sortable="true">' . __d('pollbooth', 'Intitulé du Sondage') . '</th>
                     <th data-sortable="true">ID</th>
                     </tr>
                 </thead>
@@ -275,7 +276,7 @@ class AdminPolls extends AdminController
             </table>
             <br />
             <div class="mb-3">
-                <button class="btn btn-danger" type="submit">' . adm_translate("Retirer") . '</button>
+                <button class="btn btn-danger" type="submit">' . __d('pollbooth', 'Retirer') . '</button>
             </div>
         </form>';
     
@@ -313,15 +314,15 @@ class AdminPolls extends AdminController
 
         echo '
         <hr />
-        <h3 class="mb-3">' . adm_translate("Edition des sondages") . '</h3>
-        <span class="help-block">' . adm_translate("S.V.P. Choisissez un sondage dans la liste suivante.") . '</span>
+        <h3 class="mb-3">' . __d('pollbooth', 'Edition des sondages') . '</h3>
+        <span class="help-block">' . __d('pollbooth', 'S.V.P. Choisissez un sondage dans la liste suivante.') . '</span>
         <form id="fad_editpool" action="admin.php" method="post">
             <input type="hidden" name="op" value="editpollPosted" />
             <table id="tad_editpool" data-toggle="table" data-striped="true" data-show-toggle="true" data-search="true" data-mobile-responsive="true" data-icons="icons" data-icons-prefix="fa">
                 <thead>
                     <tr>
                     <th></th>
-                    <th data-sortable="true">' . adm_translate("Intitulé du Sondage") . '</th>
+                    <th data-sortable="true">' . __d('pollbooth', 'Intitulé du Sondage') . '</th>
                     <th data-sortable="true">ID</th>
                     </tr>
                 </thead>
@@ -341,7 +342,7 @@ class AdminPolls extends AdminController
             </table>
             <br />
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">' . adm_translate("Editer") . '</button>
+                <button type="submit" class="btn btn-primary">' . __d('pollbooth', 'Editer') . '</button>
             </div>
         </form>';
     
@@ -362,14 +363,14 @@ class AdminPolls extends AdminController
     
             echo '
             <hr />
-            <h3 class="mb-3">' . adm_translate("Edition des sondages") . '</h3>
+            <h3 class="mb-3">' . __d('pollbooth', 'Edition des sondages') . '</h3>
             <form id="pollssondageed" method="post" action="admin.php">
                 <input type="hidden" name="op" value="SendEditPoll">
                 <input type="hidden" name="pollID" value="' . $id . '" />
                 <div class="form-floating mb-3">
                     <input class="form-control" type="text" id="pollTitle" name="pollTitle" value="' . $holdtitle[1] . '" maxlength="100" required="required" />
-                    <label for="pollTitle">' . adm_translate("Intitulé du Sondage") . '</label>
-                    <span class="help-block">' . adm_translate("S.V.P. entrez chaque option disponible dans un seul champ") . '</span>
+                    <label for="pollTitle">' . __d('pollbooth', 'Intitulé du Sondage') . '</label>
+                    <span class="help-block">' . __d('pollbooth', 'S.V.P. entrez chaque option disponible dans un seul champ') . '</span>
                     <span class="help-block text-end"><span id="countcar_pollTitle"></span></span>
                 </div>';
     
@@ -385,7 +386,7 @@ class AdminPolls extends AdminController
                 echo '
                 <div class="form-floating mb-3">
                     <input class="form-control" type="text" id="optionText' . $i . '" name="optionText[' . $voteID . ']" maxlength="255" value="' . $optionText . '" ' . $requi . ' />
-                    <label for="optionText' . $i . '">' . adm_translate("Option") . ' ' . $i . '</label>
+                    <label for="optionText' . $i . '">' . __d('pollbooth', 'Option') . ' ' . $i . '</label>
                     <span class="help-block text-end"><span id="countcar_optionText' . $i . '"></span></span>
                 </div>';
             }
@@ -402,7 +403,7 @@ class AdminPolls extends AdminController
                 echo ' checked="checked"';
     
             echo ' />
-                        <label class="form-check-label" for="poll_type">' . adm_translate("Seulement aux membres") . '</label>
+                        <label class="form-check-label" for="poll_type">' . __d('pollbooth', 'Seulement aux membres') . '</label>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -413,7 +414,7 @@ class AdminPolls extends AdminController
                 echo ' checked="checked"';
     
             echo ' />
-                        <label class="form-check-label" for="poll_close">' . adm_translate("Vote fermé") . '</label>
+                        <label class="form-check-label" for="poll_close">' . __d('pollbooth', 'Vote fermé') . '</label>
                     </div>
                 </div>
                 <div class="mb-3">

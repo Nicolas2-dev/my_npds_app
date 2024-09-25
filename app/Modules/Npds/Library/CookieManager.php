@@ -107,16 +107,20 @@ class CookieManager extends Cookie implements CookieInterface
         return explode(':', base64_decode($user));
     }
 
-
-    public function cookie_get_user($num)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function cookie_get_user($id)
     {
         global $user;
 
         $cookie = $this->cookiedecode($user);
         
-        return $cookie[$num]; 
+        return $cookie[$id]; 
     }
-
 
     /**
      * [docookie description]

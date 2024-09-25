@@ -2,6 +2,7 @@
 
 namespace App\Modules\Blocks\Library\Traits;
 
+use Npds\Config\Config;
 use App\Modules\Npds\Support\Facades\Metalang;
 
 /**
@@ -61,7 +62,8 @@ trait ThemeSideboxTrait
             "'!B_title!'i" => $title,
             "'!B_class_title!'i" => $B_class_title,
             "'!B_class_content!'i" => $B_class_content,
-            "'!B_content!'i" => $content
+            "'!B_content!'i" => $content,
+            "'!site_url!'i" => Config::get('npds.nuke_url'),
         );
     
         echo $htvar; 

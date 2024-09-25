@@ -2,6 +2,7 @@
 
 namespace App\Modules\Users\Library;
 
+use Npds\Config\Config;
 use App\Modules\Users\Contracts\OnlineInterface;
 
 
@@ -52,6 +53,7 @@ class OnlineManager implements OnlineInterface
         global $user, $cookie;
     
         list($member_online_num, $guest_online_num) = $this->site_load();
+
         $content1 = "$guest_online_num " . translate("visiteur(s) et") . " $member_online_num " . translate("membre(s) en ligne.");
     
         if ($user) {
@@ -70,7 +72,7 @@ class OnlineManager implements OnlineInterface
      */
     public function Site_Load()
     {
-        global $SuperCache, $who_online_num;
+        global $who_online_num;
     
         $guest_online_num = 0;
         $member_online_num = 0;
@@ -89,7 +91,7 @@ class OnlineManager implements OnlineInterface
     
         $who_online_num = $guest_online_num + $member_online_num;
     
-        if ($SuperCache) {
+        if (Config::get('SuperCache.SuperCache')) {
             $file = fopen("storage/cache/site_load.log", "w");
             fwrite($file, $who_online_num);
             fclose($file);
@@ -105,10 +107,10 @@ class OnlineManager implements OnlineInterface
      */
     public function online_members()
     {
-        
-    
         $result = sql_query("SELECT username, guest, time FROM session WHERE guest='0' ORDER BY username ASC");
-        $i = 0;
+
+        $i = 0; 
+
         $members_online[$i] = sql_num_rows($result);
     
         while ($session = sql_fetch_assoc($result)) {

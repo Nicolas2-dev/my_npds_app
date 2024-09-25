@@ -43,12 +43,12 @@ function instant_members_message()
                 $and = '';
             }
 
-            $result = sql_query("SELECT id FROM users WHERE uname='" . $ibid[$i]['username'] . "' $and");
+            $result = sql_query("SELECT uid FROM users WHERE uname='" . $ibid[$i]['username'] . "' $and");
             list($userid) = sql_fetch_row($result);
 
             if ($userid) {
 
-                $new_messages = sql_num_rows(sql_query("SELECT id FROM priv_msgs WHERE user_id = '$userid' AND read_msg='0' AND type_msg='0'"));
+                $new_messages = sql_num_rows(sql_query("SELECT msg_id FROM priv_msgs WHERE from_userid = '$userid' AND read_msg='0' AND type_msg='0'"));
                 
                 $icon = '';
                 
@@ -63,7 +63,7 @@ function instant_members_message()
                     }
 
                 } else {
-                    $messages = sql_num_rows(sql_query("SELECT id FROM priv_msgs WHERE user_id = '$userid' AND type_msg='0' AND dossier='...'"));
+                    $messages = sql_num_rows(sql_query("SELECT msg_id FROM priv_msgs WHERE from_userid = '$userid' AND type_msg='0' AND dossier='...'"));
                     
                     if ($messages > 0) {
 

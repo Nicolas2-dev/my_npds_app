@@ -1,9 +1,10 @@
 <?php
 
 use Npds\Http\Request;
-use Npds\Support\Facades\DB;
 use App\Modules\Npds\Support\Error;
+use Npds\Supercache\SuperCacheEmpty;
 use App\Modules\Npds\Support\Sanitize;
+use Npds\Supercache\SuperCacheManager;
 use App\Modules\Npds\Library\JsManager;
 use App\Modules\Npds\Library\CssManager;
 use App\Modules\Npds\Library\LogManager;
@@ -27,8 +28,6 @@ use App\Modules\Npds\Library\PaginatorManager;
 use App\Modules\Npds\Library\SubscribeManager;
 use App\Modules\Npds\Support\Facades\Metalang;
 use App\Modules\Authors\Library\AuthorsManager;
-use App\Modules\Npds\Library\Supercache\SuperCacheEmpty;
-use App\Modules\Npds\Library\Supercache\SuperCacheManager;
 
 // SuperCache
 
@@ -908,7 +907,16 @@ if (! function_exists('redirect_url'))
     
     function redirect_url($urlx)
     {
-        return UrlManager::getInstance()->redirect_url($urlx);
+        return UrlManager::getInstance()->redirect($urlx);
+    }
+}
+
+if (! function_exists('redirect_time'))
+{
+    
+    function redirect_time($urlx, $time)
+    {
+        return UrlManager::getInstance()->redirect_time($urlx, $time);
     }
 }
 
@@ -1497,62 +1505,64 @@ if (! function_exists('JavaPopUp'))
 
 // Denied
 
-if (! function_exists('access_denied'))
-{
-    /**
-     * [access_denied description]
-     *
-     * @return  [type]  [return description]
-     */
-    function access_denied()
-    {
-        include("app/Controllers/Admin/die.php");
-    }
-}
+// if (! function_exists('access_denied'))
+// {
+//     /**
+//      * [access_denied description]
+//      *
+//      * @return  [type]  [return description]
+//      */
+//     function access_denied()
+//     {
+//         include(module_path("Npds/Controllers/Admin/Die.php"));
+//     }
+// }
 
-if (! function_exists('Access_Error'))
-{
-    /**
-     * [Access_Error description]
-     *
-     * @return  [type]  [return description]
-     */
-    function Access_Error()
-    {
-        include("app/Controllers/Admin/die.php");
-    }
-}
+// if (! function_exists('Access_Error'))
+// {
+//     /**
+//      * [Access_Error description]
+//      *
+//      * @return  [type]  [return description]
+//      */
+//     function Access_Error()
+//     {
+//         include(module_path("Npds/Controllers/Admin/Die.php"));
+//     }
+// }
 
-if (! function_exists('Admin_alert'))
-{
-    /**
-     * [Admin_alert description]
-     *
-     * @param   [type]  $motif  [$motif description]
-     *
-     * @return  [type]          [return description]
-     */
-    function Admin_alert($motif)
-    {
-        global $admin;
+// if (! function_exists('Admin_alert'))
+// {
+//     /**
+//      * [Admin_alert description]
+//      *
+//      * @param   [type]  $motif  [$motif description]
+//      *
+//      * @return  [type]          [return description]
+//      */
+//     function Admin_alert($motif)
+//     {
+//         global $admin;
 
-        setcookie('admin', '', 0);
-        unset($admin);
+//         Cookie::set("admin", null);
 
-        Ecr_Log('security', 'auth.inc.php/Admin_alert : ' . $motif, '');
+//         unset($admin);
 
-        $Titlesitename = 'Npds';
-        if (file_exists("storage/meta/meta.php"))
-            include("storage/meta/meta.php");
+//         Ecr_Log('security', 'auth.inc.php/Admin_alert : ' . $motif, '');
 
-        echo '
-            </head>
-            <body>
-                <br /><br /><br />
-                <p style="font-size: 24px; font-family: Tahoma, Arial; color: red; text-align:center;"><strong>.: ' . translate("Votre adresse Ip est enregistrée") . ' :.</strong></p>
-            </body>
-        </html>';
+//         $Titlesitename = 'Npds';
 
-        die();
-    }
-}
+//         if (file_exists("storage/meta/meta.php"))
+//             include("storage/meta/meta.php");
+
+//         echo '
+//             </head>
+//             <body>
+//                 <br /><br /><br />
+//                 <p style="font-size: 24px; font-family: Tahoma, Arial; color: red; text-align:center;"><strong>.: ' . translate("Votre adresse Ip est enregistrée") . ' :.</strong></p>
+//             </body>
+//         </html>';
+
+//         die();
+//     }
+// }

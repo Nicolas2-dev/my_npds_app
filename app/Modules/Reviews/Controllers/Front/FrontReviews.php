@@ -91,18 +91,18 @@ class FrontReviews extends FrontController
         include('header.php');
     
         echo '
-        <h2>' . translate("Ecrire une critique") . '</h2>
+        <h2>' . __d('reviews', 'Ecrire une critique') . '</h2>
         <hr />
         <form id="writereview" method="post" action="reviews.php">
             <div class="form-floating mb-3">
                 <textarea class="form-control" id="title_rev" name="title" required="required" maxlength="150" style="height:70px"></textarea>
-                <label for="title_rev">' . translate("Objet") . '</label>
+                <label for="title_rev">' . __d('reviews', 'Objet') . '</label>
                 <span class="help-block text-end" id="countcar_title_rev"></span>
             </div>
             <div class="form-floating mb-3">
                 <textarea class="form-control" id="text_rev" name="text" required="required" style="height:120px"></textarea>
-                <label for="text_rev">' . translate("Texte") . '</label>
-                <span class="help-block">' . translate("Attention à votre expression écrite. Vous pouvez utiliser du code html si vous savez le faire") . '</span>
+                <label for="text_rev">' . __d('reviews', 'Texte') . '</label>
+                <span class="help-block">' . __d('reviews', 'Attention à votre expression écrite. Vous pouvez utiliser du code html si vous savez le faire') . '</span>
             </div>';
     
         if ($user) {
@@ -112,11 +112,11 @@ class FrontReviews extends FrontController
             echo '
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="reviewer_rev" name="reviewer" value="' . $uname . '" maxlength="25" required="required" />
-                <label for="reviewer_rev">' . translate("Votre nom") . '</label>
+                <label for="reviewer_rev">' . __d('reviews', 'Votre nom') . '</label>
             </div>
             <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="email_rev" name="email" value="' . $email . '" maxlength="254" required="required" />
-                <label for="email_rev">' . translate("Votre adresse Email") . '</label>
+                <label for="email_rev">' . __d('reviews', 'Votre adresse Email') . '</label>
                 <span class="help-block text-end" id="countcar_email_rev"></span>
             </div>';
     
@@ -124,11 +124,11 @@ class FrontReviews extends FrontController
             echo '
             <div class="form-floating mb-3">
                 <input class="form-control" type="text" id="reviewer_rev" name="reviewer" required="required" />
-                <label for="reviewer_rev">' . translate("Votre nom") . '</label>
+                <label for="reviewer_rev">' . __d('reviews', 'Votre nom') . '</label>
             </div>
             <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="email_rev" name="email" maxlength="254" required="required" />
-                <label for="email_rev">' . translate("Votre adresse Email") . '</label>
+                <label for="email_rev">' . __d('reviews', 'Votre adresse Email') . '</label>
                 <span class="help-block text-end" id="countcar_email_rev"></span>
             </div>';
     
@@ -146,38 +146,38 @@ class FrontReviews extends FrontController
                     <option value="2">2</option>
                     <option value="1">1</option>
                 </select>
-                <label for="score_rev">' . translate("Evaluation") . '</label>
-                <span class="help-block">' . translate("Choisir entre 1 et 10 (1=nul 10=excellent)") . '</span>
+                <label for="score_rev">' . __d('reviews', 'Evaluation') . '</label>
+                <span class="help-block">' . __d('reviews', 'Choisir entre 1 et 10 (1=nul 10=excellent)') . '</span>
             </div>';
     
         if (!Config::get('npds.short_review')) {
             echo '
             <div class="form-floating mb-3">
                 <input type="url" class="form-control" id="url_rev" name="url" maxlength="320" />
-                <label for="url_rev">' . translate("Lien relatif") . '</label>
-                <span class="help-block">' . translate("Site web officiel. Veillez à ce que votre url commence bien par") . ' http(s)://<span class="float-end" id="countcar_url_rev"></span></span>
+                <label for="url_rev">' . __d('reviews', 'Lien relatif') . '</label>
+                <span class="help-block">' . __d('reviews', 'Site web officiel. Veillez à ce que votre url commence bien par') . ' http(s)://<span class="float-end" id="countcar_url_rev"></span></span>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="url_title_rev" name="url_title" maxlength="50" />
-                <label for="url_title_rev">' . translate("Titre du lien") . '</label>
-                <span class="help-block">' . translate("Obligatoire seulement si vous soumettez un lien relatif") . '<span class="float-end" id="countcar_url_title_rev"></span></span>
+                <label for="url_title_rev">' . __d('reviews', 'Titre du lien') . '</label>
+                <span class="help-block">' . __d('reviews', 'Obligatoire seulement si vous soumettez un lien relatif') . '<span class="float-end" id="countcar_url_title_rev"></span></span>
             </div>';
     
             if ($admin) {
                 echo '
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="cover_rev" name="cover" maxlength="50" />
-                    <label for="cover_rev">' . translate("Nom de fichier de l'image") . '</label>
-                    <span class="help-block">' . translate("Nom de l'image principale non obligatoire, la mettre dans images/reviews/") . '<span class="float-end" id="countcar_cover_rev"></span></span>
+                    <label for="cover_rev">' . __d('reviews', 'Nom de fichier de l\'image') . '</label>
+                    <span class="help-block">' . __d('reviews', 'Nom de l\'image principale non obligatoire, la mettre dans images/reviews/') . '<span class="float-end" id="countcar_cover_rev"></span></span>
                 </div>';
             }
         }
     
         echo '
             <input type="hidden" name="op" value="preview_review" />
-            <button type="submit" class="btn btn-primary my-3 me-2" >' . translate("Prévisualiser") . '</button>
-            <button onclick="history.go(-1)" class="btn btn-secondary my-3">' . translate("Retour en arrière") . '</button>
-            <p class="help-block">' . translate("Assurez-vous de l'exactitude de votre information avant de la communiquer. N'écrivez pas en majuscules, votre texte serait automatiquement rejeté") . '</p>
+            <button type="submit" class="btn btn-primary my-3 me-2" >' . __d('reviews', 'Prévisualiser') . '</button>
+            <button onclick="history.go(-1)" class="btn btn-secondary my-3">' . __d('reviews', 'Retour en arrière') . '</button>
+            <p class="help-block">' . __d('reviews', 'Assurez-vous de l\'exactitude de votre information avant de la communiquer. N\'écrivez pas en majuscules, votre texte serait automatiquement rejeté') . '</p>
         </form>';
     
         $arg1 = '
@@ -204,65 +204,65 @@ class FrontReviews extends FrontController
         include('header.php');
     
         echo '<h2 class="mb-4">';
-        echo $id != 0 ? translate("Modification d'une critique") : translate("Ecrire une critique");
+        echo $id != 0 ? __d('reviews', 'Modification d\'une critique') : __d('reviews', 'Ecrire une critique');
         echo '
         </h2>
         <form id="prevreview" method="post" action="reviews.php">';
     
         if ($title == '') {
             $error = 1;
-            echo '<div class="alert alert-danger">' . translate("Titre non valide... Il ne peut pas être vide") . '</div>';
+            echo '<div class="alert alert-danger">' . __d('reviews', 'Titre non valide... Il ne peut pas être vide') . '</div>';
         }
     
         if ($text == '') {
             $error = 1;
-            echo '<div class="alert alert-danger">' . translate("Texte de critique non valide... Il ne peut pas être vide") . '</div>';
+            echo '<div class="alert alert-danger">' . __d('reviews', 'Texte de critique non valide... Il ne peut pas être vide') . '</div>';
         }
     
         if (($score < 1) || ($score > 10)) {
             $error = 1;
-            echo '<div class="alert alert-danger">' . translate("Note non valide... Elle doit se situer entre 1 et 10") . '</div>';
+            echo '<div class="alert alert-danger">' . __d('reviews', 'Note non valide... Elle doit se situer entre 1 et 10') . '</div>';
         }
     
         if (($hits < 0) && ($id != 0)) {
             $error = 1;
-            echo '<div class="alert alert-danger">' . translate("Le nombre de hits doit être un entier positif") . '</div>';
+            echo '<div class="alert alert-danger">' . __d('reviews', 'Le nombre de hits doit être un entier positif') . '</div>';
         }
     
         if ($reviewer == '' || $email == '') {
             $error = 1;
-            echo '<div class="alert alert-danger">' . translate("Vous devez entrer votre nom et votre adresse Email") . '</div>';
+            echo '<div class="alert alert-danger">' . __d('reviews', 'Vous devez entrer votre nom et votre adresse Email') . '</div>';
         } else if ($reviewer != '' && $email != '') {
             if (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email)) {
                 $error = 1;
-                echo '<div class="alert alert-danger">' . translate("Email non valide (ex.: prenom.nom@hotmail.com)") . '</div>';
+                echo '<div class="alert alert-danger">' . __d('reviews', 'Email non valide (ex.: prenom.nom@hotmail.com)') . '</div>';
             }
     
             include_once('functions.php');
     
             if (checkdnsmail($email) === false) {
                 $error = 1;
-                echo '<div class="alert alert-danger">' . translate("Erreur : DNS ou serveur de mail incorrect") . '</div>';
+                echo '<div class="alert alert-danger">' . __d('reviews', 'Erreur : DNS ou serveur de mail incorrect') . '</div>';
             }
         }
     
         if ((($url_title != '' && $url == '') || ($url_title == "" && $url != "")) and (!Config::get('npds.short_review'))) {
             $error = 1;
-            echo '<div class="alert alert-danger">' . translate("Vous devez entrer un titre de lien et une adresse relative, ou laisser les deux zones vides") . '</div>';
+            echo '<div class="alert alert-danger">' . __d('reviews', 'Vous devez entrer un titre de lien et une adresse relative, ou laisser les deux zones vides') . '</div>';
         } else if (($url != "") && (!preg_match('#^http(s)?://#i', $url))) {
             $error = 1;
-            echo '<div class="alert alert-danger">' . translate("Site web officiel. Veillez à ce que votre url commence bien par") . ' http(s)://</div>';
+            echo '<div class="alert alert-danger">' . __d('reviews', 'Site web officiel. Veillez à ce que votre url commence bien par') . ' http(s)://</div>';
         }
     
         if ($error == 1)
             echo '<button class="btn btn-secondary" type="button" onclick="history.go(-1)"><i class="fa fa-lg fa-undo"></i></button>';
         else {
-            $fdate = date(str_replace('%', '', translate("linksdatestring")), time() + ((int) Config::get('npds.gmt') * 3600));
+            $fdate = date(str_replace('%', '', __d('reviews', 'linksdatestring')), time() + ((int) Config::get('npds.gmt') * 3600));
     
-            echo translate("Critique");
+            echo __d('reviews', 'Critique');
     
             echo '
-            <br />' . translate("Ajouté :") . ' ' . $fdate . '
+            <br />' . __d('reviews', 'Ajouté :') . ' ' . $fdate . '
             <hr />
             <h3>' . stripslashes($title) . '</h3>';
     
@@ -273,8 +273,8 @@ class FrontReviews extends FrontController
     
             echo '
             <hr />
-            <strong>' . translate("Le critique") . ' :</strong> <a href="mailto:' . $email . '" target="_blank">' . $reviewer . '</a><br />
-            <strong>' . translate("Note") . '</strong>
+            <strong>' . __d('reviews', 'Le critique') . ' :</strong> <a href="mailto:' . $email . '" target="_blank">' . $reviewer . '</a><br />
+            <strong>' . __d('reviews', 'Note') . '</strong>
             <span class="text-success">';
     
             display_score($score);
@@ -282,11 +282,11 @@ class FrontReviews extends FrontController
             echo '</span>';
     
             if ($url != '')
-                echo '<br /><strong>' . translate("Lien relatif") . ' :</strong> <a href="' . $url . '" target="_blank">' . $url_title . '</a>';
+                echo '<br /><strong>' . __d('reviews', 'Lien relatif') . ' :</strong> <a href="' . $url . '" target="_blank">' . $url_title . '</a>';
     
             if ($id != 0) {
-                echo '<br /><strong>' . translate("ID de la critique") . ' :</strong> ' . $id . '<br />
-                <strong>' . translate("Hits") . ' :</strong> ' . $hits . '<br />';
+                echo '<br /><strong>' . __d('reviews', 'ID de la critique') . ' :</strong> ' . $id . '<br />
+                <strong>' . __d('reviews', 'Hits') . ' :</strong> ' . $hits . '<br />';
             }
     
             $text = urlencode($text);
@@ -304,7 +304,7 @@ class FrontReviews extends FrontController
                 <input type="hidden" name="url_title" value="' . $url_title . '" />
                 <input type="hidden" name="cover" value="' . $cover . '" />
                 <input type="hidden" name="op" value="add_reviews" />
-                <p class="my-3">' . translate("Cela semble-t-il correct ?") . '</p>';
+                <p class="my-3">' . __d('reviews', 'Cela semble-t-il correct ?') . '</p>';
     
             if (!$admin)
                 echo Q_spambot();
@@ -326,8 +326,8 @@ class FrontReviews extends FrontController
             </div>
             <div class="mb-3 row">
                 <div class="col-sm-12">
-                    <input class="btn btn-primary" type="submit" value="' . translate("Oui") . '" />&nbsp;
-                    <input class="btn btn-secondary" type="button" onclick="history.go(-1)" value="' . translate("Non") . '" />
+                    <input class="btn btn-primary" type="submit" value="' . __d('reviews', 'Oui') . '" />&nbsp;
+                    <input class="btn btn-secondary" type="button" onclick="history.go(-1)" value="' . __d('reviews', 'Non') . '" />
                 </div>
             </div>
             <div class="mb-3 row">
@@ -336,12 +336,12 @@ class FrontReviews extends FrontController
             </div>';
     
             if ($id != 0) 
-                $word = translate("modifié");
+                $word = __d('reviews', 'modifié');
             else 
-                $word = translate("ajouté");
+                $word = __d('reviews', 'ajouté');
     
             if ($admin)
-                echo '<div class="alert alert-success"><strong>' . translate("Note :") . '</strong> ' . translate("Actuellement connecté en administrateur... Cette critique sera") . ' ' . $word . ' ' . translate("immédiatement") . '.</div>';
+                echo '<div class="alert alert-success"><strong>' . __d('reviews', 'Note :') . '</strong> ' . __d('reviews', 'Actuellement connecté en administrateur... Cette critique sera') . ' ' . $word . ' ' . __d('reviews', 'immédiatement') . '.</div>';
         }
     
         echo '</form>';
@@ -387,38 +387,38 @@ class FrontReviews extends FrontController
         }
     
         if ($id != 0)
-            echo '<h2>' . translate("Modification d'une critique") . '</h2>';
+            echo '<h2>' . __d('reviews', 'Modification d\'une critique') . '</h2>';
         else
-            echo '<h2>' . translate("Ecrire une critique") . '</h2>';
+            echo '<h2>' . __d('reviews', 'Ecrire une critique') . '</h2>';
     
         echo '
         <hr />
         <div class="alert alert-success">';
     
         if ($id != 0)
-            echo translate("Merci d'avoir modifié cette critique") . '.';
+            echo __d('reviews', 'Merci d\'avoir modifié cette critique') . '.';
         else
-            echo translate("Merci d'avoir posté cette critique") . ', ' . $reviewer;
+            echo __d('reviews', 'Merci d\'avoir posté cette critique') . ', ' . $reviewer;
     
         echo '<br />';
     
         if (($admin) && ($id == 0)) {
             sql_query("INSERT INTO reviews VALUES (NULL, '$date', '$title', '$text', '$reviewer', '$email', '$score', '$cover', '$url', '$url_title', '1')");
             
-            echo translate("Dès maintenant disponible dans la base de données des critiques.");
+            echo __d('reviews', 'Dès maintenant disponible dans la base de données des critiques.');
         } else if (($admin) && ($id != 0)) {
             sql_query("UPDATE reviews SET date='$date', title='$title', text='$text', reviewer='$reviewer', email='$email', score='$score', cover='$cover', url='$url', url_title='$url_title', hits='$hits' WHERE id='$id'");
             
-            echo translate("Dès maintenant disponible dans la base de données des critiques.");
+            echo __d('reviews', 'Dès maintenant disponible dans la base de données des critiques.');
         } else {
             sql_query("INSERT INTO reviews_add VALUES (NULL, '$date', '$title', '$text', '$reviewer', '$email', '$score', '$url', '$url_title')");
             
-            echo translate("Nous allons vérifier votre contribution. Elle devrait bientôt être disponible !");
+            echo __d('reviews', 'Nous allons vérifier votre contribution. Elle devrait bientôt être disponible !');
         }
     
         echo '
         </div>
-        <a class="btn btn-secondary" href="reviews.php" title="' . translate("Retour à l'index des critiques") . '"><i class="fa fa-lg fa-undo"></i>  ' . translate("Retour à l'index des critiques") . '</a>';
+        <a class="btn btn-secondary" href="reviews.php" title="' . __d('reviews', 'Retour à l\'index des critiques') . '"><i class="fa fa-lg fa-undo"></i>  ' . __d('reviews', 'Retour à l\'index des critiques') . '</a>';
         
        include("footer.php");
     }
@@ -460,25 +460,25 @@ class FrontReviews extends FrontController
         $numresults = sql_num_rows($result);
     
         echo '
-        <h2>' . translate("Critiques") . '<span class="badge bg-secondary float-end" title="' . $numresults . ' ' . translate("Critique(s) trouvée(s).") . '" data-bs-toggle="tooltip">' . $numresults . '</span></h2>
+        <h2>' . __d('reviews', 'Critiques') . '<span class="badge bg-secondary float-end" title="' . $numresults . ' ' . __d('reviews', 'Critique(s) trouvée(s).') . '" data-bs-toggle="tooltip">' . $numresults . '</span></h2>
         <hr />
         <h3>' . aff_langue($r_title) . '</h3>
         <p class="lead">' . aff_langue($r_description) . '</p>
-        <h4><a href="reviews.php?op=write_review"><i class="fa fa-edit"></i></a>&nbsp;' . translate("Ecrire une critique") . '</h4><br />
+        <h4><a href="reviews.php?op=write_review"><i class="fa fa-edit"></i></a>&nbsp;' . __d('reviews', 'Ecrire une critique') . '</h4><br />
         ';
     
         echo '
         <div class="dropdown">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-sort-amount-down me-2"></i>' . translate("Critiques") . '
+                <i class="fa fa-sort-amount-down me-2"></i>' . __d('reviews', 'Critiques') . '
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=date&amp;order=ASC"><i class="fa fa-sort-amount-down me-2"></i>' . translate("Date") . '</a>
-                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=date&amp;order=DESC"><i class="fa fa-sort-amount-up me-2"></i>' . translate("Date") . '</a>
-                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=title&amp;order=ASC"><i class="fa fa-sort-amount-down me-2"></i>' . translate("Titre") . '</a>
-                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=title&amp;order=DESC"><i class="fa fa-sort-amount-up me-2"></i>' . translate("Titre") . '</a>
-                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=reviewer&amp;order=ASC"><i class="fa fa-sort-amount-down me-2"></i>' . translate("Posté par") . '</a>
-                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=reviewer&amp;order=DESC"><i class="fa fa-sort-amount-up me-2"></i>' . translate("Posté par") . '</a>
+                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=date&amp;order=ASC"><i class="fa fa-sort-amount-down me-2"></i>' . __d('reviews', 'Date') . '</a>
+                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=date&amp;order=DESC"><i class="fa fa-sort-amount-up me-2"></i>' . __d('reviews', 'Date') . '</a>
+                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=title&amp;order=ASC"><i class="fa fa-sort-amount-down me-2"></i>' . __d('reviews', 'Titre') . '</a>
+                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=title&amp;order=DESC"><i class="fa fa-sort-amount-up me-2"></i>' . __d('reviews', 'Titre') . '</a>
+                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=reviewer&amp;order=ASC"><i class="fa fa-sort-amount-down me-2"></i>' . __d('reviews', 'Posté par') . '</a>
+                <a class="dropdown-item" href="reviews.php?op=sort&amp;field=reviewer&amp;order=DESC"><i class="fa fa-sort-amount-up me-2"></i>' . __d('reviews', 'Posté par') . '</a>
                 <a class="dropdown-item" href="reviews.php?op=sort&amp;field=score&amp;order=ASC"><i class="fa fa-sort-amount-down me-2"></i>Score</a>
                 <a class="dropdown-item" href="reviews.php?op=sort&amp;field=score&amp;order=DESC"><i class="fa fa-sort-amount-up me-2"></i>Score</a>
                 <a class="dropdown-item" href="reviews.php?op=sort&amp;field=hits&amp;order=ASC"><i class="fa fa-sort-amount-down"></i>Hits</a>
@@ -492,13 +492,13 @@ class FrontReviews extends FrontController
                 <thead>
                     <tr>
                     <th data-align="center">
-                        <a href="reviews.php?op=sort&amp;field=date&amp;order=ASC"><i class="fa fa-sort-amount-down"></i></a> ' . translate("Date") . ' <a href="reviews.php?op=sort&amp;field=date&amp;order=DESC"><i class="fa fa-sort-amount-up"></i></a>
+                        <a href="reviews.php?op=sort&amp;field=date&amp;order=ASC"><i class="fa fa-sort-amount-down"></i></a> ' . __d('reviews', 'Date') . ' <a href="reviews.php?op=sort&amp;field=date&amp;order=DESC"><i class="fa fa-sort-amount-up"></i></a>
                     </th>
                     <th data-align="left" data-halign="center" data-sortable="true" data-sorter="htmlSorter">
-                        <a href="reviews.php?op=sort&amp;field=title&amp;order=ASC"><i class="fa fa-sort-amount-down"></i></a> ' . translate("Titre") . ' <a href="reviews.php?op=sort&amp;field=title&amp;order=DESC"><i class="fa fa-sort-amount-up"></i></a>
+                        <a href="reviews.php?op=sort&amp;field=title&amp;order=ASC"><i class="fa fa-sort-amount-down"></i></a> ' . __d('reviews', 'Titre') . ' <a href="reviews.php?op=sort&amp;field=title&amp;order=DESC"><i class="fa fa-sort-amount-up"></i></a>
                     </th>
                     <th data-align="center" data-sortable="true">
-                        <a href="reviews.php?op=sort&amp;field=reviewer&amp;order=ASC"><i class="fa fa-sort-amount-down"></i></a> ' . translate("Posté par") . ' <a href="reviews.php?op=sort&amp;field=reviewer&amp;order=DESC"><i class="fa fa-sort-amount-up"></i></a>
+                        <a href="reviews.php?op=sort&amp;field=reviewer&amp;order=ASC"><i class="fa fa-sort-amount-down"></i></a> ' . __d('reviews', 'Posté par') . ' <a href="reviews.php?op=sort&amp;field=reviewer&amp;order=DESC"><i class="fa fa-sort-amount-up"></i></a>
                     </th>
                     <th class="n-t-col-xs-2" data-align="center" data-sortable="true">
                         <a href="reviews.php?op=sort&amp;field=score&amp;order=ASC"><i class="fa fa-sort-amount-down"></i></a> Score <a href="reviews.php?op=sort&amp;field=score&amp;order=DESC"><i class="fa fa-sort-amount-up"></i></a>
@@ -552,7 +552,7 @@ class FrontReviews extends FrontController
         $year = substr($xdate, 0, 4);
         $month = substr($xdate, 5, 2);
         $day = substr($xdate, 8, 2);
-        $fdate = date(str_replace("%", '', translate("linksdatestring")), mktime(0, 0, 0, (int)$month, (int)$day, (int)$year));
+        $fdate = date(str_replace("%", '', __d('reviews', 'linksdatestring')), mktime(0, 0, 0, (int)$month, (int)$day, (int)$year));
     
         return $fdate;
     }
@@ -583,12 +583,12 @@ class FrontReviews extends FrontController
         $score = $myrow['score'];
     
         echo '
-        <h2>' . translate("Critiques") . '</h2>
+        <h2>' . __d('reviews', 'Critiques') . '</h2>
         <hr />
-        <a href="reviews.php">' . translate("Retour à l'index des critiques") . '</a>
+        <a href="reviews.php">' . __d('reviews', 'Retour à l\'index des critiques') . '</a>
         <div class="card card-body my-3">
             <div class="card-text text-muted text-end small">
-        ' . translate("Ajouté :") . ' ' . $fdate . '<br />
+        ' . __d('reviews', 'Ajouté :') . ' ' . $fdate . '<br />
             </div>
         <hr />
         <h3 class="mb-3">' . $title . '</h3><br />';
@@ -603,10 +603,10 @@ class FrontReviews extends FrontController
             <div class="card card-body mb-3">';
     
         if ($reviewer != '')
-            echo '<div class="mb-2"><strong>' . translate("Le critique") . ' :</strong> <a href="mailto:' . anti_spam($email, 1) . '" >' . $reviewer . '</a></div>';
+            echo '<div class="mb-2"><strong>' . __d('reviews', 'Le critique') . ' :</strong> <a href="mailto:' . anti_spam($email, 1) . '" >' . $reviewer . '</a></div>';
         
         if ($score != '')
-            echo '<div class="mb-2"><strong>' . translate("Note") . ' : </strong>';
+            echo '<div class="mb-2"><strong>' . __d('reviews', 'Note') . ' : </strong>';
     
         echo '<span class="text-success">';
     
@@ -616,9 +616,9 @@ class FrontReviews extends FrontController
         </div>';
     
         if ($url != '')
-            echo '<div class="mb-2"><strong>' . translate("Lien relatif") . ' : </strong> <a href="' . $url . '" target="_blank">' . $url_title . '</a></div>';
+            echo '<div class="mb-2"><strong>' . __d('reviews', 'Lien relatif') . ' : </strong> <a href="' . $url . '" target="_blank">' . $url_title . '</a></div>';
         
-        echo '<div><strong>' . translate("Hits : ") . '</strong><span class="badge bg-secondary">' . $hits . '</span></div>
+        echo '<div><strong>' . __d('reviews', 'Hits : ') . '</strong><span class="badge bg-secondary">' . $hits . '</span></div>
         </div>';
     
         if ($admin)
@@ -626,13 +626,13 @@ class FrontReviews extends FrontController
             <nav class="d-flex justify-content-center">
                 <ul class="pagination pagination-sm">
                     <li class="page-item disabled">
-                    <a class="page-link" href="#"><i class="fa fa-cogs fa-lg"></i><span class="ms-2 d-none d-lg-inline">' . translate("Outils administrateur") . '</span></a>
+                    <a class="page-link" href="#"><i class="fa fa-cogs fa-lg"></i><span class="ms-2 d-none d-lg-inline">' . __d('reviews', 'Outils administrateur') . '</span></a>
                     </li>
                     <li class="page-item">
-                    <a class="page-link" role="button" href="reviews.php?op=mod_review&amp;id=' . $id . '" title="' . translate("Editer") . '" data-bs-toggle="tooltip" ><i class="fa fa-lg fa-edit" ></i></a>
+                    <a class="page-link" role="button" href="reviews.php?op=mod_review&amp;id=' . $id . '" title="' . __d('reviews', 'Editer') . '" data-bs-toggle="tooltip" ><i class="fa fa-lg fa-edit" ></i></a>
                     </li>
                     <li class="page-item">
-                    <a class="page-link text-danger" role="button" href="reviews.php?op=del_review&amp;id_del=' . $id . '" title="' . translate("Effacer") . '" data-bs-toggle="tooltip" ><i class="fas fa-trash fa-lg" ></i></a>
+                    <a class="page-link text-danger" role="button" href="reviews.php?op=del_review&amp;id_del=' . $id . '" title="' . __d('reviews', 'Effacer') . '" data-bs-toggle="tooltip" ><i class="fas fa-trash fa-lg" ></i></a>
                     </li>
                 </ul>
             </nav>';
@@ -676,31 +676,31 @@ class FrontReviews extends FrontController
             $score = $myrow['score'];
     
             echo '
-        <h2 class="mb-4">' . translate("Modification d'une critique") . '</h2>
+        <h2 class="mb-4">' . __d('reviews', 'Modification d\'une critique') . '</h2>
         <hr />
         <form id="modreview" method="post" action="reviews.php?op=preview_review">
             <input type="hidden" name="id" value="' . $id . '">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control w-100" id="date_modrev" name="date" value="' . $date . '" />
-                <label for="date_modrev">' . translate("Date") . '</label>
+                <label for="date_modrev">' . __d('reviews', 'Date') . '</label>
             </div>
             <div class="form-floating mb-3">
                 <textarea class="form-control" id="title_modrev" name="title" required="required" maxlength="150" style="height:70px;">' . $title . '</textarea>
-                <label for="title_modrev">' . translate("Titre") . '</label>
+                <label for="title_modrev">' . __d('reviews', 'Titre') . '</label>
                 <span class="help-block text-end" id="countcar_title_modrev"></span>
             </div>
             <div class="form-floating mb-3">
                 <textarea class="form-control" id="text_modrev" name="text" required="required" style="height:70px;">' . $text . '</textarea>
-                <label for="text_modrev">' . translate("Texte") . '</label>
+                <label for="text_modrev">' . __d('reviews', 'Texte') . '</label>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="reviewer_modrev" name="reviewer" value="' . $reviewer . '" required="required" maxlength="25"/>
-                <label for="reviewer_modrev">' . translate("Le critique") . '</label>
+                <label for="reviewer_modrev">' . __d('reviews', 'Le critique') . '</label>
                 <span class="help-block text-end" id="countcar_reviewer_modrev"></span>
             </div>
             <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="email_modrev" name="email" value="' . $email . '" maxlength="254" required="required"/>
-                <label for="email_modrev">' . translate("Email") . '</label>
+                <label for="email_modrev">' . __d('reviews', 'Email') . '</label>
                 <span class="help-block text-end" id="countcar_email_modrev"></span>
             </div>
             <div class="form-floating mb-3">
@@ -721,31 +721,31 @@ class FrontReviews extends FrontController
     
             echo '
                 </select>
-                <label for="score_modrev">' . translate("Evaluation") . '</label>
-                <span class="help-block">' . translate("Choisir entre 1 et 10 (1=nul 10=excellent)") . '</span>
+                <label for="score_modrev">' . __d('reviews', 'Evaluation') . '</label>
+                <span class="help-block">' . __d('reviews', 'Choisir entre 1 et 10 (1=nul 10=excellent)') . '</span>
             </div>
             <div class="form-floating mb-3">
                 <input type="url" class="form-control" id="url_modrev" name="url" maxlength="320" value="' . $url . '" />
-                <label for="url_modrev">' . translate("Lien") . '</label>
-                <span class="help-block">' . translate("Site web officiel. Veillez à ce que votre url commence bien par") . ' http(s)://<span class="float-end" id="countcar_url_modrev"></span></span>
+                <label for="url_modrev">' . __d('reviews', 'Lien') . '</label>
+                <span class="help-block">' . __d('reviews', 'Site web officiel. Veillez à ce que votre url commence bien par') . ' http(s)://<span class="float-end" id="countcar_url_modrev"></span></span>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="url_title_modrev" name="url_title" value="' . $url_title . '"  maxlength="50" />
-                <label for="url_title_modrev">' . translate("Titre du lien") . '</label>
-                <span class="help-block">' . translate("Obligatoire seulement si vous soumettez un lien relatif") . '<span class="float-end" id="countcar_url_title_modrev"></span></span>
+                <label for="url_title_modrev">' . __d('reviews', 'Titre du lien') . '</label>
+                <span class="help-block">' . __d('reviews', 'Obligatoire seulement si vous soumettez un lien relatif') . '<span class="float-end" id="countcar_url_title_modrev"></span></span>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="cover_modrev" name="cover" value="' . $cover . '" maxlength="100"/>
-                <label for="cover_modrev">' . translate("Image de garde") . '</label>
-                <span class="help-block">' . translate("Nom de l'image principale non obligatoire, la mettre dans images/reviews/") . '<span class="float-end" id="countcar_cover_modrev"></span></span>
+                <label for="cover_modrev">' . __d('reviews', 'Image de garde') . '</label>
+                <span class="help-block">' . __d('reviews', 'Nom de l\'image principale non obligatoire, la mettre dans images/reviews/') . '<span class="float-end" id="countcar_cover_modrev"></span></span>
             </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="hits_modrev" name="hits" value="' . $hits . '" maxlength="9" />
-                <label for="hits_modrev">' . translate("Hits") . '</label>
+                <label for="hits_modrev">' . __d('reviews', 'Hits') . '</label>
             </div>
             <input type="hidden" name="op" value="preview_review" />
-            <input class="btn btn-primary my-3 me-2" type="submit" value="' . translate("Prévisualiser les modifications") . '" />
-            <input class="btn btn-secondary my-3" type="button" onclick="history.go(-1)" value="' . translate("Annuler") . '" />
+            <input class="btn btn-primary my-3 me-2" type="submit" value="' . __d('reviews', 'Prévisualiser les modifications') . '" />
+            <input class="btn btn-secondary my-3" type="button" onclick="history.go(-1)" value="' . __d('reviews', 'Annuler') . '" />
             </form>
             <script type="text/javascript" src="assets/shared/flatpickr/dist/flatpickr.min.js"></script>
             <script type="text/javascript" src="assets/shared/flatpickr/dist/l10n/' . language_iso(1, '', '') . '.js"></script>

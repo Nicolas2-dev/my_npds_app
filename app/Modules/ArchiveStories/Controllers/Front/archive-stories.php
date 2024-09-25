@@ -1,39 +1,19 @@
 <?php
 
-use App\Library\Supercache\SuperCacheEmpty;
-use App\Library\Supercache\SuperCacheManager;
-
+use Npds\Config\Config;
 use function PHP81_BC\strftime;
+use Npds\Supercache\SuperCacheEmpty;
+use Npds\Supercache\SuperCacheManager;
+use App\Modules\News\Support\Facades\News;
 
-if (strstr($ModPath, '..') 
-|| strstr($ModStart, '..') 
-|| stristr($ModPath, 'script') 
-|| stristr($ModPath, 'cookie') 
-|| stristr($ModPath, 'iframe') 
-|| stristr($ModPath, 'applet') 
-|| stristr($ModPath, 'object') 
-|| stristr($ModPath, 'meta') 
-|| stristr($ModStart, 'script') 
-|| stristr($ModStart, 'cookie') 
-|| stristr($ModStart, 'iframe') 
-|| stristr($ModStart, 'applet') 
-|| stristr($ModStart, 'object') 
-|| stristr($ModStart, 'meta')) {
-    die();
-}
+use App\Modules\Users\Support\Facades\User;
+use App\Modules\Npds\Support\Facades\Language;
+use App\Modules\Npds\Support\Facades\Paginator;
 
-if (!function_exists("Mysql_Connexion")) {
-    include("mainfile.php");
-}
-
-include("app/Modules/$ModPath/Config/archive-stories.conf.php");
-include("app/Modules/$ModPath/Config/cache.timings.php");
 
 if (!isset($start)) {
     $start = 0;
 }
-
-include("header.php");
 
 // Include cache manager
 if ($SuperCache) {
@@ -48,7 +28,7 @@ or ($cache_obj->get_Genereting_Output() == -1)
 or (!$SuperCache)) {
 
     if ($arch_titre) {
-        echo aff_langue($arch_titre);
+        echo Language::aff_langue($arch_titre);
     }
 
     echo '
@@ -85,8 +65,8 @@ or (!$SuperCache)) {
     }
 
     $xtab = $arch == 0 
-        ? news_aff("libre", "WHERE archive='$arch' ORDER BY sid DESC LIMIT $start,$maxcount", $start, $maxcount) 
-        : news_aff("archive", "WHERE archive='$arch' ORDER BY sid DESC LIMIT $start,$maxcount", $start, $maxcount);
+        ? News::news_aff("libre", "WHERE archive='$arch' ORDER BY sid DESC LIMIT $start,$maxcount", $start, $maxcount) 
+        : News::news_aff("archive", "WHERE archive='$arch' ORDER BY sid DESC LIMIT $start,$maxcount", $start, $maxcount);
 
     $ibid = 0;
     $story_limit = 0;
@@ -105,12 +85,12 @@ or (!$SuperCache)) {
             $resultm = sql_query("SELECT title FROM stories_cat WHERE catid='$catid'");
             list($title1) = sql_fetch_row($resultm);
 
-            $title = '<a href="article.php?sid=' . $sid . '&amp;archive=' . $arch . '" >' . aff_langue(ucfirst($title)) . '</a> [ <a href="index.php?op=newindex&amp;catid=' . $catid . '">' . aff_langue($title1) . '</a> ]';
+            $title = '<a href="article.php?sid=' . $sid . '&amp;archive=' . $arch . '" >' . Language::aff_langue(ucfirst($title)) . '</a> [ <a href="index.php?op=newindex&amp;catid=' . $catid . '">' . Language::aff_langue($title1) . '</a> ]';
         } else {
-            $title = '<a href="article.php?sid=' . $sid . '&amp;archive=' . $arch . '" >' . aff_langue(ucfirst($title)) . '</a>';
+            $title = '<a href="article.php?sid=' . $sid . '&amp;archive=' . $arch . '" >' . Language::aff_langue(ucfirst($title)) . '</a>';
         }
 
-        setlocale(LC_TIME, aff_langue(Config::get('npds.locale')));
+        setlocale(LC_TIME, Language::aff_langue(Config::get('npds.locale')));
         preg_match('#^(\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$#', $time, $datetime);
         $datetime = strftime("%d-%m-%Y %H:%M:%S", mktime($datetime[4] + (int) Config::get('npds.gmt'), $datetime[5], $datetime[6], $datetime[2], $datetime[3], $datetime[1]));
 
@@ -123,7 +103,7 @@ or (!$SuperCache)) {
             <td>' . $title . '</td>
             <td>' . $counter . '</td>
             <td><small>' . $datetime . '</small></td>
-            <td>' . userpopover($informant, 40, 2) . ' ' . $informant . '</td>
+            <td>' . User::userpopover($informant, 40, 2) . ' ' . $informant . '</td>
             <td>' . $printP . $sendF . '</td>
             </tr>';
     }
@@ -137,7 +117,7 @@ or (!$SuperCache)) {
             <li class="page-item disabled"><a class="page-link" href="#" >' . $nbPages . ' ' . translate("pages") . '</a></li>
         </ul>';
 
-    echo paginate('modules.php?ModPath=archive-stories&amp;ModStart=archive-stories&amp;start=', '&amp;count=' . $count, $nbPages, $current, 1, $maxcount, $start);
+    echo Paginator::paginate('modules.php?ModPath=archive-stories&amp;ModStart=archive-stories&amp;start=', '&amp;count=' . $count, $nbPages, $current, 1, $maxcount, $start);
     
     echo '</div>';
 }
@@ -145,5 +125,3 @@ or (!$SuperCache)) {
 if ($SuperCache) {
     $cache_obj->endCachingPage();
 }
-
-include("footer.php");

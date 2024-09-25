@@ -17,6 +17,13 @@ class UserExtend extends BaseModel
     protected $table = 'users_extend';
 
     /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    protected $primaryKey = 'uid';
+
+    /**
      * [$relations description]
      *
      * @var [type]
@@ -40,7 +47,7 @@ class UserExtend extends BaseModel
      */
     public function user()
     {
-        return $this->belongsTo('App\Modules\Users\Models\User', 'id');
+        return $this->belongsTo('App\Modules\Users\Models\User', 'uid');
     }
 
     /**
@@ -50,7 +57,7 @@ class UserExtend extends BaseModel
      */
     public function user_status()
     {
-        return $this->belongsTo('App\Modules\Users\Models\UserStatus', 'user_id');
+        return $this->belongsTo('App\Modules\Users\Models\UserStatus', 'uid');
     }
 
 }

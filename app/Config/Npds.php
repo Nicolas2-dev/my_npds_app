@@ -54,7 +54,7 @@ return array(
 
     'Titlesitename' => "Npds 16.8",
 
-    'nuke_url' => "http://www.lolo.local",
+    'nuke_url' => "http://www.revolutionmini.local",
 
     'site_logo' => "assets/images/npds/npds_p.gif",
 

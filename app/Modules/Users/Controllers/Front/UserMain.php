@@ -113,10 +113,10 @@ class UserMain extends FrontController
     
         $uname = Hack::remove($uname);
     
-        $result = sql_query("SELECT id, name, femail, url, bio, user_avatar, user_from, user_occ, user_intrest, user_sig, user_journal, mns FROM users WHERE uname='$uname'");
-        list($id, $name, $femail, $url, $bio, $user_avatar, $user_from, $user_occ, $user_intrest, $user_sig, $user_journal, $mns) = sql_fetch_row($result);
+        $result = sql_query("SELECT uid, name, femail, url, bio, user_avatar, user_from, user_occ, user_intrest, user_sig, user_journal, mns FROM users WHERE uname='$uname'");
+        list($uid, $name, $femail, $url, $bio, $user_avatar, $user_from, $user_occ, $user_intrest, $user_sig, $user_journal, $mns) = sql_fetch_row($result);
         
-        if (!$id) {
+        if (!$uid) {
             Url::redirect('index');
         }
     
@@ -153,7 +153,7 @@ class UserMain extends FrontController
     
         $my_rs = '';
     
-        $posterdata_extend = get_userdata_extend_from_id($id);
+        $posterdata_extend = get_userdata_extend_from_id($uid);
     
         if (!Config::get('npds.short_user')) {
             include('modules/reseaux-sociaux/config/reseaux-sociaux.conf.php');
@@ -191,11 +191,11 @@ class UserMain extends FrontController
             }
         }
     
-        $posterdata = get_userdata_from_id($id);
+        $posterdata = get_userdata_from_id($uid);
     
         $useroutils = '';
     
-        if (($user) and ($id != 1)) {
+        if (($user) and ($uid != 1)) {
             $useroutils .= '<a class=" text-primary me-3" href="powerpack.php?op=instant_message&amp;to_userid=' . $posterdata["uname"] . '" ><i class="far fa-envelope fa-2x" title="' . translate("Envoyer un message interne") . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
         }
 
@@ -398,7 +398,7 @@ class UserMain extends FrontController
             </div>
         </div>';
     
-        if ($id != 1) {
+        if ($uid != 1) {
             $userinfo .= '
             <br />
             <h4>' . translate("Journal en ligne de ") . ' ' . $uname . '.</h4>
@@ -406,33 +406,49 @@ class UserMain extends FrontController
         }
 
         $file = '';
-        $handle = opendir(module_path('comments/Config'));
-    
+        $handle = opendir(module_path('Comments/Config'));
+
+vd(module_path('Comments/Config'), readdir($handle));
+
         while (false !== ($file = readdir($handle))) {
-            if (!preg_match('#\.conf\.php$#i', $file)) {
+            if (!preg_match('#_config\.php$#i', $file)) {
                 continue;
             }
 
             $topic = "#topic#";
     
-            include(module_path('Comments/Config/'.$file));
+vd(explode('.php', $file)[0], Config::get('comments.'.explode('.php', $file)[0].'.forum'));
+
+            $forum = Config::get('comments.'.explode('.php', $file)[0].'.forum');
+            $url_ret = Config::get('comments.'.explode('.php', $file)[0].'.url_ret');
+
+            // include(module_path('Comments/Config/'.$file));
+
+            // $filelist[$forum] = $url_ret;
 
             $filelist[$forum] = $url_ret;
         }
     
         closedir($handle);
     
+vd($filelist);
+
+//dd();
+
         $userinfo .= '
         <h4 class="my-3">' . translate("Les derniers commentaires de") . ' ' . $uname . '.</h4>
         <div id="last_comment_by" class="card card-body mb-3">';
     
         $url = '';
     
-        $result = sql_query("SELECT topic_id, forum_id, post_text, post_time FROM posts WHERE forum_id<0 and poster_id='$id' ORDER BY post_time DESC LIMIT 0,10");
+        $result = sql_query("SELECT topic_id, forum_id, post_text, post_time FROM posts WHERE forum_id<0 and poster_id='$uid' ORDER BY post_time DESC LIMIT 0,10");
         
         while (list($topic_id, $forum_id, $post_text, $post_time) = sql_fetch_row($result)) {
     
-            $url = str_replace("#topic#", $topic_id, $filelist[$forum_id]);
+
+vd($filelist[$forum_id]($topic_id, 0));
+
+            $url = str_replace("#topic#", $topic_id, $filelist[$forum_id]($topic_id, 0));
             $userinfo .= '<p><a href="' . $url . '">' . translate("Posté : ") . Date::convertdate($post_time) . '</a></p>';
     
             $message = smilie(stripslashes($post_text));
@@ -474,7 +490,7 @@ class UserMain extends FrontController
         $nbp = 10;
         $content = '';
     
-        $result = sql_query("SELECT * FROM posts WHERE forum_id > 0 AND poster_id=$id ORDER BY post_time DESC LIMIT 0,50");
+        $result = sql_query("SELECT * FROM posts WHERE forum_id > 0 AND poster_id=$uid ORDER BY post_time DESC LIMIT 0,50");
     
         $j = 1;
     
@@ -494,7 +510,7 @@ class UserMain extends FrontController
                 us.post_id = $post_id 
                 AND uv.topic_id = us.topic_id 
                 AND uv.forum_id = ug.forum_id 
-                AND ut.id = us.poster_id LIMIT 1");
+                AND ut.uid = us.poster_id LIMIT 1");
     
             list($topic_id, $forum_id, $poster_id, $post_time, $topic_title, $forum_name, $forum_type, $forum_pass, $uname) = sql_fetch_row($res);
     

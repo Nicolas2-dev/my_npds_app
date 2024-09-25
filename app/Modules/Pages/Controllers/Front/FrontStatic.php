@@ -54,14 +54,14 @@ class FrontStatic extends FrontController
                         echo $remp;
                     }
         
-                    echo '<div class=" my-3"><a href="print.php?sid=static:' . $op . '&amp;metalang=' . $metalang . '&amp;nl=' . $nl . '" data-bs-toggle="tooltip" data-bs-placement="right" title="' . translate("Page spéciale pour impression") . '"><i class="fa fa-2x fa-print"></i></a></div>';
+                    echo '<div class=" my-3"><a href="print.php?sid=static:' . $op . '&amp;metalang=' . $metalang . '&amp;nl=' . $nl . '" data-bs-toggle="tooltip" data-bs-placement="right" title="' . __d('pages', 'Page spéciale pour impression') . '"><i class="fa fa-2x fa-print"></i></a></div>';
         
                     // Si vous voulez tracer les appels au pages statiques : supprimer les // devant la ligne ci-dessous
                     // Ecr_Log("security", "static/$op", "");
                 } else
-                    echo '<div class="alert alert-danger">' . translate("Merci d'entrer l'information en fonction des spécifications") . '</div>';
+                    echo '<div class="alert alert-danger">' . __d('pages', 'Merci d\'entrer l\'information en fonction des spécifications') . '</div>';
             } else
-                echo '<div class="alert alert-danger">' . translate("Merci d'entrer l'information en fonction des spécifications") . '</div>';
+                echo '<div class="alert alert-danger">' . __d('pages', 'Merci d\'entrer l\'information en fonction des spécifications') . '</div>';
         }
         
         echo '</div>';

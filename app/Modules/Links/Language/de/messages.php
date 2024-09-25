@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  '' => '',
   'ATTENTION : Etes-vous sûr de vouloir effacer cette Catégorie et tous ses Liens ?' => '',
   'Accepter' => '',
   'Ajouter' => '',

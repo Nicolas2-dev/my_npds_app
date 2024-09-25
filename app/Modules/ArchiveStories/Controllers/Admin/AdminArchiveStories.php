@@ -126,13 +126,11 @@ class AdminArchiveStories extends AdminController
     
         $this->title(__d('authors', 'Administration login'));
 
-        $this->set('arch_titre', Config::get('archivestories.config.arch_titre')); 
-        $this->set('arch', Config::get('archivestories.config.arch')); 
-        $this->set('retcache', Config::get('archivestories.config.retcache')); 
-        $this->set('maxcount', Config::get('archivestories.config.maxcount')); 
-
-
-        $this->set('adminfoot', Css::adminfoot('fv', $fv_parametres, $arg1, ''));
+        $this->set('arch_titre',    Config::get('archivestories.config.arch_titre')); 
+        $this->set('arch',          Config::get('archivestories.config.arch')); 
+        $this->set('retcache',      Config::get('archivestories.config.retcache')); 
+        $this->set('maxcount',      Config::get('archivestories.config.maxcount')); 
+        $this->set('adminfoot',     Css::adminfoot('fv', $fv_parametres, $arg1, ''));
     }
     
     /**
@@ -163,7 +161,7 @@ class AdminArchiveStories extends AdminController
             $line_cache = ConfigSave::block_white_cache('Temps de rétention cache en secondes', 'archivestsories', 'admin/archive', Request::post('retcache'));
             ConfigSave::save_block_white(module_path('ArchiveStories/Config/cache'), $line_cache);
 
-            Session::set('message', ['type' => 'success', 'text' => 'goood !!!']);
+            Session::set('message', ['type' => 'success', 'text' => 'goood test !!!']);
 
             Url::redirect('admin/archive#message');
         }

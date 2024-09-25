@@ -59,7 +59,7 @@ class AdminNln extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('newsletter', '');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -89,7 +89,7 @@ class AdminNln extends AdminController
     // public function __construct()
     // {
         // $f_meta_nom = 'lnl';
-        // $f_titre = adm_translate("Petite Lettre D'information");
+        // $f_titre = __d('newsletter', 'Petite Lettre D'information');
         
         // //==> controle droit
         // admindroits($aid, $f_meta_nom);
@@ -239,10 +239,10 @@ class AdminNln extends AdminController
         
         //                             if ($Xmime == "html-nobr") {
         //                                 $Xmessage = $message . "<br /><br /><hr noshade>";
-        //                                 $Xmessage .= adm_translate("Pour supprimer votre abonnement à notre Lettre, suivez ce lien") . " : <a href=\"Config::get('npds.nuke_url')/lnl.php?op=unsubscribe&email=$email\">" . adm_translate("Modifier") . "</a>";
+        //                                 $Xmessage .= __d('newsletter', 'Pour supprimer votre abonnement à notre Lettre, suivez ce lien') . " : <a href=\"Config::get('npds.nuke_url')/lnl.php?op=unsubscribe&email=$email\">" . __d('newsletter', 'Modifier") . "</a>";
         //                             } else {
         //                                 $Xmessage = $message . "\n\n------------------------------------------------------------------\n";
-        //                                 $Xmessage .= adm_translate("Pour supprimer votre abonnement à notre Lettre, suivez ce lien") . " : Config::get('npds.nuke_url')/lnl.php?op=unsubscribe&email=$email";
+        //                                 $Xmessage .= __d('newsletter', 'Pour supprimer votre abonnement à notre Lettre, suivez ce lien') . " : Config::get('npds.nuke_url')/lnl.php?op=unsubscribe&email=$email";
         //                             }
         
         //                             send_email($email, $subject, meta_lang($Xmessage), "", true, $Xmime, '');
@@ -362,7 +362,7 @@ class AdminNln extends AdminController
         //                 </div>
         //                 <div class="d-flex justify-content-center mt-4">
         //                     <div class="text-center mt-4">
-        //                     ' . adm_translate("Transmission LNL en cours") . ' => ' . $chartmp . '<br /><br />App - Portal System
+        //                     ' . __d('newsletter', 'Transmission LNL en cours") . ' => ' . $chartmp . '<br /><br />App - Portal System
         //                     </div>
         //                 </div>
         //                 </body>
@@ -377,8 +377,8 @@ class AdminNln extends AdminController
 
     function error_handler($ibid)
     {
-        echo "<p align=\"center\"><span class=\"rouge\">" . adm_translate("Merci d'entrer l'information en fonction des spécifications") . "<br /><br />";
-        echo "$ibid</span><br /><a href=\"index.php\" class=\"noir\">" . adm_translate("Retour en arrière") . "</a></p>";
+        echo "<p align=\"center\"><span class=\"rouge\">" . __d('newsletter', 'Merci d\'entrer l\'information en fonction des spécifications') . "<br /><br />";
+        echo "$ibid</span><br /><a href=\"index.php\" class=\"noir\">" . __d('newsletter', 'Retour en arrière') . "</a></p>";
     }
     
     function ShowHeader()
@@ -390,9 +390,9 @@ class AdminNln extends AdminController
             <thead class="d-none">
                 <tr>
                     <th class="n-t-col-xs-1" data-align="">ID</th>
-                    <th class="n-t-col-xs-8" data-align="">' . adm_translate("Entête") . '</th>
+                    <th class="n-t-col-xs-8" data-align="">' . __d('newsletter', 'Entête') . '</th>
                     <th class="n-t-col-xs-1" data-align="">Type</th>
-                    <th class="n-t-col-xs-2" data-align="right">' . adm_translate("Fonctions") . '</th>
+                    <th class="n-t-col-xs-2" data-align="right">' . __d('newsletter', 'Fonctions') . '</th>
                 </tr>
             </thead>
             <tbody>';
@@ -413,7 +413,7 @@ class AdminNln extends AdminController
                     <td>' . $ref . '</td>
                     <td>' . $text . '</td>
                     <td><code>' . $html . '</code></td>
-                    <td><a href="admin.php?op=lnl_Shw_Header&amp;Headerid=' . $ref . '" ><i class="fa fa-edit fa-lg me-2" title="' . adm_translate("Editer") . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Header&amp;Headerid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . adm_translate("Effacer") . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
+                    <td><a href="admin.php?op=lnl_Shw_Header&amp;Headerid=' . $ref . '" ><i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Header&amp;Headerid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
                 </tr>';
         }
     
@@ -433,24 +433,24 @@ class AdminNln extends AdminController
         <h3 class="mb-2">';
     
         if ($type == "HED")
-            echo adm_translate("Message d'entête");
+            echo __d('newsletter', 'Message d\'entête');
         else
-            echo adm_translate("Message de pied de page");
+            echo __d('newsletter', 'Message de pied de page');
     
-        echo ' - ' . adm_translate("Prévisualiser");
+        echo ' - ' . __d('newsletter', 'Prévisualiser');
     
         if ($tmp[1] == 1)
             echo '<code> HTML</code></h3>
             <div class="card card-body">' . $tmp[0] . '</div>';
         else
-            echo '<code>' . adm_translate("TEXTE") . '</code></h3>
+            echo '<code>' . __d('newsletter', 'TEXTE') . '</code></h3>
             <div class="card card-body">' . nl2br($tmp[0]) . '</div>';
     
         echo '
         <hr />
         <form action="admin.php" method="post" name="adminForm">
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-12" for="xtext">' . adm_translate("Texte") . '</label>
+                <label class="col-form-label col-sm-12" for="xtext">' . __d('newsletter', 'Texte') . '</label>
                 <div class="col-sm-12">
                     <textarea class="tin form-control" cols="70" rows="20" name="xtext" >' . htmlspecialchars($tmp[0], ENT_COMPAT | ENT_HTML401, cur_charset) . '</textarea>
                 </div>
@@ -473,8 +473,8 @@ class AdminNln extends AdminController
             <input type="hidden" name="ref" value="' . $ibid . '" />
             <div class="mb-3 row">
                 <div class="col-sm-12">
-                    <button class="btn btn-primary me-1" type="submit">' . adm_translate("Valider") . '</button>
-                    <a class="btn btn-secondary" href="admin.php?op=lnl" >' . adm_translate("Retour en arrière") . '</a>
+                    <button class="btn btn-primary me-1" type="submit">' . __d('newsletter', 'Valider') . '</button>
+                    <a class="btn btn-secondary" href="admin.php?op=lnl" >' . __d('newsletter', 'Retour en arrière') . '</a>
                 </div>
             </div>
         </form>';
@@ -491,9 +491,9 @@ class AdminNln extends AdminController
             <thead class="d-none">
                 <tr>
                     <th class="n-t-col-xs-1" data-align="">ID</th>
-                    <th class="n-t-col-xs-8" data-align="">' . adm_translate("Corps de message") . '</th>
+                    <th class="n-t-col-xs-8" data-align="">' . __d('newsletter', 'Corps de message') . '</th>
                     <th class="n-t-col-xs-1" data-align="">Type</th>
-                    <th class="n-t-col-xs-2" data-align="right">' . adm_translate("Fonctions") . '</th>
+                    <th class="n-t-col-xs-2" data-align="right">' . __d('newsletter', 'Fonctions') . '</th>
                 </tr>
             </thead>
             <tbody>';
@@ -514,7 +514,7 @@ class AdminNln extends AdminController
                 <td>' . $ref . '</td>
                 <td>' . $text . '</td>
                 <td><code>' . $html . '</code></td>
-                <td><a href="admin.php?op=lnl_Shw_Body&amp;Bodyid=' . $ref . '"><i class="fa fa-edit fa-lg me-2" title="' . adm_translate("Editer") . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Body&amp;Bodyid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . adm_translate("Effacer") . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
+                <td><a href="admin.php?op=lnl_Shw_Body&amp;Bodyid=' . $ref . '"><i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Body&amp;Bodyid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
             </tr>';
         }
     
@@ -527,22 +527,22 @@ class AdminNln extends AdminController
     {
         echo '
         <hr />
-        <h3 class="mb-2">' . adm_translate("Corps de message") . ' - ';
+        <h3 class="mb-2">' . __d('newsletter', 'Corps de message') . ' - ';
     
         $result = sql_query("SELECT text, html FROM lnl_body WHERE ref='$ibid'");
         $tmp = sql_fetch_row($result);
     
         if ($tmp[1] == 1)
-            echo adm_translate("Prévisualiser") . ' <code>HTML</code></h3>
+            echo __d('newsletter', 'Prévisualiser') . ' <code>HTML</code></h3>
             <div class="card card-body">' . $tmp[0] . '</div>';
         else
-            echo adm_translate("Prévisualiser") . ' <code>' . adm_translate("TEXTE") . '</code></h3>
+            echo __d('newsletter', 'Prévisualiser') . ' <code>' . __d('newsletter', 'TEXTE') . '</code></h3>
             <div class="card card-body">' . nl2br($tmp[0]) . '</div>';
     
         echo '
         <form action="admin.php" method="post" name="adminForm">
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-12" for="xtext">' . adm_translate("Corps de message") . '</label>
+                <label class="col-form-label col-sm-12" for="xtext">' . __d('newsletter', 'Corps de message') . '</label>
                 <div class="col-sm-12">
                     <textarea class="tin form-control" rows="30" name="xtext" >' . htmlspecialchars($tmp[0], ENT_COMPAT | ENT_HTML401, cur_charset) . '</textarea>
                 </div>
@@ -560,8 +560,8 @@ class AdminNln extends AdminController
             <input type="hidden" name="ref" value="' . $ibid . '" />
             <div class="mb-3 row">
                 <div class="col-sm-12">
-                    <button class="btn btn-primary" type="submit">' . adm_translate("Valider") . '</button>&nbsp;
-                    <button href="javascript:history.go(-1)" class="btn btn-secondary">' . adm_translate("Retour en arrière") . '</button>
+                    <button class="btn btn-primary" type="submit">' . __d('newsletter', 'Valider') . '</button>&nbsp;
+                    <button href="javascript:history.go(-1)" class="btn btn-secondary">' . __d('newsletter', 'Retour en arrière') . '</button>
                 </div>
             </div>
         </form>';
@@ -573,18 +573,18 @@ class AdminNln extends AdminController
     {
         echo '
         <hr />
-        <h3 class="mb-2">' . adm_translate("Corps de message") . '</h3>
+        <h3 class="mb-2">' . __d('newsletter', 'Corps de message') . '</h3>
         <form id="lnlbody" action="admin.php" method="post" name="adminForm">
             <fieldset>
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-4" for="html">' . adm_translate("Format de données") . '</label>
+                    <label class="col-form-label col-sm-4" for="html">' . __d('newsletter', 'Format de données') . '</label>
                     <div class="col-sm-8">
                     <input class="form-control" id="html" type="number" min="0" max="1" step="1" value="1" name="html" required="required" />
                     <span class="help-block"> <code>html</code> ==&#x3E; [1] / <code>text</code> ==&#x3E; [0]</span>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-12" for="xtext">' . adm_translate("Texte") . '</label>
+                    <label class="col-form-label col-sm-12" for="xtext">' . __d('newsletter', 'Texte') . '</label>
                     <div class="col-sm-12">
                     <textarea class="tin form-control" id="xtext" rows="30" name="xtext" ></textarea>
                     </div>
@@ -598,8 +598,8 @@ class AdminNln extends AdminController
         echo '
                 <div class="mb-3 row">
                     <input type="hidden" name="op" value="lnl_Add_Body_Submit" />
-                    <button class="btn btn-primary col-sm-12 col-md-6" type="submit"><i class="fa fa-plus-square fa-lg"></i>&nbsp;' . adm_translate("Ajouter") . ' ' . adm_translate("corps de message") . '</button>
-                    <a href="admin.php?op=lnl" class="btn btn-secondary col-sm-12 col-md-6">' . adm_translate("Retour en arrière") . '</a>
+                    <button class="btn btn-primary col-sm-12 col-md-6" type="submit"><i class="fa fa-plus-square fa-lg"></i>&nbsp;' . __d('newsletter', 'Ajouter') . ' ' . __d('newsletter', 'corps de message') . '</button>
+                    <a href="admin.php?op=lnl" class="btn btn-secondary col-sm-12 col-md-6">' . __d('newsletter', 'Retour en arrière') . '</a>
                 </div>
             </fieldset>
         </form>';
@@ -636,9 +636,9 @@ class AdminNln extends AdminController
             <thead class="d-none">
                 <tr>
                     <th class="n-t-col-xs-1" data-align="">ID</th>
-                    <th class="n-t-col-xs-8" data-align="">' . adm_translate("Pied") . '</th>
+                    <th class="n-t-col-xs-8" data-align="">' . __d('newsletter', 'Pied') . '</th>
                     <th class="n-t-col-xs-1" data-align="">Type</th>
-                    <th class="n-t-col-xs-2" data-align="right">' . adm_translate("Fonctions") . '</th>
+                    <th class="n-t-col-xs-2" data-align="right">' . __d('newsletter', 'Fonctions') . '</th>
                 </tr>
             </thead>
             <tbody>';
@@ -659,7 +659,7 @@ class AdminNln extends AdminController
                     <td>' . $ref . '</td>
                     <td>' . $text . '</td>
                     <td><code>' . $html . '</code></td>
-                    <td><a href="admin.php?op=lnl_Shw_Footer&amp;Footerid=' . $ref . '" ><i class="fa fa-edit fa-lg me-2" title="' . adm_translate("Editer") . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Footer&amp;Footerid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . adm_translate("Effacer") . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
+                    <td><a href="admin.php?op=lnl_Shw_Footer&amp;Footerid=' . $ref . '" ><i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Footer&amp;Footerid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
                 </tr>';
         }
     
@@ -683,18 +683,18 @@ class AdminNln extends AdminController
     
         echo '
             <hr />
-            <h3 class="mb-2">' . ucfirst(adm_translate("$ti")) . '</h3>
+            <h3 class="mb-2">' . ucfirst(__d('newsletter', $ti)) . '</h3>
             <form id="lnlheadfooter" action="admin.php" method="post" name="adminForm">
             <fieldset>
                 <div class="mb-3">
-                    <label class="col-form-label" for="html">' . adm_translate("Format de données") . '</label>
+                    <label class="col-form-label" for="html">' . __d('newsletter', 'Format de données') . '</label>
                     <div>
                         <input class="form-control" id="html" type="number" min="0" max="1" value="1" name="html" required="required" />
                         <span class="help-block"> <code>html</code> ==&#x3E; [1] / <code>text</code> ==&#x3E; [0]</span>
                     </div>
                     </div>
                 <div class="mb-3">
-                    <label class="col-form-label" for="xtext">' . adm_translate("Texte") . '</label>
+                    <label class="col-form-label" for="xtext">' . __d('newsletter', 'Texte') . '</label>
                     <div>
                     <textarea class="form-control" id="xtext" rows="20" name="xtext" ></textarea>
                     </div>
@@ -708,7 +708,7 @@ class AdminNln extends AdminController
     
         echo '
                     <input type="hidden" name="op" value="' . $va . '" />
-                    <button class="btn btn-primary col-sm-12 col-md-6" type="submit"><i class="fa fa-plus-square fa-lg"></i>&nbsp;' . adm_translate("Ajouter") . ' ' . adm_translate("$ti") . '</button>
+                    <button class="btn btn-primary col-sm-12 col-md-6" type="submit"><i class="fa fa-plus-square fa-lg"></i>&nbsp;' . __d('newsletter', 'Ajouter') . ' ' . __d('newsletter', $ti) . '</button>
                 </div>
             </fieldset>
         </form>';
@@ -743,84 +743,84 @@ class AdminNln extends AdminController
     {
         echo '
         <hr />
-        <h3 class="mb-2">' . adm_translate("Petite Lettre D'information") . '</h3>
+        <h3 class="mb-2">' . __d('newsletter', 'Petite Lettre D\'information') . '</h3>
         <ul class="nav flex-md-row flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="admin.php?op=lnl_List">' . adm_translate("Liste des LNL envoyées") . '</a>
+                <a class="nav-link active" href="admin.php?op=lnl_List">' . __d('newsletter', 'Liste des LNL envoyées') . '</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="admin.php?op=lnl_User_List">' . adm_translate("Afficher la liste des prospects") . '</a>
+                <a class="nav-link active" href="admin.php?op=lnl_User_List">' . __d('newsletter', 'Afficher la liste des prospects') . '</a>
             </li>
         </ul>
-        <h4 class="my-3"><a href="admin.php?op=lnl_Add_Header" ><i class="fa fa-plus-square me-2"></i></a>' . adm_translate("Message d'entête") . '</h4>';
+        <h4 class="my-3"><a href="admin.php?op=lnl_Add_Header" ><i class="fa fa-plus-square me-2"></i></a>' . __d('newsletter', 'Message d\'entête') . '</h4>';
         
         ShowHeader();
     
         echo '
-        <h4 class="my-3"><a href="admin.php?op=lnl_Add_Body" ><i class="fa fa-plus-square me-2"></i></a>' . adm_translate("Corps de message") . '</h4>';
+        <h4 class="my-3"><a href="admin.php?op=lnl_Add_Body" ><i class="fa fa-plus-square me-2"></i></a>' . __d('newsletter', 'Corps de message') . '</h4>';
         
         ShowBody();
     
         echo '
-        <h4 class="my-3"><a href="admin.php?op=lnl_Add_Footer"><i class="fa fa-plus-square me-2"></i></a>' . adm_translate("Message de pied de page") . '</h4>';
+        <h4 class="my-3"><a href="admin.php?op=lnl_Add_Footer"><i class="fa fa-plus-square me-2"></i></a>' . __d('newsletter', 'Message de pied de page') . '</h4>';
         
         ShowFooter();
     
         echo '
         <hr />
-        <h4>' . adm_translate("Assembler une lettre et la tester") . '</h4>
+        <h4>' . __d('newsletter', 'Assembler une lettre et la tester') . '</h4>
         <form id="ltesto" action="admin.php" method="post">
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-floating mb-3">
                     <input class="form-control" type="number" name="Xheader" id="testXheader"min="0" />
-                    <label for="testXheader">' . adm_translate("Entête") . '</label>
+                    <label for="testXheader">' . __d('newsletter', 'Entête') . '</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-floating mb-3">
                     <input class="form-control" type="number" name="Xbody" id="testXbody" maxlength="11" />
-                    <label for="testXbody">' . adm_translate("Corps") . '</label>
+                    <label for="testXbody">' . __d('newsletter', 'Corps') . '</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-floating mb-3">
                     <input class="form-control" type="number" name="Xfooter" id="testXfooter" min="0" />
-                    <label for="testXfooter">' . adm_translate("Pied") . '</label>
+                    <label for="testXfooter">' . __d('newsletter', 'Pied') . '</label>
                     </div>
                 </div>
                 <div class="mb-3 col-sm-12">
                     <input type="hidden" name="op" value="lnl_Test" />
-                    <button class="btn btn-primary" type="submit">' . adm_translate("Valider") . '</button>
+                    <button class="btn btn-primary" type="submit">' . __d('newsletter', 'Valider') . '</button>
                 </div>
             </div>
         </form>
         <hr />
-        <h4>' . adm_translate("Envoyer La Lettre") . '</h4>
+        <h4>' . __d('newsletter', 'Envoyer La Lettre') . '</h4>
         <form id="lsendo" action="admin.php" method="post">
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-floating mb-3">
                     <input class="form-control" type="number" name="Xheader" id="Xheader" />
-                    <label for="Xheader">' . adm_translate("Entête") . '</label>
+                    <label for="Xheader">' . __d('newsletter', 'Entête') . '</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-floating mb-3">
                     <input class="form-control" type="number" name="Xbody" id="Xbody" min="0" />
-                    <label for="Xbody">' . adm_translate("Corps") . '</label>
+                    <label for="Xbody">' . __d('newsletter', 'Corps') . '</label>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-floating mb-3">
                     <input class="form-control" type="number" name="Xfooter" id="Xfooter" />
-                    <label for="Xfooter">' . adm_translate("Pied") . '</label>
+                    <label for="Xfooter">' . __d('newsletter', 'Pied') . '</label>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="form-floating mb-3">
                     <input class="form-control" type="text" maxlength="255" id="Xsubject" name="Xsubject" />
-                    <label for="Xsubject">' . adm_translate("Sujet") . '</label>
+                    <label for="Xsubject">' . __d('newsletter', 'Sujet') . '</label>
                     <span class="help-block text-end"><span id="countcar_Xsubject"></span></span>
                     </div>
                 </div>
@@ -828,15 +828,15 @@ class AdminNln extends AdminController
                 <div class="mb-3 col-sm-12">
                     <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" value="All" checked="checked" id="tous" name="Xtype" />
-                    <label class="form-check-label" for="tous">' . adm_translate("Tous les Utilisateurs") . '</label>
+                    <label class="form-check-label" for="tous">' . __d('newsletter', 'Tous les Utilisateurs') . '</label>
                     </div>
                     <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" value="Mbr" id="mem" name="Xtype" />
-                    <label class="form-check-label" for="mem">' . adm_translate("Seulement aux membres") . '</label>
+                    <label class="form-check-label" for="mem">' . __d('newsletter', 'Seulement aux membres') . '</label>
                     </div>
                     <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" value="Out" id="prosp" name="Xtype" />
-                    <label class="form-check-label" for="prosp">' . adm_translate("Seulement aux prospects") . '</label>
+                    <label class="form-check-label" for="prosp">' . __d('newsletter', 'Seulement aux prospects') . '</label>
                     </div>
                 </div>';
     
@@ -856,7 +856,7 @@ class AdminNln extends AdminController
                 </div>
                 <input type="hidden" name="op" value="lnl_Send" />
                 <div class="mb-3 col-sm-12">
-                    <button class="btn btn-primary" type="submit">' . adm_translate("Valider") . '</button>
+                    <button class="btn btn-primary" type="submit">' . __d('newsletter', 'Valider') . '</button>
                 </div>
             </div>
             </form>';
@@ -884,9 +884,9 @@ class AdminNln extends AdminController
     {
         echo '
         <hr />
-        <div class="alert alert-danger">' . adm_translate("Etes-vous sûr de vouloir effacer cet Article ?") . '</div>
-        <a href="admin.php?op=' . $retour . '&amp;' . $param . '" class="btn btn-danger btn-sm">' . adm_translate("Oui") . '</a>
-        <a href="javascript:history.go(-1)" class="btn btn-secondary btn-sm">' . adm_translate("Non") . '</a>';
+        <div class="alert alert-danger">' . __d('newsletter', 'Etes-vous sûr de vouloir effacer cet Article ?') . '</div>
+        <a href="admin.php?op=' . $retour . '&amp;' . $param . '" class="btn btn-danger btn-sm">' . __d('newsletter', 'Oui') . '</a>
+        <a href="javascript:history.go(-1)" class="btn btn-secondary btn-sm">' . __d('newsletter', 'Non') . '</a>';
     
         adminfoot('', '', '', '');
     }
@@ -909,14 +909,14 @@ class AdminNln extends AdminController
         if ($Xheader[1] == 1) {
             echo '
             <hr />
-            <h3 class="mb-3">' . adm_translate("Prévisualiser") . ' HTML</h3>';
+            <h3 class="mb-3">' . __d('newsletter', 'Prévisualiser') . ' HTML</h3>';
     
             $Xmime = 'html-nobr';
             $message = meta_lang($Xheader[0] . $Xbody[0] . $Xfooter[0]);
         } else {
             echo '
             <hr />
-            <h3 class="mb-3">' . adm_translate("Prévisualiser") . ' ' . adm_translate("TEXTE") . '</h3>';
+            <h3 class="mb-3">' . __d('newsletter', 'Prévisualiser') . ' ' . __d('newsletter', 'TEXTE') . '</h3>';
     
             $Xmime = 'text';
             $message = meta_lang(nl2br($Xheader[0]) . nl2br($Xbody[0]) . nl2br($Xfooter[0]));
@@ -926,7 +926,7 @@ class AdminNln extends AdminController
         <div class="card card-body">
         ' . $message . '
         </div>
-        <a class="btn btn-secondary my-3" href="javascript:history.go(-1)" >' . adm_translate("Retour en arrière") . '</a>';
+        <a class="btn btn-secondary my-3" href="javascript:history.go(-1)" >' . __d('newsletter', 'Retour en arrière') . '</a>';
     
         send_email(Config::get('npds.adminmail'), 'LNL TEST', $message, Config::get('npds.adminmail'), true, $Xmime, '');
     
@@ -939,18 +939,18 @@ class AdminNln extends AdminController
     
         echo '
         <hr />
-        <h3 class="mb-3">' . adm_translate("Liste des LNL envoyées") . '</h3>
+        <h3 class="mb-3">' . __d('newsletter', 'Liste des LNL envoyées') . '</h3>
         <table data-toggle="table" data-search="true" data-show-toggle="true" data-mobile-responsive="true" data-icons="icons" data-icons-prefix="fa">
             <thead>
                 <tr>
                     <th class="n-t-col-xs-1" data-halign="center" data-align="right">ID</th>
-                    <th class="n-t-col-xs-1" data-halign="center" data-align="right">' . adm_translate("Entête") . '</th>
-                    <th class="n-t-col-xs-1" data-halign="center" data-align="right">' . adm_translate("Corps") . '</th>
-                    <th class="n-t-col-xs-1" data-halign="center" data-align="right">' . adm_translate("Pied") . '</th>
-                    <th data-halign="center" data-align="right">' . adm_translate("Nbre d'envois effectués") . '</th>
-                    <th data-halign="center" data-align="center">' . adm_translate("Type") . '</th>
-                    <th data-halign="center" data-align="right">' . adm_translate("Date") . '</th>
-                    <th data-halign="center" data-align="center">' . adm_translate("Etat") . '</th>
+                    <th class="n-t-col-xs-1" data-halign="center" data-align="right">' . __d('newsletter', 'Entête') . '</th>
+                    <th class="n-t-col-xs-1" data-halign="center" data-align="right">' . __d('newsletter', 'Corps') . '</th>
+                    <th class="n-t-col-xs-1" data-halign="center" data-align="right">' . __d('newsletter', 'Pied') . '</th>
+                    <th data-halign="center" data-align="right">' . __d('newsletter', 'Nbre d\'envois effectués') . '</th>
+                    <th data-halign="center" data-align="center">' . __d('newsletter', 'Type') . '</th>
+                    <th data-halign="center" data-align="right">' . __d('newsletter', 'Date') . '</th>
+                    <th data-halign="center" data-align="center">' . __d('newsletter', 'Etat') . '</th>
                 </tr>
             </thead>
             <tbody>';
@@ -991,14 +991,14 @@ class AdminNln extends AdminController
     
         echo '
         <hr />
-        <h3 class="mb-2">' . adm_translate("Liste des prospects") . '</h3>
+        <h3 class="mb-2">' . __d('newsletter', 'Liste des prospects') . '</h3>
         <table id="tad_prospect" data-toggle="table" data-search="true" data-striped="true" data-mobile-responsive="true" data-show-export="true" data-icons="icons" data-icons-prefix="fa">
             <thead>
                 <tr>
-                    <th class="n-t-col-xs-5" data-halign="center" data-sortable="true">' . adm_translate("E-mail") . '</th>
-                    <th class="n-t-col-xs-3" data-halign="center" data-align="right" data-sortable="true">' . adm_translate("Date") . '</th>
-                    <th class="n-t-col-xs-2" data-halign="center" data-align="center" data-sortable="true">' . adm_translate("Etat") . '</th>
-                    <th class="n-t-col-xs-2" data-halign="center" data-align="right" data-sortable="true">' . adm_translate("Fonctions") . '</th>
+                    <th class="n-t-col-xs-5" data-halign="center" data-sortable="true">' . __d('newsletter', 'E-mail') . '</th>
+                    <th class="n-t-col-xs-3" data-halign="center" data-align="right" data-sortable="true">' . __d('newsletter', 'Date') . '</th>
+                    <th class="n-t-col-xs-2" data-halign="center" data-align="center" data-sortable="true">' . __d('newsletter', 'Etat') . '</th>
+                    <th class="n-t-col-xs-2" data-halign="center" data-align="right" data-sortable="true">' . __d('newsletter', 'Fonctions') . '</th>
                 </tr>
             </thead>
             <tbody>';
@@ -1017,14 +1017,14 @@ class AdminNln extends AdminController
                 <td class="text-success">' . $status . '</td>';
     
             echo '
-                    <td><a href="admin.php?op=lnl_Sup_User&amp;lnl_user_email=' . $email . '" class="text-danger"><i class="fas fa-trash fa-lg text-danger" data-bs-toggle="tooltip" title="' . adm_translate("Effacer") . '"></i></a></td>
+                    <td><a href="admin.php?op=lnl_Sup_User&amp;lnl_user_email=' . $email . '" class="text-danger"><i class="fas fa-trash fa-lg text-danger" data-bs-toggle="tooltip" title="' . __d('newsletter', 'Effacer') . '"></i></a></td>
                 </tr>';
         }
     
         echo '
             </tbody>
         </table>
-        <br /><a href="javascript:history.go(-1)" class="btn btn-secondary">' . adm_translate("Retour en arrière") . '</a>';
+        <br /><a href="javascript:history.go(-1)" class="btn btn-secondary">' . __d('newsletter', 'Retour en arrière') . '</a>';
     
         adminfoot('', '', '', '');
     }

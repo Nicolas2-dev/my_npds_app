@@ -5,6 +5,7 @@
  * Active Modules
  */
 return array(
+    'Npds',    
     'ArchiveStories',
     'Authors',
     'Backend',
@@ -30,7 +31,6 @@ return array(
     'Module',
     'News',
     'Newsletter',
-    'Npds',
     'Pages',
     'Pollbooth',
     'Push',

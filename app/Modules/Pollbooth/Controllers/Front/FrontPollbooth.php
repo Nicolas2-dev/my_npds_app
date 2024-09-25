@@ -47,12 +47,12 @@ class FrontPollbooth extends FrontController
                 if ($header != 1)
                     include("header.php");
         
-                echo '<h2>' . translate("Sondage") . '</h2><hr />';
+                echo '<h2>' . __d('pollbooth', 'Sondage') . '</h2><hr />';
         
                 pollResults($pollID);
         
                 if (!$pollClose) {
-                    $block_title = '<h3>' . translate("Voter") . '</h3>';
+                    $block_title = '<h3>' . __d('pollbooth', 'Voter') . '</h3>';
                     echo $block_title;
         
                     pollboxbooth($pollID, $pollClose);
@@ -143,7 +143,7 @@ class FrontPollbooth extends FrontController
         $result = sql_query("SELECT pollID, pollTitle, voters FROM poll_desc ORDER BY timeStamp");
 
         echo '
-        <h2 class="mb-3">' . translate("Sondage") . '</h2>
+        <h2 class="mb-3">' . __d('pollbooth', 'Sondage') . '</h2>
         <hr />
         <div class="row">';
 
@@ -158,7 +158,7 @@ class FrontPollbooth extends FrontController
 
             echo '
             <div class="col-sm-8">' . aff_langue($pollTitle) . '</div>
-            <div class="col-sm-4 text-end">(<a href="pollBooth.php?op=results&amp;pollID=' . $id . '">' . translate("Résultats") . '</a> - ' . $sum . ' ' . translate("votes") . ')</div>';
+            <div class="col-sm-4 text-end">(<a href="pollBooth.php?op=results&amp;pollID=' . $id . '">' . __d('pollbooth', 'Résultats') . '</a> - ' . $sum . ' ' . __d('pollbooth', 'votes') . ')</div>';
         }
 
         echo '
@@ -180,7 +180,7 @@ class FrontPollbooth extends FrontController
         list($sum) = sql_fetch_row($result);
 
         echo '
-        <h4><span class="badge bg-secondary">' . $sum . '</span>&nbsp;' . translate("Résultats") . '</h4>';
+        <h4><span class="badge bg-secondary">' . $sum . '</span>&nbsp;' . __d('pollbooth', 'Résultats') . '</h4>';
 
         for ($i = 1; $i <= Config::get('npds.maxOptions'); $i++) {
             $result = sql_query("SELECT optionText, optionCount, voteID FROM poll_data WHERE (pollID='$pollID') AND (voteID='$i')");
@@ -215,10 +215,10 @@ class FrontPollbooth extends FrontController
         }
 
         echo '<br />';
-        echo '<p class="text-center"><b>' . translate("Nombre total de votes: ") . ' ' . $sum . '</b></p><br />';
+        echo '<p class="text-center"><b>' . __d('pollbooth', 'Nombre total de votes: ') . ' ' . $sum . '</b></p><br />';
 
         if (Config::get('npds.setCookies') > 0) {
-            echo '<p class="text-danger">' . translate("Un seul vote par sondage.") . '</p>';
+            echo '<p class="text-danger">' . __d('pollbooth', 'Un seul vote par sondage.') . '</p>';
         }
     }
 
@@ -242,7 +242,7 @@ class FrontPollbooth extends FrontController
         list($pollTitle, $voters) = sql_fetch_row($result);
 
         global $block_title;
-        $boxTitle = $block_title == '' ? translate("Sondage") : $block_title;
+        $boxTitle = $block_title == '' ? __d('pollbooth', 'Sondage') : $block_title;
 
         $boxContent .= '<h4>' . aff_langue($pollTitle) . '</h4>';
 
@@ -277,23 +277,23 @@ class FrontPollbooth extends FrontController
 
         if (!$pollClose) {
             $inputvote = '
-            <button class="btn btn-primary btn-sm my-2" type="submit" value="' . translate("Voter") . '" title="' . translate("Voter") . '" />' . translate("Voter") . '</button>';
+            <button class="btn btn-primary btn-sm my-2" type="submit" value="' . __d('pollbooth', 'Voter') . '" title="' . __d('pollbooth', 'Voter') . '" />' . __d('pollbooth', 'Voter') . '</button>';
         }
 
         $boxContent .= '
                 <div class="mb-3">' . $inputvote . '</div>
         </form>';
 
-        $boxContent .= '<div><ul><li><a href="pollBooth.php">' . translate("Anciens sondages") . '</a></li>';
+        $boxContent .= '<div><ul><li><a href="pollBooth.php">' . __d('pollbooth', 'Anciens sondages') . '</a></li>';
 
         if (Config::get('npds.pollcomm')) {
             if (file_exists("modules/comments/config/pollBoth.conf.php"))
                 include("modules/comments/config/pollBoth.conf.php");
 
             list($numcom) = sql_fetch_row(sql_query("SELECT COUNT(*) FROM posts WHERE forum_id='$forum' AND topic_id='$pollID' AND post_aff='1'"));
-            $boxContent .= '<li>' . translate("Votes : ") . ' ' . $sum . '</li><li>' . translate("Commentaire(s) : ") . ' ' . $numcom . '</li>';
+            $boxContent .= '<li>' . __d('pollbooth', 'Votes : ') . ' ' . $sum . '</li><li>' . __d('pollbooth', 'Commentaire(s) : ') . ' ' . $numcom . '</li>';
         } else
-            $boxContent .= '<li>' . translate("Votes : ") . ' ' . $sum . '</li>';
+            $boxContent .= '<li>' . __d('pollbooth', 'Votes : ') . ' ' . $sum . '</li>';
 
         $boxContent .= '</ul></div>';
 
@@ -302,7 +302,7 @@ class FrontPollbooth extends FrontController
 
     function PollMain_aff($pollID)
     {
-        $boxContent = '<p><strong><a href="pollBooth.php">' . translate("Anciens sondages") . '</a></strong></p>';
+        $boxContent = '<p><strong><a href="pollBooth.php">' . __d('pollbooth', 'Anciens sondages') . '</a></strong></p>';
         echo $boxContent;
     }
 

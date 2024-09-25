@@ -16,6 +16,7 @@ return array (
   'FAQ - Questions fréquentes' => '',
   'Faq' => '',
   'Fonctions' => '',
+  'Index' => '',
   'Langue de Prévisualisation' => '',
   'Liste des catégories' => '',
   'Liste des questions réponses' => '',

@@ -39,8 +39,6 @@ class StatManager implements StatInterface
      */
     public function req_stat()
     {
-        
-
         // Les membres
         $xtab[0] = User::stats();
 
@@ -101,7 +99,7 @@ class StatManager implements StatInterface
             if ($themelist != '') {
                 $ibix = explode('+', $themelist);
         
-                $T_exist = is_dir("themes/$ibix[0]") ? '' : '<span class="text-danger">' . translate("Ce fichier n'existe pas ...") . '</span>';
+                $T_exist = is_dir("themes/$ibix[0]") ? '' : '<span class="text-danger">' . __d('stats', 'Ce fichier n\'existe pas ...') . '</span>';
         
                 if ($themelist == Config::get('npds.Default_Theme')) {
                     $result = sql_query("SELECT uid FROM users WHERE theme='$themelist'");
@@ -112,7 +110,7 @@ class StatManager implements StatInterface
         
                     echo '
                         <tr>
-                        <td>' . $themelist . ' <b>(' . translate("par défaut") . ')</b></td>
+                        <td>' . $themelist . ' <b>(' . __d('stats', 'par défaut') . ')</b></td>
                         <td><b>' . wrh(($themeD1 + $themeD2)) . '</b></td>
                         <td>' . $T_exist . '</td>
                         </tr>';

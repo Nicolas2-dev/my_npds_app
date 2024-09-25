@@ -35,7 +35,7 @@ class FrontMap extends FrontController
         
         if (($cache_obj->get_Genereting_Output() == 1) or ($cache_obj->get_Genereting_Output() == -1) or (!$SuperCache)) {
             echo '
-            <h2>' . translate("Plan du site") . '</h2>
+            <h2>' . __d('stats', 'Plan du site') . '</h2>
             <hr />';
         
             mapsections();
@@ -94,7 +94,7 @@ class FrontMap extends FrontController
             echo '
                 <h3>
                 <a class="" data-bs-toggle="collapse" href="#collapseSections" aria-expanded="false" aria-controls="collapseSections">
-                <i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . translate("Rubriques") . '
+                <i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'Rubriques') . '
                 <span class="badge bg-secondary float-end">' . sql_num_rows($result) . '</span>
                 </h3>
             <div class="collapse" id="collapseSections">
@@ -121,7 +121,7 @@ class FrontMap extends FrontController
         if ($tmp != '')
             echo '
             <h3>
-                <a data-bs-toggle="collapse" href="#collapseForums" aria-expanded="false" aria-controls="collapseForums"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . translate("Forums") . '
+                <a data-bs-toggle="collapse" href="#collapseForums" aria-expanded="false" aria-controls="collapseForums"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'Forums') . '
             </h3>
             <div class="collapse" id="collapseForums">
                 <div class="card card-body">
@@ -149,7 +149,7 @@ class FrontMap extends FrontController
         if ($lis_top != '')
             echo '
             <h3>
-                <a class="" data-bs-toggle="collapse" href="#collapseTopics" aria-expanded="false" aria-controls="collapseTopics"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . translate("Sujets") . '
+                <a class="" data-bs-toggle="collapse" href="#collapseTopics" aria-expanded="false" aria-controls="collapseTopics"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'Sujets') . '
                 <span class="badge bg-secondary float-end">' . sql_num_rows($result) . '</span>
             </h3>
             <div class="collapse" id="collapseTopics">
@@ -180,7 +180,7 @@ class FrontMap extends FrontController
         if ($lis_cat != '')
             echo '
             <h3>
-                <a class="" data-bs-toggle="collapse" href="#collapseCategories" aria-expanded="false" aria-controls="collapseCategories"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . translate("Catégories") . '
+                <a class="" data-bs-toggle="collapse" href="#collapseCategories" aria-expanded="false" aria-controls="collapseCategories"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'Catégories') . '
                 <span class="badge bg-secondary float-end">' . sql_num_rows($result) . '</span>
             </h3>
             <div class="collapse" id="collapseCategories">
@@ -212,7 +212,7 @@ class FrontMap extends FrontController
         if ($lis_faq != '')
             echo '
             <h3>
-                <a class="" data-bs-toggle="collapse" href="#collapseFaq" aria-expanded="false" aria-controls="collapseFaq"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . translate("FAQ - Questions fréquentes") . '
+                <a class="" data-bs-toggle="collapse" href="#collapseFaq" aria-expanded="false" aria-controls="collapseFaq"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'FAQ - Questions fréquentes') . '
                 <span class="badge bg-secondary float-end">' . sql_num_rows($result) . '</span>
             </h3>
             <div class="collapse" id="collapseFaq">

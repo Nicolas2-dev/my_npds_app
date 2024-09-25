@@ -39,7 +39,7 @@ function userblock()
 
     if (($user) and ($cookie[8])) {
         $user_block = DBQ_select(
-            DB::table('users')->select('ublock')->where('id', $cookie[0])->first(), 
+            DB::table('users')->select('ublock')->where('uid', $cookie[0])->first(), 
             86400
         );
 

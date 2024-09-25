@@ -7,7 +7,7 @@ return array(
     * Nombre de Stories par page
     *
     */
-    'maxcount'  => '06',
+    'maxcount'  => '04',
 
     /**
     * Les news en ligne (arch=0;) ou les archives (arch=1;) ? 

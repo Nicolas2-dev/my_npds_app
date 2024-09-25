@@ -109,6 +109,7 @@ class CodeManager implements CodeInterface
                     highlight_string(substr($ibid, $pos_deb + 6, ($pos_fin - $pos_deb - 6)));
                     $fragment = ob_get_contents();
                 ob_end_clean();
+
                 $ibid = str_replace(substr($ibid, $pos_deb, ($pos_fin - $pos_deb + 7)), $fragment, $ibid);
             } else {
                 $pasfin = false;

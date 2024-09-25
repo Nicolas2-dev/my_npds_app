@@ -2,6 +2,7 @@
 
 use App\Modules\Npds\Support\Secure;
 use App\Modules\Npds\Support\Sanitize;
+use App\Modules\Npds\Library\SpamManager;
 
 
 if (!defined('NPDS_GRAB_GLOBALS_INCLUDED')) {
@@ -10,7 +11,7 @@ if (!defined('NPDS_GRAB_GLOBALS_INCLUDED')) {
     define('NPDS_GRAB_GLOBALS_INCLUDED', 1);
 
     //  
-    spam_boot();
+    SpamManager::getInstance()->spam_boot();
 
     // include current charset
     if (file_exists(module_path('Npds/storage/meta/cur_charset.php'))) {

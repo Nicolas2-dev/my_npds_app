@@ -1,6 +1,6 @@
 <?php
 
-use App\Modules\Npds\Library\Sform\SformManager;
+use Npds\Sform\SformManager;
 
 global $m;
 $m = new SformManager();

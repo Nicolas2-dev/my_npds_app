@@ -2,6 +2,7 @@
 
 namespace App\Modules\Npds\Library;
 
+use Npds\Http\Request;
 use App\Modules\Npds\Contracts\SpamInterface;
 
 
@@ -205,7 +206,7 @@ class SpamManager implements SpamInterface
         $maj_fic = false;
 
         if ($ip == '') {
-            $ip = getip();
+            $ip = Request::getip();
         }
 
         $ip = urldecode($ip);
@@ -335,7 +336,7 @@ class SpamManager implements SpamInterface
         }
 
         if (is_array($tab_spam)) {
-            $ipadr = urldecode(getip());
+            $ipadr = urldecode(Request::getip());
             $ipv = strstr($ipadr, ':') ? '6' : '4';
 
             if (in_array($ipadr . "|5", $tab_spam)) {

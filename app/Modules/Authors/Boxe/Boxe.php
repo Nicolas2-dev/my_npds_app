@@ -72,7 +72,7 @@ function adminblock()
                 }
             }
 
-            $bloc_foncts_A .= AlertNpds::check($SAQ, $aid, $adminico);
+            $bloc_foncts_A .= AlertNpds::check($SAQ, $adminico, $aid, $Q['radminsuper']);
         }
 
         $block = DB::table('block')->select('title', 'content')->find(2);

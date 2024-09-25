@@ -68,15 +68,9 @@ class AuthorLogin extends FrontController
      */
     public function login()
     {
-        $arg1 = '
-            var formulid =["adminlogin"];
-            ';
-    
-        $adminfoot = Css::adminfoot('fv', '', $arg1, '');
-
         $this->title(__d('authors', 'Administration login'));
 
-        $this->set('adminfoot', $adminfoot);
+        $this->set('adminfoot', Css::adminfoot('fv', '', 'var formulid = ["adminlogin"];', ''));
 
     }
 
@@ -143,7 +137,7 @@ class AuthorLogin extends FrontController
                     Cookie::set('admin', $admin, $timeX);
                     Cookie::set('adm_exp', $timeX, $timeX);
 
-                    Url::redirect('index');
+                    Url::redirect('admin');
                 }
             } else {
                 Url::redirect('admin/login');

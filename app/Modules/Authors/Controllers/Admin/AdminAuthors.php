@@ -576,7 +576,8 @@ class AdminAuthors extends AdminController
                         $admin_cook_duration = Config::get('npds.admin_cook_duration');
 
                         if ($admin_cook_duration <= 0) {
-                            $admin_cook_duration = 1; }
+                            $admin_cook_duration = 1; 
+                        }
     
                         $timeX = time() + (3600 * $admin_cook_duration);
     

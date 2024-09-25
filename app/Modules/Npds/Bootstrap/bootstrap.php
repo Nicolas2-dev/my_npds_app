@@ -14,4 +14,6 @@ include $configDir .'Boxe/Boxe.php';
 
 include $configDir .'Routes/web/routes.php';
 
+include $configDir .'Routes/api/routes.php';
+
 include $configDir .'Routes/admin/routes.php';

@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  '' => '',
   '(description ou nom complet du sujet)' => '',
   '(nom de l\'image + extension)' => '',
   '(un simple nom sans espaces)' => '',
@@ -128,6 +129,7 @@ return array (
   'Remettre cet article en première position ? : ' => '',
   'Retour en arrière' => '',
   'Retour en arrière, pour changer le Nom' => '',
+  'Rubriques' => '',
   'Sauver les modifications' => '',
   'Seulement aux membres' => '',
   'Site à découvrir : ' => '',

@@ -31,17 +31,35 @@ class UrlManager implements UrlInterface
     }
 
     /**
-     * [redirect_url description]
+     * [redirect description]
      *
      * @param   [type]  $urlx  [$urlx description]
      *
      * @return  [type]         [return description]
      */
-    public function redirect_url($urlx)
+    public function redirect($urlx)
     {
         echo "<script type=\"text/javascript\">\n";
         echo "//<![CDATA[\n";
         echo "document.location.href='" . $urlx . "';\n";
+        echo "//]]>\n";
+        echo "</script>";
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $urlx
+     * @param [type] $time
+     * @return void
+     */
+    public function redirect_time($urlx, $time)
+    {
+        echo "<script type=\"text/javascript\">\n";
+        echo "//<![CDATA[\n";
+        echo "setTimeout(function(){
+            document.location.href='" . $urlx . "'
+        } , ".$time.");";
         echo "//]]>\n";
         echo "</script>";
     }

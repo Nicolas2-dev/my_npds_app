@@ -97,13 +97,13 @@ class UserLogin extends FrontController
         $uname = Request::post('uname');
         $pass = Request::post('pass');
 
-        $result = sql_query("SELECT pass, hashkey, id, uname, storynum, umode, uorder, thold, noscore, ublockon, theme, commentmax, user_langue FROM users WHERE uname = '$uname'");
+        $result = sql_query("SELECT pass, hashkey, uid, uname, storynum, umode, uorder, thold, noscore, ublockon, theme, commentmax, user_langue FROM users WHERE uname = '$uname'");
         
         if (sql_num_rows($result) == 1) {
     
             $setinfo = sql_fetch_assoc($result);
     
-            $result = sql_query("SELECT open FROM users_status WHERE id='" . $setinfo['id'] . "'");
+            $result = sql_query("SELECT open FROM users_status WHERE uid='" . $setinfo['uid'] . "'");
             list($open_user) = sql_fetch_row($result);
     
             if ($open_user == 0) {
@@ -122,7 +122,7 @@ class UserLogin extends FrontController
     
                     sql_query("UPDATE users SET pass='$pass', hashkey='1' WHERE uname='$uname'");
     
-                    $result = sql_query("SELECT pass, hashkey, id, uname, storynum, umode, uorder, thold, noscore, ublockon, theme, commentmax, user_langue FROM users WHERE uname = '$uname'");
+                    $result = sql_query("SELECT pass, hashkey, uid, uname, storynum, umode, uorder, thold, noscore, ublockon, theme, commentmax, user_langue FROM users WHERE uname = '$uname'");
                     
                     if (sql_num_rows($result) == 1) {
                         $setinfo = sql_fetch_assoc($result);
@@ -144,7 +144,7 @@ class UserLogin extends FrontController
             }
     
             Cookie::docookie(
-                $setinfo['id'], 
+                $setinfo['uid'], 
                 $setinfo['uname'], 
                 $CryptpPWD, 
                 $setinfo['storynum'], 

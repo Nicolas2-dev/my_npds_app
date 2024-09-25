@@ -28,11 +28,10 @@ function Site_Activ()
         'totald'        => Sanitize::wrh($totald),
         'totalb'        => Sanitize::wrh($totalb),
         'imgtmptop'     => (Theme::theme_image('box/top.gif') ?: false),
-        'imgtmpstat'    => (Theme::theme_image('box/top.gif') ?: false),
+        'imgtmpstat'    => (Theme::theme_image('box/stat.gif') ?: false),
     ];
 
     global $block_title;
-    $title = $block_title == '' ? __d('stats', 'Activité du site') : $block_title;
 
-    Theme::themesidebox($title, View::make('Modules/Stats/Views/Boxe/Site_Activ', $data));
+    Theme::themesidebox($block_title ?: __d('stats', 'Activité du site'), View::make('Modules/Stats/Views/Boxe/Site_Activ', $data));
 }

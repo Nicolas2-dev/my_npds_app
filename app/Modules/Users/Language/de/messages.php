@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  '' => '',
   'Devenez membre privilégié en cliquant' => '',
   'Identifiant' => '',
   'Il y a actuellement' => '',

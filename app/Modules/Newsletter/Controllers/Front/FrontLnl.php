@@ -54,22 +54,22 @@ class FrontLnl extends FrontController
         $stop = '';
     
         if ((!$email) || ($email == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email)))
-            $stop = translate("Erreur : Email invalide");
+            $stop = __d('newsletter', 'Erreur : Email invalide');
     
         if (strrpos($email, ' ') > 0)
-            $stop = translate("Erreur : une adresse Email ne peut pas contenir d'espaces");
+            $stop = __d('newsletter', 'Erreur : une adresse Email ne peut pas contenir d\'espaces');
     
         if (checkdnsmail($email) === false)
-            $stop = translate("Erreur : DNS ou serveur de mail incorrect");
+            $stop = __d('newsletter', 'Erreur : DNS ou serveur de mail incorrect');
     
         if (sql_num_rows(sql_query("SELECT email FROM users WHERE email='$email'")) > 0)
-            $stop = translate("Erreur : adresse Email déjà utilisée");
+            $stop = __d('newsletter', 'Erreur : adresse Email déjà utilisée');
     
         if (sql_num_rows(sql_query("SELECT email FROM lnl_outside_users WHERE email='$email'")) > 0) {
             if (sql_num_rows(sql_query("SELECT email FROM lnl_outside_users WHERE email='$email' AND status='NOK'")) > 0)
                 sql_query("DELETE FROM lnl_outside_users WHERE email='$email'");
             else
-                $stop = translate("Erreur : adresse Email déjà utilisée");
+                $stop = __d('newsletter', 'Erreur : adresse Email déjà utilisée');
         }
     
         return ($stop);
@@ -78,11 +78,11 @@ class FrontLnl extends FrontController
     function error_handler($ibid)
     {
         echo '
-        <h2>' . translate("La lettre") . '</h2>
+        <h2>' . __d('newsletter', 'La lettre') . '</h2>
         <hr />
-        <p class="lead mb-2">' . translate("Merci d'entrer l'information en fonction des spécifications") . '</p>
+        <p class="lead mb-2">' . __d('newsletter', 'Merci d\'entrer l\'information en fonction des spécifications') . '</p>
         <div class="alert alert-danger">' . $ibid . '</div>
-        <a href="index.php" class="btn btn-outline-secondary">' . translate("Retour en arrière") . '</a>';
+        <a href="index.php" class="btn btn-outline-secondary">' . __d('newsletter', 'Retour en arrière') . '</a>';
     }
     
     function subscribe($var)
@@ -90,15 +90,15 @@ class FrontLnl extends FrontController
         if ($var != '') {
             include("header.php");
             echo '
-            <h2>' . translate("La lettre") . '</h2>
+            <h2>' . __d('newsletter', 'La lettre') . '</h2>
             <hr />
-            <p class="lead mb-2">' . translate("Gestion de vos abonnements") . ' : <strong>' . $var . '</strong></p>
+            <p class="lead mb-2">' . __d('newsletter', 'Gestion de vos abonnements') . ' : <strong>' . $var . '</strong></p>
             <form action="lnl.php" method="POST">
                 ' . Q_spambot() . '
                 <input type="hidden" name="email" value="' . $var . '" />
                 <input type="hidden" name="op" value="subscribeOK" />
-                <input type="submit" class="btn btn-outline-primary me-2" value="' . translate("Valider") . '" />
-                <a href="index.php" class="btn btn-outline-secondary">' . translate("Retour en arrière") . '</a>
+                <input type="submit" class="btn btn-outline-primary me-2" value="' . __d('newsletter', 'Valider') . '" />
+                <a href="index.php" class="btn btn-outline-secondary">' . __d('newsletter', 'Retour en arrière') . '</a>
             </form>';
             include("footer.php");
         } else
@@ -125,24 +125,24 @@ class FrontLnl extends FrontController
                     sql_query("INSERT INTO lnl_outside_users VALUES ('$xemail', '$host_name', '$timeX', 'OK')");
                     // Email validation + url to unsubscribe
     
-                    $subject = html_entity_decode(translate("La lettre"), ENT_COMPAT | ENT_HTML401, cur_charset) . ' / ' . Config::get('npds.sitename');
-                    $message = translate("Merci d'avoir consacré du temps pour vous enregistrer.") . '<br /><br />' . translate("Pour supprimer votre abonnement à notre lettre, merci d'utiliser") . ' : <br />' . Config::get('npds.nuke_url') . '/lnl.php?op=unsubscribe&email=' . $xemail . '<br /><br />';
+                    $subject = html_entity_decode(__d('newsletter', 'La lettre'), ENT_COMPAT | ENT_HTML401, cur_charset) . ' / ' . Config::get('npds.sitename');
+                    $message = __d('newsletter', 'Merci d\'avoir consacré du temps pour vous enregistrer.') . '<br /><br />' . __d('newsletter', 'Pour supprimer votre abonnement à notre lettre, merci d\'utiliser') . ' : <br />' . Config::get('npds.nuke_url') . '/lnl.php?op=unsubscribe&email=' . $xemail . '<br /><br />';
                     
                     include("signat.php");
     
                     send_email($xemail, $subject, $message, '', true, 'html', '');
     
                     echo '
-                    <div class="alert alert-success">' . translate("Merci d'avoir consacré du temps pour vous enregistrer.") . '</div>
-                    <a href="index.php">' . translate("Retour en arrière") . '</a>';
+                    <div class="alert alert-success">' . __d('newsletter', 'Merci d\'avoir consacré du temps pour vous enregistrer.') . '</div>
+                    <a href="index.php">' . __d('newsletter', 'Retour en arrière') . '</a>';
                 } else {
-                    $stop = translate("Compte ou adresse IP désactivée. Cet émetteur a participé plus de x fois dans les dernières heures, merci de contacter le webmaster pour déblocage.") . "<br />";
+                    $stop = __d('newsletter', 'Compte ou adresse IP désactivée. Cet émetteur a participé plus de x fois dans les dernières heures, merci de contacter le webmaster pour déblocage.') . "<br />";
                     error_handler($stop);
                 }
             } else
                 error_handler($stop);
         } else
-            error_handler(translate("Cette donnée ne doit pas être vide.") . "<br />");
+            error_handler(__d('newsletter', 'Cette donnée ne doit pas être vide.') . "<br />");
     
         include("footer.php");
     }
@@ -167,12 +167,12 @@ class FrontLnl extends FrontController
                     sql_query("UPDATE lnl_outside_users SET status='NOK' WHERE email='$xemail'");
                     include("header.php");
                     echo '
-                    <div class="alert alert-success">' . translate("Merci") . '</div>
-                    <a href="index.php">' . translate("Retour en arrière") . '</a>';
+                    <div class="alert alert-success">' . __d('newsletter', 'Merci') . '</div>
+                    <a href="index.php">' . __d('newsletter', 'Retour en arrière') . '</a>';
                     include("footer.php");
                 } else {
                     include("header.php");
-                    $stop = translate("Compte ou adresse IP désactivée. Cet émetteur a participé plus de x fois dans les dernières heures, merci de contacter le webmaster pour déblocage.") . "<br />";
+                    $stop = __d('newsletter', 'Compte ou adresse IP désactivée. Cet émetteur a participé plus de x fois dans les dernières heures, merci de contacter le webmaster pour déblocage.') . "<br />";
                     error_handler($stop);
                     include("footer.php");
                 }

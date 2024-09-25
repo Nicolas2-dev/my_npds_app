@@ -75,9 +75,6 @@ AliasLoader::initialize();
 /** A useful alias for the Query Builder Facade. */
 class_alias('\Npds\Database\Query\Builder\Facade', 'Npds\QB');
 
-/** Bootstrap the active Packages. */
-Packages::bootstrap();
-
 /** Get the current Router instance. */
 $router = Router::getInstance();
 
@@ -85,8 +82,19 @@ $router = Router::getInstance();
 require APPPATH .'Routes/web/routes.php';
 require APPPATH .'Routes/admin/routes.php';
 
+// // Execute the local Grabglobal.
+if (!defined('NPDS_GRAB_GLOBALS_INCLUDED')) {
+    require APPPATH .'Bootstrap' .DS .'Grabglobals.php';
+}
+
+// // Execute the local bootstrap.
+require APPPATH .'Bootstrap.php';
+
 /** Bootstrap the active Modules. */
 Modules::bootstrap();
+
+/** Bootstrap the active Packages. */
+Packages::bootstrap();
 
 /** Bootstrap the active Themes. */
 Themes::bootstrap();
@@ -97,16 +105,8 @@ Events::initialize();
 /** Initialize the Sessions. */
 Session::initialize();
 
-// // Execute the local Grabglobal.
-if (!defined('NPDS_GRAB_GLOBALS_INCLUDED')) {
-    require APPPATH .'Bootstrap' .DS .'Grabglobals.php';
-}
-
 // dd(DB::table('config')->get());
 // vd(Config::all());
-
-// // Execute the local bootstrap.
-require APPPATH .'Bootstrap.php';
 
 /** Execute the Request dispatching by Router. */
 $router->dispatch();

@@ -35,15 +35,15 @@ function push_menu()
     }
 
     if (substr($options, 2, 1) == 1) {
-        echo "document.write('[<a href=\"#poll\">" . push_translate("Poll") . "</a>]$push_br');\n";
+        echo "document.write('[<a href=\"#poll\">" . __d('push', 'Poll') . "</a>]$push_br');\n";
     }
 
     if (substr($options, 3, 1) == 1) {
-        echo "document.write('[<a href=\"#member\">" . push_translate("Member(s)") . "</a>]$push_br');\n";
+        echo "document.write('[<a href=\"#member\">" . __d('push', 'Member(s)') . "</a>]$push_br');\n";
     }
 
     if (substr($options, 4, 1) == 1) {
-        echo "document.write('[<a href=\"#link\">" . push_translate("Web links") . "</a>]');\n";
+        echo "document.write('[<a href=\"#link\">" . __d('push', 'Web links') . "</a>]');\n";
     }
 
     echo "document.write('</p>');\n";
@@ -97,7 +97,7 @@ function push_news()
 
     if ($result) {
         echo "document.write('<a name=\"article\"></a>');\n";
-        echo "document.write('<li><b>" . push_translate("Latest Articles") . "</b></li><br />');\n";
+        echo "document.write('<li><b>" . __d('push', 'Latest Articles') . "</b></li><br />');\n";
 
         $ibid = sql_num_rows($result);
 
@@ -141,7 +141,7 @@ function new_show($sid, $offset)
 
         $topictext = str_replace("'", "\'", $topictext);
 
-        echo "document.write('" . push_translate("Posted by") . " <b>$informant</b> : $datetime (" . htmlspecialchars($topictext, ENT_COMPAT | ENT_HTML401, cur_charset) . ")');\n";
+        echo "document.write('" . __d('push', 'Posted by') . " <b>$informant</b> : $datetime (" . htmlspecialchars($topictext, ENT_COMPAT | ENT_HTML401, cur_charset) . ")');\n";
         echo "document.write('<br /><br />');\n";
         echo "document.write('" . links(convert_nl(str_replace("'", "\'", meta_lang(aff_code(aff_langue($hometext)))), "win", "html")) . "<br />');\n";
         
@@ -155,7 +155,7 @@ function new_show($sid, $offset)
             echo "document.write('" . links(convert_nl(str_replace("'", "\'", meta_lang(aff_code(aff_langue($notes)))), "win", "html")) . "');\n";
         }
 
-        echo "document.write('<br /><span style=\"font-size: 11px;\">.: <a href=\"javascript: history.go(0)\">" . push_translate("Home") . "</a> :.</span>');\n";
+        echo "document.write('<br /><span style=\"font-size: 11px;\">.: <a href=\"javascript: history.go(0)\">" . __d('push', 'Home') . "</a> :.</span>');\n";
         push_footer();
     }
 
@@ -167,7 +167,7 @@ function push_poll()
     
 
     echo "document.write('<a name=\"poll\"></a>');\n";
-    echo "document.write('<li><b>" . push_translate("Latest Poll Results") . "</b></li>');\n";
+    echo "document.write('<li><b>" . __d('push', 'Latest Poll Results') . "</b></li>');\n";
 
     $result = sql_query("SELECT pollID, polltitle FROM poll_desc ORDER BY pollID DESC LIMIT 1");
     list($pollID, $polltitle) = sql_fetch_row($result);
@@ -199,7 +199,7 @@ function push_poll()
             echo "document.write('</td><td align=\"center\" style=\"font-size: 11px;\">($optionCount)</td></tr>');\n";
         }
 
-        echo "document.write('<tr><td width=\"50%\" style=\"font-size: 11px;\">" . push_translate("Total Votes:") . "</td><td width=\"20%\">&nbsp;</td><td align=\"center\" style=\"font-size: 11px;\"><b>$sum</b></td>');\n";
+        echo "document.write('<tr><td width=\"50%\" style=\"font-size: 11px;\">" . __d('push', 'Total Votes:') . "</td><td width=\"20%\">&nbsp;</td><td align=\"center\" style=\"font-size: 11px;\"><b>$sum</b></td>');\n";
         echo "document.write('</tr></table>');\n";
     }
 
@@ -246,7 +246,7 @@ function faq_show($id_cat)
         echo "document.write('<p align=\"justify\">" . links(convert_nl(str_replace("'", "\'", meta_lang(aff_code(aff_langue($answer)))), "win", "html")) . "</p><br />');\n";
     }
 
-    echo "document.write('.: <a href=\"javascript: history.go(0)\" style=\"font-size: 11px;\">" . push_translate("Home") . "</a> :.');\n";
+    echo "document.write('.: <a href=\"javascript: history.go(0)\" style=\"font-size: 11px;\">" . __d('push', 'Home') . "</a> :.');\n";
 
     push_footer();
 
@@ -260,7 +260,7 @@ function push_members()
     
 
     echo "document.write('<a name=\"member\"></a>');\n";
-    echo "document.write('<li><b>" . push_translate("Member(s)") . "</b></li><br />');\n";
+    echo "document.write('<li><b>" . __d('push', 'Member(s)') . "</b></li><br />');\n";
     echo "document.write('<table border=\"0\" width=\"100%\"><tr>');\n";
 
     if (!$page) {
@@ -295,9 +295,9 @@ function push_members()
 
     if ($count_user < $push_member_limit) {
         $page = 0;
-        echo "document.write('<td><b><a href=javascript:onclick=register(\"App-push\",\"op=next_page&page=$page\"); style=\"font-size: 11px;\">" . push_translate("Home") . "</a></b></td>');\n";
+        echo "document.write('<td><b><a href=javascript:onclick=register(\"App-push\",\"op=next_page&page=$page\"); style=\"font-size: 11px;\">" . __d('push', 'Home') . "</a></b></td>');\n";
     } else {
-        echo "document.write('<td><b><a href=javascript:onclick=register(\"App-push\",\"op=next_page&page=$page\"); style=\"font-size: 11px;\">" . push_translate("Next") . "</a></b></td>');\n";
+        echo "document.write('<td><b><a href=javascript:onclick=register(\"App-push\",\"op=next_page&page=$page\"); style=\"font-size: 11px;\">" . __d('push', 'Next') . "</a></b></td>');\n";
     }
 
     echo "document.write('</tr></table>');\n";
@@ -314,7 +314,7 @@ function push_links()
     $orderby = "title " . $push_orderby;
 
     echo "document.write('<a name=\"link\"></a>');\n";
-    echo "document.write('<li><b>" . push_translate("Web links") . "</b></li><br />');\n";
+    echo "document.write('<li><b>" . __d('push', 'Web links') . "</b></li><br />');\n";
 
     echo "document.write('<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr>');\n";
 
@@ -434,7 +434,7 @@ function viewlink_show($cid, $min)
         echo "document.write('<a href=javascript:onclick=register(\"App-push\",\"op=viewlink&cid=$cid&min=$min\"); style=\"font-size: 11px;\"><img src=\"Config::get('npds.nuke_url')/$imgtmp\" border=\"0\" alt=\"\" align=\"center\" /></a><br />');\n";
     }
 
-    echo "document.write('<br />.: <a href=\"javascript: history.go(0)\" style=\"font-size: 11px;\">" . push_translate("Home") . "</a> :.');\n";
+    echo "document.write('<br />.: <a href=\"javascript: history.go(0)\" style=\"font-size: 11px;\">" . __d('push', 'Home') . "</a> :.');\n";
     
     push_footer();
 
@@ -490,7 +490,7 @@ function viewslink_show($sid, $min)
         echo "document.write('<a href=javascript:onclick=register(\"App-push\",\"op=viewlink&cid=$cid&min=$min\"); style=\"font-size: 11px;\"><img src=\"Config::get('npds.nuke_url')/$imgtmp\" border=\"0\" alt=\"\" align=\"center\" /></a><br />');\n";
     }
 
-    echo "document.write('<br />.: <a href=\"javascript: history.go(0)\" style=\"font-size: 11px;\">" . push_translate("Home") . "</a> :.');\n";
+    echo "document.write('<br />.: <a href=\"javascript: history.go(0)\" style=\"font-size: 11px;\">" . __d('push', 'Home') . "</a> :.');\n";
     
     push_footer();
 

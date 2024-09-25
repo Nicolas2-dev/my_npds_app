@@ -2,6 +2,7 @@
 
 namespace App\Modules\Npds\Library;
 
+use Npds\Http\Request;
 use Npds\Config\Config;
 use App\Modules\Npds\Contracts\SessionInterface;
 
@@ -41,7 +42,7 @@ class SessionManager implements SessionInterface
         global $cookie, $REQUEST_URI;
 
         $guest = 0;
-        $ip = getip();
+        $ip = Request::getip();
 
         $username = isset($cookie[1]) ? $cookie[1] : $ip;
 
@@ -84,4 +85,5 @@ class SessionManager implements SessionInterface
                     VALUES ('$username', '" . time() . "', '$ip', '$guest', '$REQUEST_URI', '" . getenv("HTTP_USER_AGENT") . "')");
         }
     }
+    
 }

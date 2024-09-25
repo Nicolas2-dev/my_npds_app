@@ -238,7 +238,7 @@ class AdminDashboard extends AdminController
             </form>';
         }
 
-        $this->title(__('user login'));
+        $this->title(__d('npds', 'Administration Dashboard'));
 
         $this->set('nbre_articles', $nbre_articles);
 

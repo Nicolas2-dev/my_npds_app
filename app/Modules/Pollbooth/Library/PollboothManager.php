@@ -39,9 +39,6 @@ class PollboothManager implements PollboothInterface
      */
     public function PollNewest(int $id = null): void
     {
-        
-
-        // snipe : multi-poll evolution
         if ($id != 0) {
             settype($id, "integer");
             list($ibid, $pollClose) = $this->pollSecur($id);
@@ -69,7 +66,6 @@ class PollboothManager implements PollboothInterface
     {
         global $user;
 
-        $pollIDX = false;
         $pollClose = '';
 
         $result = sql_query("SELECT pollType FROM poll_data WHERE pollID='$pollID'");

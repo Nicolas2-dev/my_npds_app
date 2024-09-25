@@ -43,19 +43,20 @@ class LanguageManager implements LanguageInterface
         global $tab_langue;
 
         // copie du tableau + rajout de transl pour gestion de l'appel à translate(...); - Theme Dynamic
-        $tab_llangue = $tab_langue;
-        $tab_llangue[] = 'transl';
+        $tab_llangue        = $tab_langue;
+        $tab_llangue[]      = 'transl';
 
         reset($tab_llangue);
 
-        $ok_language = false;
-        $trouve_language = false;
+        $ok_language        = false;
+        $trouve_language    = false;
 
         foreach ($tab_llangue as $key => $lang) {
-            $pasfin = true;
-            $pos_deb = false;
-            $abs_pos_deb = false;
-            $pos_fin = false;
+
+            $pasfin         = true;
+            $pos_deb        = false;
+            $abs_pos_deb    = false;
+            $pos_fin        = false;
 
             while ($pasfin) {
                 // tags [langue] et [/langue]

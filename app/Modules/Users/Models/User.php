@@ -18,6 +18,13 @@ class User extends BaseModel
     protected $table = 'users';
 
     /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    protected $primaryKey = 'uid';
+
+    /**
      * [$relations description]
      *
      * @var [type]
@@ -51,7 +58,7 @@ class User extends BaseModel
      */
     public function user_extend()
     {
-        return $this->hasMany('App\Modules\Users\Models\UserExtend', 'user_id');
+        return $this->hasMany('App\Modules\Users\Models\UserExtend', 'uid');
     }
 
     /**
@@ -61,7 +68,7 @@ class User extends BaseModel
      */
     public function priv_msg()
     {
-        return $this->hasMany('App\Modules\Messenger\Models\PrivMsg', 'user_id');
+        return $this->hasMany('App\Modules\Messenger\Models\PrivMsg', 'uid');
     }
 
     /**

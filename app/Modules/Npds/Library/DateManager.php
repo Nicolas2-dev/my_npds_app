@@ -113,9 +113,7 @@ class DateManager implements DateInterface
      */
     public function post_convertdate($tmst)
     {
-        $val = $tmst > 0 ? date("d-m-Y H:i", $tmst) : '';
-    
-        return $val;
+        return $tmst > 0 ? date("d-m-Y H:i", $tmst) : '';
     }
     
     /**
@@ -128,9 +126,8 @@ class DateManager implements DateInterface
     public function convertdate($myrow)
     {
         $tmst = static::convertdateTOtimestamp($myrow);
-        $val = static::post_convertdate($tmst);
-    
-        return $val;
+
+        return  static::post_convertdate($tmst);
     }
 
 }

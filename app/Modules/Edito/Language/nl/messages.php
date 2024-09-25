@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  '' => '',
   'Abandonner' => '',
   'Afficher pendant' => '',
   'Anonyme' => '',

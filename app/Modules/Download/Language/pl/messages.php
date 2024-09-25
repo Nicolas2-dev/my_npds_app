@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  '' => '',
   'ATTENTION : êtes-vous sûr de vouloir supprimer ce fichier téléchargeable ?' => '',
   'Administrateurs' => '',
   'Affichage filtré pour' => '',

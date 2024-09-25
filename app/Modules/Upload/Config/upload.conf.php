@@ -43,21 +43,25 @@ $url_upload = "http://127.0.0.1/";
 
 // URL de la feuille de style à utiliser pour la présentation de la fenetre d'upload (ou "")
 
-global $cookie, $user, $theme;
-if (isset($user)) {
-    if ($cookie[9] == '') 
-        $cookie[9] = Config::get('npds.Default_Theme');
+// global $cookie, $user, $theme;
+// if (isset($user)) {
 
-    if (isset($theme)) 
-        $cookie[9] = $theme;
 
-    $tmp_theme = $cookie[9];
+// vd($cookie[9]);
 
-    if (!$file = @opendir("themes/$cookie[9]")) 
-        $tmp_theme = Config::get('npds.Default_Theme');
-} else {
-    $tmp_theme = Config::get('npds.Default_Theme');
-}
+//     if ($cookie[9] == '') 
+//         $cookie[9] = Config::get('npds.Default_Theme');
+
+//     if (isset($theme)) 
+//         $cookie[9] = $theme;
+
+//     $tmp_theme = $cookie[9];
+
+//     if (!$file = @opendir("themes/$cookie[9]")) 
+//         $tmp_theme = Config::get('npds.Default_Theme');
+// } else {
+//     $tmp_theme = Config::get('npds.Default_Theme');
+// }
 
 /*
 pour une css dans le theme courant utiliser :

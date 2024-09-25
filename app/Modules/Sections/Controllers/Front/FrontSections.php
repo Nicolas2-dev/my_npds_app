@@ -98,9 +98,9 @@ class FrontSections extends FrontController
             $aff = '';
     
             if ($rubric)
-                $aff .= '<span class="lead"><a href="sections.php" title="' . translate("Retour à l'index des rubriques") . '" data-bs-toggle="tooltip">Index</a></span><hr />';
+                $aff .= '<span class="lead"><a href="sections.php" title="' . __d('sections', 'Retour à l\'index des rubriques') . '" data-bs-toggle="tooltip">Index</a></span><hr />';
             
-            $aff .= '<h2>' . translate("Rubriques") . '<span class="float-end badge bg-secondary">' . $nb_r . '</span></h2>';
+            $aff .= '<h2>' . __d('sections', 'Rubriques') . '<span class="float-end badge bg-secondary">' . $nb_r . '</span></h2>';
             
             if (sql_num_rows($result) > 0) {
                 while (list($rubid, $rubname, $intro) = sql_fetch_row($result)) {
@@ -117,7 +117,7 @@ class FrontSections extends FrontController
                         $aff .= '<i class="fa fa-caret-down text-muted invisible "></i>';
     
                     $aff .= '
-                        <a class="ms-2" href="sections.php?rubric=' . $rubid . '">' . aff_langue($rubname) . '</a><span class=" float-end">#NEW#<span class="badge bg-secondary" title="' . translate("Sous-rubrique") . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $nb_section . '</span></span>
+                        <a class="ms-2" href="sections.php?rubric=' . $rubid . '">' . aff_langue($rubname) . '</a><span class=" float-end">#NEW#<span class="badge bg-secondary" title="' . __d('sections', 'Sous-rubrique') . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $nb_section . '</span></span>
                     </h3>';
     
                     if ($intro != '')
@@ -142,7 +142,7 @@ class FrontSections extends FrontController
                             if ($nb_art !== 0)
                                 $aff .= '<a href="#" class="arrow-toggle text-primary" data-bs-toggle="collapse" data-bs-target="#sec' . $secid . '" aria-expanded="true" aria-controls="sec' . $secid . '"><i class="toggle-icon fa fa-caret-up"></i></a>&nbsp;';
                             
-                            $aff1 = aff_langue($secname) . '<span class=" float-end">#NEW#<span class="badge bg-secondary" title="' . translate("Articles") . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $nb_art . '</span></span>';
+                            $aff1 = aff_langue($secname) . '<span class=" float-end">#NEW#<span class="badge bg-secondary" title="' . __d('sections', 'Articles') . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $nb_art . '</span></span>';
                             
                             if ($image != '') {
                                 if (file_exists("assets/images/sections/$image")) {
@@ -177,7 +177,7 @@ class FrontSections extends FrontController
                                     if ((time() - $timestamp) < (86400 * 7))
                                         $nouveau = '';
     
-                                    $aff2 .= '<a href="sections.php?op=viewarticle&amp;artid=' . $artid . '">' . aff_langue($title) . '</a><span class="float-end"><small>' . translate("lu : ") . ' ' . $counter . ' ' . translate("Fois") . '</small>';
+                                    $aff2 .= '<a href="sections.php?op=viewarticle&amp;artid=' . $artid . '">' . aff_langue($title) . '</a><span class="float-end"><small>' . __d('sections', 'lu : ') . ' ' . $counter . ' ' . __d('sections', 'Fois') . '</small>';
                                     
                                     if ($nouveau == '') {
                                         $aff2 .= '<i class="far fa-star ms-3 text-success"></i>';
@@ -207,7 +207,7 @@ class FrontSections extends FrontController
     
             /*
             if ($rubric)
-             echo '<a class="btn btn-secondary" href="sections.php">'.translate("Return to Sections Index").'</a>';
+             echo '<a class="btn btn-secondary" href="sections.php">'.__d('sections', 'Return to Sections Index').'</a>';
             */
     
             sql_free_result($result);
@@ -232,7 +232,7 @@ class FrontSections extends FrontController
         list($rubname) = sql_fetch_row(sql_query("SELECT rubname FROM rubriques WHERE rubid='$rubid'"));
     
         if ($sections_chemin == 1)
-            $chemin = '<span class="lead"><a href="sections.php" title="' . translate("Retour à l'index des rubriques") . '" data-bs-toggle="tooltip">Index</a>&nbsp;/&nbsp;<a href="sections.php?rubric=' . $rubid . '">' . aff_langue($rubname) . '</a></span>';
+            $chemin = '<span class="lead"><a href="sections.php" title="' . __d('sections', 'Retour à l\'index des rubriques') . '" data-bs-toggle="tooltip">Index</a>&nbsp;/&nbsp;<a href="sections.php?rubric=' . $rubid . '">' . aff_langue($rubname) . '</a></span>';
         
         $title =  aff_langue($secname);
     
@@ -254,7 +254,7 @@ class FrontSections extends FrontController
                 $nb_art = sql_num_rows($result);
     
                 if ($prev == 1) {
-                    echo '<input class="btn btn-primary" type="button" value="' . translate("Retour à l'administration") . '" onclick="javascript:history.back()" /><br /><br />';
+                    echo '<input class="btn btn-primary" type="button" value="' . __d('sections', 'Retour à l\'administration') . '" onclick="javascript:history.back()" /><br /><br />';
                 }
     
                 if (function_exists("themesection_title")) {
@@ -262,7 +262,7 @@ class FrontSections extends FrontController
                 } else {
                     echo $chemin . '
                     <hr />
-                    <h3 class="mb-3">' . $title . '<span class="float-end"><span class="badge bg-secondary" title="' . translate("Articles") . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $nb_art . '</span></h3>';
+                    <h3 class="mb-3">' . $title . '<span class="float-end"><span class="badge bg-secondary" title="' . __d('sections', 'Articles') . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $nb_art . '</span></h3>';
                 }
     
                 if ($intro != '')
@@ -281,7 +281,7 @@ class FrontSections extends FrontController
                 }
     
                 echo '
-                    <p>' . translate("Voici les articles publiés dans cette rubrique.") . '</p>
+                    <p>' . __d('sections', 'Voici les articles publiés dans cette rubrique.') . '</p>
                 <div class="card card-body mb-3">';
     
                 while (list($artid, $secid, $title, $content, $userlevel, $counter, $timestamp) = sql_fetch_row($result)) {
@@ -297,7 +297,7 @@ class FrontSections extends FrontController
                         echo '
                         <div class="mb-1">
                         <a href="sections.php?op=viewarticle&amp;artid=' . $artid . '">' . aff_langue($title) . '</a><small>
-                        ' . translate("lu : ") . ' ' . $counter . ' ' . translate("Fois") . '</small><span class="float-end"><a href="sections.php?op=printpage&amp;artid=' . $artid . '" title="' . translate("Page spéciale pour impression") . '" data-bs-toggle="tooltip" data-bs-placement="left"><i class="fa fa-print fa-lg"></i></a></span>';
+                        ' . __d('sections', 'lu : ') . ' ' . $counter . ' ' . __d('sections', 'Fois') . '</small><span class="float-end"><a href="sections.php?op=printpage&amp;artid=' . $artid . '" title="' . __d('sections', 'Page spéciale pour impression') . '" data-bs-toggle="tooltip" data-bs-placement="left"><i class="fa fa-print fa-lg"></i></a></span>';
                         
                         if ($nouveau == '') {
                             echo '&nbsp;<i class="fa fa-star-o text-success"></i>';
@@ -309,7 +309,7 @@ class FrontSections extends FrontController
                 echo '</div>';
                 /*
                 echo '
-                <a class="btn btn-secondary" href="sections.php">'.translate("Return to Sections Index").'</a>';
+                <a class="btn btn-secondary" href="sections.php">'.__d('sections', 'Return to Sections Index').'</a>';
                 */
             } else
                 redirect_url("sections.php");
@@ -355,7 +355,7 @@ class FrontSections extends FrontController
             $pindex = substr(substr($page, 5), 0, -1);
     
             if ($pindex != '')
-                $pindex = translate("Page") . ' ' . $pindex;
+                $pindex = __d('sections', 'Page') . ' ' . $pindex;
     
             if ($sections_chemin == 1)
                 $chemin = '<span class="lead"><a href="sections.php">Index</a>&nbsp;/&nbsp;<a href="sections.php?rubric=' . $rubid . '">' . aff_langue($rubname) . '</a>&nbsp;/&nbsp;<a href="sections.php?op=listarticles&amp;secid=' . $secid . '">' . aff_langue($secname) . '</a></span>';
@@ -376,7 +376,7 @@ class FrontSections extends FrontController
                 $words = sizeof(explode(' ', $Xcontent));
     
                 if ($prev == 1) {
-                    echo '<input class="btn btn-secondary" type="button" value="' . translate("Retour à l'administration") . '" onclick="javascript:history.back()" /><br /><br />';
+                    echo '<input class="btn btn-secondary" type="button" value="' . __d('sections', 'Retour à l\'administration') . '" onclick="javascript:history.back()" /><br /><br />';
                 }
     
                 if (function_exists("themesection_title")) {
@@ -385,8 +385,8 @@ class FrontSections extends FrontController
                     echo $chemin . '
                     <hr />
                     <h3 class="mb-2">' . $title . '<span class="small text-muted"> - ' . $pindex . '</span></h3>
-                    <p><span class="text-muted small">(' . $words . ' ' . translate("mots dans ce texte )") . '&nbsp;-&nbsp;
-                ' . translate("lu : ") . ' ' . $counter . ' ' . translate("Fois") . '</span><span class="float-end"><a href="sections.php?op=printpage&amp;artid=' . $artid . '" title="' . translate("Page spéciale pour impression") . '" data-bs-toggle="tooltip" data-bs-placement="left"><i class="fa fa-print fa-lg ms-3"></i></a></span></p><hr />';
+                    <p><span class="text-muted small">(' . $words . ' ' . __d('sections', 'mots dans ce texte )') . '&nbsp;-&nbsp;
+                ' . __d('sections', 'lu : ') . ' ' . $counter . ' ' . __d('sections', 'Fois') . '</span><span class="float-end"><a href="sections.php?op=printpage&amp;artid=' . $artid . '" title="' . __d('sections', 'Page spéciale pour impression') . '" data-bs-toggle="tooltip" data-bs-placement="left"><i class="fa fa-print fa-lg ms-3"></i></a></span></p><hr />';
                     preg_match_all('#\[page.*\]#', $Xcontent, $rs);
                 
                 $ndepages = count($rs[0]);
@@ -410,18 +410,18 @@ class FrontSections extends FrontController
                     <li class="page-item disabled"><a class="page-link" href="#">' . $ndepages . ' pages</a></li>';
     
                     if ($pageS !== '[page0]')
-                        $Xcontent .= '<li class="page-item"><a class="page-link" href="sections.php?op=viewarticle&amp;artid=' . $artid . '">' . translate("Début de l'article") . '</a></li>';
+                        $Xcontent .= '<li class="page-item"><a class="page-link" href="sections.php?op=viewarticle&amp;artid=' . $artid . '">' . __d('sections', 'Début de l\'article') . '</a></li>';
                     
                     $Xcontent .= '
                         <li class="page-item active"><a class="page-link">' . preg_replace('#\[(page)(.*)(\])#', '\1 \2', $pageS) . '</a></li>
-                        <li class="page-item"><a class="page-link" href="sections.php?op=viewarticle&amp;artid=' . $artid . '&amp;page=' . $pageS . '" >' . translate("Page suivante") . '</a></li>
+                        <li class="page-item"><a class="page-link" href="sections.php?op=viewarticle&amp;artid=' . $artid . '&amp;page=' . $pageS . '" >' . __d('sections', 'Page suivante') . '</a></li>
                     </ul>
                     </nav>';
                 } else if ($multipage) {
                     $Xcontent .= '
                     <nav class="d-flex mt-3">
                     <ul class="mx-auto pagination pagination-sm">
-                    <li class="page-item"><a class="page-link" href="sections.php?op=viewarticle&amp;artid=' . $artid . '&amp;page=[page0]">' . translate("Début de l'article") . '</a></li>
+                    <li class="page-item"><a class="page-link" href="sections.php?op=viewarticle&amp;artid=' . $artid . '&amp;page=[page0]">' . __d('sections', 'Début de l\'article') . '</a></li>
                     </ul>
                     </nav>';
                 }
@@ -432,9 +432,9 @@ class FrontSections extends FrontController
                 $artidtempo = $artid;
                 if ($rubname != 'Divers') {
                     /*
-                    echo '<hr /><p><a class="btn btn-secondary" href="sections.php">'.translate("Return to Sections Index").'</a></p>'; 
+                    echo '<hr /><p><a class="btn btn-secondary" href="sections.php">'.__d('sections', 'Return to Sections Index').'</a></p>'; 
     
-                    echo '<h4>***<strong>'.translate("Back to chapter:").'</strong></h4>';
+                    echo '<h4>***<strong>'.__d('sections', 'Back to chapter:').'</strong></h4>';
                     echo '<ul class="list-group"><li class="list-group-item"><a href="sections.php?op=listarticles&amp;secid='.$secid.'">'.aff_langue($secname).'</a></li></ul>';
                     */
     
@@ -443,7 +443,7 @@ class FrontSections extends FrontController
     
                     if ($nb_article > 0) {
                         echo '
-                        <h4 class="my-3">' . translate("Autres publications de la sous-rubrique") . '<span class="badge bg-secondary float-end">' . $nb_article . '</span></h4>
+                        <h4 class="my-3">' . __d('sections', 'Autres publications de la sous-rubrique') . '<span class="badge bg-secondary float-end">' . $nb_article . '</span></h4>
                         <ul class="list-group">';
     
                         while (list($artid, $secid, $title, $userlevel) = sql_fetch_row($result3)) {
@@ -462,7 +462,7 @@ class FrontSections extends FrontController
     
                 if (sql_num_rows($resultconnexe) > 0) {
                     echo '
-                    <h4 class="my-3">' . translate("Cela pourrait vous intéresser") . '<span class="badge bg-secondary float-end">' . sql_num_rows($resultconnexe) . '</span></h4>
+                    <h4 class="my-3">' . __d('sections', 'Cela pourrait vous intéresser') . '<span class="badge bg-secondary float-end">' . sql_num_rows($resultconnexe) . '</span></h4>
                     <ul class="list-group">';
     
                     while (list($connexe) = sql_fetch_row($resultconnexe)) {
@@ -525,8 +525,8 @@ class FrontSections extends FrontController
         echo '
                    <hr />
                    <p class="text-center">
-                   ' . translate("Cet article provient de") . ' ' . Config::get('npds.sitename') . '<br /><br />
-                   ' . translate("L'url pour cet article est : ") . '
+                   ' . __d('sections', 'Cet article provient de') . ' ' . Config::get('npds.sitename') . '<br /><br />
+                   ' . __d('sections', 'L\'url pour cet article est : ') . '
                    <a href="' . Config::get('npds.nuke_url') . '/sections.php?op=viewarticle&amp;artid=' . $artid . '">' . Config::get('npds.nuke_url') . '/sections.php?op=viewarticle&amp;artid=' . $artid . '</a>
                    </p>
                 </div>

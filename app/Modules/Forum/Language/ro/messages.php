@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  '' => '',
   '(C\'est le nombre de Sujets affichés pour chaque page relative à un Forum)' => '',
   '(C\'est le nombre de contributions affichées pour chaque page relative à un Sujet)' => '',
   '(Redirection sur un forum externe : <.a href...)' => '',

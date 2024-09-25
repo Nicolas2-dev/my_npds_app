@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  '' => '',
   'Actif' => '',
   'Activer le Bloc' => '',
   'Administrateurs' => '',

@@ -42,8 +42,6 @@ class UserManager implements UserInterface
      */
     public function getusrinfo($user)
     {
-        
-
         $cookie = explode(':', base64_decode($user));
 
         $result = sql_query("SELECT pass 
@@ -55,7 +53,7 @@ class UserManager implements UserInterface
         $userinfo = '';
 
         if (($cookie[2] == md5($pass)) and ($pass != '')) {
-            $result = sql_query("SELECT id, name, uname, email, femail, url, user_avatar, user_occ, user_from, user_intrest, user_sig, user_viewemail, user_theme, pass, storynum, umode, uorder, thold, noscore, bio, ublockon, ublock, theme, commentmax, user_journal, send_email, is_visible, mns, user_lnl 
+            $result = sql_query("SELECT uid, name, uname, email, femail, url, user_avatar, user_occ, user_from, user_intrest, user_sig, user_viewemail, user_theme, pass, storynum, umode, uorder, thold, noscore, bio, ublockon, ublock, theme, commentmax, user_journal, send_email, is_visible, mns, user_lnl 
                                 FROM users 
                                 WHERE uname='$cookie[1]'");
             
@@ -84,7 +82,7 @@ class UserManager implements UserInterface
 
                 list($test) = sql_fetch_row(sql_query("SELECT open 
                                                     FROM users_status 
-                                                    WHERE id='$cookie[0]'"));
+                                                    WHERE uid='$cookie[0]'"));
 
                 if (!$test) {
                     setcookie('user', '', 0);
@@ -110,9 +108,7 @@ class UserManager implements UserInterface
      */
     public function get_moderator($user_id)
     {
-        
-    
-        $user_id = str_replace(",", "' or id='", $user_id);
+        $user_id = str_replace(",", "' or uid='", $user_id);
     
         if ($user_id == 0)
             return ("None");
@@ -140,10 +136,8 @@ class UserManager implements UserInterface
      */
     public function user_is_moderator($uidX, $passwordX, $forum_accessX)
     {
-        
-    
-        $result1 = sql_query("SELECT pass FROM users WHERE id = '$uidX'");
-        $result2 = sql_query("SELECT level FROM users_status WHERE user_id = '$uidX'");
+        $result1 = sql_query("SELECT pass FROM users WHERE uid = '$uidX'");
+        $result2 = sql_query("SELECT level FROM users_status WHERE uid = '$uidX'");
     
         $userX = sql_fetch_assoc($result1);
     
@@ -166,16 +160,14 @@ class UserManager implements UserInterface
      */
     public function get_userdata_from_id($userid)
     {
-        
-    
-        $sql1 = "SELECT * FROM users WHERE id='$userid'";
-        $sql2 = "SELECT * FROM users_status WHERE user_id='$userid'";
+        $sql1 = "SELECT * FROM users WHERE uid='$userid'";
+        $sql2 = "SELECT * FROM users_status WHERE uid='$userid'";
     
         if (!$result = sql_query($sql1))
             forumerror('0016');
     
         if (!$myrow = sql_fetch_assoc($result))
-            $myrow = array("id" => 1);
+            $myrow = array("uid" => 1);
         else
             $myrow = array_merge($myrow, (array)sql_fetch_assoc(sql_query($sql2)));
     
@@ -191,10 +183,8 @@ class UserManager implements UserInterface
      */
     public function get_userdata_extend_from_id($userid)
     {
-        
-    
-        $sql1 = "SELECT * FROM users_extend WHERE id='$userid'";
-        /*   $sql2 = "SELECT * FROM users_status WHERE user_id='$userid'";
+        $sql1 = "SELECT * FROM users_extend WHERE uid='$userid'";
+        /*   $sql2 = "SELECT * FROM users_status WHERE uid='$userid'";
     
         if (!$result = sql_query($sql1))  
             forumerror('0016');
@@ -219,23 +209,19 @@ class UserManager implements UserInterface
      */
     public function get_userdata($username)
     {
-        
-    
         $sql = "SELECT * FROM users WHERE uname='$username'";
     
         if (!$result = sql_query($sql))
             forumerror('0016');
     
         if (!$myrow = sql_fetch_assoc($result))
-            $myrow = array("id" => 1);
+            $myrow = array("uid" => 1);
     
         return ($myrow);
     }
 
     function message_error($ibid, $op)
     {
-        include("header.php");
-    
         echo '
         <h2>' . translate("Utilisateur") . '</h2>
         <div class="alert alert-danger lead">';
@@ -253,23 +239,15 @@ class UserManager implements UserInterface
         
         echo '
         </div>';
-    
-        include("footer.php");
     }
     
     function message_pass($ibid)
     {
-        include("header.php");
         echo $ibid;
-        include("footer.php");
     }
     
     function userCheck($uname, $email)
     {
-        
-    
-        include_once('functions.php');
-    
         $stop = '';
     
         if ((!$email) || ($email == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email)))
@@ -575,7 +553,7 @@ class UserManager implements UserInterface
      */
     public function user_rang($user_id)
     {
-        $user_rang = DB::table('users_status')->select('rang')->where('user_id', $user_id)->first();
+        $user_rang = DB::table('users_status')->select('rang')->where('uid', $user_id)->first();
 
         if ($user_rang['rang']) {
 

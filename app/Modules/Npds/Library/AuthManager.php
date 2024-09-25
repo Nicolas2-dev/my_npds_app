@@ -50,11 +50,11 @@ class AuthManager implements AuthInterface
         switch ($auth) {
 
             case 'user':
-                $guard = (isset($user) ?: null);
+                $guard = (isset($user) ? true : false);
                 break;
 
             case 'admin':
-                $guard = (isset($admin) ?: null);
+                $guard = (isset($admin) ? true : false);
                 break;
         }
 
@@ -72,20 +72,20 @@ class AuthManager implements AuthInterface
     {
         global $user, $admin;
 
-        $guard = null;
+        $auth_guard = null;
 
         switch ($auth) {
 
             case 'user':
-                $guard = (isset($user) ? $user : null);
+                $auth_guard = (isset($user) ? $user : null);
                 break;
 
             case 'admin':
-                $guard = (isset($admin) ? $admin : null);
+                $auth_guard = (isset($admin) ? $admin : null);
                 break;
         }
 
-        return $guard;
+        return $auth_guard;
     }
 
     /**
@@ -129,8 +129,8 @@ class AuthManager implements AuthInterface
      */
     public function autorisation($auto)
     { 
-        $user   = Auth::guard('user');
-        $admin  = Auth::guard('admin');
+        $user   = Auth::check('user');
+        $admin  = Auth::check('admin');
 
         $affich = false;
 

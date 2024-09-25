@@ -1552,7 +1552,7 @@ class SformManager
      * @param [type] $response
      * @return void
      */
-    pubic function sform_insert_mysql($response)
+    public function sform_insert_mysql($response)
     {
         $content = $this->write_sform_data($response);
 
