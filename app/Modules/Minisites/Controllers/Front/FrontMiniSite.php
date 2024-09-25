@@ -78,8 +78,6 @@ class FrontMiniSite extends FrontController
 
                         $avatar_mns = 'storage/users_private/' . $op . '/groupe.png';
 
-                        function adm_translate() {};
-
                         $gX = liste_group();
                         foreach ($gX as $g_id => $g_name) {
                             if ($g_id == basename($op)) $gr_name = $g_name;

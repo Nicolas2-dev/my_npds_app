@@ -42,7 +42,7 @@ class LanguageManager implements LanguageInterface
     {
         global $tab_langue;
 
-        // copie du tableau + rajout de transl pour gestion de l'appel à translate(...); - Theme Dynamic
+        // copie du tableau + rajout de transl pour gestion de l'appel à __(...); - Theme Dynamic
         $tab_llangue        = $tab_langue;
         $tab_llangue[]      = 'transl';
 
@@ -93,7 +93,7 @@ class LanguageManager implements LanguageInterface
                         if ($lang != 'transl') {
                             $ibid = str_replace("[$lang]" . $fragment . "[/$lang]", $fragment, $ibid);
                         } else {
-                            $ibid = str_replace("[$lang]" . $fragment . "[/$lang]", translate($fragment), $ibid);
+                            $ibid = str_replace("[$lang]" . $fragment . "[/$lang]", __($fragment), $ibid);
                         }
 
                         $ok_language = true;
@@ -101,7 +101,7 @@ class LanguageManager implements LanguageInterface
                         if ($lang != 'transl') {
                             $ibid = str_replace("[$lang]" . $fragment . "[/$lang]", "", $ibid);
                         } else {
-                            $ibid = str_replace("[$lang]" . $fragment . "[/$lang]", translate($fragment), $ibid);
+                            $ibid = str_replace("[$lang]" . $fragment . "[/$lang]", __($fragment), $ibid);
                         }
                     }
                 } else {

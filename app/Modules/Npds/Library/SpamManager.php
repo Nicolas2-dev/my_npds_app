@@ -151,9 +151,9 @@ class SpamManager implements SpamInterface
         $al1 = mt_rand(0, count($tab) - 1);
 
         if (function_exists("imagepng")) {
-            $aff = str_replace($tab[$al1], html_entity_decode(translate($tab[$al1]), ENT_QUOTES | ENT_HTML401, 'UTF-8'), $aff);
+            $aff = str_replace($tab[$al1], html_entity_decode($tab[$al1], ENT_QUOTES | ENT_HTML401, 'UTF-8'), $aff);
         } else {
-            $aff = str_replace($tab[$al1], translate($tab[$al1]), $aff);
+            $aff = str_replace($tab[$al1], $tab[$al1], $aff);
         }
 
         // mis en majuscule

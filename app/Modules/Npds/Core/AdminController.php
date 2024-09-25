@@ -616,7 +616,7 @@ class AdminController extends BaseController
             </head>
             <body>
                 <br /><br /><br />
-                <p style="font-size: 24px; font-family: Tahoma, Arial; color: red; text-align:center;"><strong>.: ' . translate("Votre adresse Ip est enregistrée") . ' :.</strong></p>
+                <p style="font-size: 24px; font-family: Tahoma, Arial; color: red; text-align:center;"><strong>.: ' . __d('npds', 'Votre adresse Ip est enregistrée') . ' :.</strong></p>
             </body>
         </html>';
 

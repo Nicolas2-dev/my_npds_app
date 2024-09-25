@@ -1202,7 +1202,7 @@ class AdminStories extends AdminController
                     <input class="form-check-input" type="checkbox" id="Cdate" name="Cdate" value="true" />
                     <label class="form-check-label" for="Cdate">' . __d('news', 'Oui') . '</label>
                     </div>
-                    <span class="small help-block">' . translate(date("l")) . date(" " . translate("dateinternal"), time() + ((int) Config::get('npds.gmt') * 3600)) . '</span>
+                    <span class="small help-block">' . __d('news', date("l")) . date(" " . __d('news', '"dateinternal'), time() + ((int) Config::get('npds.gmt') * 3600)) . '</span>
                 </div>
             </div>
             <div class="mb-3 row">

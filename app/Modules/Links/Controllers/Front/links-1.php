@@ -54,14 +54,14 @@ function AddLink()
          <h3 class="mb-3">Proposer un lien</h3>
          <div class="card card-outline-secondary mb-3">
             <div class="card-body">
-               <span class="help-block">' . translate("Proposer un seul lien.") . '<br />' . translate("Tous les liens proposés sont vérifiés avant insertion.") . '<br />' . translate("Merci de ne pas abuser, le nom d'utilisateur et l'adresse IP sont enregistrés.") . '</span>
+               <span class="help-block">' . __d('links', 'Proposer un seul lien.') . '<br />' . __d('links', 'Tous les liens proposés sont vérifiés avant insertion.') . '<br />' . __d('links', 'Merci de ne pas abuser, le nom d\'utilisateur et l\'adresse IP sont enregistrés.') . '</span>
             </div>
          </div>
          <form id="addlink" method="post" action="modules.php" name="adminForm">
             <input type="hidden" name="ModPath" value="' . $ModPath . '" />
             <input type="hidden" name="ModStart" value="' . $ModStart . '" />
             <div class="mb-3 row">
-               <label class="col-form-label col-sm-3" for="title">' . translate("Titre") . '</label>
+               <label class="col-form-label col-sm-3" for="title">' . __d('links', 'Titre') . '</label>
                <div class="col-sm-9">
                   <input class="form-control" type="text" id="title" name="title" maxlength="100" required="required" />
                   <span class="help-block text-end" id="countcar_title"></span>
@@ -83,7 +83,7 @@ function AddLink()
 
         echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-3" for="cat">' . translate("Catégorie") . '</label>
+                <label class="col-form-label col-sm-3" for="cat">' . __d('links', 'Catégorie') . '</label>
                 <div class="col-sm-9">
                 <select class="form-select" id="cat" name="cat">';
 
@@ -106,13 +106,13 @@ function AddLink()
         if ($links_topic) {
             echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-3" for="topicL">' . translate("Sujets") . '</label>
+                <label class="col-form-label col-sm-3" for="topicL">' . __d('links', 'Sujets') . '</label>
                 <div class="col-sm-9">
                 <select class="form-select" id="topicL" name="topicL">';
 
             $toplist = sql_query("SELECT topicid, topictext FROM topics ORDER BY topictext");
 
-            echo '<option value="">' . translate("Tous les sujets") . '</option>';
+            echo '<option value="">' . __d('links', 'Tous les sujets') . '</option>';
 
             while (list($topicid, $topics) = sql_fetch_row($toplist)) {
                 echo '<option value="' . $topicid . '">' . $topics . '</option>';
@@ -126,7 +126,7 @@ function AddLink()
 
         echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-12" for="xtext">' . translate("Description") . '</label>
+                <label class="col-form-label col-sm-12" for="xtext">' . __d('links', 'Description') . '</label>
                 <div class="col-sm-12">
                 <textarea class="tin form-control" name="xtext" id="xtext" rows="10"></textarea>
                 </div>
@@ -139,13 +139,13 @@ function AddLink()
 
         echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-3" for="name">' . translate("Votre nom") . '</label>
+                <label class="col-form-label col-sm-3" for="name">' . __d('links', 'Votre nom') . '</label>
                 <div class="col-sm-9">
                 <input type="text" class="form-control" id="name" name="name" maxlength="60" value="' . $nom . '" required="required" />
                 </div>
             </div>
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-3" for="email">' . translate("Votre Email") . '</label>
+                <label class="col-form-label col-sm-3" for="email">' . __d('links', 'Votre Email') . '</label>
                 <div class="col-sm-9">
                 <input type="email" class="form-control" id="email" name="email" maxlength="254" required="required" />
                 <span class="help-block text-end" id="countcar_email"></span>
@@ -158,7 +158,7 @@ function AddLink()
                 <div class="mb-3 row">
                     <input type="hidden" name="op" value="Add" />
                     <div class="col-sm-9 ms-sm-auto">
-                    <input type="submit" class="btn btn-primary" value="' . translate("Ajouter une url") . '" />
+                    <input type="submit" class="btn btn-primary" value="' . __d('links', 'Ajouter une url') . '" />
                     </div>
                 </div>
             </form>
@@ -179,8 +179,8 @@ function AddLink()
         include("footer.php");
     } else {
         echo '
-        <div class="alert alert-warning">' . translate("Vous n'êtes pas (encore) enregistré ou vous n'êtes pas (encore) connecté.") . '<br />
-        ' . translate("Si vous étiez enregistré, vous pourriez proposer des liens.") . '</div>';
+        <div class="alert alert-warning">' . __d('links', 'Vous n\'êtes pas (encore) enregistré ou vous n\'êtes pas (encore) connecté.') . '<br />
+        ' . __d('links', 'Si vous étiez enregistré, vous pourriez proposer des liens.') . '</div>';
 
         SearchForm();
 
@@ -207,7 +207,7 @@ function Add($title, $url, $name, $cat, $description, $email, $topicL, $asb_ques
 
     if ($numrows >= Config::get('npds.troll_limit')) {
         error_head("alert-danger");
-        echo translate("Erreur : cette url est déjà présente dans la base de données") . '<br />';
+        echo __d('links', 'Erreur : cette url est déjà présente dans la base de données') . '<br />';
         error_foot();
         exit();
     }
@@ -221,14 +221,14 @@ function Add($title, $url, $name, $cat, $description, $email, $topicL, $asb_ques
 
     if ($title == '') {
         error_head('alert-danger');
-        echo translate("Erreur : vous devez saisir un titre pour votre lien") . '<br />';
+        echo __d('links', 'Erreur : vous devez saisir un titre pour votre lien') . '<br />';
         error_foot();
         exit();
     }
 
     if ($email == '') {
         error_head('alert-danger');
-        echo translate("Erreur : Email invalide") . '<br />';
+        echo __d('links', 'Erreur : Email invalide') . '<br />';
         error_foot();
         exit();
     }
@@ -236,14 +236,14 @@ function Add($title, $url, $name, $cat, $description, $email, $topicL, $asb_ques
     global $links_url;
     if (($url == '') and ($links_url == 1)) {
         error_head('alert-danger');
-        echo translate("Erreur : vous devez saisir une url pour votre lien") . '<br />';
+        echo __d('links', 'Erreur : vous devez saisir une url pour votre lien') . '<br />';
         error_foot();
         exit();
     }
 
     if ($description == '') {
         error_head('alert-danger');
-        echo translate("Erreur : vous devez saisir une description pour votre lien") . '<br />';
+        echo __d('links', 'Erreur : vous devez saisir une description pour votre lien') . '<br />';
         error_foot();
         exit();
     }
@@ -264,8 +264,8 @@ function Add($title, $url, $name, $cat, $description, $email, $topicL, $asb_ques
     
     error_head('alert-success');
 
-    echo translate("Nous avons bien reçu votre demande de lien, merci") . '<br />';
-    echo translate("Vous recevrez un mèl quand elle sera approuvée.") . '<br />';
+    echo __d('links', 'Nous avons bien reçu votre demande de lien, merci') . '<br />';
+    echo __d('links', 'Vous recevrez un mèl quand elle sera approuvée.') . '<br />';
 
     error_foot();
 }
@@ -301,12 +301,12 @@ function links_search($query, $topicL, $min, $max, $offset)
 
         if ($prev >= 0) {
             echo "$min <a href=\"modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;op=search&min=$prev&amp;query=$query&amp;topicL=$topicL\" class=\"noir\">";
-            echo translate("réponses précédentes") . "</a>&nbsp;&nbsp;";
+            echo __d('links', 'réponses précédentes') . "</a>&nbsp;&nbsp;";
         }
 
         if ($x >= ($offset - 1)) {
             echo "<a href=\"modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;op=search&amp;min=$max&amp;query=$query&amp;topicL=$topicL\" class=\"noir\">";
-            echo translate("réponses suivantes") . "</a>";
+            echo __d('links', 'réponses suivantes') . "</a>";
         }
     }
     

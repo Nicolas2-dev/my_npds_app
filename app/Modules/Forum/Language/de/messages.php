@@ -144,6 +144,7 @@ return array (
   'Nouveau' => '',
   'Nouveau sujet' => '',
   'Off' => '',
+  'Ok' => '',
   'On' => '',
   'Options' => '',
   'Oui' => '',

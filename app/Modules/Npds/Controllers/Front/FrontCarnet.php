@@ -39,7 +39,7 @@ class Front extends FrontController
         
             include("themes/$tmp_theme/theme.php");
         
-            $Titlesitename = translate("Carnet d'adresses");
+            $Titlesitename = __d('npds', 'Carnet d\'adresses');
         
             include("storage/meta/meta.php");
         
@@ -90,8 +90,8 @@ class Front extends FrontController
             } else
                 echo '
                     <div class="alert alert-secondary text-break">
-                        <span>' . translate("Vous pouvez charger un fichier carnet.txt dans votre miniSite") . '.</span><br />
-                        <span>' . translate("La structure de chaque ligne de ce fichier : nom_du_membre; adresse Email; commentaires") . '</span>
+                        <span>' . __d('npds', 'Vous pouvez charger un fichier carnet.txt dans votre miniSite') . '.</span><br />
+                        <span>' . __d('npds', 'La structure de chaque ligne de ce fichier : nom_du_membre; adresse Email; commentaires') . '</span>
                     </div>';
         
             echo '

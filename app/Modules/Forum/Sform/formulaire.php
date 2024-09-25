@@ -131,7 +131,7 @@ $m->add_extra('
         <div class="mb-3 row">
             <div class="col-sm-8 ms-sm-auto" >');
 
-$m->add_field('Reset', '', translate("Annuler"), 'reset', false);
+$m->add_field('Reset', '', __d('forum', 'Annuler'), 'reset', false);
 $m->add_extra("&nbsp;&nbsp;&nbsp;");
 
 // Submit bouton

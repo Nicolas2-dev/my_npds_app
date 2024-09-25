@@ -38,7 +38,7 @@ class Front extends FrontController
         //         bannerstats($login, $pass);
         //         break;
         
-        //     case translate('Changer'):
+        //     case 'Changer':
         //         change_banner_url_by_client($login, $pass, $cid, $bid, $url);
         //         break;
         

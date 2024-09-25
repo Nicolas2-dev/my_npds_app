@@ -604,8 +604,8 @@ class AdminGroupes extends AdminController
         $list_membres = explode(',', $luname);
         $nbremembres = count($list_membres);
     
-        $subject = adm_translate('Nouvelles du groupe') . ' ' . $gn;
-        $message = adm_translate('Vous faites désormais partie des membres du groupe') . ' : ' . $gn . ' [' . $groupe_id . '].';
+        $subject = __d('groupes', 'Nouvelles du groupe') . ' ' . $gn;
+        $message = __d('groupes', 'Vous faites désormais partie des membres du groupe') . ' : ' . $gn . ' [' . $groupe_id . '].';
     
         $copie = '';
         $from_userid = 1;
@@ -689,8 +689,8 @@ class AdminGroupes extends AdminController
     
             $resultat = sql_query("SELECT groupe FROM users_status WHERE uid='$uid'");
     
-            $subject = adm_translate('Nouvelles du groupe') . ' ' . $gn;
-            $message = adm_translate('Vous ne faites plus partie des membres du groupe') . ' : ' . $gn . ' [' . $groupe_id . '].';
+            $subject = __d('groupes', 'Nouvelles du groupe') . ' ' . $gn;
+            $message = __d('groupes', 'Vous ne faites plus partie des membres du groupe') . ' : ' . $gn . ' [' . $groupe_id . '].';
     
             $copie = '';
             $from_userid = 1;

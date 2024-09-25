@@ -1,30 +1,6 @@
 <?php
 
 /**
- * [adm_translate description]
- *
- * @param   [type]  $msg  [$msg description]
- *
- * @return  [type]        [return description]
- */
-function adm_translate($msg)
-{
-    return $msg;
-}
-
-/**
- * [translate description]
- *
- * @param   [type]  $msg  [$msg description]
- *
- * @return  [type]        [return description]
- */
-function translate($msg)
-{
-    return $msg;
-}
-
-/**
  * [check_install description]
  *
  * @return  [type]  [return description]

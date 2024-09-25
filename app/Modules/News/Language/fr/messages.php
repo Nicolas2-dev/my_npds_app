@@ -2,6 +2,7 @@
 
 return array (
   '' => '',
+  '"dateinternal' => '',
   '(description ou nom complet du sujet)' => '',
   '(nom de l\'image + extension)' => '',
   '(un simple nom sans espaces)' => '',

@@ -281,7 +281,7 @@ class AdminEmailUser extends AdminController
     
             $message = str_replace('\n', '<br />', $message);
     
-            $time = date(translate("dateinternal"), time() + ((int) Config::get('npds.gmt') * 3600));
+            $time = date(__d('users', 'dateinternal'), time() + ((int) Config::get('npds.gmt') * 3600));
     
             $pasfin = false;
             $count = 0;

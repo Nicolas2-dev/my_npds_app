@@ -36,11 +36,11 @@ or (!$SuperCache)) {
     <table id ="lst_art_arch" data-toggle="table"  data-striped="true" data-search="true" data-show-toggle="true" data-show-columns="true" data-mobile-responsive="true" data-icons-prefix="fa" data-buttons-class="outline-secondary" data-icons="icons">
         <thead>
             <tr>
-                <th data-sortable="true" data-sorter="htmlSorter" data-halign="center" class="n-t-col-xs-4">' . translate("Articles") . '</th>
-                <th data-sortable="true" data-halign="center" data-align="right" class="n-t-col-xs-1">' . translate("lus") . '</th>
-                <th data-halign="center" data-align="right">' . translate("Posté le") . '</th>
-                <th data-sortable="true" data-halign="center" data-align="left">' . translate("Auteur") . '</th>
-                <th data-halign="center" data-align="center" class="n-t-col-xs-2">' . translate("Fonctions") . '</th>
+                <th data-sortable="true" data-sorter="htmlSorter" data-halign="center" class="n-t-col-xs-4">' . __d('archivestories', 'Articles"') . '</th>
+                <th data-sortable="true" data-halign="center" data-align="right" class="n-t-col-xs-1">' . __d('archivestories', 'lus"') . '</th>
+                <th data-halign="center" data-align="right">' . __d('archivestories', 'Posté le"') . '</th>
+                <th data-sortable="true" data-halign="center" data-align="left">' . __d('archivestories', 'Auteur"') . '</th>
+                <th data-halign="center" data-align="center" class="n-t-col-xs-2">' . __d('archivestories', 'Fonctions"') . '</th>
             </tr>
         </thead>
         <tbody>';
@@ -76,8 +76,8 @@ or (!$SuperCache)) {
 
         $story_limit++;
 
-        $printP = '<a href="print.php?sid=' . $s_sid . '&amp;archive=' . $arch . '"><i class="fa fa-print fa-lg" title="' . translate("Page spéciale pour impression") . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a>';
-        $sendF = '<a class="ms-4" href="friend.php?op=FriendSend&amp;sid=' . $s_sid . '&amp;archive=' . $arch . '"><i class="fa fa-at fa-lg" title="' . translate("Envoyer cet article à un ami") . '" data-bs-toggle="tooltip" data-bs-placement="left" ></i></a>';
+        $printP = '<a href="print.php?sid=' . $s_sid . '&amp;archive=' . $arch . '"><i class="fa fa-print fa-lg" title="' . __d('archivestories', 'Page spéciale pour impression"') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a>';
+        $sendF = '<a class="ms-4" href="friend.php?op=FriendSend&amp;sid=' . $s_sid . '&amp;archive=' . $arch . '"><i class="fa fa-at fa-lg" title="' . __d('archivestories', 'Envoyer cet article à un ami"') . '" data-bs-toggle="tooltip" data-bs-placement="left" ></i></a>';
        
         $sid = $s_sid;
 
@@ -113,8 +113,8 @@ or (!$SuperCache)) {
         </table>
         <div class="d-flex my-3 justify-content-between flex-wrap">
         <ul class="pagination pagination-sm">
-            <li class="page-item disabled"><a class="page-link" href="#" >' . translate("Nb. d'articles") . ' ' . $count . ' </a></li>
-            <li class="page-item disabled"><a class="page-link" href="#" >' . $nbPages . ' ' . translate("pages") . '</a></li>
+            <li class="page-item disabled"><a class="page-link" href="#" >' . __d('archivestories', 'Nb. d\'articles') . ' ' . $count . ' </a></li>
+            <li class="page-item disabled"><a class="page-link" href="#" >' . $nbPages . ' ' . __d('archivestories', 'pages') . '</a></li>
         </ul>';
 
     echo Paginator::paginate('modules.php?ModPath=archive-stories&amp;ModStart=archive-stories&amp;start=', '&amp;count=' . $count, $nbPages, $current, 1, $maxcount, $start);

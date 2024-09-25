@@ -12,7 +12,7 @@
 /************************************************************************/
 
 // Constantes
-define('DateFormat', translate("dateinternal"));
+define('DateFormat', __d('fmanager', 'dateinternal'));
 
 class Navigator
 {
@@ -512,7 +512,7 @@ class Navigator
             $ibid = @chmod($file, 0777);
 
         if (!$ibid)
-            $this->Errors = fma_translate("Impossible d'appliquer le chmod");
+            $this->Errors = __d('fmanager', 'Impossible d\'appliquer le chmod');
 
         if ($this->Errors != "") 
             return (false);
@@ -527,9 +527,9 @@ class Navigator
             if (!file_exists($new)) 
                 rename($old, $new);
             else 
-                $this->Errors = basename($new) . " : " . fma_translate("Impossible de renommer");
+                $this->Errors = basename($new) . " : " . __d('fmanager', 'Impossible de renommer');
         } else {
-            $this->Errors = basename($old) . " : " . fma_translate("Le fichier n'existe pas");
+            $this->Errors = basename($old) . " : " . __d('fmanager', 'Le fichier n\'existe pas');
         }
 
         if ($this->Errors != "") 
@@ -545,9 +545,9 @@ class Navigator
             if (!file_exists($new)) 
                 rename($old, $new);
             else 
-                $this->Errors = basename($new) . " : " . fma_translate("Impossible de déplacer");
+                $this->Errors = basename($new) . " : " . __d('fmanager', 'Impossible de déplacer');
         } else {
-            $this->Errors = basename($old) . " : " . fma_translate("Le fichier n'existe pas");
+            $this->Errors = basename($old) . " : " . __d('fmanager', 'Le fichier n\'existe pas');
         }
 
         if ($this->Errors != "") 
@@ -563,14 +563,14 @@ class Navigator
             if (!file_exists($new)) 
                 $noerr = copy($old, $new);
             else {
-                $new = str_replace(basename($new), fma_translate("Copie de ") . basename($new), $new);
+                $new = str_replace(basename($new), __d('fmanager', 'Copie de ') . basename($new), $new);
                 $noerr = copy($old, $new);
             }
 
             if (!$noerr) 
-                $this->Errors = basename($new) . " : " . fma_translate("Impossible de copier");
+                $this->Errors = basename($new) . " : " . __d('fmanager', 'Impossible de copier');
         } else {
-            $this->Errors = basename($old) . " : " . fma_translate("Le fichier n'existe pas");
+            $this->Errors = basename($old) . " : " . __d('fmanager', 'Le fichier n\'existe pas');
         }
 
         if ($this->Errors != "") 
@@ -588,19 +588,19 @@ class Navigator
             case "f":
                 if (!file_exists($name)) {
                     if (!$fp = fopen($name, "w")) 
-                        $this->Errors = fma_translate("Impossible de créer") . " : " . basename($name);
+                        $this->Errors = __d('fmanager', 'Impossible de créer') . " : " . basename($name);
                     else 
                         fclose($fp);
                 } else
-                    $this->Errors = basename($name) . " : " . fma_translate("existe déjà");
+                    $this->Errors = basename($name) . " : " . __d('fmanager', 'existe déjà');
                 break;
 
             case "d":
                 if (!file_exists($name)) {
                     if (!mkdir($name, 0777)) 
-                        $this->Errors = fma_translate("Impossible de créer") . " : " . basename($name);
+                        $this->Errors = __d('fmanager', 'Impossible de créer') . " : " . basename($name);
                 } else
-                    $this->Errors = basename($name) . " : " . fma_translate("existe déjà");
+                    $this->Errors = basename($name) . " : " . __d('fmanager', 'existe déjà');
                 break;
         }
 
@@ -615,7 +615,7 @@ class Navigator
     {
         if (is_file($file)) {
             if (!@unlink($file))
-                $this->Errors = fma_translate("Impossible de supprimer") . " : " . basename($file);
+                $this->Errors = __d('fmanager', 'Impossible de supprimer') . " : " . basename($file);
         }
 
         if ($this->Errors != "") 
@@ -631,7 +631,7 @@ class Navigator
             closedir($handle);
 
             if (!@rmdir($dir))
-                $this->Errors = fma_translate("Impossible de supprimer") . " : " . basename($dir);
+                $this->Errors = __d('fmanager', 'Impossible de supprimer') . " : " . basename($dir);
         }
 
         if ($this->Errors != "") 

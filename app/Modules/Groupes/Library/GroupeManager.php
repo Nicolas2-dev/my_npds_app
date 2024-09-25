@@ -161,7 +161,7 @@ class GroupeManager implements GroupeInterface
         $content .= '<p>' . aff_langue($rsql['groupe_description']) . '</p>' . "\n";
     
         if (file_exists('storage/users_private/groupe/' . $gr . '/groupe.png') and ($i_gr == 1)) {
-            $content .= '<img src="storage/users_private/groupe/' . $gr . '/groupe.png" class="img-fluid mx-auto d-block rounded" alt="' . translate("Groupe") . '" loading="lazy" />';
+            $content .= '<img src="storage/users_private/groupe/' . $gr . '/groupe.png" class="img-fluid mx-auto d-block rounded" alt="' . __d('groupes', 'Groupe') . '" loading="lazy" />';
         }
 
         //=> liste des membres
@@ -177,7 +177,7 @@ class GroupeManager implements GroupeInterface
     
         $li_mb .= '
             <div class="my-4">
-                <a data-bs-toggle="collapse" data-bs-target="#lst_mb_ws_' . $gr . '" class="text-primary" id="show_lst_mb_ws_' . $gr . '" title="' . translate("Déplier la liste") . '"><i id="i_lst_mb_ws_' . $gr . '" class="toggle-icon fa fa-caret-down fa-2x" >&nbsp;</i></a><i class="fa fa-users fa-2x text-muted ms-3 align-middle" title="' . translate("Liste des membres du groupe.") . '" data-bs-toggle="tooltip"></i>&nbsp;<a href="memberslist.php?gr_from_ws=' . $gr . '" class="text-uppercase">' . translate("Membres") . '</a><span class="badge bg-secondary float-end">' . $nb_mb . '</span>';
+                <a data-bs-toggle="collapse" data-bs-target="#lst_mb_ws_' . $gr . '" class="text-primary" id="show_lst_mb_ws_' . $gr . '" title="' . __d('groupes', 'Déplier la liste') . '"><i id="i_lst_mb_ws_' . $gr . '" class="toggle-icon fa fa-caret-down fa-2x" >&nbsp;</i></a><i class="fa fa-users fa-2x text-muted ms-3 align-middle" title="' . __d('groupes', 'Liste des membres du groupe.') . '" data-bs-toggle="tooltip"></i>&nbsp;<a href="memberslist.php?gr_from_ws=' . $gr . '" class="text-uppercase">' . __d('groupes', 'Membres') . '</a><span class="badge bg-secondary float-end">' . $nb_mb . '</span>';
         
         $tab = online_members();
 
@@ -243,32 +243,32 @@ class GroupeManager implements GroupeInterface
             $useroutils = '';
 
             if ($uid != 1 and $uid != '') {
-                $useroutils .= '<a class="list-group-item text-primary" href="user.php?op=userinfo&amp;uname=' . $uname . '" target="_blank" title="' . translate("Profil") . '" data-bs-toggle="tooltip"><i class="fa fa-2x fa-user align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . translate("Profil") . '</span></a>';
+                $useroutils .= '<a class="list-group-item text-primary" href="user.php?op=userinfo&amp;uname=' . $uname . '" target="_blank" title="' . __d('groupes', 'Profil') . '" data-bs-toggle="tooltip"><i class="fa fa-2x fa-user align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . __d('groupes', 'Profil') . '</span></a>';
             }
 
             if ($uid != 1) {
-                $useroutils .= '<a class="list-group-item text-primary" href="powerpack.php?op=instant_message&amp;to_userid=' . $uname . '" title="' . translate("Envoyer un message interne") . '" data-bs-toggle="tooltip"><i class="far fa-2x fa-envelope align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . translate("Message") . '</span></a>';
+                $useroutils .= '<a class="list-group-item text-primary" href="powerpack.php?op=instant_message&amp;to_userid=' . $uname . '" title="' . __d('groupes', 'Envoyer un message interne') . '" data-bs-toggle="tooltip"><i class="far fa-2x fa-envelope align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . __d('groupes', 'Message') . '</span></a>';
             }
 
             if ($femail != '') {
-                $useroutils .= '<a class="list-group-item text-primary" href="mailto:' . anti_spam($femail, 1) . '" target="_blank" title="' . translate("Email") . '" data-bs-toggle="tooltip"><i class="fas fa-at fa-2x align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . translate("Email") . '</span></a>';
+                $useroutils .= '<a class="list-group-item text-primary" href="mailto:' . anti_spam($femail, 1) . '" target="_blank" title="' . __d('groupes', 'Email') . '" data-bs-toggle="tooltip"><i class="fas fa-at fa-2x align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . __d('groupes', 'Email') . '</span></a>';
             }
 
             if ($url != '') {
-                $useroutils .= '<a class="list-group-item text-primary" href="' . $url . '" target="_blank" title="' . translate("Visiter ce site web") . '" data-bs-toggle="tooltip"><i class="fas fa-2x fa-external-link-alt align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . translate("Visiter ce site web") . '</span></a>';
+                $useroutils .= '<a class="list-group-item text-primary" href="' . $url . '" target="_blank" title="' . __d('groupes', 'Visiter ce site web') . '" data-bs-toggle="tooltip"><i class="fas fa-2x fa-external-link-alt align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . __d('groupes', 'Visiter ce site web') . '</span></a>';
             }
 
             if ($mns) {
-                $useroutils .= '<a class="list-group-item text-primary" href="minisite.php?op=' . $uname . '" target="_blank" target="_blank" title="' . translate("Visitez le minisite") . '" data-bs-toggle="tooltip"><i class="fa fa-2x fa-desktop align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . translate("Visitez le minisite") . '</span></a>';
+                $useroutils .= '<a class="list-group-item text-primary" href="minisite.php?op=' . $uname . '" target="_blank" target="_blank" title="' . __d('groupes', 'Visitez le minisite') . '" data-bs-toggle="tooltip"><i class="fa fa-2x fa-desktop align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . __d('groupes', 'Visitez le minisite') . '</span></a>';
             }
 
             if (!Config::get('npds.short_user')) {
                 if ($posterdata_extend[$ch_lat] != ''){
-                    $useroutils .= '<a class="list-group-item text-primary" href="modules.php?ModPath=geoloc&amp;ModStart=geoloc&op=u' . $uid . '" title="' . translate("Localisation") . '" ><i class="fas fa-map-marker-alt fa-2x align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . translate("Localisation") . '</span></a>';
+                    $useroutils .= '<a class="list-group-item text-primary" href="modules.php?ModPath=geoloc&amp;ModStart=geoloc&op=u' . $uid . '" title="' . __d('groupes', 'Localisation') . '" ><i class="fas fa-map-marker-alt fa-2x align-middle fa-fw"></i><span class="ms-2 d-none d-sm-inline">' . __d('groupes', 'Localisation') . '</span></a>';
                 }
             }
 
-            $conn = '<i class="fa fa-plug text-muted" title="' . $uname . ' ' . translate("n'est pas connecté") . '" data-bs-toggle="tooltip" ></i>';
+            $conn = '<i class="fa fa-plug text-muted" title="' . $uname . ' ' . __d('groupes', 'n\'est pas connecté') . '" data-bs-toggle="tooltip" ></i>';
             
             if (!$user_avatar) {
                 $imgtmp = "assets/images/forum/avatar/blank.gif";
@@ -295,7 +295,7 @@ class GroupeManager implements GroupeInterface
             }
     
             if (($timex !== false) and ($timex < 60)) {
-                $conn = '<i class="fa fa-plug faa-flash animated text-primary" title="' . $uname . ' ' . translate("est connecté") . '" data-bs-toggle="tooltip" ></i>';
+                $conn = '<i class="fa fa-plug faa-flash animated text-primary" title="' . $uname . ' ' . __d('groupes', 'est connecté') . '" data-bs-toggle="tooltip" ></i>';
             }
 
             $li_ic .= '<img class="n-smil" src="' . $imgtmp . '" alt="avatar" loading="lazy" />';
@@ -335,7 +335,7 @@ class GroupeManager implements GroupeInterface
             $nb_foru = sql_num_rows($res_forum);
     
             if ($nb_foru >= 1) {
-                $lst_for_tog = '<a data-bs-toggle="collapse" data-bs-target="#lst_for_gr_' . $gr . '" class="text-primary" id="show_lst_for_' . $gr . '" title="' . translate("Déplier la liste") . '" ><i id="i_lst_for_gr_' . $gr . '" class="toggle-icon fa fa-caret-down fa-2x" >&nbsp;</i></a>';
+                $lst_for_tog = '<a data-bs-toggle="collapse" data-bs-target="#lst_for_gr_' . $gr . '" class="text-primary" id="show_lst_for_' . $gr . '" title="' . __d('groupes', 'Déplier la liste') . '" ><i id="i_lst_for_gr_' . $gr . '" class="toggle-icon fa fa-caret-down fa-2x" >&nbsp;</i></a>';
                 $lst_for .= '<ul id="lst_for_gr_' . $gr . '" class="list-group ul_bloc_ws collapse" style ="list-style-type:none;">';
                 $nb_for_gr = '  <span class="badge bg-secondary float-end">' . $nb_foru . '</span>';
                 
@@ -346,7 +346,7 @@ class GroupeManager implements GroupeInterface
                 $lst_for .= '</ul>';
             }
     
-            $content .= '<hr /><div class="">' . $lst_for_tog . '<i class="fa fa-list-alt fa-2x text-muted ms-3 align-middle" title="' . translate("Groupe") . '(' . $gr . '): ' . translate("forum") . '." data-bs-toggle="tooltip" ></i>&nbsp;<a class="text-uppercase" href="forum.php">' . translate("Forum") . '</a>' . $nb_for_gr . $lst_for . '</div>' . "\n";
+            $content .= '<hr /><div class="">' . $lst_for_tog . '<i class="fa fa-list-alt fa-2x text-muted ms-3 align-middle" title="' . __d('groupes', 'Groupe') . '(' . $gr . '): ' . __d('groupes', 'forum') . '." data-bs-toggle="tooltip" ></i>&nbsp;<a class="text-uppercase" href="forum.php">' . __d('groupes', 'Forum') . '</a>' . $nb_for_gr . $lst_for . '</div>' . "\n";
         }
         //=> wspad
         if ($rsql['groupe_pad'] == 1) {
@@ -361,20 +361,20 @@ class GroupeManager implements GroupeInterface
             $nb_doc = sql_num_rows($docs_gr);
     
             if ($nb_doc >= 1) {
-                $lst_doc_tog = '<a data-bs-toggle="collapse" data-bs-target="#lst_doc_gr_' . $gr . '" class="text-primary" id="show_lst_doc_' . $gr . '" title="' . translate("Déplier la liste") . '"><i id="i_lst_doc_gr_' . $gr . '" class="toggle-icon fa fa-caret-down fa-2x" >&nbsp;</i></a>';
+                $lst_doc_tog = '<a data-bs-toggle="collapse" data-bs-target="#lst_doc_gr_' . $gr . '" class="text-primary" id="show_lst_doc_' . $gr . '" title="' . __d('groupes', 'Déplier la liste') . '"><i id="i_lst_doc_gr_' . $gr . '" class="toggle-icon fa fa-caret-down fa-2x" >&nbsp;</i></a>';
                 $lst_doc .= '<ul id="lst_doc_gr_' . $gr . '" class="list-group ul_bloc_ws mt-3 collapse">';
     
                 $nb_doc_gr = '  <span class="badge bg-secondary float-end">' . $nb_doc . '</span>';
                 
                 while (list($p, $e, $m, $r) = sql_fetch_row($docs_gr)) {
                     $surlignage = $couleur[hexfromchr($e)];
-                    $lst_doc .= '<li class="list-group-item list-group-item-action px-1 py-3" style="line-height:14px;"><div id="last_editor_' . $p . '" data-bs-toggle="tooltip" data-bs-placement="right" title="' . translate("Dernier éditeur") . ' : ' . $e . ' ' . date(translate("dateinternal"), $m) . '" style="float:left; width:1rem; height:1rem; background-color:' . $surlignage . '"></div><i class="fa fa-edit text-muted mx-1" data-bs-toggle="tooltip" title="' . translate("Document co-rédigé") . '." ></i><a href="modules.php?ModPath=wspad&amp;ModStart=wspad&amp;op=relo&amp;page=' . $p . '&amp;member=' . $gr . '&amp;ranq=' . $r . '">' . $p . '</a></li>';
+                    $lst_doc .= '<li class="list-group-item list-group-item-action px-1 py-3" style="line-height:14px;"><div id="last_editor_' . $p . '" data-bs-toggle="tooltip" data-bs-placement="right" title="' . __d('groupes', 'Dernier éditeur') . ' : ' . $e . ' ' . date(__d('groupes', 'dateinternal'), $m) . '" style="float:left; width:1rem; height:1rem; background-color:' . $surlignage . '"></div><i class="fa fa-edit text-muted mx-1" data-bs-toggle="tooltip" title="' . __d('groupes', 'Document co-rédigé') . '." ></i><a href="modules.php?ModPath=wspad&amp;ModStart=wspad&amp;op=relo&amp;page=' . $p . '&amp;member=' . $gr . '&amp;ranq=' . $r . '">' . $p . '</a></li>';
                 }
     
                 $lst_doc .= '</ul>';
             }
     
-            $content .= '<hr /><div class="">' . $lst_doc_tog . '<i class="fa fa-edit fa-2x text-muted ms-3 align-middle" title="' . translate("Co-rédaction") . '" data-bs-toggle="tooltip" data-bs-placement="right"></i>&nbsp;<a class="text-uppercase" href="modules.php?ModPath=wspad&ModStart=wspad&member=' . $gr . '" >' . translate("Co-rédaction") . '</a>' . $nb_doc_gr . $lst_doc . '</div>' . "\n";
+            $content .= '<hr /><div class="">' . $lst_doc_tog . '<i class="fa fa-edit fa-2x text-muted ms-3 align-middle" title="' . __d('groupes', 'Co-rédaction') . '" data-bs-toggle="tooltip" data-bs-placement="right"></i>&nbsp;<a class="text-uppercase" href="modules.php?ModPath=wspad&ModStart=wspad&member=' . $gr . '" >' . __d('groupes', 'Co-rédaction') . '</a>' . $nb_doc_gr . $lst_doc . '</div>' . "\n";
         }
         //<= wspad
     
@@ -386,7 +386,7 @@ class GroupeManager implements GroupeInterface
     
             include_once("modules/bloc-notes/bloc-notes.php");
     
-            $lst_blocnote_tog = '<a data-bs-toggle="collapse" data-bs-target="#lst_blocnote_' . $gr . '" class="text-primary" id="show_lst_blocnote" title="' . translate("Déplier la liste") . '"><i id="i_lst_blocnote" class="toggle-icon fa fa-caret-down fa-2x" >&nbsp;</i></a><i class="far fa-sticky-note fa-2x text-muted ms-3 align-middle"></i>&nbsp;<span class="text-uppercase">Bloc note</span>';
+            $lst_blocnote_tog = '<a data-bs-toggle="collapse" data-bs-target="#lst_blocnote_' . $gr . '" class="text-primary" id="show_lst_blocnote" title="' . __d('groupes', 'Déplier la liste') . '"><i id="i_lst_blocnote" class="toggle-icon fa fa-caret-down fa-2x" >&nbsp;</i></a><i class="far fa-sticky-note fa-2x text-muted ms-3 align-middle"></i>&nbsp;<span class="text-uppercase">Bloc note</span>';
             $lst_blocnote = '
             <div id="lst_blocnote_' . $gr . '" class="mt-3 collapse">
             ' . blocnotes("shared", 'WS-BN' . $gr, '', '7', 'bg-dark text-light', false) . '
@@ -402,12 +402,12 @@ class GroupeManager implements GroupeInterface
     
         //=> Filemanager
         if (file_exists('modules/f-manager/users/groupe_' . $gr . '.conf.php')) {
-            $content .= '<a class="mx-2" href="modules.php?ModPath=f-manager&amp;ModStart=f-manager&amp;FmaRep=groupe_' . $gr . '" title="' . translate("Gestionnaire fichiers") . '" data-bs-toggle="tooltip" data-bs-placement="right"><i class="fa fa-folder fa-2x"></i></a>' . "\n";
+            $content .= '<a class="mx-2" href="modules.php?ModPath=f-manager&amp;ModStart=f-manager&amp;FmaRep=groupe_' . $gr . '" title="' . __d('groupes', 'Gestionnaire fichiers') . '" data-bs-toggle="tooltip" data-bs-placement="right"><i class="fa fa-folder fa-2x"></i></a>' . "\n";
         }
 
         //=> Minisite
         if ($rsql['groupe_mns'] == 1) {
-            $content .= '<a class="mx-2" href="minisite.php?op=groupe/' . $gr . '" target="_blank" title= "' . translate("MiniSite") . '" data-bs-toggle="tooltip" data-bs-placement="right"><i class="fa fa-desktop fa-2x"></i></a>';
+            $content .= '<a class="mx-2" href="minisite.php?op=groupe/' . $gr . '" target="_blank" title= "' . __d('groupes', 'MiniSite') . '" data-bs-toggle="tooltip" data-bs-placement="right"><i class="fa fa-desktop fa-2x"></i></a>';
         }
 
         //=> Chat
@@ -420,12 +420,12 @@ class GroupeManager implements GroupeInterface
                 if ($_COOKIE['chat_info_' . $gr]) $chat_img = 'faa-pulse animated faa-slow';
             }
     
-            $content .= '<a class="mx-2" href="javascript:void(0);" onclick="window.open(' . $PopUp . ');" title="' . translate("Ouvrir un salon de chat pour le groupe.") . '" data-bs-toggle="tooltip" data-bs-placement="right" ><i class="fa fa-comments fa-2x ' . $chat_img . '"></i></a>';
+            $content .= '<a class="mx-2" href="javascript:void(0);" onclick="window.open(' . $PopUp . ');" title="' . __d('groupes', 'Ouvrir un salon de chat pour le groupe.') . '" data-bs-toggle="tooltip" data-bs-placement="right" ><i class="fa fa-comments fa-2x ' . $chat_img . '"></i></a>';
         }
     
         //=> admin
         if (autorisation(-127)) {
-            $content .= '<a class="mx-2" href="admin.php?op=groupes" ><i title="' . translate("Gestion des groupes.") . '" data-bs-toggle="tooltip" class="fa fa-cogs fa-2x"></i></a>';
+            $content .= '<a class="mx-2" href="admin.php?op=groupes" ><i title="' . __d('groupes', 'Gestion des groupes.') . '" data-bs-toggle="tooltip" class="fa fa-cogs fa-2x"></i></a>';
         }
 
         $content .= '</div>
@@ -481,9 +481,9 @@ class GroupeManager implements GroupeInterface
                 <ul id="lst_groupes" class="list-group list-group-flush mb-3">
                     <li class="list-group-item d-flex justify-content-between align-items-start px-0">
                     <div class="me-auto">
-                        <div class="fw-bold"><i class="fa fa-users fa-2x text-muted me-2"></i>' . translate('Groupes') . '</div>';
+                        <div class="fw-bold"><i class="fa fa-users fa-2x text-muted me-2"></i>' . __d('groupes', 'Groupes') . '</div>';
     
-        $content .= $nb_groupes > 0 ? translate('Groupe ouvert') : translate('Pas de groupe ouvert');
+        $content .= $nb_groupes > 0 ? __d('groupes', 'Groupe ouvert') : __d('groupes', 'Pas de groupe ouvert');
     
         $content .= '
                     </div>
@@ -497,7 +497,7 @@ class GroupeManager implements GroupeInterface
             
             if (!file_exists('storage/users_private/groupe/ask4group_' . $userdata[0] . '_' . $groupe_id . '_.txt') and !autorisation($groupe_id)) {
                 if (!autorisation(-1)) {
-                    $content .= '<div class="text-end small"><a href="user.php?op=askforgroupe&amp;askedgroup=' . $groupe_id . '" title="' . translate('Envoi une demande aux administrateurs pour rejoindre ce groupe. Un message privé vous informera du résultat de votre demande.') . '" data-bs-toggle="tooltip">' . translate('Rejoindre ce groupe') . '</a></div>';
+                    $content .= '<div class="text-end small"><a href="user.php?op=askforgroupe&amp;askedgroup=' . $groupe_id . '" title="' . __d('groupes', 'Envoi une demande aux administrateurs pour rejoindre ce groupe. Un message privé vous informera du résultat de votre demande.') . '" data-bs-toggle="tooltip">' . __d('groupes', 'Rejoindre ce groupe') . '</a></div>';
                 }
             } 
 
@@ -508,7 +508,7 @@ class GroupeManager implements GroupeInterface
              </ul>';
     
         if (autorisation(-127))
-            $content .= '<div class="text-end"><a class="mx-2" href="admin.php?op=groupes" ><i title="' . translate("Gestion des groupes.") . '" data-bs-toggle="tooltip" data-bs-placement="left" class="fa fa-cogs fa-lg"></i></a></div>';
+            $content .= '<div class="text-end"><a class="mx-2" href="admin.php?op=groupes" ><i title="' . __d('groupes', 'Gestion des groupes.') . '" data-bs-toggle="tooltip" data-bs-placement="left" class="fa fa-cogs fa-lg"></i></a></div>';
         
         $content .= '</div>';
     

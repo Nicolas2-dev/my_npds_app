@@ -145,7 +145,7 @@ class AdminPhpbbMain extends AdminController
     
                 echo '
                     </td>
-                    <td align="center">' . translate("Ok") . '</td>
+                    <td align="center">' . __d('forum', 'Ok') . '</td>
                 </tr>';
             }
     
@@ -349,7 +349,7 @@ class AdminPhpbbMain extends AdminController
                     echo '<option value="' . $myrow['forum_id'] . '">' . $myrow['forum_name'] . '</option>';
                 } while ($myrow = sql_fetch_assoc($result));
             } else
-                echo '<option value="-1">' . translate("No More Forums") . '</option>';
+                echo '<option value="-1">' . __d('forum', 'No More Forums') . '</option>';
         } else
             echo '<option value="-1">Database Error</option>';
     

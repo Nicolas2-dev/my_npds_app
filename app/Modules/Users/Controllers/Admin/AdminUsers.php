@@ -743,7 +743,7 @@ class AdminUsers extends AdminController
         $image = '18.png';
     
         $subject = __d('users', 'Votre adresse Email est incorrecte.');
-        $time = date(translate("dateinternal"), time() + ((int) Config::get('npds.gmt') * 3600));
+        $time = date(__d('users', 'dateinternal'), time() + ((int) Config::get('npds.gmt') * 3600));
         $message = __d('users', 'Votre adresse Email est incorrecte.') . ' (' . __d('users', 'DNS ou serveur de mail incorrect') . ').<br />' . __d('users', 'Tous vos abonnements vers cette adresse Email ont été suspendus.') . '<br /><a href="user.php?op=edituser">' . __d('users', 'Merci de fournir une nouvelle adresse Email valide.') . ' <i class="fa fa-user fa-2x align-middle fa-fw"></i></a><br />' . __d('users', 'Sans réponse de votre part sous 60 jours vous ne pourrez plus vous connecter en tant que membre sur ce site.') . ' ' . __d('users', 'Puis votre compte pourra être supprimé.') . '<br /><br />' . __d('users', 'Contacter l\'administration du site.') . '<a href="mailto:' . Config::get('npds.adminmail') . '" target="_blank"><i class="fa fa-at fa-2x align-middle fa-fw"></i>';
         
         $output = '';

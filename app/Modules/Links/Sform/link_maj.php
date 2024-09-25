@@ -44,11 +44,11 @@ function interface_function($browse_key)
     global $m;
 
     if ($m->sform_read_mysql($browse_key)) {
-        $m->add_field('', '', translate("Mise à jour"), 'submit', false);
+        $m->add_field('', '', __d('links', 'Mise à jour'), 'submit', false);
         $m->add_extra(' - ');
-        $m->add_field('', '', translate("Effacer"), 'submit', false);
+        $m->add_field('', '', __d('links', 'Effacer'), 'submit', false);
     } else
-        $m->add_field('', '', translate("Ajouter"), 'submit', false);
+        $m->add_field('', '', __d('links', 'Ajouter'), 'submit', false);
 
     $m->key_lock('close');
 
@@ -65,13 +65,13 @@ function Supprimer_function($browse_key)
 }
 
 switch ($modifylinkrequest_adv_infos) {
-    case translate("Ajouter"):
+    case __d('links', 'Ajouter'):
         $m->make_response();
         $m->sform_insert_mysql($m->answer);
         interface_function($browse_key);
         break;
 
-    case translate("Effacer"):
+    case __d('links', 'Effacer'):
         $m->make_response();
         $m->sform_delete_mysql();
         interface_function($browse_key);
@@ -81,7 +81,7 @@ switch ($modifylinkrequest_adv_infos) {
         // C'est normal que ce case soit vide !
         break;
 
-    case translate("Mise à jour"):
+    case __d('links', 'Mise à jour'):
         $m->make_response();
         $m->sform_modify_mysql($m->answer);
         interface_function($browse_key);

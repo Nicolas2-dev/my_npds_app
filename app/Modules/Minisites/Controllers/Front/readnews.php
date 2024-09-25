@@ -93,13 +93,13 @@ function readnews($blog_dir, $op, $startpage, $action, $adminblog)
             $content .= '
             <form name="adminForm" method="post" action="minisite.php?op=' . $op . '&action=AOK">
                 <div class="mb-3 row">
-                <label class="form-label" for="title">' . translate("Titre") . '</label>
+                <label class="form-label" for="title">' . __d('Minisites', '"Titre') . '</label>
                 <div class="col-sm-12">
                     <input class="form-control" type="text" name="title" />
                 </div>
                 </div>
                 <div class="mb-3 row">
-                <label class="form-label" for="story">' . translate("Texte complet") . '</label>
+                <label class="form-label" for="story">' . __d('Minisites', '"Texte complet') . '</label>
                 <div class="col-sm-12">
                     <textarea class="tin form-control" name="story" rows="25"></textarea>';
 
@@ -110,7 +110,7 @@ function readnews($blog_dir, $op, $startpage, $action, $adminblog)
                 </div>
                 <div class="mb-3 row">
                 <div class="col-sm-12">
-                    <input class="btn btn-primary" type="submit" name="submit" value="' . translate("Valider") . '" />
+                    <input class="btn btn-primary" type="submit" name="submit" value="' . __d('Minisites', '"Valider') . '" />
                 </div>
                 </div>
             </form>';
@@ -158,11 +158,11 @@ function readnews($blog_dir, $op, $startpage, $action, $adminblog)
             $content .= '
             <form name="adminForm" method="post" action="minisite.php?op=' . $op . '&action=MOK&index=' . $index . '">
                 <div class="mb-3">
-                <label class="form-label" for="title">' . translate("Titre") . '</label>
+                <label class="form-label" for="title">' . __d('Minisites', '"Titre') . '</label>
                 <input class="form-control" type="text" name="title" value="' . $crtsplit[1] . '" />
                 </div>
                 <div class="mb-3">
-                <label class="form-label" for="story" >' . translate("Texte complet") . '</label>
+                <label class="form-label" for="story" >' . __d('Minisites', '"Texte complet') . '</label>
                 <textarea class="tin form-control" name="story" rows="25">' . str_replace("\n", "", $crtsplit[2]) . '</textarea>';
 
             $content .= "&nbsp;!blog_editeur!";
@@ -170,7 +170,7 @@ function readnews($blog_dir, $op, $startpage, $action, $adminblog)
             $content .= '
                 </div>
                 <div class="mb-3">
-                <input class="btn btn-primary" type="submit" name="submit" value="' . translate("Valider") . '" />
+                <input class="btn btn-primary" type="submit" name="submit" value="' . __d('Minisites', '"Valider') . '" />
                 </div>
             </form>
             #v_yt#';
@@ -181,14 +181,14 @@ function readnews($blog_dir, $op, $startpage, $action, $adminblog)
     $new_pages = false;
     for ($i = $startpage * Config::get('npds.perpage'); $i < $startpage * Config::get('npds.perpage') + Config::get('npds.perpage') && $i < $ubound; $i++) {
         $crtsplit = explode('!;!', $xnews[$i]);
-        $actionM = '<a class="" href="minisite.php?op=' . $op . '&amp;action=M' . $i . '" title="' . translate("Modifier") . '" data-bs-toggle="tooltip" ><i class="fa fa-edit fa-lg me-1"></i></a>';
-        $actionD = '<a class="" href="minisite.php?op=' . $op . '&amp;action=D' . $i . '" title="' . translate("Effacer") . '" data-bs-toggle="tooltip"><i class="fas fa-trash fa-lg text-danger"></i></a>';
+        $actionM = '<a class="" href="minisite.php?op=' . $op . '&amp;action=M' . $i . '" title="' . __d('Minisites', '"Modifier') . '" data-bs-toggle="tooltip" ><i class="fa fa-edit fa-lg me-1"></i></a>';
+        $actionD = '<a class="" href="minisite.php?op=' . $op . '&amp;action=D' . $i . '" title="' . __d('Minisites', '"Effacer') . '" data-bs-toggle="tooltip"><i class="fas fa-trash fa-lg text-danger"></i></a>';
         
         $content .= '
         <div class="card mb-3">
             <div class="card-body">
                 <h2 class="card-title">' . aff_langue($crtsplit[1]) . '</h2>
-                <h6 class="card-subtitle text-muted">' . translate("Posté le ") . ' ' . $crtsplit[0] . '</h6>
+                <h6 class="card-subtitle text-muted">' . __d('Minisites', '"Posté le ') . ' ' . $crtsplit[0] . '</h6>
             </div>
             <div class=" card-body">' . convert_ressources($crtsplit[2]) . '</div>';
 

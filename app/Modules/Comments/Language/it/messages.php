@@ -27,6 +27,7 @@ return array (
   'Localisation' => '',
   'Masquer ce commentaire' => '',
   'Message' => '',
+  'Note' => '',
   'Nouveau commentaire' => '',
   'Options' => '',
   'Outils administrateur' => '',

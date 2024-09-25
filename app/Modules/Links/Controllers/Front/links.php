@@ -37,15 +37,15 @@ function menu()
 
     echo '
         <ul class="nav nav-tabs mb-3">
-            <li class="nav-item"><a class="nav-link ' . $in_l . '" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '" >' . translate("Index") . '</a></li>';
+            <li class="nav-item"><a class="nav-link ' . $in_l . '" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '" >' . __d('links', 'Index') . '</a></li>';
 
     if (autorisation(Config::get('npds.links_anonaddlinklock')))
         echo '
-        <li class="nav-item" ><a class="nav-link ' . $ad_l . '" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=AddLink" >' . translate("Ajouter") . '</a></li>';
+        <li class="nav-item" ><a class="nav-link ' . $ad_l . '" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=AddLink" >' . __d('links', 'Ajouter') . '</a></li>';
 
     echo '
-        <li class="nav-item"><a class="nav-link ' . $ne_l . '" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=NewLinks" >' . translate("Nouveautés") . '</a></li>
-        <li class="nav-item"><a class="nav-link " href="#linksearchblock">' . translate("Recherche") . '</a></li>
+        <li class="nav-item"><a class="nav-link ' . $ne_l . '" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=NewLinks" >' . __d('links', 'Nouveautés') . '</a></li>
+        <li class="nav-item"><a class="nav-link " href="#linksearchblock">' . __d('links', 'Recherche') . '</a></li>
     </ul>';
 }
 
@@ -55,19 +55,19 @@ function SearchForm()
 
     echo '
     <div class="card card-body mb-3" id="linksearchblock">
-        <h3 class="mb-3">' . translate("Recherche") . '</h3>
+        <h3 class="mb-3">' . __d('links', 'Recherche') . '</h3>
         <form action="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=search" method="post">';
 
     if ($links_topic) {
         echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-4" for="topicL" >' . translate("Sélectionner un sujet") . '</label>
+                <label class="col-form-label col-sm-4" for="topicL" >' . __d('links', 'Sélectionner un sujet') . '</label>
                 <div class="col-sm-8">
                 <select class="form-select" id="topicL" name="topicL">';
 
         $toplist = sql_query("SELECT topicid, topictext FROM topics ORDER BY topictext");
 
-        echo '<option value="">' . translate("Tous les sujets") . '</option>';
+        echo '<option value="">' . __d('links', 'Tous les sujets') . '</option>';
 
         while (list($topicid, $topics) = sql_fetch_row($toplist)) {
             echo '<option value="' . $topicid . '">' . $topics . '</option>';
@@ -81,14 +81,14 @@ function SearchForm()
 
     echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-4" for="query">' . translate("Votre requête") . '</label>
+                <label class="col-form-label col-sm-4" for="query">' . __d('links', 'Votre requête') . '</label>
                 <div class="col-sm-8">
                 <input class="form-control" type="text" id="query" name="query" />
                 </div>
             </div>
             <div class="mb-3 row">
                 <div class="col-sm-8 ms-sm-auto">
-                <button class="btn btn-primary" type="submit">' . translate("Recherche") . '</button>
+                <button class="btn btn-primary" type="submit">' . __d('links', 'Recherche') . '</button>
                 </div>
             </div>
         </form>
@@ -113,7 +113,7 @@ function autorise_mod($lid, $aff)
 
         if ($radminsuper == 1) { // faut remettre le controle des droits probablement pour les admin qui ont le droit link ??!!
             if ($aff)
-                echo '<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=modifylinkrequest&amp;lid=' . $lid . '&amp;author=-9" title="' . translate("Modifier") . '" data-bs-toggle="tooltip"><i class="fa fa-edit fa-lg"></i></a>';
+                echo '<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=modifylinkrequest&amp;lid=' . $lid . '&amp;author=-9" title="' . __d('links', 'Modifier') . '" data-bs-toggle="tooltip"><i class="fa fa-edit fa-lg"></i></a>';
             
             return (true);
         }
@@ -126,7 +126,7 @@ function autorise_mod($lid, $aff)
 
         if ($submitter == $cookie[1]) {
             if ($aff)
-                echo '<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=modifylinkrequest&amp;lid=' . $lid . '&amp;author=' . $cookie[1] . '" title="' . translate("Modifier") . '" data-bs-toggle="tooltip" ><i class="fa fa-edit fa-lg"></i></a>';
+                echo '<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=modifylinkrequest&amp;lid=' . $lid . '&amp;author=' . $cookie[1] . '" title="' . __d('links', 'Modifier') . '" data-bs-toggle="tooltip" ><i class="fa fa-edit fa-lg"></i></a>';
             return (true);
         } else
             return (false);
@@ -202,10 +202,10 @@ function index()
         if ($result) {
             $numrows = sql_num_rows($result);
             echo '
-            <p class="lead" align="center"><span>' . translate("Il y a") . ' <b>' . $numrows . '</b> ' . translate("Liens") . '
-                <span class="btn btn-danger btn-sm" title="' . translate("Les nouveaux liens de cette catégorie ajoutés aujourd'hui") . '" data-bs-toggle="tooltip" >N</span>&nbsp;
-                <span class="btn btn-success btn-sm" title="' . translate("Les nouveaux liens ajoutés dans cette catégorie dans les 3 derniers jours") . '" data-bs-toggle="tooltip" >N</span>&nbsp;
-                <span class="btn btn-primary btn-sm" title="' . translate("Les nouveaux Liens ajoutés dans cette catégorie cette semaine") . '" data-bs-toggle="tooltip" >N</span>
+            <p class="lead" align="center"><span>' . __d('links', 'Il y a') . ' <b>' . $numrows . '</b> ' . __d('links', 'Liens') . '
+                <span class="btn btn-danger btn-sm" title="' . __d('links', 'Les nouveaux liens de cette catégorie ajoutés aujourd\'hui') . '" data-bs-toggle="tooltip" >N</span>&nbsp;
+                <span class="btn btn-success btn-sm" title="' . __d('links', 'Les nouveaux liens ajoutés dans cette catégorie dans les 3 derniers jours') . '" data-bs-toggle="tooltip" >N</span>&nbsp;
+                <span class="btn btn-primary btn-sm" title="' . __d('links', 'Les nouveaux Liens ajoutés dans cette catégorie cette semaine') . '" data-bs-toggle="tooltip" >N</span>
             </p>';
         }
         SearchForm();
@@ -229,10 +229,10 @@ function index()
 
             echo '
             <p class="lead p-2 text-center border rounded bg-light">
-                <a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '/admin"><i class="fa fa-cogs fa-2x me-2 align-middle" title="Admin" data-bs-toggle="tooltip"></i></a> ' . translate("Liens") . ' : 
-                <span class="badge bg-danger ms-2" title="' . translate("Lien(s) en attente de validation") . '" data-bs-toggle="tooltip">' . $num . '</span> 
-                <span class="badge bg-danger ms-2" title="' . translate("Liens cassés rapportés par un ou plusieurs utilisateurs") . '" data-bs-toggle="tooltip">' . $totalbrokenlinks . '</span> 
-                <span class="badge bg-danger ms-2" title="' . translate("Proposition de modification") . '" data-bs-toggle="tooltip">' . $totalmodrequests . '</span>';
+                <a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '/admin"><i class="fa fa-cogs fa-2x me-2 align-middle" title="Admin" data-bs-toggle="tooltip"></i></a> ' . __d('links', 'Liens') . ' : 
+                <span class="badge bg-danger ms-2" title="' . __d('links', 'Lien(s) en attente de validation') . '" data-bs-toggle="tooltip">' . $num . '</span> 
+                <span class="badge bg-danger ms-2" title="' . __d('links', 'Liens cassés rapportés par un ou plusieurs utilisateurs') . '" data-bs-toggle="tooltip">' . $totalbrokenlinks . '</span> 
+                <span class="badge bg-danger ms-2" title="' . __d('links', 'Proposition de modification') . '" data-bs-toggle="tooltip">' . $totalmodrequests . '</span>';
             
             if ($links_DB != '') 
                 echo 'Ref Tables => <strong>' . $links_DB . '</strong>';
@@ -240,7 +240,7 @@ function index()
             echo '
             </p>';
         } else
-            echo "<p align=\"center\"><span> -: [ <a href=\"modules.php?ModStart=create_tables&amp;ModPath=$ModPath/admin/\">" . translate("Créer") . "</a> Tables : $links_DB ] :-</span></p>";
+            echo "<p align=\"center\"><span> -: [ <a href=\"modules.php?ModStart=create_tables&amp;ModPath=$ModPath/admin/\">" . __d('links', 'Créer') . "</a> Tables : $links_DB ] :-</span></p>";
     }
 
     include("footer.php");
@@ -250,30 +250,30 @@ function FooterOrderBy($cid, $sid, $orderbyTrans, $linkop)
 {
     global $ModPath, $ModStart;
 
-    echo '<p align="center"><span class="">' . translate("Classement") . ' : ';
+    echo '<p align="center"><span class="">' . __d('links', 'Classement') . ' : ';
 
     if ($linkop == "viewlink") {
-        echo translate("Titre") . ' (<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlink&amp;cid=' . $cid . '&amp;orderby=titleA"><i class="fas fa-sort-alpha-down"></i>A</a>\<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlink&amp;cid=' . $cid . '&amp;orderby=titleD">D</a>)
-          ' . translate("Date") . ' (<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlink&amp;cid=' . $cid . '&amp;orderby=dateA">A</a>\<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlink&amp;cid=' . $cid . '&amp;orderby=dateD">D</a>)';
+        echo __d('links', 'Titre') . ' (<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlink&amp;cid=' . $cid . '&amp;orderby=titleA"><i class="fas fa-sort-alpha-down"></i>A</a>\<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlink&amp;cid=' . $cid . '&amp;orderby=titleD">D</a>)
+          ' . __d('links', 'Date') . ' (<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlink&amp;cid=' . $cid . '&amp;orderby=dateA">A</a>\<a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlink&amp;cid=' . $cid . '&amp;orderby=dateD">D</a>)';
     } else {
-        echo translate("Titre") . ' <a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewslink&amp;sid=' . $sid . '&amp;orderby=titleA"><i class="fas fa-sort-alpha-down fa-lg align-middle"></i></a><a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewslink&amp;sid=' . $sid . '&amp;orderby=titleD"><i class="fas fa-sort-alpha-down-alt fa-lg align-middle"></i></a>
-          ' . translate("Date") . ' <a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewslink&amp;sid=' . $sid . '&amp;orderby=dateA"><i class="fas fa-sort-numeric-down fa-lg align-middle"></i></a><a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewslink&amp;sid=' . $sid . '&amp;orderby=dateD"><i class="fas fa-sort-numeric-down-alt fa-lg align-middle"></i></a>';
+        echo __d('links', 'Titre') . ' <a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewslink&amp;sid=' . $sid . '&amp;orderby=titleA"><i class="fas fa-sort-alpha-down fa-lg align-middle"></i></a><a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewslink&amp;sid=' . $sid . '&amp;orderby=titleD"><i class="fas fa-sort-alpha-down-alt fa-lg align-middle"></i></a>
+          ' . __d('links', 'Date') . ' <a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewslink&amp;sid=' . $sid . '&amp;orderby=dateA"><i class="fas fa-sort-numeric-down fa-lg align-middle"></i></a><a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewslink&amp;sid=' . $sid . '&amp;orderby=dateD"><i class="fas fa-sort-numeric-down-alt fa-lg align-middle"></i></a>';
     }
 
-    echo '<br />' . translate("Sites classés par") . ' : <strong>' . $orderbyTrans . '</strong></span></p>';
+    echo '<br />' . __d('links', 'Sites classés par') . ' : <strong>' . $orderbyTrans . '</strong></span></p>';
 
     /*
     echo '
     <div class="btn-group">
     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    '.translate("Classement").'
+    '.__d('links', 'Classement').'
     </button>
     <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">'.translate("Titre").'<i class="ms-2 fas fa-sort-alpha-down fa-lg align-middle"></i></a>
-        <a class="dropdown-item" href="#">'.translate("Titre").'<i class="ms-2 fas fa-sort-alpha-down-alt fa-lg align-middle"></i></a>
+        <a class="dropdown-item" href="#">'.__d('links', 'Titre').'<i class="ms-2 fas fa-sort-alpha-down fa-lg align-middle"></i></a>
+        <a class="dropdown-item" href="#">'.__d('links', 'Titre').'<i class="ms-2 fas fa-sort-alpha-down-alt fa-lg align-middle"></i></a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">'.translate("Date").'<i class="fas fa-sort-numeric-down fa-lg align-middle"></i></a>
-        <a class="dropdown-item" href="#">'.translate("Date").'<i class="fas fa-sort-numeric-down-alt fa-lg align-middle"></i></a>
+        <a class="dropdown-item" href="#">'.__d('links', 'Date').'<i class="fas fa-sort-numeric-down fa-lg align-middle"></i></a>
+        <a class="dropdown-item" href="#">'.__d('links', 'Date').'<i class="fas fa-sort-numeric-down-alt fa-lg align-middle"></i></a>
     </div>
     </div>';
     */
@@ -319,7 +319,7 @@ function viewlink($cid, $min, $orderby, $show)
 
         $affsouscat .= '
         <ul class="list-group">
-            <li class="list-group-item "><h4 class="w-100">' . translate("Sous-catégories") . '<span class="badge bg-secondary float-end"> ' . $numrows . '</span></h4></li>';
+            <li class="list-group-item "><h4 class="w-100">' . __d('links', 'Sous-catégories') . '<span class="badge bg-secondary float-end"> ' . $numrows . '</span></h4></li>';
         
         while (list($sid, $title) = sql_fetch_row($subresult)) {
             $result2 = sql_query("SELECT lid FROM " . $links_DB . "links_links WHERE sid='$sid'");
@@ -418,7 +418,7 @@ function viewslink($sid, $min, $orderby, $show)
         list($cid, $title) = sql_fetch_row($result2);
 
         echo "<table class=\"table table-bordered\"><tr><td class=\"header\">\n";
-        echo "<a href=\"modules.php?ModStart=$ModStart&amp;ModPath=$ModPath\" class=\"box\">" . translate("Index") . "</a> / <a href=\"modules.php?ModStart=$ModStart&amp;ModPath=$ModPath&amp;op=viewlink&amp;cid=$cid\" class=\"box\">" . aff_langue($title) . "</a> / " . aff_langue($stitle);
+        echo "<a href=\"modules.php?ModStart=$ModStart&amp;ModPath=$ModPath\" class=\"box\">" . __d('links', 'Index') . "</a> / <a href=\"modules.php?ModStart=$ModStart&amp;ModPath=$ModPath&amp;op=viewlink&amp;cid=$cid\" class=\"box\">" . aff_langue($title) . "</a> / " . aff_langue($stitle);
         echo "</td></tr></table>";
 
         $orderbyTrans = convertorderbytrans($orderby);
@@ -506,13 +506,13 @@ function categorynewlinkgraphic($cat)
 function popgraphics($count)
 {
     if ($count < 1) 
-        echo '<span class="btn btn-danger btn-sm float-end" title="' . translate("Les nouveaux liens de cette catégorie ajoutés aujourd'hui") . '" data-bs-toggle="tooltip" data-bs-placement="left">N</span>';
+        echo '<span class="btn btn-danger btn-sm float-end" title="' . __d('links', 'Les nouveaux liens de cette catégorie ajoutés aujourd\'hui') . '" data-bs-toggle="tooltip" data-bs-placement="left">N</span>';
     
     if ($count <= 3 && $count >= 1) 
-        echo '<span class="btn btn-success btn-sm float-end" title="' . translate("Les nouveaux liens ajoutés dans cette catégorie dans les 3 derniers jours") . '" data-bs-toggle="tooltip" data-bs-placement="left">N</span>';
+        echo '<span class="btn btn-success btn-sm float-end" title="' . __d('links', 'Les nouveaux liens ajoutés dans cette catégorie dans les 3 derniers jours') . '" data-bs-toggle="tooltip" data-bs-placement="left">N</span>';
     
     if ($count <= 7 && $count > 3) 
-        echo '<span class="btn btn-infos btn-sm float-end" title="' . translate("Les nouveaux Liens ajoutés dans cette catégorie cette semaine") . '" data-bs-toggle="tooltip" data-bs-placement="left">N</span>';
+        echo '<span class="btn btn-infos btn-sm float-end" title="' . __d('links', 'Les nouveaux Liens ajoutés dans cette catégorie cette semaine') . '" data-bs-toggle="tooltip" data-bs-placement="left">N</span>';
 }
 
 function newlinkgraphic($datetime, $time)
@@ -532,7 +532,7 @@ function detecteditorial($lid, $ttitle)
     $recordexist = sql_num_rows($resulted2);
 
     if ($recordexist != 0) 
-        echo '<a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlinkeditorial&amp;lid=' . $lid . '&amp;ttitle=' . $ttitle . '"><i class="far fa-sticky-note fa-lg" title="' . translate("EDITO") . '" data-bs-toggle="tooltip"></i></a>';
+        echo '<a class="me-3" href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=viewlinkeditorial&amp;lid=' . $lid . '&amp;ttitle=' . $ttitle . '"><i class="far fa-sticky-note fa-lg" title="' . __d('links', 'EDITO') . '" data-bs-toggle="tooltip"></i></a>';
 }
 
 //Reusable Link Sorting Functions
@@ -557,19 +557,19 @@ function convertorderbyin($orderby)
 
 function convertorderbytrans($orderby)
 {
-    $orderbyTrans = translate("Title (A to Z)");
+    $orderbyTrans = __d('links', 'Title (A to Z)');
 
     if ($orderby == 'title ASC')       
-        $orderbyTrans = translate("Titre (de A à Z)");
+        $orderbyTrans = __d('links', 'Titre (de A à Z)');
 
     if ($orderby == 'title DESC')      
-        $orderbyTrans = translate("Titre (de Z à A)");
+        $orderbyTrans = __d('links', 'Titre (de Z à A)');
 
     if ($orderby == 'date ASC')        
-        $orderbyTrans = translate("Date (les plus vieux liens en premier)");
+        $orderbyTrans = __d('links', 'Date (les plus vieux liens en premier)');
 
     if ($orderby == 'date DESC')       
-        $orderbyTrans = translate("Date (les liens les plus récents en premier)");
+        $orderbyTrans = __d('links', 'Date (les liens les plus récents en premier)');
 
     return $orderbyTrans;
 }
@@ -623,11 +623,11 @@ function viewlinkeditorial($lid, $ttitle)
 
     echo '
     <div class="card card-body">
-    <h3>' . translate("EDITO") . ' : 
+    <h3>' . __d('links', 'EDITO') . ' : 
         <span class="text-muted">' . aff_langue($displaytitle) . '</span>';
 
     if ($url != '')
-        echo '<span class="float-end"><a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=visit&amp;lid=' . $lid . '" target="_blank" title="' . translate("Visiter ce site web") . '" data-bs-toggle="tooltip" data-bs-placement="left"><i class="fas fa-external-link-alt"></i></a></span>';
+        echo '<span class="float-end"><a href="modules.php?ModStart=' . $ModStart . '&amp;ModPath=' . $ModPath . '&amp;op=visit&amp;lid=' . $lid . '" target="_blank" title="' . __d('links', 'Visiter ce site web') . '" data-bs-toggle="tooltip" data-bs-placement="left"><i class="fas fa-external-link-alt"></i></a></span>';
     
     echo '</h3>';
 
@@ -640,11 +640,11 @@ function viewlinkeditorial($lid, $ttitle)
 
             echo '
             <h4>' . aff_langue($editorialtitle) . '</h4>
-            <p><span class="text-muted small">' . translate("Editorial par") . ' ' . $adminid . ' - ' . $formatted_date . '</span></p>
+            <p><span class="text-muted small">' . __d('links', 'Editorial par') . ' ' . $adminid . ' - ' . $formatted_date . '</span></p>
             <hr/>' . aff_langue($editorialtext);
         }
     } else
-        echo '<p class="text-center">' . translate("Aucun édito n'est disponible pour ce site") . '</p><br />';
+        echo '<p class="text-center">' . __d('links', 'Aucun édito n\'est disponible pour ce site') . '</p><br />';
 
     echo '
     </div>';
@@ -658,7 +658,7 @@ function formatTimestampShort($time)
 
     setlocale(LC_TIME, aff_langue(Config::get('npds.locale')));
     preg_match('#^(\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$#', $time, $datetime);
-    $datetime = strftime("" . translate("linksdatestring") . "", mktime($datetime[4] + (int) Config::get('npds.gmt'), $datetime[5], $datetime[6], $datetime[2], $datetime[3], $datetime[1]));
+    $datetime = strftime("" . __d('links', 'linksdatestring') . "", mktime($datetime[4] + (int) Config::get('npds.gmt'), $datetime[5], $datetime[6], $datetime[2], $datetime[3], $datetime[1]));
     
     if (cur_charset != 'utf-8')
         $datetime = ucfirst($datetime);
@@ -725,7 +725,7 @@ switch ($op) {
             $orderby = "title ASC";
 
         if (isset($show)) 
-            Config::set('npds.perpage', $show)
+            Config::set('npds.perpage', $show);
         else 
             $show = Config::get('npds.perpage');
 

@@ -36,12 +36,12 @@ function modifylinkrequest($lid, $modifylinkrequest_adv_infos, $author)
         $description = stripslashes($description);
 
         echo '
-        <h3 class="my-3">' . translate("Proposition de modification") . ' : <span class="text-muted">' . $title . '</span></h3>
+        <h3 class="my-3">' . __d('links', 'Proposition de modification') . ' : <span class="text-muted">' . $title . '</span></h3>
         <form action="modules.php" method="post" name="adminForm">
             <input type="hidden" name="ModPath" value="' . $ModPath . '" />
             <input type="hidden" name="ModStart" value="' . $ModStart . '" />
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-3" for="title">' . translate("Titre") . '</label>
+                <label class="col-form-label col-sm-3" for="title">' . __d('links', 'Titre') . '</label>
                 <div class="col-sm-9">
                     <input class="form-control" type="text" id="title" name="title" value="' . $title . '"  maxlength="100" required="required" />
                 </div>
@@ -59,7 +59,7 @@ function modifylinkrequest($lid, $modifylinkrequest_adv_infos, $author)
 
         echo '
         <div class="mb-3 row">
-            <label class="col-form-label col-sm-3" for="cat">' . translate("Catégorie") . '</label>
+            <label class="col-form-label col-sm-3" for="cat">' . __d('links', 'Catégorie') . '</label>
             <div class="col-sm-9">
                 <select class="form-select" id="cat" name="cat">';
 
@@ -95,13 +95,13 @@ function modifylinkrequest($lid, $modifylinkrequest_adv_infos, $author)
         if ($links_topic) {
             echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-3" for="topicL">' . translate("Sujets") . '</label>
+                <label class="col-form-label col-sm-3" for="topicL">' . __d('links', 'Sujets') . '</label>
                 <div class="col-sm-9">
                     <select class="form-select" id="topicL" name="topicL">';
 
             $toplist = sql_query("SELECT topicid, topictext FROM topics ORDER BY topictext");
 
-            echo '<option value="">' . translate("Tous les sujets") . '</option>';
+            echo '<option value="">' . __d('links', 'Tous les sujets') . '</option>';
 
             while (list($topicid, $topics) = sql_fetch_row($toplist)) {
                 if ($topicid == $topicid_card) 
@@ -119,7 +119,7 @@ function modifylinkrequest($lid, $modifylinkrequest_adv_infos, $author)
 
         echo '
         <div class="mb-3 row">
-            <label class="col-form-label col-sm-12" for="xtext">' . translate("Description : (255 caractères max)") . '</label>
+            <label class="col-form-label col-sm-12" for="xtext">' . __d('links', 'Description : (255 caractères max)') . '</label>
             <div class="col-sm-12">
                 <textarea class="form-control tin" id="xtext" name="xtext" rows="10">' . $description . '</textarea>
             </div>
@@ -133,7 +133,7 @@ function modifylinkrequest($lid, $modifylinkrequest_adv_infos, $author)
                 <input type="hidden" name="modifysubmitter" value="' . $author . '" />
                 <input type="hidden" name="op" value="modifylinkrequestS" />
                 <div class="col-sm-12">
-                    <input type="submit" class="btn btn-primary" value="' . translate("Envoyer une demande") . '" />
+                    <input type="submit" class="btn btn-primary" value="' . __d('links', 'Envoyer une demande') . '" />
                 </div>
             </div>
         </form>';
@@ -172,10 +172,10 @@ function modifylinkrequestS($lid, $cat, $title, $url, $description, $modifysubmi
         include("header.php");
 
         echo '
-        <h3 class="my-3">' . translate("Liens") . '</h3>
+        <h3 class="my-3">' . __d('links', 'Liens') . '</h3>
         <hr />
-        <h4 class="my-3">' . translate("Proposition de modification") . '</h4>
-        <div class="alert alert-success">' . translate("Merci pour cette information. Nous allons l'examiner dès que possible.") . '</div>
+        <h4 class="my-3">' . __d('links', 'Proposition de modification') . '</h4>
+        <div class="alert alert-success">' . __d('links', 'Merci pour cette information. Nous allons l\'examiner dès que possible.') . '</div>
         <a class="btn btn-primary" href="modules.php?ModPath=links&amp;ModStart=links">Index </a>';
 
         include("footer.php");
@@ -198,11 +198,11 @@ function brokenlink($lid)
     mainheader();
 
     echo '
-    <h3>' . translate("Rapporter un lien rompu") . '</h3>
+    <h3>' . __d('links', 'Rapporter un lien rompu') . '</h3>
     <div class="alert alert-success my-3">
-            ' . translate("Merci de contribuer à la maintenance du site.") . '
+            ' . __d('links', 'Merci de contribuer à la maintenance du site.') . '
             <br />
-            <strong>' . translate("Pour des raisons de sécurité, votre nom d'utilisateur et votre adresse IP vont être momentanément conservés.") . '</strong>
+            <strong>' . __d('links', 'Pour des raisons de sécurité, votre nom d\'utilisateur et votre adresse IP vont être momentanément conservés.') . '</strong>
             <br />
     </div>
     <form method="post" action="modules.php">
@@ -211,7 +211,7 @@ function brokenlink($lid)
         <input type="hidden" name="lid" value="' . $lid . '" />
         <input type="hidden" name="modifysubmitter" value="' . $ratinguser . '" />
         <input type="hidden" name="op" value="brokenlinkS" />
-        <input type="submit" class="btn btn-success" value="' . translate("Rapporter un lien rompu") . '" />
+        <input type="submit" class="btn btn-success" value="' . __d('links', 'Rapporter un lien rompu') . '" />
     </form>';
 
     include("footer.php");
@@ -237,9 +237,9 @@ function brokenlinkS($lid, $modifysubmitter)
     mainheader();
 
     echo '
-    <h3>' . translate("Rapporter un lien rompu") . '</h3>
+    <h3>' . __d('links', 'Rapporter un lien rompu') . '</h3>
     <div class="alert alert-success my-3">
-    ' . translate("Merci pour cette information. Nous allons l'examiner dès que possible.") . '
+    ' . __d('links', 'Merci pour cette information. Nous allons l\'examiner dès que possible.') . '
     </div>';
 
     include("footer.php");
