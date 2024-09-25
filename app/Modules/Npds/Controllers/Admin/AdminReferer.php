@@ -87,7 +87,7 @@ class AdminReferer extends AdminController
     // public function __construct()
     // {
         // $f_meta_nom = 'hreferer';
-        // $f_titre = adm_translate("Sites Référents");
+        // $f_titre = __d('npds', 'Sites Référents');
         
         // //==> controle droit
         // admindroits($aid, $f_meta_nom);
@@ -121,11 +121,11 @@ class AdminReferer extends AdminController
     
         echo '
         <hr />
-        <h3>' . adm_translate("Qui parle de nous ?") . '</h3>
+        <h3>' . __d('npds', 'Qui parle de nous ?') . '</h3>
         <form action="admin.php" method="post">
             <input type="hidden" name="op" value="hreferer" />
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-4" for="filter">' . adm_translate("Filtre") . '</label>
+                <label class="col-form-label col-sm-4" for="filter">' . __d('npds', 'Filtre') . '</label>
                 <div class="col-sm-4">
                     <input type="number" class="form-control" name="filter" min="0" max="99999" value="' . $filter . '" />
                 </div>
@@ -170,8 +170,8 @@ class AdminReferer extends AdminController
         </table>
         <br />
         <ul class="nav nav-pills">
-            <li class="nav-item"><a class="text-danger nav-link" href="admin.php?op=delreferer" >' . adm_translate("Effacer les Référants") . '</a></li>
-            <li class="nav-item"><a class="nav-link" href="admin.php?op=archreferer&amp;filter=' . $filter . '">' . adm_translate("Archiver les Référants") . '</a></li>
+            <li class="nav-item"><a class="text-danger nav-link" href="admin.php?op=delreferer" >' . __d('npds', 'Effacer les Référants') . '</a></li>
+            <li class="nav-item"><a class="nav-link" href="admin.php?op=archreferer&amp;filter=' . $filter . '">' . __d('npds', 'Archiver les Référants') . '</a></li>
         </ul>';
         
        adminfoot('', '', '', '');

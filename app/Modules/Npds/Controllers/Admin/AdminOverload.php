@@ -87,7 +87,7 @@ class Admin extends AdminController
     // public function __construct()
     // {
         // $f_meta_nom = 'supercache';
-        // $f_titre = adm_translate("SuperCache");
+        // $f_titre = __d('npds', 'SuperCache');
         
         // //==> controle droit
         // admindroits($aid, $f_meta_nom);
@@ -181,7 +181,7 @@ class Admin extends AdminController
             <hr />
             <form id="overloadcacheadm" action="admin.php" method="post">
             <fieldset>
-            <legend>' . adm_translate("Activation") . '</legend>
+            <legend>' . __d('npds', 'Activation') . '</legend>
                 <div class="mb-3">
                     <div>';
     
@@ -199,11 +199,11 @@ class Admin extends AdminController
         echo '
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="xsupercache_y" name="xsupercache" value="true" ' . $cky . ' />
-                        <label class="form-check-label" for="xsupercache_y">' . adm_translate("Oui") . '</label>
+                        <label class="form-check-label" for="xsupercache_y">' . __d('npds', 'Oui') . '</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="xsupercache_n" name="xsupercache" value="false" ' . $ckn . ' />
-                        <label class="form-check-label" for="xsupercache_n">' . adm_translate("Non") . '</label>
+                        <label class="form-check-label" for="xsupercache_n">' . __d('npds', 'Non') . '</label>
                     </div>
                     </div>
                 </div>
@@ -243,7 +243,7 @@ class Admin extends AdminController
     
         echo '
             <fieldset>
-            <legend>' . adm_translate("Temps de rétention en secondes") . '</legend>
+            <legend>' . __d('npds', 'Temps de rétention en secondes') . '</legend>
             <div class="mb-3 row">
                 <div class=" col-sm-4 col-12">
                     <label for="xt_index"><code>index.php</code></label>
@@ -290,7 +290,7 @@ class Admin extends AdminController
             <div class="mb-3 row">
                 <input type="hidden" name="op" value="supercache_save" />
                 <div class="col-12">
-                    <button class="btn btn-outline-primary col-12 text-start" type="submit"><i class="fa fa-check fa-lg">&nbsp;</i>' . adm_translate("Valider") . '</button>
+                    <button class="btn btn-outline-primary col-12 text-start" type="submit"><i class="fa fa-check fa-lg">&nbsp;</i>' . __d('npds', 'Valider') . '</button>
                 </div>
             </div>
             </form>
@@ -298,7 +298,7 @@ class Admin extends AdminController
             <form id="fad_cacheclean" action="admin.php" method="post">
                 <div class="mb-3 row">
                     <div class="col-12">
-                    <button class="btn btn-outline-danger col-12 float-end text-end" type="submit">' . adm_translate("Vider le répertoire cache") . '&nbsp;<i class="fas fa-trash fa-lg"></i></button>
+                    <button class="btn btn-outline-danger col-12 float-end text-end" type="submit">' . __d('npds', 'Vider le répertoire cache') . '&nbsp;<i class="fas fa-trash fa-lg"></i></button>
                     </div>
                 </div>
                 <input type="hidden" name="op" value="supercache_empty" />

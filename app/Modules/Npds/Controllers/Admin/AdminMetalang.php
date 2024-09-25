@@ -125,7 +125,7 @@ class AdminMetalang extends AdminController
     function go_back($label)
     {
         if (!$label) 
-            $label = adm_translate("Retour en arrière");
+            $label = __d('npds', 'Retour en arrière');
     
         echo '
         <script type="text/javascript">
@@ -170,7 +170,7 @@ class AdminMetalang extends AdminController
     {
         $list = '
         <select class="form-select" name="type_meta" onchange="window.location=eval(\'this.options[this.selectedIndex].value\')">
-            <option value="">' . adm_translate("Type") . '</option>
+            <option value="">' . __d('npds', 'Type') . '</option>
             <option value="admin.php?op=Creat_Meta_Lang&amp;type_meta=meta">meta</option>
             <option value="admin.php?op=Creat_Meta_Lang&amp;type_meta=mot">mot</option>
             <option value="admin.php?op=Creat_Meta_Lang&amp;type_meta=smil">smil</option>
@@ -261,23 +261,23 @@ class AdminMetalang extends AdminController
     
         $tablmeta .= '
         <hr />
-        <h3><a href="admin.php?op=Creat_Meta_Lang"><i class="fa fa-plus-square"></i></a>&nbsp;' . adm_translate("Créer un nouveau") . ' META-MOT</h3>
+        <h3><a href="admin.php?op=Creat_Meta_Lang"><i class="fa fa-plus-square"></i></a>&nbsp;' . __d('npds', 'Créer un nouveau') . ' META-MOT</h3>
         <hr />
-        <h3>' . adm_translate("Recherche rapide") . '</h3>
+        <h3>' . __d('npds', 'Recherche rapide') . '</h3>
         <div class="row">
             <div class="col-sm-3">' . list_meta($meta, $type_meta) . '</div>
             <div class="col-sm-3">' . list_type_meta($type_meta) . '</div>
         </div>
         <hr />
         <h3>META-MOT <span class="tag tag-default float-end">' . $ibid . '</span></h3>
-        <form name="admin_meta_lang" action="admin.php" method="post" onkeypress="return event.keyCode != 13;" onsubmit="return confirm(\'' . adm_translate("Supprimer") . ' ?\')">
+        <form name="admin_meta_lang" action="admin.php" method="post" onkeypress="return event.keyCode != 13;" onsubmit="return confirm(\'' . __d('npds', 'Supprimer') . ' ?\')">
         <table data-toggle="table" data-striped="true" data-search="true" data-show-toggle="true" data-mobile-responsive="true" data-icons-prefix="fa" data-icons="icons" >
             <thead>
                 <tr>
-                    <th class="n-t-col-xs-2" data-sortable="true" data-halign="center" data-align="right">' . adm_translate("Fonctions") . '</th>
-                    <th data-sortable="true" data-halign="center" >' . adm_translate("Nom") . '</th>
-                    <th class="n-t-col-xs-2" data-sortable="true" data-halign="center" >' . adm_translate("Type") . '</th>
-                    <th data-sortable="true" data-halign="center" >' . adm_translate("Description") . '</th>
+                    <th class="n-t-col-xs-2" data-sortable="true" data-halign="center" data-align="right">' . __d('npds', 'Fonctions') . '</th>
+                    <th data-sortable="true" data-halign="center" >' . __d('npds', 'Nom') . '</th>
+                    <th class="n-t-col-xs-2" data-sortable="true" data-halign="center" >' . __d('npds', 'Type') . '</th>
+                    <th data-sortable="true" data-halign="center" >' . __d('npds', 'Description') . '</th>
                 </tr>
             </thead>
             <tbody>';
@@ -289,7 +289,7 @@ class AdminMetalang extends AdminController
         </table>
         <div class="">
             <input type="hidden" name="op" value="Kill_Meta_Lang" />
-            <button class="btn btn-danger my-2" type="submit" value="kill" title="' . adm_translate("Tout supprimer") . '" data-bs-toggle="tooltip" data-bs-placement="right"><i class="fas fa-trash fa-lg"></i></button>
+            <button class="btn btn-danger my-2" type="submit" value="kill" title="' . __d('npds', 'Tout supprimer') . '" data-bs-toggle="tooltip" data-bs-placement="right"><i class="fas fa-trash fa-lg"></i></button>
         </div>
         </form>';
     
@@ -309,9 +309,9 @@ class AdminMetalang extends AdminController
         echo '<hr />';
     
         if ($Q['obligatoire'] != true)
-            echo '<h3>' . adm_translate("Modifier un ") . ' META-MOT</h3>';
+            echo '<h3>' . __d('npds', 'Modifier un ') . ' META-MOT</h3>';
     
-        echo aff_local_langue('', 'local_user_language') . '<br />', '<label class="col-form-label">' . adm_translate("Langue de Prévisualisation") . '</label>';
+        echo aff_local_langue('', 'local_user_language') . '<br />', '<label class="col-form-label">' . __d('npds', 'Langue de Prévisualisation') . '</label>';
         
         echo '
         <div class="row">
@@ -319,11 +319,11 @@ class AdminMetalang extends AdminController
             <div class="col-sm-9"><code>' . $Q['def'] . '</code></div>
         </div>
         <div class="row">
-            <div class="text-muted col-sm-3">' . adm_translate("Type") . '</div>
+            <div class="text-muted col-sm-3">' . __d('npds', 'Type') . '</div>
             <div class="col-sm-9">' . $Q['type_meta'] . '</div>
         </div>
         <div class="row">
-            <div class="text-muted col-sm-3">' . adm_translate("Description") . '</div>
+            <div class="text-muted col-sm-3">' . __d('npds', 'Description') . '</div>
             <div class="col-sm-9">';
     
         if ($Q['type_meta'] == 'smil') {
@@ -339,7 +339,7 @@ class AdminMetalang extends AdminController
         if ($Q['type_meta'] != 'docu' and $Q['type_meta'] != 'them') {
             echo '
             <div class="row">
-                <div class="text-muted col-sm-12">' . adm_translate("Script") . '</div>
+                <div class="text-muted col-sm-12">' . __d('npds', 'Script') . '</div>
                 <div class=" col-sm-12">
                     <pre class="language-php"><code class="language-php">' . htmlspecialchars($Q['content'], ENT_QUOTES) . '</code></pre>
                 </div>
@@ -355,10 +355,10 @@ class AdminMetalang extends AdminController
                 </div>
                 <div class="form-floating mb-3">
                     <input class="form-control" type="text" id="typemeta" name="type_meta" value="' . $Q['type_meta'] . '" maxlength="10" readonly="readonly" />
-                    <label for="typemeta">' . adm_translate("Type") . '</label>
+                    <label for="typemeta">' . __d('npds', 'Type') . '</label>
                 </div>
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-12" for="desc">' . adm_translate("Description") . '</label>
+                    <label class="col-form-label col-sm-12" for="desc">' . __d('npds', 'Description') . '</label>
                     <div class="col-sm-12">';
     
             if ($Q['type_meta'] == 'smil') {
@@ -374,7 +374,7 @@ class AdminMetalang extends AdminController
             if ($Q['type_meta'] != "docu" and $Q['type_meta'] != "them") {
                 echo '
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-12" for="content">' . adm_translate("Script") . '</label>
+                    <label class="col-form-label col-sm-12" for="content">' . __d('npds', 'Script') . '</label>
                     <div class="col-sm-12">
                         <textarea class="form-control" id="content" name="content" rows="20"required="required" >' . $Q['content'] . '</textarea>
                     </div>
@@ -383,7 +383,7 @@ class AdminMetalang extends AdminController
     
             echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-4" for="typeuri">' . adm_translate("Restriction") . '</label>';
+                <label class="col-form-label col-sm-4" for="typeuri">' . __d('npds', 'Restriction') . '</label>';
     
             $sel0 = '';
             $sel1 = '';
@@ -403,13 +403,13 @@ class AdminMetalang extends AdminController
             echo '
                 <div class="col-sm-8">
                     <select class="form-select" id="typeuri" name="type_uri">
-                        <option' . $sel0 . ' value="moins">' . adm_translate("Tous sauf pour ...") . '</option>
-                        <option' . $sel1 . ' value="plus">' . adm_translate("Seulement pour ...") . '</option>
+                        <option' . $sel0 . ' value="moins">' . __d('npds', 'Tous sauf pour ...') . '</option>
+                        <option' . $sel1 . ' value="plus">' . __d('npds', 'Seulement pour ...') . '</option>
                     </select>
                     <div class="help-block">...
-                ' . adm_translate("les URLs que vous aurez renseignés ci-après (ne renseigner que la racine de l'URI)") . '<br />
-                ' . adm_translate("Exemple") . ' : index.php user.php forum.php static.php<br />
-                ' . adm_translate("Par défaut, rien ou Tout sauf pour ... [aucune URI] = aucune restriction") . '
+                ' . __d('npds', 'les URLs que vous aurez renseignés ci-après (ne renseigner que la racine de l\'URI)') . '<br />
+                ' . __d('npds', 'Exemple') . ' : index.php user.php forum.php static.php<br />
+                ' . __d('npds', 'Par défaut, rien ou Tout sauf pour ... [aucune URI] = aucune restriction') . '
                     </div>
                     </div>
                 </div>
@@ -423,7 +423,7 @@ class AdminMetalang extends AdminController
                     <div class="col-sm-12">
                         <input type="hidden" name="Maj_Bdd_ML" value="edit_meta" />
                         <input type="hidden" name="op" value="Valid_Meta_Lang" />
-                        <button class="btn btn-primary" type="submit">' . adm_translate("Valider") . '</button>
+                        <button class="btn btn-primary" type="submit">' . __d('npds', 'Valider') . '</button>
                     </div>
                 </div>
             </form>';
@@ -446,11 +446,11 @@ class AdminMetalang extends AdminController
 
         echo '
         <hr />
-        <h3>' . adm_translate("Créer un nouveau") . ' META-MOT : <small>de type ' . $type_meta . '</small></h3>
+        <h3>' . __d('npds', 'Créer un nouveau') . ' META-MOT : <small>de type ' . $type_meta . '</small></h3>
         <form id="metalangcreat" name="creat_meta_lang" action="admin.php" method="post">';
     
         if (!$type_meta)
-            echo adm_translate("Veuillez choisir un type de META-MOT") . ' ';
+            echo __d('npds', 'Veuillez choisir un type de META-MOT') . ' ';
     
         echo list_meta_type($type_meta);
     
@@ -467,7 +467,7 @@ class AdminMetalang extends AdminController
             if ($type_meta != "smil") {
                 echo '
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-12" for="desc">' . adm_translate("Description") . '</label>
+                    <label class="col-form-label col-sm-12" for="desc">' . __d('npds', 'Description') . '</label>
                     <div class="col-sm-12">
                         <textarea class="form-control" name="desc" id="desc" rows="7">[french]...[/french][english]...[/english]</textarea>
                     </div>
@@ -477,13 +477,13 @@ class AdminMetalang extends AdminController
             if ($type_meta != "them") {
                 echo '
                 <div class="mb-3 row">
-                    <label class="col-form-label col-sm-12" for="content">' . adm_translate("Script") . '</label>
+                    <label class="col-form-label col-sm-12" for="content">' . __d('npds', 'Script') . '</label>
                     <div class="col-sm-12">';
     
                 if ($type_meta == "smil")
                     echo '
                         <input class="form-control" type="text" name="content" id="content" maxlength="255" required="required" />
-                        <span class="help-block">' . adm_translate("Chemin et nom de l'image du Smiley") . ' Ex. : forum/smilies/pafmur.gif<span class="float-end ms-1" id="countcar_content"></span></span>
+                        <span class="help-block">' . __d('npds', 'Chemin et nom de l\'image du Smiley') . ' Ex. : forum/smilies/pafmur.gif<span class="float-end ms-1" id="countcar_content"></span></span>
                         </div>
                     </div>';
                 else
@@ -501,20 +501,20 @@ class AdminMetalang extends AdminController
     
             echo '
             <div class="mb-3 row">
-                <label class="col-form-label col-sm-12" for="typeuri">' . adm_translate("Restriction") . '</label>
+                <label class="col-form-label col-sm-12" for="typeuri">' . __d('npds', 'Restriction') . '</label>
                 <div class="col-sm-12">
                     <select class="form-select" id="typeuri" name="type_uri">
-                    <option value="moins">' . adm_translate("Tous sauf pour ...") . '</option>
-                    <option value="plus">' . adm_translate("Seulement pour ...") . '</option>
+                    <option value="moins">' . __d('npds', 'Tous sauf pour ...') . '</option>
+                    <option value="plus">' . __d('npds', 'Seulement pour ...') . '</option>
                     </select>
                 </div>
             </div>
             <div class="mb-3 row">
                 <div class="col-sm-12">
                 <div class="help-block">
-                    ' . adm_translate("les URLs que vous aurez renseignés ci-après (ne renseigner que la racine de l'URI)") . '<br />
-                    ' . adm_translate("Exemple") . ' : index.php user.php forum.php static.php<br />
-                    ' . adm_translate("Par defaut, rien ou Tout sauf pour ... [aucune URI] = aucune restriction") . '
+                    ' . __d('npds', 'les URLs que vous aurez renseignés ci-après (ne renseigner que la racine de l\'URI)') . '<br />
+                    ' . __d('npds', 'Exemple') . ' : index.php user.php forum.php static.php<br />
+                    ' . __d('npds', 'Par defaut, rien ou Tout sauf pour ... [aucune URI] = aucune restriction') . '
                     </div>
                     <textarea class="form-control" id="uri" name="uri" rows="7" maxlength="255"></textarea>
                     <span class="help-block text-end"><span id="countcar_uri"></span></span>
@@ -525,7 +525,7 @@ class AdminMetalang extends AdminController
                     <input type="hidden" name="type_meta" value="' . $type_meta . '" />
                     <input type="hidden" name="Maj_Bdd_ML" value="creat_meta" />
                     <input type="hidden" name="op" value="Valid_Meta_Lang" />
-                    <button class="btn btn-primary" type="submit">' . adm_translate("Valider") . '</button>
+                    <button class="btn btn-primary" type="submit">' . __d('npds', 'Valider') . '</button>
                 </div>
             </div>';
         }
@@ -558,7 +558,7 @@ class AdminMetalang extends AdminController
         <hr />
         <div class="alert alert-danger">
             <strong>' . $def . '</strong>
-            <br />' . adm_translate("Ce META-MOT existe déjà") . '<br />' . adm_translate("Veuillez nommer différement ce nouveau META-MOT") . '<br /><br />';
+            <br />' . __d('npds', 'Ce META-MOT existe déjà') . '<br />' . __d('npds', 'Veuillez nommer différement ce nouveau META-MOT') . '<br /><br />';
         
         echo go_back('');
     

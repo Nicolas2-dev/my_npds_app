@@ -92,16 +92,16 @@ function MM_msg_foot()
 function MM_date()
 {
 	setlocale(LC_TIME, aff_langue(config('npds.locale')));
-	$MT_date = \PHP81_BC\strftime(translate("daydate"), time() + ((int) config('npds.gmt') * 3600));
+	$MT_date = \PHP81_BC\strftime(__d('npds', 'daydate'), time() + ((int) config('npds.gmt') * 3600));
 
 	return $MT_date;
 }
 
 function MM_search_topics()
 {
-	$MT_search_topics = "<form action=\"search.php\" method=\"post\"><label class=\"col-form-label\">" . translate("Sujets") . " </label>";
+	$MT_search_topics = "<form action=\"search.php\" method=\"post\"><label class=\"col-form-label\">" . __d('npds', 'Sujets') . " </label>";
 	$MT_search_topics .= "<select class=\"form-select\" name=\"topic\"onChange='submit()'>";
-	$MT_search_topics .= "<option value=\"\">" . translate("Tous les sujets") . "</option>\n";
+	$MT_search_topics .= "<option value=\"\">" . __d('npds', 'Tous les sujets') . "</option>\n";
 
 	$rowQ = Q_select("select topicid, topictext from topics order by topictext", 86400);
 
@@ -116,7 +116,7 @@ function MM_search_topics()
 
 function MM_search()
 {
-	$MT_search = "<form action=\"search.php\" method=\"post\"><label>" . translate("Recherche") . "</label>
+	$MT_search = "<form action=\"search.php\" method=\"post\"><label>" . __d('npds', 'Recherche') . "</label>
 	<input class=\"form-control\" type=\"text\" name=\"query\" size=\"10\"></form>";
 
 	return $MT_search;
@@ -404,10 +404,10 @@ function MM_forum_message()
 
 	$ibid = "";
 	if (!$user) {
-		$ibid = translate("Devenez membre et vous disposerez de fonctions spécifiques : abonnements, forums spéciaux (cachés, membres, ..), statut de lecture, ...");
+		$ibid = __d('npds', 'Devenez membre et vous disposerez de fonctions spécifiques : abonnements, forums spéciaux (cachés, membres, ..), statut de lecture, ...');
 	}
 	if ((config('npds.subscribe')) and ($user)) {
-		$ibid = translate("Cochez un forum et cliquez sur le bouton pour recevoir un Email lors d'une nouvelle soumission dans celui-ci.");
+		$ibid = __d('npds', 'Cochez un forum et cliquez sur le bouton pour recevoir un Email lors d\'une nouvelle soumission dans celui-ci.');
 	}
 
 	return $ibid;
@@ -436,8 +436,8 @@ function MM_forum_icones()
 		$imgtmp = "assets/images/forum/icons/folder.gif";
 	}
 
-	$ibid = "<img src=\"$imgtmpR\" border=\"\" alt=\"\" /> = " . translate("Les nouvelles contributions depuis votre dernière visite.") . "<br />";
-	$ibid .= "<img src=\"$imgtmp\" border=\"\" alt=\"\" /> = " . translate("Aucune nouvelle contribution depuis votre dernière visite.");
+	$ibid = "<img src=\"$imgtmpR\" border=\"\" alt=\"\" /> = " . __d('npds', 'Les nouvelles contributions depuis votre dernière visite.') . "<br />";
+	$ibid .= "<img src=\"$imgtmp\" border=\"\" alt=\"\" /> = " . __d('npds', 'Aucune nouvelle contribution depuis votre dernière visite.');
 
 	return $ibid;
 }
@@ -469,7 +469,7 @@ function MM_forum_bouton_subscribe()
 		$userR = explode(':', $userX);
 
 		if (isbadmailuser($userR[0]) === false) {
-			return '<input class="btn btn-secondary" type="submit" name="Xsub" value="' . translate("OK") . '" />';
+			return '<input class="btn btn-secondary" type="submit" name="Xsub" value="' . __d('npds', 'OK') . '" />';
 		}
 	} else {
 		return '';
@@ -536,37 +536,37 @@ function MM_login()
 	global $user;
 	$boxstuff = '
 	<div class="card card-body m-3">
-	   <h5><a href="user.php?op=only_newuser" role="button" title="' . translate("Nouveau membre") . '"><i class="fa fa-user-plus"></i>&nbsp;' . translate("Nouveau membre") . '</a></h5>
+	   <h5><a href="user.php?op=only_newuser" role="button" title="' . __d('npds', 'Nouveau membre') . '"><i class="fa fa-user-plus"></i>&nbsp;' . __d('npds', 'Nouveau membre') . '</a></h5>
 	</div>
 	<div class="card card-body m-3">
-	   <h5 class="mb-3"><i class="fas fa-sign-in-alt fa-lg"></i>&nbsp;' . translate("Connexion") . '</h5>
+	   <h5 class="mb-3"><i class="fas fa-sign-in-alt fa-lg"></i>&nbsp;' . __d('npds', 'Connexion') . '</h5>
 	   <form action="user.php" method="post" name="userlogin_b">
 		  <div class="row g-2">
 			 <div class="col-12">
 				<div class="mb-3 form-floating">
-				   <input type="text" class="form-control" name="uname" id="inputuser_b" placeholder="' . translate("Identifiant") . '" required="required" />            
-				   <label for="inputuser_b" >' . translate("Identifiant") . '</label>
+				   <input type="text" class="form-control" name="uname" id="inputuser_b" placeholder="' . __d('npds', 'Identifiant') . '" required="required" />            
+				   <label for="inputuser_b" >' . __d('npds', 'Identifiant') . '</label>
 			   </div>
 			</div>
 			<div class="col-12">
 			   <div class="mb-0 form-floating">
-				  <input type="password" class="form-control" name="pass" id="inputPassuser_b" placeholder="' . translate("Mot de passe") . '" required="required" />
-				  <label for="inputPassuser_b">' . translate("Mot de passe") . '</label>
-				  <span class="help-block small"><a href="user.php?op=forgetpassword" role="button" title="' . translate("Vous avez perdu votre mot de passe ?") . '">' . translate("Vous avez perdu votre mot de passe ?") . '</a></span>
+				  <input type="password" class="form-control" name="pass" id="inputPassuser_b" placeholder="' . __d('npds', 'Mot de passe') . '" required="required" />
+				  <label for="inputPassuser_b">' . __d('npds', 'Mot de passe') . '</label>
+				  <span class="help-block small"><a href="user.php?op=forgetpassword" role="button" title="' . __d('npds', 'Vous avez perdu votre mot de passe ?') . '">' . __d('npds', 'Vous avez perdu votre mot de passe ?') . '</a></span>
 				</div>
 			 </div>
 		  </div>
 		  <input type="hidden" name="op" value="login" />
 		  <div class="mb-3 row">
 			 <div class="ms-sm-auto">
-				<button class="btn btn-primary" type="submit" title="' . translate("Valider") . '">' . translate("Valider") . '</button>
+				<button class="btn btn-primary" type="submit" title="' . __d('npds', 'Valider') . '">' . __d('npds', 'Valider') . '</button>
 			 </div>
 		  </div>
 	   </form>
 	</div>';
 
 	if (isset($user))
-		$boxstuff = '<h5><a class="text-danger" href="user.php?op=logout"><i class="fas fa-sign-out-alt fa-lg align-middle text-danger me-2"></i>' . translate("Déconnexion") . '</a></h5>';
+		$boxstuff = '<h5><a class="text-danger" href="user.php?op=logout"><i class="fas fa-sign-out-alt fa-lg align-middle text-danger me-2"></i>' . __d('npds', 'Déconnexion') . '</a></h5>';
 
 	return $boxstuff;
 }
@@ -578,7 +578,7 @@ function MM_administration()
 	global $admin;
 
 	if ($admin) {
-		return "<a href=\"admin.php\">" . translate("Outils administrateur") . "</a>";
+		return "<a href=\"admin.php\">" . __d('npds', 'Outils administrateur') . "</a>";
 	} else {
 		return "";
 	}
@@ -670,7 +670,7 @@ function MM_top_stories($arg)
 		$story_limit++;
 
 		if ($counter > 0) {
-			$content .= '<li class="ms-4 my-1"><a href="article.php?sid=' . $sid . '" >' . aff_langue($title) . '</a>&nbsp;<span class="badge bg-secondary float-end">' . wrh($counter) . ' ' . translate("Fois") . '</span></li>';
+			$content .= '<li class="ms-4 my-1"><a href="article.php?sid=' . $sid . '" >' . aff_langue($title) . '</a>&nbsp;<span class="badge bg-secondary float-end">' . wrh($counter) . ' ' . __d('npds', 'Fois') . '</span></li>';
 		}
 	}
 
@@ -723,7 +723,7 @@ function MM_top_sections($arg)
 	$result = sql_query("SELECT artid, title, counter FROM seccont ORDER BY counter DESC LIMIT 0,$arg");
 
 	while (list($artid, $title, $counter) = sql_fetch_row($result)) {
-		$content .= '<li class="ms-4 my-1"><a href="sections.php?op=viewarticle&amp;artid=' . $artid . '" >' . aff_langue($title) . '</a>&nbsp;<span class="badge bg-secondary float-end">' . wrh($counter) . ' ' . translate("Fois") . '</span></li>';
+		$content .= '<li class="ms-4 my-1"><a href="sections.php?op=viewarticle&amp;artid=' . $artid . '" >' . aff_langue($title) . '</a>&nbsp;<span class="badge bg-secondary float-end">' . wrh($counter) . ' ' . __d('npds', 'Fois') . '</span></li>';
 	}
 	sql_free_result($result);
 
@@ -740,7 +740,7 @@ function MM_top_reviews($arg)
 
 	while (list($id, $title, $hits) = sql_fetch_row($result)) {
 		if ($hits > 0) {
-			$content .= '<li class="ms-4 my-1"><a href="reviews.php?op=showcontent&amp;id=' . $id . '" >' . $title . '</a>&nbsp;<span class="badge bg-secondary float-end">' . wrh($hits) . ' ' . translate("Fois") . '</span></li>';
+			$content .= '<li class="ms-4 my-1"><a href="reviews.php?op=showcontent&amp;id=' . $id . '" >' . $title . '</a>&nbsp;<span class="badge bg-secondary float-end">' . wrh($hits) . ' ' . __d('npds', 'Fois') . '</span></li>';
 		}
 	}
 	sql_free_result($result);
@@ -831,7 +831,7 @@ function MM_topic_all()
 
 		$aff .= '
 					<p class="card-text">' . aff_langue($topictext) . '</p>
-					<p class="card-text text-end"><span class="small">' . translate("Nb. d'articles") . '</span> <span class="badge bg-secondary">' . $total_news['total'] . '</span></p>
+					<p class="card-text text-end"><span class="small">' . __d('npds', 'Nb. d\'articles') . '</span> <span class="badge bg-secondary">' . $total_news['total'] . '</span></p>
 				 </div>';
 		$aff .= '
 			  </div>
@@ -849,7 +849,7 @@ function MM_topic_all()
 function MM_topic_subscribeOFF()
 {
 	$aff = '<div class="mb-3 row"><input type="hidden" name="op" value="maj_subscribe" />';
-	$aff .= '<button class="btn btn-primary ms-3" type="submit" name="ok">' . translate("Valider") . '</button>';
+	$aff .= '<button class="btn btn-primary ms-3" type="submit" name="ok">' . __d('npds', 'Valider') . '</button>';
 	$aff .= '</div></fieldset></form>';
 
 	return $aff;

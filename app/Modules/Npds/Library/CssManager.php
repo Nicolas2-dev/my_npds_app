@@ -200,35 +200,35 @@ $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/admin.css')."'
                         if (value === value.toLowerCase()) {
                             return {
                                 valid: false,
-                                message: "' . translate("Le mot de passe doit contenir au moins un caractère en majuscule.") . '",
+                                message: "' . __d('npds', 'Le mot de passe doit contenir au moins un caractère en majuscule.') . '",
                                 meta:{score: score-1},
                             };
                         }
                         if (value === value.toUpperCase()) {
                             return {
                                 valid: false,
-                                message: "' . translate("Le mot de passe doit contenir au moins un caractère en minuscule.") . '",
+                                message: "' . __d('npds', 'Le mot de passe doit contenir au moins un caractère en minuscule.') . '",
                                 meta:{score: score-2},
                             };
                         }
                         if (value.search(/[0-9]/) < 0) {
                             return {
                                 valid: false,
-                                message: "' . translate("Le mot de passe doit contenir au moins un chiffre.") . '",
+                                message: "' . __d('npds', 'Le mot de passe doit contenir au moins un chiffre.') . '",
                                 meta:{score: score-3},
                             };
                         }
                         if (value.search(/[@\+\-!#$%&^~*_]/) < 0) {
                             return {
                                 valid: false,
-                                message: "' . translate("Le mot de passe doit contenir au moins un caractère non alphanumérique.") . '",
+                                message: "' . __d('npds', 'Le mot de passe doit contenir au moins un caractère non alphanumérique.') . '",
                                 meta:{score: score-4},
                             };
                         }
                         if (value.length < 8) {
                             return {
                                 valid: false,
-                                message: "' . translate("Le mot de passe doit contenir") . ' ' . Config::get('npds.minpass') . ' ' . translate("caractères au minimum") . '",
+                                message: "' . __d('npds', 'Le mot de passe doit contenir') . ' ' . Config::get('npds.minpass') . ' ' . __d('npds', 'caractères au minimum') . '",
                                 meta:{score: score-5},
                             };
                         }

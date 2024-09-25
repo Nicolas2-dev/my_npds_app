@@ -56,9 +56,9 @@ class PaginatorManager implements PaginatorInterface
                 <ul class="pagination pagination-sm d-flex flex-wrap">';
     
             if ($current == 2)
-                $pagination .= '<li class="page-item"><a class="page-link" href="' . $url . $urlmore . '" title="' . translate("Page précédente") . '" data-bs-toggle="tooltip">◄</a></li>';
+                $pagination .= '<li class="page-item"><a class="page-link" href="' . $url . $urlmore . '" title="' . __d('npds', 'Page précédente') . '" data-bs-toggle="tooltip">◄</a></li>';
             elseif ($current > 2)
-                $pagination .= '<li class="page-item"><a class="page-link" href="' . $url . $prev . $urlmore . '" title="' . translate("Page précédente") . '" data-bs-toggle="tooltip">◄</a></li>';
+                $pagination .= '<li class="page-item"><a class="page-link" href="' . $url . $prev . $urlmore . '" title="' . __d('npds', 'Page précédente') . '" data-bs-toggle="tooltip">◄</a></li>';
             else
                 $pagination .= '<li class="page-item disabled"><a class="page-link" href="#">◄</a></li>';
     
@@ -132,7 +132,7 @@ class PaginatorManager implements PaginatorInterface
     
             $pagination .= $current == $total 
                 ? '<li class="page-item disabled"><a class="page-link" href="#">►</a></li>' 
-                : '<li class="page-item"><a class="page-link" href="' . $url . $next . $urlmore . '" title="' . translate("Page suivante") . '" data-bs-toggle="tooltip">►</a></li>';
+                : '<li class="page-item"><a class="page-link" href="' . $url . $next . $urlmore . '" title="' . __d('npds', 'Page suivante') . '" data-bs-toggle="tooltip">►</a></li>';
             
              $pagination .= '
                 </ul>
@@ -168,9 +168,9 @@ class PaginatorManager implements PaginatorInterface
             <ul class="pagination pagination-sm d-flex flex-wrap">';
     
             if ($current == 1)
-                $pagination .= '<li class="page-item"><a class="page-link" href="' . $url . '0' . $urlmore . '" title="' . translate("Page précédente") . '" data-bs-toggle="tooltip">◄</a></li>';
+                $pagination .= '<li class="page-item"><a class="page-link" href="' . $url . '0' . $urlmore . '" title="' . __d('npds', 'Page précédente') . '" data-bs-toggle="tooltip">◄</a></li>';
             elseif ($current > 1)
-                $pagination .= '<li class="page-item"><a class="page-link" href="' . $url . $prev . $urlmore . '" title="' . translate("Page précédente") . '" data-bs-toggle="tooltip">◄</a></li>';
+                $pagination .= '<li class="page-item"><a class="page-link" href="' . $url . $prev . $urlmore . '" title="' . __d('npds', 'Page précédente') . '" data-bs-toggle="tooltip">◄</a></li>';
             else
                 $pagination .= '<li class="page-item disabled"><a class="page-link" href="#">◄</a></li>';
     
@@ -246,7 +246,7 @@ class PaginatorManager implements PaginatorInterface
     
             $pagination .= $current + 1 == $total 
                 ? '<li class="page-item disabled"><a class="page-link" href="#">►</a></li>' 
-                : '<li class="page-item"><a class="page-link" href="' . $url . $next . $urlmore . '" title="' . translate("Page suivante") . '" data-bs-toggle="tooltip">►</a></li>';
+                : '<li class="page-item"><a class="page-link" href="' . $url . $next . $urlmore . '" title="' . __d('npds', 'Page suivante') . '" data-bs-toggle="tooltip">►</a></li>';
             
             $pagination .= '
                 </ul>

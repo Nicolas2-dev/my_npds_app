@@ -223,13 +223,13 @@ if (! function_exists('SC_infos'))
 
         if ($SuperCache) {
             /*
-            $infos = $App_sc ? '<span class="small">'.translate(".:Page >> Super-Cache:.").'</span>':'';
+            $infos = $App_sc ? '<span class="small">'.__d('npds', '.:Page >> Super-Cache:.').'</span>':'';
             */
 
             if ($App_sc) {
-                $infos = '<span class="small">' . translate(".:Page >> Super-Cache:.") . '</span>';
+                $infos = '<span class="small">' . __d('npds', '.:Page >> Super-Cache:.') . '</span>';
             } else {
-                $infos = '<span class="small">' . translate(".:Page >> Super-Cache:.") . '</span>';
+                $infos = '<span class="small">' . __d('npds', '.:Page >> Super-Cache:.') . '</span>';
             }
         }
 
@@ -1559,7 +1559,7 @@ if (! function_exists('JavaPopUp'))
 //             </head>
 //             <body>
 //                 <br /><br /><br />
-//                 <p style="font-size: 24px; font-family: Tahoma, Arial; color: red; text-align:center;"><strong>.: ' . translate("Votre adresse Ip est enregistrée") . ' :.</strong></p>
+//                 <p style="font-size: 24px; font-family: Tahoma, Arial; color: red; text-align:center;"><strong>.: ' . __d('npds', 'Votre adresse Ip est enregistrée') . ' :.</strong></p>
 //             </body>
 //         </html>';
 

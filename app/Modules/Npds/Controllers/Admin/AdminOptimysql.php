@@ -87,7 +87,7 @@ class AdminOptimysql extends AdminController
     // public function __construct()
     // {
     //     $f_meta_nom = 'OptimySQL';
-    //     $f_titre = adm_translate("Optimisation de la base de données") . ' : ' . Config::get('npds.dbname');
+    //     $f_titre = __d('npds', 'Optimisation de la base de données') . ' : ' . Config::get('npds.dbname');
         
     //     //==> controle droit
     //     admindroits($aid, $f_meta_nom);
@@ -98,7 +98,7 @@ class AdminOptimysql extends AdminController
 
     public function index()
     {
-        $date_opt = date(adm_translate("dateforop"));
+        $date_opt = date(__d('npds', 'dateforop'));
         $heure_opt = date("h:i a");
 
         // Insertion de valeurs d'initialisation de la table (si nécessaire)
@@ -116,7 +116,7 @@ class AdminOptimysql extends AdminController
         
         if (!$dateopt or ($dateopt == '') or !$houropt or ($houropt == '')) {
         } else {
-            $last_opti = adm_translate("Dernière optimisation effectuée le") . " : " . $dateopt . " " . adm_translate(" à ") . " " . $houropt . "<br />\n";
+            $last_opti = __d('npds', 'Dernière optimisation effectuée le') . " : " . $dateopt . " " . __d('npds', ' à ') . " " . $houropt . "<br />\n";
         }
         
         $tot_data = 0;
@@ -150,7 +150,7 @@ class AdminOptimysql extends AdminController
                     <tr class="table-success">
                         <td align="right">' . $row['Name'] . '</td>
                         <td align="right">' . $total . ' Ko</td>
-                        <td align="center">' . adm_translate("optimisée") . '</td>
+                        <td align="center">' . __d('npds', 'optimisée') . '</td>
                         <td align="center"> -- </td>
                     </tr>';
                 else
@@ -158,7 +158,7 @@ class AdminOptimysql extends AdminController
                     <tr class="table-danger">
                         <td align="right">' . $row['Name'] . '</td>
                         <td align="right">' . $total . ' Ko</td>
-                        <td class="text-danger" align="center">' . adm_translate("non optimisée") . '</td>
+                        <td class="text-danger" align="center">' . __d('npds', 'non optimisée') . '</td>
                         <td align="right">' . $gain . ' Ko</td>
                     </tr>';
             }
@@ -184,26 +184,26 @@ class AdminOptimysql extends AdminController
         // Affichage
         adminhead($f_meta_nom, $f_titre);
         
-        echo '<hr /><p class="lead">' . adm_translate("Optimisation effectuée") . ' : ' . adm_translate("Gain total réalisé") . ' ' . $total_gain . ' Ko</br>';
+        echo '<hr /><p class="lead">' . __d('npds', 'Optimisation effectuée') . ' : ' . __d('npds', 'Gain total réalisé') . ' ' . $total_gain . ' Ko</br>';
         
         echo $last_opti;
         
         echo '
-            ' . adm_translate("A ce jour, vous avez effectué ") . ' ' . $countopt . ' optimisation(s) ' . adm_translate(" et réalisé un gain global de ") . ' ' . $gainopt . ' Ko.</p>
+            ' . __d('npds', 'A ce jour, vous avez effectué ') . ' ' . $countopt . ' optimisation(s) ' . __d('npds', ' et réalisé un gain global de ') . ' ' . $gainopt . ' Ko.</p>
             <table id="tad_opti" data-toggle="table" data-striped="true" data-show-toggle="true" data-mobile-responsive="true" data-icons="icons" data-icons-prefix="fa">
             <thead>
                 <tr>
-                    <th data-sortable="true" data-halign="center" data-align="center">' . adm_translate('Table') . '</th>
-                    <th data-halign="center" data-align="center">' . adm_translate('Taille actuelle') . '</th>
-                    <th data-sortable="true" data-halign="center" data-align="center">' . adm_translate('Etat') . '</th>
-                    <th data-halign="center" date-align="center">' . adm_translate('Gain réalisable') . '</th>
+                    <th data-sortable="true" data-halign="center" data-align="center">' . __d('npds', 'Table') . '</th>
+                    <th data-halign="center" data-align="center">' . __d('npds', 'Taille actuelle') . '</th>
+                    <th data-sortable="true" data-halign="center" data-align="center">' . __d('npds', 'Etat') . '</th>
+                    <th data-halign="center" date-align="center">' . __d('npds', 'Gain réalisable') . '</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <td></td>
                     <td></td>
-                    <td>' . adm_translate("Gain total réalisé") . ' : </td>
+                    <td>' . __d('npds', 'Gain total réalisé') . ' : </td>
                     <td>' . $total_gain . ' Ko</td>
                 </tr>
             </tfoot>

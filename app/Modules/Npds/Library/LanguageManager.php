@@ -149,18 +149,18 @@ class LanguageManager implements LanguageInterface
         $M_langue = '
         <div class="mb-3">
             <select name="' . $ibid . '" class="form-select" onchange="this.form.submit()">
-                <option value="">' . translate("Choisir une langue") . '</option>';
+                <option value="">' . __d('npds', 'Choisir une langue') . '</option>';
 
         foreach ($tab_langue as $bidon => $langue) {
-            $M_langue .= '<option value="' . $langue . '">' . $flag[$langue] . ' ' . translate("$langue") . '</option>';
+            $M_langue .= '<option value="' . $langue . '">' . $flag[$langue] . ' ' . $langue . '</option>';
         }
 
         $M_langue .= '
-                    <option value="">- ' . translate("Aucune langue") . '</option>
+                    <option value="">- ' . __d('npds', 'Aucune langue') . '</option>
                 </select>
             </div>
             <noscript>
-                <input class="btn btn-primary" type="submit" name="local_sub" value="' . translate("Valider") . '" />
+                <input class="btn btn-primary" type="submit" name="local_sub" value="' . __d('npds', 'Valider') . '" />
             </noscript>';
 
         return $M_langue;

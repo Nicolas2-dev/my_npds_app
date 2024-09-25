@@ -114,7 +114,7 @@ class AdminSaveMysql extends AdminController
         
         //             echo "<script type=\"text/javascript\">
         //                   //<![CDATA[
-        //                   alert('" . html_entity_decode(adm_translate("Sauvegarde terminée. Les fichiers sont disponibles dans le répertoire /slogs"), ENT_COMPAT | ENT_HTML401, cur_charset) . "');
+        //                   alert('" . html_entity_decode(__d('npds', 'Sauvegarde terminée. Les fichiers sont disponibles dans le répertoire /slogs'), ENT_COMPAT | ENT_HTML401, cur_charset) . "');
         //                   //]]>
         //                   </script>";
         
@@ -124,7 +124,7 @@ class AdminSaveMysql extends AdminController
         
         //             echo "<script type=\"text/javascript\">
         //                   //<![CDATA[
-        //                   alert('" . html_entity_decode(adm_translate("Sauvegarde terminée. Les fichiers sont disponibles dans le répertoire /slogs"), ENT_COMPAT | ENT_HTML401, cur_charset) . "');
+        //                   alert('" . html_entity_decode(__d('npds', 'Sauvegarde terminée. Les fichiers sont disponibles dans le répertoire /slogs'), ENT_COMPAT | ENT_HTML401, cur_charset) . "');
         //                   //]]>
         //                   </script>";
         
@@ -263,7 +263,7 @@ class AdminSaveMysql extends AdminController
     
         @set_time_limit(600);
     
-        $date_jour = date(adm_translate("dateforop"));
+        $date_jour = date(__d('npds', 'dateforop'));
         $date_op = date("mdy");
     
         $filename = Config::get('npds.dbname') . "-" . $date_op;
@@ -272,14 +272,14 @@ class AdminSaveMysql extends AdminController
         $num_tables = sql_num_rows($tables);
     
         if ($num_tables == 0)
-            echo "&nbsp;" . adm_translate("Aucune table n'a été trouvée") . "\n";
+            echo "&nbsp;" . __d('npds', 'Aucune table n\'a été trouvée') . "\n";
         else {
             $heure_jour = date("H:i");
     
             $data = "# ========================================================$crlf"
                 . "# $crlf"
-                . "# " . adm_translate("Sauvegarde de la base de données") . " : " . Config::get('npds.dbname') . " $crlf"
-                . "# " . adm_translate("Effectuée le") . " " . $date_jour . " : " . $heure_jour . " " . adm_translate("par") . " " . $name . " $crlf"
+                . "# " . __d('npds', 'Sauvegarde de la base de données') . " : " . Config::get('npds.dbname') . " $crlf"
+                . "# " . __d('npds', 'Effectuée le') . " " . $date_jour . " : " . $heure_jour . " " . __d('npds', 'par') . " " . $name . " $crlf"
                 . "# $crlf"
                 . "# ========================================================$crlf";
     
@@ -288,12 +288,12 @@ class AdminSaveMysql extends AdminController
                 $data .= "$crlf"
                     . "# --------------------------------------------------------$crlf"
                     . "# $crlf"
-                    . "# " . adm_translate("Structure de la table") . " '" . $table . "' $crlf"
+                    . "# " . __d('npds', 'Structure de la table') . " '" . $table . "' $crlf"
                     . "# $crlf$crlf";
                 $data .= get_table_def($table)
                     . "$crlf$crlf"
                     . "# $crlf"
-                    . "# " . adm_translate("Contenu de la table") . " '" . $table . "' $crlf"
+                    . "# " . __d('npds', 'Contenu de la table') . " '" . $table . "' $crlf"
                     . "# $crlf$crlf";
                 $data .= get_table_content($table)
                     . "$crlf$crlf"
@@ -310,7 +310,7 @@ class AdminSaveMysql extends AdminController
     
         @set_time_limit(600);
     
-        $date_jour = date(adm_translate("dateforop"));
+        $date_jour = date(__d('npds', 'dateforop'));
     
         $date_op = date("ymd");
         $filename = Config::get('npds.dbname') . "-" . $date_op;
@@ -318,7 +318,7 @@ class AdminSaveMysql extends AdminController
         $tables = sql_list_tables(Config::get('npds.dbname'));
         $num_tables = sql_num_rows($tables);
         if ($num_tables == 0)
-            echo "&nbsp;" . adm_translate("Aucune table n'a été trouvée") . "\n";
+            echo "&nbsp;" . __d('npds', 'Aucune table n\'a été trouvée') . "\n";
         else {
             if ((!isset($repertoire)) or ($repertoire == "")) 
                 $repertoire = ".";

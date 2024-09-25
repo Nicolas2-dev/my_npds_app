@@ -176,7 +176,7 @@ class SpamManager implements SpamInterface
             $tmp = '
             <div class="mb-3 row">
                 <div class="col-sm-9 text-end">
-                    <label class="form-label text-danger" for="asb_reponse">' . translate("Anti-Spam / Merci de répondre à la question suivante : ") . '&nbsp;' . $aff . '</label>
+                    <label class="form-label text-danger" for="asb_reponse">' . __d('npds', 'Anti-Spam / Merci de répondre à la question suivante : ') . '&nbsp;' . $aff . '</label>
                 </div>
                 <div class="col-sm-3 text-end">
                     <input class="form-control" type="text" id="asb_reponse" name="asb_reponse" maxlength="2" onclick="this.value" />

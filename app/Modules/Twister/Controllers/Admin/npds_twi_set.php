@@ -91,72 +91,72 @@ function Configuretwi($subop, $ModPath, $ModStart, $class_sty_2, $npds_twi_arti,
     echo '<hr />';
 
     if (Config::get('npds.npds_twi') !== 1)
-        echo '<div class="alert alert-danger">' . twi_trad("La publication de vos news sur twitter n'est pas autorisée vous devez l'activer") . ' <a class="alert-link" href="admin.php?op=Configure">' . twi_trad("Ici") . '</a></div>';
+        echo '<div class="alert alert-danger">' . __d('twister', 'La publication de vos news sur twitter n\'est pas autorisée vous devez l\'activer') . ' <a class="alert-link" href="admin.php?op=Configure">' . __d('twister', 'Ici') . '</a></div>';
     else
-        echo '<div class="alert alert-success">' . twi_trad("La publication de vos news sur twitter est autorisée. Vous pouvez révoquer cette autorisation") . ' <a class="alert-link" href="admin.php?op=Configure">' . twi_trad("Ici") . '</a></div>';
+        echo '<div class="alert alert-success">' . __d('twister', 'La publication de vos news sur twitter est autorisée. Vous pouvez révoquer cette autorisation') . ' <a class="alert-link" href="admin.php?op=Configure">' . __d('twister', 'Ici') . '</a></div>';
 
     echo '
-    <h3 class="mb-3">' . twi_trad('Configuration du module App_twi') . '</h3>
-    <span class="text-danger">*</span> ' . twi_trad('requis') . '
+    <h3 class="mb-3">' . __d('twister', 'Configuration du module App_twi') . '</h3>
+    <span class="text-danger">*</span> ' . __d('twister', 'requis') . '
     <form id="twitterset" action="admin.php" method="post">
         <div class="mb-3 row">
-            <label class="col-form-label col-sm-6" for="App_twi_arti">' . twi_trad('Activation de la publication auto des articles') . '</label>
+            <label class="col-form-label col-sm-6" for="App_twi_arti">' . __d('twister', 'Activation de la publication auto des articles') . '</label>
             <div class="col-sm-6 my-2">
                 <div class="form-check">
                 <input class="form-check-input" type="radio" id="App_twi_arti_y" name="App_twi_arti" value="1" ' . $checkarti_y . ' />
-                <label class="form-check-label" for="App_twi_arti_y">' . twi_trad('Oui') . '</label>
+                <label class="form-check-label" for="App_twi_arti_y">' . __d('twister', 'Oui') . '</label>
                 </div>
                 <div class="form-check">
                 <input class="form-check-input" type="radio" id="App_twi_arti_n" name="App_twi_arti" value="0" ' . $checkarti_n . ' />
-                <label class="form-check-label" for="App_twi_arti_n">' . twi_trad('Non') . '</label>
+                <label class="form-check-label" for="App_twi_arti_n">' . __d('twister', 'Non') . '</label>
                 </div>
             </div>
         </div>
         <div class="mb-3 row">
-            <label class="form-label col-sm-6" for="App_twi_urshort">' . twi_trad("Méthode pour le raccourciceur d'URL") . '</label>
+            <label class="form-label col-sm-6" for="App_twi_urshort">' . __d('twister', 'Méthode pour le raccourciceur d\'URL') . '</label>
             <div class="col-sm-6">
                 <div class="custom-controls-stacked">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="App_twi_mod" name="App_twi_urshort" value="1" ' . $urshort_mr . ' />
-                    <label class="form-check-label" for="App_twi_mod">' . twi_trad("Réécriture d'url avec mod_rewrite") . '</label>
+                    <label class="form-check-label" for="App_twi_mod">' . __d('twister', 'Réécriture d\'url avec mod_rewrite') . '</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="App_twi_force" name="App_twi_urshort" value="2" ' . $urshort_ft . ' />
-                    <label class="form-check-label" for="App_twi_force">' . twi_trad("Réécriture d'url avec ForceType") . '</label>
+                    <label class="form-check-label" for="App_twi_force">' . __d('twister', 'Réécriture d\'url avec ForceType') . '</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="App_twi_npd" name="App_twi_urshort" value="3" ' . $urshort_c . ' />
-                    <label class="form-check-label" for="App_twi_npd">' . twi_trad("Réécriture d'url avec contrôleur App") . '</label>
+                    <label class="form-check-label" for="App_twi_npd">' . __d('twister', 'Réécriture d\'url avec contrôleur App') . '</label>
                 </div>
                 </div>
             </div>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="consumer_key" name="consumer_key" value="' . $consumer_key . '" required="required" />
-            <label for="consumer_key">' . twi_trad('Votre clef de consommateur') . '&nbsp;<span class="text-danger">*</span></label>
+            <label for="consumer_key">' . __d('twister', 'Votre clef de consommateur') . '&nbsp;<span class="text-danger">*</span></label>
             <span class="help-block small">' . $consumer_key . '</span>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="consumer_secret" name="consumer_secret" value="' . $consumer_secret . '" required="required" />
-            <label for="consumer_secret">' . twi_trad('Votre clef secrète de consommateur') . '&nbsp;<span class="text-danger">*</span></label>
+            <label for="consumer_secret">' . __d('twister', 'Votre clef secrète de consommateur') . '&nbsp;<span class="text-danger">*</span></label>
             <span class="help-block small">' . $consumer_secret . '</span>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="oauth_token" name="oauth_token" value="' . $oauth_token . '" required="required" />
-            <label for="oauth_token" >' . twi_trad("Jeton d'accès pour Open Authentification (oauth_token)") . '&nbsp;<span class="text-danger">*</span></label>
+            <label for="oauth_token" >' . __d('twister', 'Jeton d\'accès pour Open Authentification (oauth_token)') . '&nbsp;<span class="text-danger">*</span></label>
             <span class="help-block small">' . $oauth_token . '</span>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="oauth_token_secret" name="oauth_token_secret" value="' . $oauth_token_secret . '" />
-            <label for="oauth_token_secret" >' . twi_trad("Jeton d'accès secret pour Open Authentification (oauth_token_secret)") . ' <span class="text-danger">*</span></label>
+            <label for="oauth_token_secret" >' . __d('twister', 'Jeton d\'accès secret pour Open Authentification (oauth_token_secret)') . ' <span class="text-danger">*</span></label>
             <span class="help-block small">' . $oauth_token_secret . '</span>
         </div>
         <!--
         <tr>
-        <td colspan="2"><strong>' . twi_trad('Interface bloc') . '</strong></td>
+        <td colspan="2"><strong>' . __d('twister', 'Interface bloc') . '</strong></td>
         </tr>
         <td width="30%">
-        ' . twi_trad('Largeur de la tweet box') . ' <span class="text-danger">*</span> : ' . $tbox_width . '
+        ' . __d('twister', 'Largeur de la tweet box') . ' <span class="text-danger">*</span> : ' . $tbox_width . '
         </td>
         <td>
         <input type="text" " size="25" maxlength="3" name="tbox_width" value="' . $tbox_width . '" />
@@ -164,7 +164,7 @@ function Configuretwi($subop, $ModPath, $ModStart, $class_sty_2, $npds_twi_arti,
         </tr>
         <tr>
         <td width="30%">
-        ' . twi_trad('Hauteur de la tweet box') . '</span>  <span class="text-danger">*</span> : ' . $tbox_height . '
+        ' . __d('twister', 'Hauteur de la tweet box') . '</span>  <span class="text-danger">*</span> : ' . $tbox_height . '
         </td>
         <td>
         <input type="text" " size="25" maxlength="3" name="tbox_height" value="' . $tbox_height . '" />
@@ -175,12 +175,12 @@ function Configuretwi($subop, $ModPath, $ModStart, $class_sty_2, $npds_twi_arti,
         </tr>
         <tr>
         <td width="30%">
-        <span class="' . $class_sty_2 . '">' . twi_trad('Classe de style titre') . '</span> </td><td><input type="text" size="25" maxlength="255" name="class_sty_1" value="' . $class_sty_1 . '">
+        <span class="' . $class_sty_2 . '">' . __d('twister', 'Classe de style titre') . '</span> </td><td><input type="text" size="25" maxlength="255" name="class_sty_1" value="' . $class_sty_1 . '">
         </td>
         </tr>
         <tr>
         <td width="30%">
-        <span class="' . $class_sty_2 . '">' . twi_trad("Classe de style sous-titre") . '</span>
+        <span class="' . $class_sty_2 . '">' . __d('twister', 'Classe de style sous-titre') . '</span>
         </td>
         <td>
         <input type="text" size="25" maxlength="255" name="class_sty_2" value="' . $class_sty_2 . '" />
@@ -189,7 +189,7 @@ function Configuretwi($subop, $ModPath, $ModStart, $class_sty_2, $npds_twi_arti,
         -->';
 
     echo '
-        <input class="btn btn-primary my-3" type="submit" value="' . twi_trad('Enregistrez') . '" />
+        <input class="btn btn-primary my-3" type="submit" value="' . __d('twister', 'Enregistrez') . '" />
         <input type="hidden" name="op" value="Extend-Admin-SubModule" />
         <input type="hidden" name="ModPath" value="' . $ModPath . '" />
         <input type="hidden" name="ModStart" value="' . $ModStart . '" />

@@ -89,7 +89,7 @@ class AdminModules extends AdminController
     // public function __construct()
     // {
     //     $f_meta_nom = 'modules';
-    //     $f_titre = adm_translate("Gestion, Installation Modules");
+    //     $f_titre = __d('module', 'Gestion, Installation Modules');
         
     //     //==> controle droit
     //     admindroits($aid, $f_meta_nom);
@@ -129,13 +129,13 @@ class AdminModules extends AdminController
 
         echo '
             <hr />
-            <h3>' . adm_translate("Les modules") . '</h3>
+            <h3>' . __d('module', 'Les modules') . '</h3>
             <table id="tad_modu" data-toggle="table" data-striped="false" data-show-toggle="true" data-mobile-responsive="true" data-buttons-class="outline-secondary" data-icons="icons" data-icons-prefix="fa">
                 <thead>
                     <tr>
                         <th data-align="center" class="n-t-col-xs-1"><img class="adm_img" src="assets/images/admin/module.png" alt="icon_module" /></th>
-                        <th data-sortable="true">' . adm_translate('Nom') . '</th>
-                        <th data-align="center" class="n-t-col-xs-2" >' . adm_translate('Fonctions') . '</th>
+                        <th data-sortable="true">' . __d('module', 'Nom') . '</th>
+                        <th data-align="center" class="n-t-col-xs-2" >' . __d('module', 'Fonctions') . '</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -153,13 +153,13 @@ class AdminModules extends AdminController
             
             if ($row["minstall"] == 0) {
                 $status_chngac = file_exists("modules/" . $row["mnom"] . "/install.conf.php") ?
-                    '<a class="text-success" href="admin.php?op=Module-Install&amp;ModInstall=' . $row["mnom"] . '&amp;subop=install" ><i class="fa fa-compress fa-lg"></i><i class="fa fa-puzzle-piece fa-2x fa-rotate-90" title="' . adm_translate("Installer le module") . '" data-bs-toggle="tooltip"></i></a>' :
-                    '<a class="text-success" href="admin.php?op=Module-Install&amp;ModInstall=' . $row["mnom"] . '&amp;subop=install"><i class="fa fa-check fa-lg"></i><i class="fa fa fa-puzzle-piece fa-2x fa-rotate-90" title="' . adm_translate("Pas d'installeur disponible") . ' ' . adm_translate("Marquer le module comme installé") . '" data-bs-toggle="tooltip"></i></a>';
+                    '<a class="text-success" href="admin.php?op=Module-Install&amp;ModInstall=' . $row["mnom"] . '&amp;subop=install" ><i class="fa fa-compress fa-lg"></i><i class="fa fa-puzzle-piece fa-2x fa-rotate-90" title="' . __d('module', 'Installer le module') . '" data-bs-toggle="tooltip"></i></a>' :
+                    '<a class="text-success" href="admin.php?op=Module-Install&amp;ModInstall=' . $row["mnom"] . '&amp;subop=install"><i class="fa fa-check fa-lg"></i><i class="fa fa fa-puzzle-piece fa-2x fa-rotate-90" title="' . __d('module', 'Pas d\'installeur disponible') . ' ' . __d('module', 'Marquer le module comme installé') . '" data-bs-toggle="tooltip"></i></a>';
                 $clatd = 'table-danger';
             } else {
                 $status_chngac =  file_exists("modules/" . $row["mnom"] . "/install.conf.php") ?
-                    '<a class="text-danger" href="admin.php?op=Module-Install&amp;ModDesinstall=' . $row["mnom"] . '" ><i class="fa fa-expand fa-lg"></i><i class="fa fa fa-puzzle-piece fa-2x fa-rotate-90" title="' . adm_translate("Désinstaller le module") . '" data-bs-toggle="tooltip"></i></a>' :
-                    '<a class="text-danger" href="admin.php?op=Module-Install&amp;ModDesinstall=' . $row["mnom"] . '" ><i class="fa fa fa-ban fa-lg"></i><i class="fa fa fa-puzzle-piece fa-2x fa-rotate-90" title="' . adm_translate("Marquer le module comme désinstallé") . '" data-bs-toggle="tooltip"</i></a>';
+                    '<a class="text-danger" href="admin.php?op=Module-Install&amp;ModDesinstall=' . $row["mnom"] . '" ><i class="fa fa-expand fa-lg"></i><i class="fa fa fa-puzzle-piece fa-2x fa-rotate-90" title="' . __d('module', 'Désinstaller le module') . '" data-bs-toggle="tooltip"></i></a>' :
+                    '<a class="text-danger" href="admin.php?op=Module-Install&amp;ModDesinstall=' . $row["mnom"] . '" ><i class="fa fa fa-ban fa-lg"></i><i class="fa fa fa-puzzle-piece fa-2x fa-rotate-90" title="' . __d('module', 'Marquer le module comme désinstallé') . '" data-bs-toggle="tooltip"</i></a>';
                 $clatd = 'table-success';
             }
         

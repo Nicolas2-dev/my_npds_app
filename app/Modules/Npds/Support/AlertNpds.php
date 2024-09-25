@@ -327,7 +327,7 @@ class AlertNpds
         $critsubs = sql_num_rows(sql_query("SELECT * FROM reviews_add"));
 
         if ($critsubs) {
-            sql_query("UPDATE fonctions SET fetat='1',fretour='" . $critsubs . "', fretour_h='" . adm_translate("Critique en attente de validation.") . "' WHERE fid='35'");
+            sql_query("UPDATE fonctions SET fetat='1',fretour='" . $critsubs . "', fretour_h='" . __d('npds', 'Critique en attente de validation.') . "' WHERE fid='35'");
         } else {
             sql_query("UPDATE fonctions SET fetat='0',fretour='0' WHERE fid='35'");
         }

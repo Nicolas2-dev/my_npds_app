@@ -92,7 +92,7 @@ class AdminAblalog extends AdminController
         // include("auth.php");
 
         // $f_meta_nom = 'abla';
-        // $f_titre = translate("Tableau de bord");
+        // $f_titre = __d('npds', 'Tableau de bord');
         
         // //==> controle droit
         // admindroits($aid, $f_meta_nom);
@@ -120,17 +120,17 @@ class AdminAblalog extends AdminController
         
         //     $timex = time() - $xdate;
         //     if ($timex >= 86400)
-        //         $timex = round($timex / 86400) . ' ' . translate("Jour(s)");
+        //         $timex = round($timex / 86400) . ' ' . __d('npds', 'Jour(s)');
         //     elseif ($timex >= 3600)
-        //         $timex = round($timex / 3600) . ' ' . translate("Heure(s)");
+        //         $timex = round($timex / 3600) . ' ' . __d('npds', 'Heure(s)');
         //     elseif ($timex >= 60)
-        //         $timex = round($timex / 60) . ' ' . translate("Minute(s)");
+        //         $timex = round($timex / 60) . ' ' . __d('npds', 'Minute(s)');
         //     else
-        //         $timex = $timex . ' ' . translate("Seconde(s)");
+        //         $timex = $timex . ' ' . __d('npds', 'Seconde(s)');
         
         //     echo '
         //    <hr />
-        //    <p class="lead mb-3">' . translate("Statistiques générales") . ' - ' . translate("Dernières stats") . ' : ' . $timex . ' </p>
+        //    <p class="lead mb-3">' . __d('npds', 'Statistiques générales') . ' - ' . __d('npds', 'Dernières stats') . ' : ' . $timex . ' </p>
         //    <table class="mb-2" data-toggle="table" data-classes="table mb-2">
         //       <thead class="collapse thead-default">
         //          <tr>
@@ -140,7 +140,7 @@ class AdminAblalog extends AdminController
         //       </thead>
         //       <tbody>
         //          <tr>
-        //             <td>' . translate("Nb. pages vues") . ' : </td>
+        //             <td>' . __d('npds', 'Nb. pages vues') . ' : </td>
         //             <td>' . wrh($totalz) . ' (';
         
         //     if ($totalz > $xtotalz)
@@ -153,7 +153,7 @@ class AdminAblalog extends AdminController
         //     echo wrh($totalz - $xtotalz) . '</span>)</td>
         //          </tr>
         //          <tr>
-        //             <td>' . translate("Nb. de membres") . ' : </td>
+        //             <td>' . __d('npds', 'Nb. de membres') . ' : </td>
         //             <td>' . wrh($membres) . ' (';
         
         //     if ($membres > $xmembres)
@@ -166,7 +166,7 @@ class AdminAblalog extends AdminController
         //     echo wrh($membres - $xmembres) . '</span>)</td>
         //          </tr>
         //          <tr>
-        //             <td>' . translate("Nb. d'articles") . ' : </td>
+        //             <td>' . __d('npds', 'Nb. d'articles') . ' : </td>
         //             <td>' . wrh($totala) . ' (';
         
         //     if ($totala > $xtotala)
@@ -179,7 +179,7 @@ class AdminAblalog extends AdminController
         //     echo wrh($totala - $xtotala) . '</span>)</td>
         //          </tr>
         //          <tr>
-        //             <td>' . translate("Nb. de forums") . ' : </td>
+        //             <td>' . __d('npds', 'Nb. de forums') . ' : </td>
         //             <td>' . wrh($totalc) . ' (';
         
         //     if ($totalc > $xtotalc)
@@ -192,7 +192,7 @@ class AdminAblalog extends AdminController
         //     echo wrh($totalc - $xtotalc) . '</span>)</td>
         //          </tr>
         //          <tr>
-        //             <td>' . translate("Nb. de sujets") . ' : </td>
+        //             <td>' . __d('npds', 'Nb. de sujets') . ' : </td>
         //             <td>' . wrh($totald) . ' (';
         
         //     if ($totald > $xtotald)
@@ -205,7 +205,7 @@ class AdminAblalog extends AdminController
         //     echo wrh($totald - $xtotald) . '</span>)</td>
         //          </tr>
         //          <tr>
-        //             <td>' . translate("Nb. de critiques") . ' : </td>
+        //             <td>' . __d('npds', 'Nb. de critiques') . ' : </td>
         //             <td>' . wrh($totalb) . ' (';
         
         //     if ($totalb > $xtotalb)
@@ -218,7 +218,7 @@ class AdminAblalog extends AdminController
         //     echo wrh($totalb - $xtotalb) . '</span>)</td>
         //          </tr>
         //          <tr>
-        //             <td>' . translate("Nb abonnés à lettre infos") . ' : </td>
+        //             <td>' . __d('npds', 'Nb abonnés à lettre infos') . ' : </td>
         //             <td>' . wrh($totalnl) . ' (';
         
         //     if ($totalnl > $xtotalnl)
@@ -244,7 +244,7 @@ class AdminAblalog extends AdminController
         //     echo '
         //       </tbody>
         //    </table>
-        //    <p class="lead my-3">' . translate("Statistiques des chargements") . '</p>
+        //    <p class="lead my-3">' . __d('npds', 'Statistiques des chargements') . '</p>
         //    <table data-toggle="table" data-classes="table">
         //       <thead class=" thead-default">
         //          <tr>
@@ -289,10 +289,10 @@ class AdminAblalog extends AdminController
         //    <table class="table table-bordered table-sm" data-classes="table">
         //       <thead class="">
         //          <tr>
-        //             <th>' . translate("Forum") . '</th>
-        //             <th class="n-t-col-xs-2 text-center">' . translate("Sujets") . '</th>
-        //             <th class="n-t-col-xs-2 text-center">' . translate("Contributions") . '</th>
-        //             <th class="n-t-col-xs-3 text-end">' . translate("Dernières contributions") . '</th>
+        //             <th>' . __d('npds', 'Forum') . '</th>
+        //             <th class="n-t-col-xs-2 text-center">' . __d('npds', 'Sujets') . '</th>
+        //             <th class="n-t-col-xs-2 text-center">' . __d('npds', 'Contributions') . '</th>
+        //             <th class="n-t-col-xs-3 text-end">' . __d('npds', 'Dernières contributions') . '</th>
         //          </tr>
         //       </thead>';
         

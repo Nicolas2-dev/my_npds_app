@@ -140,7 +140,7 @@ class EmoticoneManager implements EmoticoneInterface
         if (stristr($_SERVER['PHP_SELF'], "more_emoticon.php")) 
             $theme = $tmp_theme;
     
-        echo '<p align="center">' . translate("Cliquez pour insérer des émoticons dans votre message") . '</p>';
+        echo '<p align="center">' . __d('npds', 'Cliquez pour insérer des émoticons dans votre message') . '</p>';
     
         if ($ibid = theme_image("forum/smilies/more/smilies.php")) {
             $imgtmp = "themes/$theme/assets/images/forum/smilies/more/";
@@ -180,7 +180,7 @@ class EmoticoneManager implements EmoticoneInterface
         global $theme;
     
         echo '
-        <div title="' . translate("Cliquez pour insérer des emoji dans votre message") . '" data-bs-toggle="tooltip">
+        <div title="' . __d('npds', 'Cliquez pour insérer des emoji dans votre message') . '" data-bs-toggle="tooltip">
             <button class="btn btn-link ps-0" type="button" id="button-textOne" data-bs-toggle="emojiPopper" data-bs-target="#' . $targetarea . '">
                 <i class="far fa-smile fa-lg" aria-hidden="true"></i>
             </button>
