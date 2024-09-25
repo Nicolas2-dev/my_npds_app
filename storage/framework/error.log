@@ -1,0 +1,27 @@
+Exception information:
+
+           Date: Sep 25, 2024 18:21PM
+
+           Message: syntax error, unexpected token "protected"
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Core\AdminController.php
+
+           Line: 595
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\vendor\composer\ClassLoader.php(433): Composer\Autoload\{closure}('F:\\Dev_Diver\\Np...')
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Controllers\Admin\AdminDashboard.php(11): Composer\Autoload\ClassLoader->loadClass('App\\Modules\\Npd...')
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\vendor\composer\ClassLoader.php(582): include('F:\\Dev_Diver\\Np...')
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\vendor\composer\ClassLoader.php(433): Composer\Autoload\{closure}('F:\\Dev_Diver\\Np...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Modules\\Npd...')
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): class_exists('App\\Modules\\Npd...')
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(483): Npds\Routing\Router->invokeObject('App\\Modules\\Npd...', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(112): Npds\Routing\Router->dispatch()
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(33): require('F:\\Dev_Diver\\Np...')
+#9 {main}
+
+           ---------
+
