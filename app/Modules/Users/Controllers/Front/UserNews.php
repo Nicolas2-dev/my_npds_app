@@ -90,25 +90,25 @@ class UserNews extends FrontController
         
                 echo '
                 <div>
-                <h2 class="mb-3">' . translate("Utilisateur") . '</h2>
+                <h2 class="mb-3">' . __d('users', 'Utilisateur') . '</h2>
                 <div class="card card-body mb-3">
-                    <h3>' . translate("Notes") . '</h3>
+                    <h3>' . __d('users', 'Notes') . '</h3>
                     <p>
-                    ' . translate("Les préférences de compte fonctionnent sur la base des cookies.") . ' ' . translate("Nous ne vendons ni ne communiquons vos informations personnelles à autrui.") . ' ' . translate("En tant qu'utilisateur enregistré vous pouvez") . ' : 
+                    ' . __d('users', 'Les préférences de compte fonctionnent sur la base des cookies.') . ' ' . __d('users', 'Nous ne vendons ni ne communiquons vos informations personnelles à autrui.') . ' ' . __d('users', 'En tant qu\'utilisateur enregistré vous pouvez') . ' : 
                         <ul>
-                            <li>' . translate("Poster des commentaires signés") . '</li>
-                            <li>' . translate("Proposer des articles en votre nom") . '</li>
-                            <li>' . translate("Disposer d'un bloc que vous seul verrez dans le menu (pour spécialistes, nécessite du code html)") . '</li>
-                            <li>' . translate("Télécharger un avatar personnel") . '</li>
-                            <li>' . translate("Sélectionner le nombre de news que vous souhaitez voir apparaître sur la page principale.") . '</li>
-                            <li>' . translate("Personnaliser les commentaires") . '</li>
-                            <li>' . translate("Choisir un look différent pour le site (si plusieurs proposés)") . '</li>
-                            <li>' . translate("Gérer d'autres options et applications") . '</li>
+                            <li>' . __d('users', 'Poster des commentaires signés') . '</li>
+                            <li>' . __d('users', 'Proposer des articles en votre nom') . '</li>
+                            <li>' . __d('users', 'Disposer d\'un bloc que vous seul verrez dans le menu (pour spécialistes, nécessite du code html)') . '</li>
+                            <li>' . __d('users', 'Télécharger un avatar personnel') . '</li>
+                            <li>' . __d('users', 'Sélectionner le nombre de news que vous souhaitez voir apparaître sur la page principale.') . '</li>
+                            <li>' . __d('users', 'Personnaliser les commentaires') . '</li>
+                            <li>' . __d('users', 'Choisir un look différent pour le site (si plusieurs proposés)') . '</li>
+                            <li>' . __d('users', 'Gérer d\'autres options et applications') . '</li>
                         </ul>
                     </p>';
         
                 if (!Config::get('npds.memberpass')) {
-                    echo '<div class="alert alert-success lead"><i class="fa fa-exclamation me-2"></i>' . translate("Le mot de passe vous sera envoyé à l'adresse Email indiquée.") . '</div>';
+                    echo '<div class="alert alert-success lead"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Le mot de passe vous sera envoyé à l\'adresse Email indiquée.') . '</div>';
                 }
 
                 echo '
@@ -172,17 +172,17 @@ class UserNews extends FrontController
     
         if (Config::get('npds.memberpass')) {
             if ((isset($pass)) and ($pass != $vpass)) {
-                $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Les mots de passe sont différents. Ils doivent être identiques.");
+                $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Les mots de passe sont différents. Ils doivent être identiques.');
             } elseif (strlen($pass) < Config::get('npds.minpass')) {
-                $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Désolé, votre mot de passe doit faire au moins") . ' <strong>' . Config::get('npds.minpass') . '</strong> ' . translate("caractères");
+                $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Désolé, votre mot de passe doit faire au moins') . ' <strong>' . Config::get('npds.minpass') . '</strong> ' . __d('users', 'caractères');
             }
         }
     
         if (!$stop) {
             echo '
-            <h2>' . translate("Utilisateur") . '</h2>
+            <h2>' . __d('users', 'Utilisateur') . '</h2>
             <hr />
-            <h3 class="mb-3"><i class="fa fa-user me-2"></i>' . translate("Votre fiche d'inscription") . '</h3>
+            <h3 class="mb-3"><i class="fa fa-user me-2"></i>' . __d('users', 'Votre fiche d\'inscription') . '</h3>
             <div class="card">
                 <div class="card-body">';
     
@@ -198,15 +198,15 @@ class UserNews extends FrontController
             if (!$charte) {
                 echo '
                     <div class="alert alert-danger lead mt-3">
-                        <i class="fa fa-exclamation me-2"></i>' . translate("Vous devez accepter la charte d'utilisation du site") . '
+                        <i class="fa fa-exclamation me-2"></i>' . __d('users', 'Vous devez accepter la charte d\'utilisation du site') . '
                     </div>
                     <input type="hidden" name="op" value="only_newuser" />
-                    <input class="btn btn-secondary mt-1" type="submit" value="' . translate("Retour en arrière") . '" />
+                    <input class="btn btn-secondary mt-1" type="submit" value="' . __d('users', 'Retour en arrière') . '" />
                     </form>';
             } else {
                 echo '
                     <input type="hidden" name="op" value="finish" /><br />
-                    <input class="btn btn-primary mt-2" type="submit" value="' . translate("Terminer") . '" />
+                    <input class="btn btn-primary mt-2" type="submit" value="' . __d('users', 'Terminer') . '" />
                     </form>';
                 }
         } else {
@@ -299,35 +299,35 @@ class UserNews extends FrontController
             if ($result) {
                 if (Config::get('npds.memberpass')) {
                     echo '
-                    <h2>' . translate("Utilisateur") . '</h2>
+                    <h2>' . __d('users', 'Utilisateur') . '</h2>
                     <hr />
-                    <h2><i class="fa fa-user me-2"></i>' . translate("Inscription") . '</h2>
-                    <p class="lead">' . translate("Votre mot de passe est : ") . '<strong>' . $makepass . '</strong></p>
-                    <p class="lead">' . translate("Vous pourrez le modifier après vous être connecté sur") . ' : <br /><a href="user.php?op=login&amp;uname=' . $uname . '&amp;pass=' . urlencode($makepass) . '"><i class="fas fa-sign-in-alt fa-lg me-2"></i><strong>' . Config::get('npds.sitename') . '</strong></a></p>';
+                    <h2><i class="fa fa-user me-2"></i>' . __d('users', 'Inscription') . '</h2>
+                    <p class="lead">' . __d('users', 'Votre mot de passe est : ') . '<strong>' . $makepass . '</strong></p>
+                    <p class="lead">' . __d('users', 'Vous pourrez le modifier après vous être connecté sur') . ' : <br /><a href="user.php?op=login&amp;uname=' . $uname . '&amp;pass=' . urlencode($makepass) . '"><i class="fas fa-sign-in-alt fa-lg me-2"></i><strong>' . Config::get('npds.sitename') . '</strong></a></p>';
     
-                    $message = translate("Bienvenue sur") . Config::get('npds.sitename') ."!\n\n" . translate("Vous, ou quelqu'un d'autre, a utilisé votre Email identifiant votre compte") . " ($email) " . translate("pour enregistrer un compte sur") . Config::get('npds.sitename')."\n\n" . translate("Informations sur l'utilisateur :") . " : \n\n";
+                    $message = __d('users', 'Bienvenue sur') . Config::get('npds.sitename') ."!\n\n" . __d('users', 'Vous, ou quelqu\'un d\'autre, a utilisé votre Email identifiant votre compte') . " ($email) " . __d('users', 'pour enregistrer un compte sur') . Config::get('npds.sitename')."\n\n" . __d('users', 'Informations sur l\'utilisateur :') . " : \n\n";
                     $message .=
-                        translate("ID utilisateur (pseudo)") . ' : ' . $uname . "\n" .
-                        translate("Véritable adresse Email") . ' : ' . $email . "\n";
+                        __d('users', 'ID utilisateur (pseudo)') . ' : ' . $uname . "\n" .
+                        __d('users', 'Véritable adresse Email') . ' : ' . $email . "\n";
     
                     if ($name != '') {
-                        $message .= translate("Votre véritable identité") . ' : ' . $name . "\n";
+                        $message .= __d('users', 'Votre véritable identité') . ' : ' . $name . "\n";
                     }
 
                     if ($user_from != '') {
-                        $message .= translate("Votre situation géographique") . ' : ' . $user_from . "\n";
+                        $message .= __d('users', 'Votre situation géographique') . ' : ' . $user_from . "\n";
                     }
 
                     if ($user_occ != '') {
-                        $message .= translate("Votre activité") . ' : ' . $user_occ . "\n";
+                        $message .= __d('users', 'Votre activité') . ' : ' . $user_occ . "\n";
                     }
 
                     if ($user_intrest != '') {
-                        $message .= translate("Vos centres d'intérêt") . ' : ' . $user_intrest . "\n";
+                        $message .= __d('users', 'Vos centres d\'intérêt') . ' : ' . $user_intrest . "\n";
                     }
 
                     if ($user_sig != '') {
-                        $message .= translate("Signature") . ' : ' . $user_sig . "\n";
+                        $message .= __d('users', 'Signature') . ' : ' . $user_sig . "\n";
                     }
 
                     if (isset($C1) and $C1 != '') {
@@ -347,29 +347,29 @@ class UserNews extends FrontController
                     
                     include("signat.php");
                     
-                    $subject = html_entity_decode(translate("Inscription"), ENT_COMPAT | ENT_HTML401, cur_charset) . ' ' . $uname;
+                    $subject = html_entity_decode(__d('users', 'Inscription'), ENT_COMPAT | ENT_HTML401, cur_charset) . ' ' . $uname;
                     
                     Mailer::send_email($email, $subject, $message, '', true, 'html', '');
                 } else {
-                    $message = translate("Bienvenue sur") . Config::get('npds.sitename') ." !\n\n" . translate("Vous, ou quelqu'un d'autre, a utilisé votre Email identifiant votre compte") . " ($email) " . translate("pour enregistrer un compte sur") . Config::get('npds.sitename') .".\n\n" . translate("Informations sur l'utilisateur :") . "\n" . translate("-Identifiant : ") . " $uname\n" . translate("-Mot de passe : ") . " $makepass\n\n";
+                    $message = __d('users', 'Bienvenue sur') . Config::get('npds.sitename') ." !\n\n" . __d('users', 'Vous, ou quelqu\'un d\'autre, a utilisé votre Email identifiant votre compte') . " ($email) " . __d('users', 'pour enregistrer un compte sur') . Config::get('npds.sitename') .".\n\n" . __d('users', 'Informations sur l\'utilisateur :') . "\n" . __d('users', '-Identifiant : ') . " $uname\n" . __d('users', '-Mot de passe : ') . " $makepass\n\n";
                     
                     include("signat.php");
                     
-                    $subject = html_entity_decode(translate("Mot de passe utilisateur pour"), ENT_COMPAT | ENT_HTML401, cur_charset) . ' ' . $uname;
+                    $subject = html_entity_decode(__d('users', 'Mot de passe utilisateur pour'), ENT_COMPAT | ENT_HTML401, cur_charset) . ' ' . $uname;
                     
                     Mailer::send_email($email, $subject, $message, '', true, 'html', '');
     
                     echo '
-                    <h2>' . translate("Utilisateur") . '</h2>
+                    <h2>' . __d('users', 'Utilisateur') . '</h2>
                     <h2><i class="fa fa-user me-2"></i>Inscription</h2>
-                    <div class="alert alert-success lead"><i class="fa fa-exclamation me-2"></i>' . translate("Vous êtes maintenant enregistré. Vous allez recevoir un code de confirmation dans votre boîte à lettres électronique.") . '</div>';
+                    <div class="alert alert-success lead"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Vous êtes maintenant enregistré. Vous allez recevoir un code de confirmation dans votre boîte à lettres électronique.') . '</div>';
                 }
     
                 //------------------------------------------------
                 if (file_exists("themes/default/include/new_user.inc")) {
                     include("themes/default/include/new_user.inc");
     
-                    $time = date(translate("dateinternal"), time() + ((int) Config::get('npds.gmt') * 3600));
+                    $time = date(__d('users', 'dateinternal'), time() + ((int) Config::get('npds.gmt') * 3600));
     
                     $message = Metalang::meta_lang(AddSlashes(str_replace("\n", "<br />", $message)));
     
@@ -379,7 +379,7 @@ class UserNews extends FrontController
                 }
     
                 //------------------------------------------------
-                $subject = html_entity_decode(translate("Inscription"), ENT_COMPAT | ENT_HTML401, cur_charset) . ' : ' . Config::get('npds.sitename');
+                $subject = html_entity_decode(__d('users', 'Inscription'), ENT_COMPAT | ENT_HTML401, cur_charset) . ' : ' . Config::get('npds.sitename');
                 
                 Mailer::send_email(Config::get('npds.adminmail'), $subject, "Infos :
                     Nom : $name

@@ -196,24 +196,24 @@ class UserMain extends FrontController
         $useroutils = '';
     
         if (($user) and ($uid != 1)) {
-            $useroutils .= '<a class=" text-primary me-3" href="powerpack.php?op=instant_message&amp;to_userid=' . $posterdata["uname"] . '" ><i class="far fa-envelope fa-2x" title="' . translate("Envoyer un message interne") . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
+            $useroutils .= '<a class=" text-primary me-3" href="powerpack.php?op=instant_message&amp;to_userid=' . $posterdata["uname"] . '" ><i class="far fa-envelope fa-2x" title="' . __d('users', 'Envoyer un message interne') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
         }
 
         if (array_key_exists('femail', $posterdata)) {
             if ($posterdata['femail'] != '')  {
-                $useroutils .= '<a class=" text-primary me-3" href="mailto:' . anti_spam($posterdata['femail'], 1) . '" target="_blank" ><i class="fa fa-at fa-2x" title="' . translate("Email") . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
+                $useroutils .= '<a class=" text-primary me-3" href="mailto:' . anti_spam($posterdata['femail'], 1) . '" target="_blank" ><i class="fa fa-at fa-2x" title="' . __d('users', 'Email') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
             }
         }
 
         if (array_key_exists('url', $posterdata)) {
             if ($posterdata['url'] != '') {
-                $useroutils .= '<a class=" text-primary me-3" href="' . $posterdata['url'] . '" target="_blank" ><i class="fas fa-external-link-alt fa-2x" title="' . translate("Visiter ce site web") . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
+                $useroutils .= '<a class=" text-primary me-3" href="' . $posterdata['url'] . '" target="_blank" ><i class="fas fa-external-link-alt fa-2x" title="' . __d('users', 'Visiter ce site web') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
             }
         }
 
         if (array_key_exists('mns', $posterdata)) {
             if ($posterdata['mns']) {
-                $useroutils .= '<a class=" text-primary me-3" href="minisite.php?op=' . $posterdata['uname'] . '" target="_blank" ><i class="fa fa-desktop fa-2x" title="' . translate("Visitez le minisite") . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
+                $useroutils .= '<a class=" text-primary me-3" href="minisite.php?op=' . $posterdata['uname'] . '" target="_blank" ><i class="fa fa-desktop fa-2x" title="' . __d('users', 'Visitez le minisite') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
             }
         }
 
@@ -221,7 +221,7 @@ class UserMain extends FrontController
         <div class="d-flex flex-row flex-wrap">
             <div class="me-2 my-auto"><img src="' . $direktori . $user_avatar . '" class=" rounded-circle center-block n-ava-64 align-middle" /></div>
             <div class="align-self-center">
-                <h2>' . translate("Utilisateur") . '<span class="d-inline-block text-muted ms-1">' . $uname . '</span></h2>';
+                <h2>' . __d('users', 'Utilisateur') . '<span class="d-inline-block text-muted ms-1">' . $uname . '</span></h2>';
     
         if (isset($cookie[1])) {
             if ($uname !== $cookie[1]) {
@@ -233,7 +233,7 @@ class UserMain extends FrontController
     
         if (isset($cookie[1])) {
             if ($uname == $cookie[1]) {
-                $userinfo .= '<p class="lead">' . translate("Si vous souhaitez personnaliser un peu le site, c'est l'endroit indiqué. ") . '</p>';
+                $userinfo .= '<p class="lead">' . __d('users', 'Si vous souhaitez personnaliser un peu le site, c\'est l\'endroit indiqué. ') . '</p>';
             }
         }
 
@@ -401,7 +401,7 @@ class UserMain extends FrontController
         if ($uid != 1) {
             $userinfo .= '
             <br />
-            <h4>' . translate("Journal en ligne de ") . ' ' . $uname . '.</h4>
+            <h4>' . __d('users', 'Journal en ligne de ') . ' ' . $uname . '.</h4>
             <div id="online_user_journal" class="card card-body mb-3">' . meta_lang($user_journal) . '</div>';
         }
 
@@ -436,7 +436,7 @@ vd($filelist);
 //dd();
 
         $userinfo .= '
-        <h4 class="my-3">' . translate("Les derniers commentaires de") . ' ' . $uname . '.</h4>
+        <h4 class="my-3">' . __d('users', 'Les derniers commentaires de') . ' ' . $uname . '.</h4>
         <div id="last_comment_by" class="card card-body mb-3">';
     
         $url = '';
@@ -449,7 +449,7 @@ vd($filelist);
 vd($filelist[$forum_id]($topic_id, 0));
 
             $url = str_replace("#topic#", $topic_id, $filelist[$forum_id]($topic_id, 0));
-            $userinfo .= '<p><a href="' . $url . '">' . translate("Posté : ") . Date::convertdate($post_time) . '</a></p>';
+            $userinfo .= '<p><a href="' . $url . '">' . __d('users', 'Posté : ') . Date::convertdate($post_time) . '</a></p>';
     
             $message = smilie(stripslashes($post_text));
             $message = aff_video_yt($message);
@@ -464,7 +464,7 @@ vd($filelist[$forum_id]($topic_id, 0));
     
         $userinfo .= '
         </div>
-        <h4 class="my-3">' . translate("Les derniers articles de") . ' ' . $uname . '.</h4>
+        <h4 class="my-3">' . __d('users', 'Les derniers articles de') . ' ' . $uname . '.</h4>
         <div id="last_article_by" class="card card-body mb-3">';
     
         $xtab = news_aff("libre", "WHERE informant='$uname' ORDER BY sid DESC LIMIT 10", '', 10);
@@ -485,7 +485,7 @@ vd($filelist[$forum_id]($topic_id, 0));
     
         $userinfo .= '
         </div>
-        <h4 class="my-3">' . translate("Les dernières contributions de") . ' ' . $uname . '</h4>';
+        <h4 class="my-3">' . __d('users', 'Les dernières contributions de') . ' ' . $uname . '</h4>';
     
         $nbp = 10;
         $content = '';
@@ -532,9 +532,9 @@ vd($filelist[$forum_id]($topic_id, 0));
                 $sqlR = "SELECT rid FROM forum_read WHERE topicid = '$topic_id' AND uid = '$id_lecteur' AND status != '0'";
     
                 if (sql_num_rows(sql_query($sqlR)) == 0) {
-                    $image = '<a href="" title="' . translate("Non lu") . '" data-bs-toggle="tooltip"><i class="far fa-file-alt fa-lg faa-shake animated text-primary "></i></a>';
+                    $image = '<a href="" title="' . __d('users', 'Non lu') . '" data-bs-toggle="tooltip"><i class="far fa-file-alt fa-lg faa-shake animated text-primary "></i></a>';
                 } else {
-                    $image = '<a title="' . translate("Lu") . '" data-bs-toggle="tooltip"><i class="far fa-file-alt fa-lg text-primary"></i></a>';
+                    $image = '<a title="' . __d('users', 'Lu') . '" data-bs-toggle="tooltip"><i class="far fa-file-alt fa-lg text-primary"></i></a>';
                 }
 
                 $content .= '
@@ -542,7 +542,7 @@ vd($filelist[$forum_id]($topic_id, 0));
                     <span class="d-flex w-100 mt-1">
                     <span>' . $post_time . '</span>
                     <span class="ms-auto">
-                    <span class="badge bg-secondary ms-1" title="' . translate("Réponses") . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $replys . '</span>
+                    <span class="badge bg-secondary ms-1" title="' . __d('users', 'Réponses') . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $replys . '</span>
                     </span>
                 </span>
                 <span class="d-flex w-100"><br /><a href="viewtopic.php?topic=' . $topic_id . '&forum=' . $forum_id . '" data-bs-toggle="tooltip" title="' . $forum_name . '">' . $topic_title . '</a><span class="ms-auto mt-1">' . $image . '</span></span>

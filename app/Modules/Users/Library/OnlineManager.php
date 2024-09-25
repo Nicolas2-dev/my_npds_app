@@ -54,12 +54,12 @@ class OnlineManager implements OnlineInterface
     
         list($member_online_num, $guest_online_num) = $this->site_load();
 
-        $content1 = "$guest_online_num " . translate("visiteur(s) et") . " $member_online_num " . translate("membre(s) en ligne.");
+        $content1 = "$guest_online_num " . __d('users', 'visiteur(s) et') . " $member_online_num " . __d('users', 'membre(s) en ligne.');
     
         if ($user) {
-            $content2 = translate("Vous êtes connecté en tant que") . " <b>" . $cookie[1] . "</b>";
+            $content2 = __d('users', 'Vous êtes connecté en tant que') . " <b>" . $cookie[1] . "</b>";
         } else {
-            $content2 = translate("Devenez membre privilégié en cliquant") . " <a href=\"user.php?op=only_newuser\">" . translate("ici") . "</a>";
+            $content2 = __d('users', 'Devenez membre privilégié en cliquant') . " <a href=\"user.php?op=only_newuser\">" . __d('users', 'ici') . "</a>";
         }
     
         return array($content1, $content2);

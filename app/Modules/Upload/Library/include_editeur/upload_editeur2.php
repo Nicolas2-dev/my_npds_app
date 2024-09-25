@@ -23,7 +23,7 @@ include_once("modules/upload/include_editeur/upload.conf.editeur.php");
 /*****************************************************/
 /* Entete                                            */
 /*****************************************************/
-$Titlesitename = upload_translate("Télécharg.");
+$Titlesitename = __d('upload', 'Télécharg.');
 
 include("storage/meta/meta.php");
 
@@ -82,11 +82,11 @@ if (isset($groupe)) {
 echo '
                 <div class="mb-3 row">
                 <input type="hidden" name="actiontype" value="upload" />
-                <label class="form-label">' . upload_translate("Fichier") . '</label>
+                <label class="form-label">' . __d('upload', 'Fichier') . '</label>
                 <input class="form-control" name="pcfile" type="file" id="pcfile" value="" />
                 </div>
                 <div class="mb-3 row">
-                <input type="submit" class="btn btn-primary btn-sm" name="insert" value="' . upload_translate("Joindre") . '" />
+                <input type="submit" class="btn btn-primary btn-sm" name="insert" value="' . __d('upload', 'Joindre') . '" />
                 </div>
             </form>
         </div>

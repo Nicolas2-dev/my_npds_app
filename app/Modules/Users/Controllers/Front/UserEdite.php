@@ -152,10 +152,10 @@ class UserEdit extends FrontController
     
         if (($check == $uname) and ($uid == $vuid)) {
             if ((isset($pass)) && ("$pass" != "$vpass")) {
-                message_error('<i class="fa fa-exclamation me-2"></i>' . translate("Les mots de passe sont différents. Ils doivent être identiques.") . '<br />', '');
+                message_error('<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Les mots de passe sont différents. Ils doivent être identiques.') . '<br />', '');
             
             } elseif (($pass != '') && (strlen($pass) < Config::get('npds.minpass'))) {
-                message_error('<i class="fa fa-exclamation me-2"></i>' . translate("Désolé, votre mot de passe doit faire au moins") . ' <strong>' . Config::get('npds.minpass') . '</strong> ' . translate("caractères") . '<br />', '');
+                message_error('<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Désolé, votre mot de passe doit faire au moins') . ' <strong>' . Config::get('npds.minpass') . '</strong> ' . __d('users', 'caractères') . '<br />', '');
             
             } else {
                 $stop = userCheck('edituser', $email);

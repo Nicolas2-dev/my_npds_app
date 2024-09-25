@@ -88,7 +88,7 @@ class UserTheme extends FrontController
         member_menu($userinfo['mns'], $userinfo['uname']);
     
         echo '
-        <h2 class="mb-3">' . translate("Changer le thème") . '</h2>
+        <h2 class="mb-3">' . __d('users', 'Changer le thème') . '</h2>
         <form action="user.php" method="post">
             <div class="row">
                 <div class="col-md-6">
@@ -114,12 +114,12 @@ class UserTheme extends FrontController
     
         echo '
                     </select>
-                    <label for="theme_local">' . translate("Sélectionnez un thème d'affichage") . '</label>
+                    <label for="theme_local">' . __d('users', 'Sélectionnez un thème d\'affichage') . '</label>
                     </div>
                     <p class="help-block mb-4">
-                    <span>' . translate("Cette option changera l'aspect du site.") . '</span> 
-                    <span>' . translate("Les modifications seront seulement valides pour vous.") . '</span> 
-                    <span>' . translate("Chaque utilisateur peut voir le site avec un thème graphique différent.") . '</span>
+                    <span>' . __d('users', 'Cette option changera l\'aspect du site.') . '</span> 
+                    <span>' . __d('users', 'Les modifications seront seulement valides pour vous.') . '</span> 
+                    <span>' . __d('users', 'Chaque utilisateur peut voir le site avec un thème graphique différent.') . '</span>
                     </p>';
     
         $handle = opendir('assets/skins');
@@ -164,7 +164,7 @@ class UserTheme extends FrontController
     
         echo '
                     </select>
-                    <label for="skins">' . translate("Choisir une charte graphique") . '</label>
+                    <label for="skins">' . __d('users', 'Choisir une charte graphique') . '</label>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -174,7 +174,7 @@ class UserTheme extends FrontController
             <input type="hidden" name="uname" value="' . $userinfo['uname'] . '" />
             <input type="hidden" name="uid" value="' . $userinfo['uid'] . '" />
             <input type="hidden" name="op" value="savetheme" />
-            <input class="btn btn-primary my-3" type="submit" value="' . translate("Sauver les modifications") . '" />
+            <input class="btn btn-primary my-3" type="submit" value="' . __d('users', 'Sauver les modifications') . '" />
         </form>
         <script type="text/javascript">
         //<![CDATA[

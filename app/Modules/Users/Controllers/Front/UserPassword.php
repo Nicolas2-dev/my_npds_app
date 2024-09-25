@@ -39,7 +39,7 @@ class UserPassword extends FrontController
         //             if (strlen($code) >= Config::get('npds.minpass'))
         //                 mail_password($uname, $code);
         //             else
-        //                 message_error("<i class=\"fa fa-exclamation\"></i>&nbsp;" . translate("Mot de passe erroné, refaites un essai.") . "<br /><br />", "");
+        //                 message_error("<i class=\"fa fa-exclamation\"></i>&nbsp;" . __d('users', 'Mot de passe erroné, refaites un essai.') . "<br /><br />", "");
         //         } else
         //             main($user);
         //         break;
@@ -93,22 +93,22 @@ class UserPassword extends FrontController
     public function ForgetPassword()
     {
         echo '
-        <h2 class="mb-3">' . translate("Utilisateur") . '</h2>
+        <h2 class="mb-3">' . __d('users', 'Utilisateur') . '</h2>
         <div class="card card-body">
-            <div class="alert alert-danger lead"><i class="fa fa-exclamation me-2"></i>' . translate("Vous avez perdu votre mot de passe ?") . '</div>
-            <div class="alert alert-success"><i class="fa fa-exclamation me-2"></i>' . translate("Pas de problème. Saisissez votre identifiant et le nouveau mot de passe que vous souhaitez utiliser puis cliquez sur envoyer pour recevoir un Email de confirmation.") . '</div>
+            <div class="alert alert-danger lead"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Vous avez perdu votre mot de passe ?') . '</div>
+            <div class="alert alert-success"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Pas de problème. Saisissez votre identifiant et le nouveau mot de passe que vous souhaitez utiliser puis cliquez sur envoyer pour recevoir un Email de confirmation.') . '</div>
             <form id="forgetpassword" action="user.php" method="post">
                 <div class="row g-2">
                     <div class="col-sm-6 ">
                     <div class="mb-3 form-floating">
-                        <input type="text" class="form-control" name="uname" id="inputuser" placeholder="' . translate("Identifiant") . '" required="required" />
-                        <label for="inputuser">' . translate("Identifiant") . '</label>
+                        <input type="text" class="form-control" name="uname" id="inputuser" placeholder="' . __d('users', 'Identifiant') . '" required="required" />
+                        <label for="inputuser">' . __d('users', 'Identifiant') . '</label>
                     </div>
                     </div>
                     <div class="col-sm-6">
                     <div class="mb-3 form-floating">
-                        <input type="password" class="form-control" name="code" id="inputpassuser" placeholder="' . translate("Mot de passe") . '" required="required" />
-                        <label for="inputpassuser">' . translate("Mot de passe") . '</label>
+                        <input type="password" class="form-control" name="code" id="inputpassuser" placeholder="' . __d('users', 'Mot de passe') . '" required="required" />
+                        <label for="inputpassuser">' . __d('users', 'Mot de passe') . '</label>
                     </div>
                     <div class="progress" style="height: 0.4rem;">
                         <div id="passwordMeter_cont" class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
@@ -116,7 +116,7 @@ class UserPassword extends FrontController
                     </div>
                 </div>
                 <input type="hidden" name="op" value="mailpasswd" />
-                <input class="btn btn-primary btn-lg my-3" type="submit" value ="' . translate("Envoyer") . '" />
+                <input class="btn btn-primary btn-lg my-3" type="submit" value ="' . __d('users', 'Envoyer') . '" />
             </form>
         </div>';
     
@@ -153,7 +153,7 @@ class UserPassword extends FrontController
         $tmp_result = sql_fetch_row($result);
     
         if (!$tmp_result) {
-            User::message_error(translate("Désolé, aucune information correspondante pour cet utlilisateur n'a été trouvée") . "<br /><br />", '');
+            User::message_error(__d('users', 'Désolé, aucune information correspondante pour cet utlilisateur n\'a été trouvée') . "<br /><br />", '');
         } else {
             $host_name = Request::getip();
             list($uname, $email, $pass) = $tmp_result;
@@ -161,15 +161,15 @@ class UserPassword extends FrontController
             // On envoie une URL avec dans le contenu : username, email, le MD5 du passwd retenu et le timestamp
             $url = "Config::get('npds.nuke_url')/user.php?op=validpasswd&code=" . urlencode(Crypt::encrypt($uname) . "#fpwd#" . Crypt::encryptK($email . "#fpwd#" . $code . "#fpwd#" . time(), $pass));
     
-            $message = translate("Le compte utilisateur") . ' ' . $uname . ' ' . translate("at") . ' ' . Config::get('npds.sitename') . ' ' . translate("est associé à votre Email.") . "\n\n";
-            $message .= translate("Un utilisateur web ayant l'adresse IP ") . " $host_name " . translate("vient de demander une confirmation pour changer de mot de passe.") . "\n\n" . translate("Votre url de confirmation est :") . " <a href=\"$url\">$url</a> \n\n" . translate("Si vous n'avez rien demandé, ne vous inquiétez pas. Effacez juste ce Email. ") . "\n\n";
+            $message = __d('users', 'Le compte utilisateur') . ' ' . $uname . ' ' . __d('users', 'at') . ' ' . Config::get('npds.sitename') . ' ' . __d('users', 'est associé à votre Email.') . "\n\n";
+            $message .= __d('users', 'Un utilisateur web ayant l\'adresse IP ') . " $host_name " . __d('users', 'vient de demander une confirmation pour changer de mot de passe.') . "\n\n" . __d('users', 'Votre url de confirmation est :') . " <a href=\"$url\">$url</a> \n\n" . __d('users', 'Si vous n\'avez rien demandé, ne vous inquiétez pas. Effacez juste ce Email. ') . "\n\n";
             
             include("signat.php");
     
-            $subject = translate("Confirmation du code pour") . ' ' . $uname;
+            $subject = __d('users', 'Confirmation du code pour') . ' ' . $uname;
     
             Mailer::send_email($email, $subject, $message, '', true, 'html', '');
-            User::message_pass('<div class="alert alert-success lead text-center"><i class="fa fa-exclamation"></i>&nbsp;' . translate("Confirmation du code pour") . ' ' . $uname . ' ' . translate("envoyée par courrier.") . '</div>');
+            User::message_pass('<div class="alert alert-success lead text-center"><i class="fa fa-exclamation"></i>&nbsp;' . __d('users', 'Confirmation du code pour') . ' ' . $uname . ' ' . __d('users', 'envoyée par courrier.') . '</div>');
             
             Ecr_Log('security', 'Lost_password_request : ' . $uname, '');
         }
@@ -196,16 +196,16 @@ class UserPassword extends FrontController
     
             if ($email == $ibid[0]) {
                 echo '
-                <p class="lead">' . translate("Vous avez perdu votre mot de passe ?") . '</p>
+                <p class="lead">' . __d('users', 'Vous avez perdu votre mot de passe ?') . '</p>
                 <div class="card border rounded p-3">
                     <div class="row">
                         <div class="col-sm-7">
-                        <div class="blockquote">' . translate("Pour valider votre nouveau mot de passe, merci de le re-saisir.") . '<br />' . translate("Votre mot de passe est : ") . ' <strong>' . $ibid[1] . '</strong></div>
+                        <div class="blockquote">' . __d('users', 'Pour valider votre nouveau mot de passe, merci de le re-saisir.') . '<br />' . __d('users', 'Votre mot de passe est : ') . ' <strong>' . $ibid[1] . '</strong></div>
                         </div>
                         <div class="col-sm-5">
                         <form id="lostpassword" action="user.php" method="post">
                             <div class="mb-3 row">
-                                <label class="col-form-label col-sm-12" for="passwd">' . translate("Mot de passe") . '</label>
+                                <label class="col-form-label col-sm-12" for="passwd">' . __d('users', 'Mot de passe') . '</label>
                                 <div class="col-sm-12">
                                     <input type="password" class="form-control" name="passwd" placeholder="' . $ibid[1] . '" required="required" />
                                 </div>
@@ -214,7 +214,7 @@ class UserPassword extends FrontController
                             <input type="hidden" name="code" value="' . $code . '" />
                             <div class="mb-3 row">
                                 <div class="col-sm-12">
-                                    <input class="btn btn-primary" type="submit" value="' . translate("Valider") . '" />
+                                    <input class="btn btn-primary" type="submit" value="' . __d('users', 'Valider') . '" />
                                 </div>
                             </div>
                         </form>
@@ -222,11 +222,11 @@ class UserPassword extends FrontController
                     </div>
                 </div>';
             } else {
-                User::message_pass('<div class="alert alert-danger lead text-center">' . translate("Erreur") . '</div>');
+                User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . '</div>');
                 Ecr_Log('security', 'Lost_password_valid NOK Mail not match : ' . $ibid[0], '');
             }
         } else {
-            User::message_pass('<div class="alert alert-danger lead text-center">' . translate("Erreur") . '</div>');
+            User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . '</div>');
             Ecr_Log('security', 'Lost_password_valid NOK Bad hash : ' . $ibid[0], '');
         }
     }
@@ -265,22 +265,22 @@ class UserPassword extends FrontController
     
                         sql_query("UPDATE users SET pass='$cryptpass', hashkey='1' WHERE uname='$uname'");
     
-                        User::message_pass('<div class="alert alert-success lead text-center"><a class="alert-link" href="user.php"><i class="fa fa-exclamation me-2"></i>' . translate("Mot de passe mis à jour. Merci de vous re-connecter") . '<i class="fas fa-sign-in-alt fa-lg ms-2"></i></a></div>');
+                        User::message_pass('<div class="alert alert-success lead text-center"><a class="alert-link" href="user.php"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Mot de passe mis à jour. Merci de vous re-connecter') . '<i class="fas fa-sign-in-alt fa-lg ms-2"></i></a></div>');
                         Ecr_Log('security', 'Lost_password_update OK : ' . $uname, '');
                     } else {
-                        User::message_pass('<div class="alert alert-danger lead text-center">' . translate("Erreur") . ' : ' . translate("Les mots de passe sont différents. Ils doivent être identiques.") . '</div>');
+                        User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . ' : ' . __d('users', 'Les mots de passe sont différents. Ils doivent être identiques.') . '</div>');
                         Ecr_Log('security', 'Lost_password_update Password not match : ' . $uname, '');
                     }
                 } else {
-                    User::message_pass('<div class="alert alert-danger lead text-center">' . translate("Erreur") . ' : ' . translate("Votre url de confirmation est expirée") . ' > 24 h</div>');
+                    User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . ' : ' . __d('users', 'Votre url de confirmation est expirée') . ' > 24 h</div>');
                     Ecr_Log('security', 'Lost_password_update NOK Time > 24H00 : ' . $uname, '');
                 }
             } else {
-                User::message_pass('<div class="alert alert-danger lead text-center">' . translate("Erreur : Email invalide") . '</div>');
+                User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur : Email invalide') . '</div>');
                 Ecr_Log('security', 'Lost_password_update NOK Mail not match : ' . $uname, '');
             }
         } else {
-            User::message_pass('<div class="alert alert-danger lead text-center">' . translate("Erreur") . '</div>');
+            User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . '</div>');
             Ecr_Log('security', 'Lost_password_update NOK Empty Mail or bad user : ' . $uname, '');
         }
     }

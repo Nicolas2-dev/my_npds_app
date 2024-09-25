@@ -77,7 +77,7 @@ class UserJournal extends FrontController
         member_menu($userinfo['mns'], $userinfo['uname']);
     
         echo '
-        <h2 class="mb-3">' . translate("Editer votre journal") . '</h2>
+        <h2 class="mb-3">' . __d('users', 'Editer votre journal') . '</h2>
         <form action="user.php" method="post" name="adminForm">
             <div class="mb-3 row">
                 <div class="col-sm-12">
@@ -92,13 +92,13 @@ class UserJournal extends FrontController
                 <div class="col-12">
                     <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="datetime" name="datetime" value="1" />
-                    <label class="form-check-label" for="datetime">' . translate("Ajouter la date et l'heure") . '</label>
+                    <label class="form-check-label" for="datetime">' . __d('users', 'Ajouter la date et l\'heure') . '</label>
                     </div>
                 </div>
             </div>
             <div class="mb-3 row">
                 <div class="col-12">
-                    <input class="btn btn-primary" type="submit" value="' . translate("Sauvez votre journal") . '" />
+                    <input class="btn btn-primary" type="submit" value="' . __d('users', 'Sauvez votre journal') . '" />
                 </div>
             </div>
         </form>';
@@ -146,7 +146,7 @@ class UserJournal extends FrontController
                 $journalentry = $journal;
                 $journalentry .= '<br /><br />';
     
-                $journalentry .= date(translate("dateinternal"), time() + ((int) Config::get('npds.gmt') * 3600));
+                $journalentry .= date(__d('users', 'dateinternal'), time() + ((int) Config::get('npds.gmt') * 3600));
     
                 sql_query("UPDATE users SET user_journal='$journalentry' WHERE uid='$uid'");
             } else {

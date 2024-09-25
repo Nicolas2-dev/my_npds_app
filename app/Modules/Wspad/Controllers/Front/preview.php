@@ -70,7 +70,7 @@ $row = sql_fetch_assoc(sql_query("SELECT content, modtime, editedby, ranq  FROM 
 
 echo '
         <h2>' . $wspad[0] . '</h2>
-        <span class="">[ ' . wspad_trans("révision") . ' : ' . $row['ranq'] . ' - ' . $row['editedby'] . " / " . date(translate("dateinternal"), $row['modtime'] + ((int) Config::get('npds.gmt') * 3600)) . ' ]</span>
+        <span class="">[ ' . __d('wspad', 'révision') . ' : ' . $row['ranq'] . ' - ' . $row['editedby'] . " / " . date(__d('wspad', 'dateinternal'), $row['modtime'] + ((int) Config::get('npds.gmt') * 3600)) . ' ]</span>
         <hr />
         ' . aff_langue($row['content']) . '
     </body>

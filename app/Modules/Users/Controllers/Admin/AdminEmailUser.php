@@ -87,7 +87,7 @@ class AdminEmailUser extends AdminController
     // public function __construct()
     // {
         // $f_meta_nom = 'email_user';
-        // $f_titre = adm_translate("Diffusion d'un Message Interne");
+        // $f_titre = __d('users', 'Diffusion d'un Message Interne');
         
         // //==> controle droit
         // admindroits($aid, $f_meta_nom);
@@ -112,32 +112,32 @@ class AdminEmailUser extends AdminController
             <hr />
             <form id="emailuseradm" action="admin.php" method="post" name="AdmMI">
                 <fieldset>
-                    <legend>' . adm_translate("Message") . '</legend>
+                    <legend>' . __d('users', 'Message') . '</legend>
                     <input type="hidden" name="op" value="send_email_to_user" />
                     <div class="mb-3 row">
-                    <label class="col-form-label col-sm-4" for="expediteur">' . adm_translate("Expédier en tant") . '</label>
+                    <label class="col-form-label col-sm-4" for="expediteur">' . __d('users', 'Expédier en tant') . '</label>
                     <div id="expediteur" class="col-sm-8 my-2">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" id="adm" name="expediteur" value="1" checked="checked" />
-                            <label class="form-check-label" for="adm">' . adm_translate("qu'administrateur") . '</label>
+                            <label class="form-check-label" for="adm">' . __d('users', 'qu\'administrateur') . '</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" id="mem" name="expediteur" value="0" />
-                            <label class="form-check-label" for="mem">' . adm_translate("que membre") . '</label>
+                            <label class="form-check-label" for="mem">' . __d('users', 'que membre') . '</label>
                         </div>
                     </div>
                     </div>
                     <div id="div_username" class="mb-3 row">
-                    <label class="col-form-label col-sm-4" for="username">' . adm_translate("Utilisateur") . '</label>
+                    <label class="col-form-label col-sm-4" for="username">' . __d('users', 'Utilisateur') . '</label>
                     <div class="col-sm-8">
                         <input  class="form-control" type="text" id="username" name="username" value="" />
                     </div>
                     </div>
                     <div id="div_groupe" class="mb-3 row">
-                    <label class="col-form-label col-sm-4" for="groupe">' . adm_translate("Groupe") . '</label>
+                    <label class="col-form-label col-sm-4" for="groupe">' . __d('users', 'Groupe') . '</label>
                     <div class="col-sm-8">
                         <select id="groupe" class="form-select" name="groupe" >
-                            <option value="0" selected="selected">' . adm_translate("Choisir un groupe");
+                            <option value="0" selected="selected">' . __d('users', 'Choisir un groupe');
     
         $resultID = sql_query("SELECT groupe_id, groupe_name FROM groupes ORDER BY groupe_id ASC");
     
@@ -150,7 +150,7 @@ class AdminEmailUser extends AdminController
                     </div>
                     </div>
                     <div id="div_all" class="mb-3 row">
-                    <label class="col-form-label col-sm-4" for="all">' . adm_translate("Envoyer à tous les membres") . '</label>
+                    <label class="col-form-label col-sm-4" for="all">' . __d('users', 'Envoyer à tous les membres') . '</label>
                     <div class="col-sm-8 ">
                         <div class="form-check my-2">
                             <input class="form-check-input" id="all" type="checkbox" name="all" value="1" />
@@ -159,14 +159,14 @@ class AdminEmailUser extends AdminController
                     </div>
                     </div>
                     <div class="mb-3 row">
-                    <label class="col-form-label col-sm-4" for="subject">' . adm_translate("Sujet") . '</label>
+                    <label class="col-form-label col-sm-4" for="subject">' . __d('users', 'Sujet') . '</label>
                     <div class="col-sm-8">
                         <input  class="form-control" type="text" maxlength="100" id="subject" name="subject" required="required" />
                         <span class="help-block text-end"><span id="countcar_subject"></span></span>
                     </div>
                     </div>
                     <div class="mb-3 row">
-                    <label class="col-form-label col-sm-12" for="message">' . adm_translate("Corps de message") . '</label>
+                    <label class="col-form-label col-sm-12" for="message">' . __d('users', 'Corps de message') . '</label>
                     <div class="col-sm-12">
                         <textarea class="tin form-control" rows="25" id="message" name="message"></textarea>
                     </div>
@@ -177,7 +177,7 @@ class AdminEmailUser extends AdminController
         echo '
                     <div class="mb-3 row">
                     <div class="col-sm-12">
-                        <button type="submit" class="btn btn-primary">' . adm_translate("Envoyer") . '</button>
+                        <button type="submit" class="btn btn-primary">' . __d('users', 'Envoyer') . '</button>
                     </div>
                     </div>
                 </fieldset>
@@ -326,9 +326,9 @@ class AdminEmailUser extends AdminController
         echo '<hr />';
     
         if ($pasfin)
-            echo '<div class="alert alert-success"><strong>"' . stripslashes($subject) . '"</strong> ' . adm_translate("a été envoyée") . '.</div>';
+            echo '<div class="alert alert-success"><strong>"' . stripslashes($subject) . '"</strong> ' . __d('users', 'a été envoyée') . '.</div>';
         else
-            echo '<div class="alert alert-danger"><strong>"' . stripslashes($subject) . '"</strong>' . adm_translate("n'a pas été envoyée") . '.</div>';
+            echo '<div class="alert alert-danger"><strong>"' . stripslashes($subject) . '"</strong>' . __d('users', 'n\'a pas été envoyée') . '.</div>';
         
         adminfoot('', '', '', '');
     }

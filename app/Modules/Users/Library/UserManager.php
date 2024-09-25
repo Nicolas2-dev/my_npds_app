@@ -60,7 +60,7 @@ class UserManager implements UserInterface
             if (sql_num_rows($result) == 1) {
                 $userinfo = sql_fetch_assoc($result);
             } else {
-                echo '<strong>' . translate("Un problème est survenu") . '.</strong>';
+                echo '<strong>' . __d('users', 'Un problème est survenu') . '.</strong>';
             }
         }
 
@@ -223,7 +223,7 @@ class UserManager implements UserInterface
     function message_error($ibid, $op)
     {
         echo '
-        <h2>' . translate("Utilisateur") . '</h2>
+        <h2>' . __d('users', 'Utilisateur') . '</h2>
         <div class="alert alert-danger lead">';
     
         echo $ibid;
@@ -232,10 +232,10 @@ class UserManager implements UserInterface
             hidden_form();
             echo '
                 <input type="hidden" name="op" value="only_newuser" />
-                <button class="btn btn-secondary mt-2" type="submit">' . translate("Retour en arrière") . '</button>
+                <button class="btn btn-secondary mt-2" type="submit">' . __d('users', 'Retour en arrière') . '</button>
             </form>';
         } else
-            echo '<a class="btn btn-secondary mt-4" href="javascript:history.go(-1)" title="' . translate("Retour en arrière") . '">' . translate("Retour en arrière") . '</a>';
+            echo '<a class="btn btn-secondary mt-4" href="javascript:history.go(-1)" title="' . __d('users', 'Retour en arrière') . '">' . __d('users', 'Retour en arrière') . '</a>';
         
         echo '
         </div>';
@@ -251,32 +251,32 @@ class UserManager implements UserInterface
         $stop = '';
     
         if ((!$email) || ($email == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email)))
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Erreur : Email invalide");
+            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : Email invalide');
     
         if (strrpos($email, ' ') > 0)
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Erreur : une adresse Email ne peut pas contenir d'espaces");
+            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : une adresse Email ne peut pas contenir d\'espaces');
     
         if (checkdnsmail($email) === false)
-            $stop = translate("Erreur : DNS ou serveur de mail incorrect") . '!<br />';
+            $stop = __d('users', 'Erreur : DNS ou serveur de mail incorrect') . '!<br />';
     
         if ((!$uname) || ($uname == '') || (preg_match('#[^a-zA-Z0-9_-]#', $uname)))
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Erreur : identifiant invalide");
+            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : identifiant invalide');
     
         if (strlen($uname) > 25)
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Votre surnom est trop long. Il doit faire moins de 25 caractères.");
+            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Votre surnom est trop long. Il doit faire moins de 25 caractères.');
     
         if (preg_match('#^(root|adm|linux|webmaster|admin|god|administrator|administrador|nobody|anonymous|anonimo|an€nimo|operator|dune|netadm)$#i', $uname))
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Erreur : nom existant.");
+            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : nom existant.');
     
         if (strrpos($uname, ' ') > 0)
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Il ne peut pas y avoir d'espace dans le surnom.");
+            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Il ne peut pas y avoir d\'espace dans le surnom.');
     
         if (sql_num_rows(sql_query("SELECT uname FROM users WHERE uname='$uname'")) > 0)
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Erreur : cet identifiant est déjà utilisé");
+            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : cet identifiant est déjà utilisé');
     
         if ($uname != 'edituser')
             if (sql_num_rows(sql_query("SELECT email FROM users WHERE email='$email'")) > 0)
-                $stop = '<i class="fa fa-exclamation me-2"></i>' . translate("Erreur : adresse Email déjà utilisée");
+                $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : adresse Email déjà utilisée');
     
         return ($stop);
     }
@@ -381,13 +381,13 @@ class UserManager implements UserInterface
         
         $menu = '
         <ul class="nav nav-tabs d-flex flex-wrap"> 
-            <li class="nav-item"><a class="nav-link ' . $cl_u . '" href="user.php" title="' . translate("Votre compte") . '" data-bs-toggle="tooltip" ><i class="fas fa-user fa-2x d-xl-none"></i><span class="d-none d-xl-inline"><i class="fas fa-user fa-lg"></i></span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $ed_u . '" href="user.php?op=edituser" title="' . translate("Vous") . '" data-bs-toggle="tooltip" ><i class="fas fa-user-edit fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . translate("Vous") . '</span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $cl_u . '" href="user.php" title="' . __d('users', 'Votre compte') . '" data-bs-toggle="tooltip" ><i class="fas fa-user fa-2x d-xl-none"></i><span class="d-none d-xl-inline"><i class="fas fa-user fa-lg"></i></span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $ed_u . '" href="user.php?op=edituser" title="' . __d('users', 'Vous') . '" data-bs-toggle="tooltip" ><i class="fas fa-user-edit fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Vous') . '</span></a></li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle tooltipbyclass ' . $cl_edjh . '" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" data-bs-html="true" title="' . translate("Editer votre journal") . '<br />' . translate("Editer votre page principale") . '"><i class="fas fa-edit fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">Editer</span></a>
+                <a class="nav-link dropdown-toggle tooltipbyclass ' . $cl_edjh . '" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" data-bs-html="true" title="' . __d('users', 'Editer votre journal') . '<br />' . __d('users', 'Editer votre page principale') . '"><i class="fas fa-edit fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">Editer</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item ' . $cl_edj . '" href="user.php?op=editjournal" title="' . translate("Editer votre journal") . '" data-bs-toggle="tooltip">' . translate("Journal") . '</a></li>
-                    <li><a class="dropdown-item ' . $cl_edh . '" href="user.php?op=edithome" title="' . translate("Editer votre page principale") . '" data-bs-toggle="tooltip">' . translate("Page") . '</a></li>
+                    <li><a class="dropdown-item ' . $cl_edj . '" href="user.php?op=editjournal" title="' . __d('users', 'Editer votre journal') . '" data-bs-toggle="tooltip">' . __d('users', 'Journal') . '</a></li>
+                    <li><a class="dropdown-item ' . $cl_edh . '" href="user.php?op=edithome" title="' . __d('users', 'Editer votre page principale') . '" data-bs-toggle="tooltip">' . __d('users', 'Page') . '</a></li>
                 </ul>
             </li>';
     
@@ -400,19 +400,19 @@ class UserManager implements UserInterface
     
         //     $menu .= '
         //     <li class="nav-item dropdown">
-        //         <a class="nav-link dropdown-toggle tooltipbyclass" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="' . translate("Gérer votre miniSite") . '"><i class="fas fa-desktop fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">' . translate("MiniSite") . '</span></a>
+        //         <a class="nav-link dropdown-toggle tooltipbyclass" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="' . __d('users', 'Gérer votre miniSite') . '"><i class="fas fa-desktop fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">' . __d('users', 'MiniSite') . '</span></a>
         //         <ul class="dropdown-menu">
-        //             <li><a class="dropdown-item" href="minisite.php?op=' . $qui . '" target="_blank">' . translate("MiniSite") . '</a></li>
-        //             <li><a class="dropdown-item" href="javascript:void(0);" onclick="window.open(' . $PopUp . ')" >' . translate("Gérer votre miniSite") . '</a></li>
+        //             <li><a class="dropdown-item" href="minisite.php?op=' . $qui . '" target="_blank">' . __d('users', 'MiniSite') . '</a></li>
+        //             <li><a class="dropdown-item" href="javascript:void(0);" onclick="window.open(' . $PopUp . ')" >' . __d('users', 'Gérer votre miniSite') . '</a></li>
         //         </ul>
         //     </li>';
         // }
     
         $menu .= '
-            <li class="nav-item"><a class="nav-link ' . $cl_cht . '" href="user.php?op=chgtheme" title="' . translate("Changer le thème") . '"  data-bs-toggle="tooltip" ><i class="fas fa-paint-brush fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . translate("Thème") . '</span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $cl_rs . '" href="modules.php?ModPath=reseaux-sociaux&amp;ModStart=reseaux-sociaux" title="' . translate("Réseaux sociaux") . '"  data-bs-toggle="tooltip" ><i class="fas fa-share-alt-square fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . translate("Réseaux sociaux") . '</span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $cl_pm . '" href="viewpmsg.php" title="' . translate("Message personnel") . '"  data-bs-toggle="tooltip" ><i class="far fa-envelope fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . translate("Message") . '</span></a></li>
-            <li class="nav-item"><a class="nav-link " href="user.php?op=logout" title="' . translate("Déconnexion") . '" data-bs-toggle="tooltip" ><i class="fas fa-sign-out-alt fa-2x text-danger d-xl-none"></i><span class="d-none d-xl-inline text-danger">&nbsp;' . translate("Déconnexion") . '</span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $cl_cht . '" href="user.php?op=chgtheme" title="' . __d('users', 'Changer le thème') . '"  data-bs-toggle="tooltip" ><i class="fas fa-paint-brush fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Thème') . '</span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $cl_rs . '" href="modules.php?ModPath=reseaux-sociaux&amp;ModStart=reseaux-sociaux" title="' . __d('users', 'Réseaux sociaux') . '"  data-bs-toggle="tooltip" ><i class="fas fa-share-alt-square fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Réseaux sociaux') . '</span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $cl_pm . '" href="viewpmsg.php" title="' . __d('users', 'Message personnel') . '"  data-bs-toggle="tooltip" ><i class="far fa-envelope fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Message') . '</span></a></li>
+            <li class="nav-item"><a class="nav-link " href="user.php?op=logout" title="' . __d('users', 'Déconnexion') . '" data-bs-toggle="tooltip" ><i class="fas fa-sign-out-alt fa-2x text-danger d-xl-none"></i><span class="d-none d-xl-inline text-danger">&nbsp;' . __d('users', 'Déconnexion') . '</span></a></li>
         </ul>
         <div class="mt-3"></div>';
 
@@ -487,30 +487,30 @@ class UserManager implements UserInterface
     
             if ($user or autorisation(-127)) {
                 if ($temp_user['uid'] != 1 and $temp_user['uid'] != '') {
-                    $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="user.php?op=userinfo&amp;uname=' . $temp_user['uname'] . '" target="_blank" title="' . translate("Profil") . '" ><i class="fa fa-lg fa-user align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . translate("Profil") . '</span></a></li>';
+                    $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="user.php?op=userinfo&amp;uname=' . $temp_user['uname'] . '" target="_blank" title="' . __d('users', 'Profil') . '" ><i class="fa fa-lg fa-user align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . __d('users', 'Profil') . '</span></a></li>';
                 }
 
                 if ($temp_user['uid'] != 1 and $temp_user['uid'] != '') {
-                    $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="powerpack.php?op=instant_message&amp;to_userid=' . urlencode($temp_user['uname']) . '" title="' . translate("Envoyer un message interne") . '" ><i class="far fa-lg fa-envelope align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . translate("Message") . '</span></a></li>';
+                    $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="powerpack.php?op=instant_message&amp;to_userid=' . urlencode($temp_user['uname']) . '" title="' . __d('users', 'Envoyer un message interne') . '" ><i class="far fa-lg fa-envelope align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . __d('users', 'Message') . '</span></a></li>';
                 }
 
                 if ($temp_user['femail'] != '') {
-                    $useroutils .= '<li><a class="dropdown-item  text-center text-md-start" href="mailto:' . anti_spam($temp_user['femail'], 1) . '" target="_blank" title="' . translate("Email") . '" ><i class="fa fa-at fa-lg align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . translate("Email") . '</span></a></li>';
+                    $useroutils .= '<li><a class="dropdown-item  text-center text-md-start" href="mailto:' . anti_spam($temp_user['femail'], 1) . '" target="_blank" title="' . __d('users', 'Email') . '" ><i class="fa fa-at fa-lg align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . __d('users', 'Email') . '</span></a></li>';
                 }
 
                 if ($temp_user['uid'] != 1 and array_key_exists($ch_lat, $posterdata_extend)) {
                     if ($posterdata_extend[$ch_lat] != '') {
-                        $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="modules.php?ModPath=geoloc&amp;ModStart=geoloc&op=u' . $temp_user['uid'] . '" title="' . translate("Localisation") . '" ><i class="fas fa-map-marker-alt fa-lg align-middle fa-fw">&nbsp;</i><span class="ms-2 d-none d-md-inline">' . translate("Localisation") . '</span></a></li>';
+                        $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="modules.php?ModPath=geoloc&amp;ModStart=geoloc&op=u' . $temp_user['uid'] . '" title="' . __d('users', 'Localisation') . '" ><i class="fas fa-map-marker-alt fa-lg align-middle fa-fw">&nbsp;</i><span class="ms-2 d-none d-md-inline">' . __d('users', 'Localisation') . '</span></a></li>';
                     }
                 }
             }
     
             if ($temp_user['url'] != '') {
-                $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="' . $temp_user['url'] . '" target="_blank" title="' . translate("Visiter ce site web") . '"><i class="fas fa-external-link-alt fa-lg align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . translate("Visiter ce site web") . '</span></a></li>';
+                $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="' . $temp_user['url'] . '" target="_blank" title="' . __d('users', 'Visiter ce site web') . '"><i class="fas fa-external-link-alt fa-lg align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . __d('users', 'Visiter ce site web') . '</span></a></li>';
             }
 
             if ($temp_user['mns']) {
-                $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="minisite.php?op=' . $temp_user['uname'] . '" target="_blank" target="_blank" title="' . translate("Visitez le minisite") . '" ><i class="fa fa-lg fa-desktop align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . translate("Visitez le minisite") . '</span></a></li>';
+                $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="minisite.php?op=' . $temp_user['uname'] . '" target="_blank" target="_blank" title="' . __d('users', 'Visitez le minisite') . '" ><i class="fa fa-lg fa-desktop align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . __d('users', 'Visitez le minisite') . '</span></a></li>';
             }
 
             if (stristr($temp_user['user_avatar'], 'users_private')) {

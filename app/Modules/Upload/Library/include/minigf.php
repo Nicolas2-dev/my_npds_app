@@ -29,7 +29,7 @@
             }
 
             if (sel) {
-                if (window.confirm(htmlDecode('"<?php echo upload_translate("Supprimer les fichiers sélectionnés ?") ?>"'))) {
+                if (window.confirm(htmlDecode('"<?php echo __d('upload', 'Supprimer les fichiers sélectionnés ?') ?>"'))) {
                     has_submitted = 1;
 
                     setTimeout('has_submitted=0', 5000);
@@ -44,7 +44,7 @@
                 return true;
             }
         } else {
-            bootbox.alert(htmlDecode("<?php echo upload_translate("Cette page a déjà été envoyée, veuillez patienter") ?>"));
+            bootbox.alert(htmlDecode("<?php echo __d('upload', 'Cette page a déjà été envoyée, veuillez patienter') ?>"));
 
             return false;
         }
@@ -57,7 +57,7 @@
 
             f.submit();
         } else {
-            bootbox.alert(htmlDecode("<?php echo upload_translate("Cette page a déjà été envoyée, veuillez patienter") ?>"));
+            bootbox.alert(htmlDecode("<?php echo __d('upload', 'Cette page a déjà été envoyée, veuillez patienter') ?>"));
 
             return false;
         }
@@ -74,11 +74,11 @@
 
         if (sel == false) {
             f.actiontype.value = '';
-            bootbox.alert(htmlDecode("<?php echo upload_translate("Vous devez tout d'abord choisir la Pièce jointe à supprimer") ?>"));
+            bootbox.alert(htmlDecode("<?php echo __d('upload', 'Vous devez tout d\'abord choisir la Pièce jointe à supprimer') ?>"));
 
             return false;
         } else {
-            bootbox.confirm(htmlDecode("<?php echo upload_translate("Supprimer les fichiers sélectionnés ?") ?>"), function(result) {
+            bootbox.confirm(htmlDecode("<?php echo __d('upload', 'Supprimer les fichiers sélectionnés ?') ?>"), function(result) {
                 if (result === true) {
                     f.actiontype.value = 'delete';
 
@@ -106,13 +106,13 @@
             uniqueSubmit(f);
         } else {
             f.actiontype.value = '';
-            bootbox.alert(htmlDecode("<?php echo upload_translate('Vous devez sélectionner un fichier') ?>"));
+            bootbox.alert(htmlDecode("<?php echo __d('upload', 'Vous devez sélectionner un fichier') ?>"));
             f.pcfile.focus();
         }
     }
 
     function confirmSendFile(f) {
-        bootbox.confirm("<?php echo upload_translate('Joindre le fichier maintenant ?') ?>",
+        bootbox.confirm("<?php echo __d('upload', 'Joindre le fichier maintenant ?') ?>",
             function(result) {
                 if (result === true) {
                     uploadFile(f);
@@ -163,17 +163,17 @@ if (is_array($att)) {
     $display_att = true;
 
     if ($Mmod)
-        $vizut = '<th data-halign="center" data-align="center">' . upload_translate("Visibilité") . '</th>';
+        $vizut = '<th data-halign="center" data-align="center">' . __d('upload', 'Visibilité') . '</th>';
 
     $att_table = '
                 <table data-toggle="table" data-classes="table table-sm table-no-bordered table-hover table-striped" data-mobile-responsive="true">
                 <thead>
                     <tr>
                         <th class="n-t-col-xs-1"><i class="fas fa-trash fa-lg text-danger"></i></th>
-                        <th class="n-t-col-xs-3" data-halign="center" data-align="center" data-sortable="true">' . upload_translate("Fichier") . '</th>
-                        <th data-halign="center" data-align="center" data-sortable="true">' . upload_translate("Type") . '</th>
-                        <th data-halign="center" data-align="right">' . upload_translate("Taille") . '</th>
-                        <th data-halign="center" data-align="center">' . upload_translate("Affichage intégré") . '</th>
+                        <th class="n-t-col-xs-3" data-halign="center" data-align="center" data-sortable="true">' . __d('upload', 'Fichier') . '</th>
+                        <th data-halign="center" data-align="center" data-sortable="true">' . __d('upload', 'Type') . '</th>
+                        <th data-halign="center" data-align="right">' . __d('upload', 'Taille') . '</th>
+                        <th data-halign="center" data-align="center">' . __d('upload', 'Affichage intégré') . '</th>
                     ' . $vizut . '
                     </tr>
                 </thead>
@@ -215,17 +215,17 @@ if (is_array($att)) {
     $visu_button = '';
 
     echo '<input type="hidden" name="visible_list" value="' . $visible_list . '">';
-    $att_inline_button = '<button class="btn btn-outline-primary btn-sm btn-block" onclick="InlineType(this.form);">' . upload_translate("Adapter") . '<span class="d-none d-xl-inline"> ' . upload_translate("Affichage intégré") . '</span></button>';
+    $att_inline_button = '<button class="btn btn-outline-primary btn-sm btn-block" onclick="InlineType(this.form);">' . __d('upload', 'Adapter') . '<span class="d-none d-xl-inline"> ' . __d('upload', 'Affichage intégré') . '</span></button>';
 
     if ($Mmod)
-        $visu_button = '<button class="btn btn-outline-primary btn-sm btn-block" onclick="visibleFile(this.form);">' . upload_translate("Adapter") . '<span class="d-none d-xl-inline"> ' . upload_translate("Visibilité") . '</span></button>';
+        $visu_button = '<button class="btn btn-outline-primary btn-sm btn-block" onclick="visibleFile(this.form);">' . __d('upload', 'Adapter') . '<span class="d-none d-xl-inline"> ' . __d('upload', 'Visibilité') . '</span></button>';
 
     $att_table .= '
                 </tbody>
                 </table>
                 <div class="row p-2">
-                <div class="col-sm-4 col-6 mb-2"><i class="fas fa-level-up-alt fa-2x fa-flip-horizontal text-danger me-1"></i><a class="text-danger" href="#" onclick="deleteFile(document.form0); return false;"><span class="d-sm-none" title="' . upload_translate("Supprimer les fichiers sélectionnés") . '" data-bs-toggle="tooltip" data-bs-placement="right" ><i class="fas fa-trash fa-2x ms-1"></i></span><span class="d-none d-sm-inline">' . upload_translate("Supprimer les fichiers sélectionnés") . '</span></a></div>
-                <div class="col-sm-4 text-end col-6 mb-2"><strong>' . upload_translate("Total :") . ' ' . $total_sz . '</strong></div>
+                <div class="col-sm-4 col-6 mb-2"><i class="fas fa-level-up-alt fa-2x fa-flip-horizontal text-danger me-1"></i><a class="text-danger" href="#" onclick="deleteFile(document.form0); return false;"><span class="d-sm-none" title="' . __d('upload', 'Supprimer les fichiers sélectionnés') . '" data-bs-toggle="tooltip" data-bs-placement="right" ><i class="fas fa-trash fa-2x ms-1"></i></span><span class="d-none d-sm-inline">' . __d('upload', 'Supprimer les fichiers sélectionnés') . '</span></a></div>
+                <div class="col-sm-4 text-end col-6 mb-2"><strong>' . __d('upload', 'Total :') . ' ' . $total_sz . '</strong></div>
                 <div class="col-sm-2 text-center-sm mb-2 col-12 ">' . $att_inline_button . '</div>
                 <div class="col-sm-2 text-center-sm mb-2 col-12">' . $visu_button . '</div>
                 </div>';
@@ -237,23 +237,23 @@ $oo = $tf->file_size_format($MAX_FILE_SIZE, 1);
 $att_upload_table = '
     <div class="card card-body my-2">
         <div class="mb-3 row">
-            <label class="col-form-label col-sm-3" for="pcfile">' . upload_translate("Fichier joint") . '</label>
+            <label class="col-form-label col-sm-3" for="pcfile">' . __d('upload', 'Fichier joint') . '</label>
             <div class="col-sm-9">
                 <div class="input-group mb-2 me-sm-2">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="pcfile" id="pcfile" onchange="confirmSendFile(this.form);"/>
-                    <label id="lab" class="custom-file-label" for="pcfile">' . upload_translate("Sélectionner votre fichier") . '</label>
+                    <label id="lab" class="custom-file-label" for="pcfile">' . __d('upload', 'Sélectionner votre fichier') . '</label>
                 </div>
                 </div>
             </div>
         </div>
         <div class="mb-3 row">
             <div class="col-sm-9 ms-sm-auto">
-                <button type="button" class="btn btn-primary" onclick="uploadFile(this.form);">' . upload_translate("Joindre") . '</button>
+                <button type="button" class="btn btn-primary" onclick="uploadFile(this.form);">' . __d('upload', 'Joindre') . '</button>
             </div>
         </div>
-        <p class="mb-0">' . upload_translate("Taille maxi du fichier") . ' : ' . $oo . '</p>
-        <p class="mb-0">' . upload_translate("Extensions autorisées") . ' : <small class="text-success">' . $bn_allowed_extensions . '</small></p>
+        <p class="mb-0">' . __d('upload', 'Taille maxi du fichier') . ' : ' . $oo . '</p>
+        <p class="mb-0">' . __d('upload', 'Extensions autorisées') . ' : <small class="text-success">' . $bn_allowed_extensions . '</small></p>
     </div>';
 
 $att_form = '
