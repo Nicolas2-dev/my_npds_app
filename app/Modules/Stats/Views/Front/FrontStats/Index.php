@@ -415,4 +415,4 @@ echo '
     <li class="list-group-item d-flex justify-content-start align-items-center"><i class="fa fa-cogs fa-2x text-muted me-1"></i>Version Sub <span class="badge bg-danger ms-auto">' . Config::get('npds.Version_Sub') . '</span></li>
 </ul>
 <br />
-<p class="text-center"><a href="http://www.App.org" >http://www.App.org</a> - French Portal Generator Gnu/Gpl Licence</p><br />';
+<p class="text-center"><a href="http://www.npds.org" >http://www.Npds.org</a> - French Portal Generator Gnu/Gpl Licence</p><br />';

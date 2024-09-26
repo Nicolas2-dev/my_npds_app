@@ -1,24 +1,35 @@
 <?php
+/**
+ * Two - Modules/Users/boxe/Boxe.php
+ *
+ * @author  Nicolas Devoy
+ * @email   nicolas@nicodev.fr 
+ * @version 1.0.0
+ * @date    26 Septembre 2024
+ */
 
 use Npds\view\View;
 use Npds\Http\Request;
 use Npds\Support\Facades\DB;
 use App\Modules\Users\Models\User;
+use App\Modules\Npds\Support\Facades\Auth;
+use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Theme\Support\Facades\Theme;
 
+use function time;
 
 /**
  * Bloc Login
  * 
  * syntaxe : function#loginbox
  *
- * @return  [type]  [return description]
+ * @return  void
  */
-function loginbox()
+function loginbox(): void
 {
-    global $user, $block_title;
+    global $block_title;
 
-    if (!$user) {
+    if (!Auth::guard('user')) {
         Theme::themesidebox(
             ($block_title ?: __d('users', 'Se connecter')), 
             View::make('Modules/Users/Views/Boxe/Boxe_Login')
@@ -31,19 +42,19 @@ function loginbox()
  * 
  * syntaxe : function#userblock
  *
- * @return  [type]  [return description]
+ * @return  void
  */
-function userblock()
+function userblock(): void
 {
-    global $user, $cookie, $block_title;
+    global $block_title;
 
-    if (($user) and ($cookie[8])) {
+    if (Auth::guard('user') and Cookie::cookie_user(8)) {
         $user_block = DBQ_select(
-            DB::table('users')->select('ublock')->where('uid', $cookie[0])->first(), 
+            DB::table('users')->select('ublock')->where('uid', Cookie::cookie_user(0))->first(), 
             86400
         );
 
-        Theme::themesidebox(($block_title ?: __d('users', 'Menu de {0}', $cookie[1])), $user_block['ublock']);
+        Theme::themesidebox(($block_title ?: __d('users', 'Menu de {0}', Cookie::cookie_user(1))), $user_block['ublock']);
     }
 }
 
@@ -52,23 +63,23 @@ function userblock()
  * 
  * syntaxe : function#online
  *
- * @return  [type]  [return description]
+ * @return  void
  */
-function online()
+function online(): void
 {
-    global $user, $cookie, $block_title;
+    global $block_title;
 
     DB::table('session')->where('time', '<', (time() - 300))->delete();
 
+    $username = Cookie::cookie_user(1) ?: '';
+
     $ip = Request::getip();
 
-    $username = isset($cookie[1]) ? $cookie[1] : '';
-
     $data = [
-        'username'  => (($username != $ip) ? $username : $ip),
+        'username'  => ($username != $ip ? $username : $ip),
         'time'      => time(),
         'host_addr' => $ip,
-        'guest'     => (($username != $ip) ? 0 : 1),
+        'guest'     => ($username != $ip ? 0 : 1),
     ];
 
     if ($username != $ip) {
@@ -77,11 +88,9 @@ function online()
         DB::table('session')->insert($data);
     }
 
-    if ($user) {
+    if ($user = Auth::guard('user')) {
         $count_pmsg = User::where('uname', $username)->first();
     }
-
-    $query = DB::table('session')->select('username');
 
     Theme::themesidebox(
         ($block_title ?: __d('users', 'Qui est en ligne ?')), 
@@ -90,8 +99,8 @@ function online()
                 'user'              => $user,
                 'count_msg'         => ($user ? $count_pmsg->priv_msg()->count() : 0),
                 'username'          => $username,
-                'guest_online_num'  => $query->where('guest', 1)->count(),
-                'member_online_num' => $query->where('guest', 0)->count(),
+                'guest_online_num'  => DB::table('session')->select('username')->where('guest', 1)->count(),
+                'member_online_num' => DB::table('session')->select('username')->where('guest', 0)->count(),
             ]
         )
     );

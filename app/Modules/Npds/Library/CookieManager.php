@@ -18,6 +18,13 @@ class CookieManager extends Cookie implements CookieInterface
      */
     protected static $instance;
 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    private $user_cookie = null;
+
 
     /**
      * [getInstance description]
@@ -73,6 +80,8 @@ class CookieManager extends Cookie implements CookieInterface
                                     WHERE uname='$cookie[1]'");
                         }
 
+                        $this->user_cookie = $cookie;
+
                         return $cookie;
                     } else {
                         $stop = true;
@@ -121,6 +130,22 @@ class CookieManager extends Cookie implements CookieInterface
         
         return $cookie[$id]; 
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function cookie_user($id = '')
+    {
+        if (!empty($id)) {
+            return $this->user_cookie[$id];
+        } else {
+            return $this->user_cookie;
+        }
+    }
+
 
     /**
      * [docookie description]
