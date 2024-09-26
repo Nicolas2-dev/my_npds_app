@@ -30,9 +30,10 @@ trait ThemeHeaderTrait
         settype($ContainerGlobal, 'string');
 
         // $theme = with(get_instance())->template();
+        $theme_dir = with(get_instance())->template_dir();
 
-        if (file_exists(theme_path($this->theme . "/Fragments/header.php"))) {
-            $rep = theme_path($this->theme);
+        if (file_exists(theme_path($theme_dir .'/'. $this->theme . "/Fragments/header.php"))) {
+            $rep = theme_path($theme_dir .'/'. $this->theme);
         } elseif (file_exists(module_path("Theme/Views/Fragments/header.php"))) {
             $rep = module_path('Theme/Views');
         } else {
@@ -42,7 +43,7 @@ trait ThemeHeaderTrait
 
         if ($rep) {
             if (file_exists(module_path("Theme/Support/Include/body_onload.php")) 
-            or file_exists(theme_path($this->theme."/Support/Include/body_onload.php"))) {
+            or file_exists(theme_path($theme_dir .'/'. $this->theme."/Support/Include/body_onload.php"))) {
                 $onload_init = ' onload="init();"';
             } else {
                 $onload_init = '';

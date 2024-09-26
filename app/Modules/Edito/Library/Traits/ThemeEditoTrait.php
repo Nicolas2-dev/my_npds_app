@@ -18,12 +18,13 @@ trait ThemeEditoTrait
      */
     public function themedito($content)
     {
-        $theme = with(get_instance())->template();
-    
         $inclusion = false;
     
-        if (file_exists(theme_path($theme . "/views/editorial.html"))) {
-            $inclusion = theme_path($theme . "/views/editorial.html");
+        $theme = with(get_instance())->template();
+        $theme_dir = with(get_instance())->template_dir();
+
+        if (file_exists(theme_path($theme_dir .'/'. $theme . "/views/editorial.html"))) {
+            $inclusion = theme_path($theme_dir .'/'. $theme . "/views/editorial.html");
 
         } elseif (file_exists(theme_path("default/views/editorial.html"))) {
             $inclusion = theme_path("default/views/editorial.html");

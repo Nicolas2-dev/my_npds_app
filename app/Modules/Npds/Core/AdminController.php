@@ -29,6 +29,14 @@ class AdminController extends BaseController
     protected $template = 'Npdsboost_sk';
 
     /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    protected $template_dir = 'Frontend';
+
+
+    /**
      * [$admintest description]
      *
      * @var [type]
@@ -134,7 +142,7 @@ class AdminController extends BaseController
         $this->admindroits();
 
         if ($this->radminsuper != 1) {
-            Access_Error();
+            $this->access_error();
         }
 
         // Leave to parent's method the Flight decisions.

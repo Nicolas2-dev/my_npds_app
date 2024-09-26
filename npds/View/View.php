@@ -173,13 +173,14 @@ class View
         $controller =& get_instance();
 
         $template = $controller->template();
+        $template_dir = $controller->template_dir();
 
         if(is_null($layout)) {
             $layout = $controller->layout();
         }
 
         // Prepare the file path.
-        $path = APPPATH .'Themes' .DS .$template .DS .'Layouts' .DS .$layout .'.php';
+        $path = APPPATH .'Themes' .DS .$template_dir .DS .$template .DS .'Layouts' .DS .$layout .'.php';
 
         //
         Response::addHeader('Content-Type: text/html; charset=UTF-8');
@@ -202,9 +203,10 @@ class View
         $controller =& get_instance();
 
         $template = $controller->template();
+        $template_dir = $controller->template_dir();
 
         // Prepare the file path.
-        $path = APPPATH .'Themes' .DS .$template .DS .'Fragments' .DS .$fragment .'.php';
+        $path = APPPATH .'Themes' .DS .$template_dir .DS .$template .DS .'Fragments' .DS .$fragment .'.php';
 
         return new View($path, $data);
     }

@@ -180,7 +180,7 @@ if (autorisation(-1)) {
 </nav>
 <div class="page-header">
     <div class="row">
-        <div class="col-sm-2"><img class="img-fluid" src="<?php echo site_url('themes/!theme!/assets/images/header.png'); ?>" alt="image_entete" /></div>
+        <div class="col-sm-2"><img class="img-fluid" src="<?php echo site_url('themes/frontend/!theme!/assets/images/header.png'); ?>" alt="image_entete" /></div>
         <div id="logo_header" class="col-sm-6">
             <h1 class="my-4">App<br /><small class="text-muted">Responsive</small></h1>
         </div>

@@ -55,8 +55,10 @@ trait ThemefooterTrait
 
         settype($ContainerGlobal, 'string');
 
-        if (file_exists(theme_path($this->theme . "/Fragments/footer.php"))) {
-            $rep = theme_path($this->theme);
+        $theme_dir = with(get_instance())->template_dir();
+
+        if (file_exists(theme_path($theme_dir .'/'. $this->theme . "/Fragments/footer.php"))) {
+            $rep = theme_path($theme_dir .'/'. $this->theme);
         } elseif (file_exists(module_path("Theme/Views/Fragments/footer.php"))) {
             $rep = module_path('Theme/Views');
         } else {
@@ -166,6 +168,8 @@ trait ThemefooterTrait
 
         $this->foot();
 
+        $theme_dir = with(get_instance())->template_dir();
+
         // include externe file from modules/themes include for functions, codes ...
         if (isset($user)) {
             global $user, $cookie9;
@@ -182,16 +186,16 @@ trait ThemefooterTrait
                 $cookie9 = $ibix[0];
             }
 
-            if (file_exists(theme_path($cookie9."/Support/Include/footer_after.php"))) {
-                include(theme_path($cookie9."/Support/Include/footer_after.php"));
+            if (file_exists(theme_path($theme_dir .'/'. $cookie9."/Support/Include/footer_after.php"))) {
+                include(theme_path($theme_dir .'/'. $cookie9."/Support/Include/footer_after.php"));
             } else {
                 if (file_exists(module_path("Theme/Support/Include/footer_after.php"))) {
                     include(module_path("Theme/Support/Include/footer_after.php"));
                 }
             }
         } else {
-            if (file_exists(theme_path($this->theme."/Support/Include/footer_after.php"))) {
-                include(theme_path($this->theme."/Support/Include/footer_after.php"));
+            if (file_exists(theme_path($theme_dir .'/'. $this->theme."/Support/Include/footer_after.php"))) {
+                include(theme_path($theme_dir .'/'. $this->theme."/Support/Include/footer_after.php"));
             } else {
                 if (file_exists(module_path("Theme/Support/Include/footer_after.php"))) {
                     include(module_path("Theme/Support/Include/footer_after.php"));

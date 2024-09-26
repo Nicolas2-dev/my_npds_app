@@ -72,6 +72,13 @@ abstract class Controller
      *
      * @var string
      */
+    protected $template_dir = 'Frontend';
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
     protected $layout   = 'default';
 
     /**
@@ -356,6 +363,16 @@ abstract class Controller
     public function template()
     {
         return $this->template;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function template_dir()
+    {
+        return $this->template_dir;
     }
 
     /**

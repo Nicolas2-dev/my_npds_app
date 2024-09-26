@@ -59,16 +59,16 @@ function adminblock()
             $fid_ar[]   = $SAQ['fid'];
 
             if ($SAQ['fcategorie'] == 9) {
-                $adminico = site_url(Config::get('npds.adminimg') . $SAQ['ficone'] . '.' . Config::get('npds.admf_ext'));
+                $adminico = Config::get('npds.adminimg') . $SAQ['ficone'] . '.' . Config::get('npds.admf_ext');
             }
 
             // Note url 'op=Extend-Admin-SubModule' a revoir 
             if ($SAQ['fcategorie'] == 9 and strstr($SAQ['furlscript'], "op=Extend-Admin-SubModule")) {
                 
                 if (file_exists(module_path($SAQ['fnom'] . '/' . $SAQ['fnom'] . '.' . Config::get('npds.admf_ext')))) {
-                    $adminico = site_url('modules/' . $SAQ['fnom'] . '/' . $SAQ['fnom'] . '.' . Config::get('npds.admf_ext'));
+                    $adminico = 'modules/' . $SAQ['fnom'] . '/' . $SAQ['fnom'] . '.' . Config::get('npds.admf_ext');
                 } else {
-                    $adminico = site_url(Config::get('npds.adminimg') . 'module.' . Config::get('npds.admf_ext'));
+                    $adminico = Config::get('npds.adminimg') . 'module.' . Config::get('npds.admf_ext');
                 }
             }
 

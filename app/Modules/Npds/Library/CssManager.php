@@ -50,7 +50,12 @@ class CssManager implements CssInterface
 
         $theme = with(get_instance())->template();
 
-        $tmp_theme = $theme;
+        $template_dir = with(get_instance())->template_dir();
+
+        $tmp_theme = $template_dir .'/'. $theme;
+
+//vd($tmp_theme);
+
 
         $language = Config::get('npds.language');
 
@@ -86,7 +91,7 @@ class CssManager implements CssInterface
             
         }
 
-$tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/admin.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
+        $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/admin.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
 
         // Chargeur CSS spécifique
         if ($css_pages_ref) {

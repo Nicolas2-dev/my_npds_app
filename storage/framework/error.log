@@ -25,3 +25,85 @@ Exception information:
 
            ---------
 
+Exception information:
+
+           Date: Sep 26, 2024 1:51AM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Themes\Npdsboost_sk\Layouts\backend.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(187): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Core\BaseController.php(138): Npds\view\View::layout('backend', Array)
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Core\AdminController.php(164): App\Controllers\Core\BaseController->after(Object(Npds\view\View))
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\ArchiveStories\Controllers\Admin\AdminArchiveStories.php(88): App\Modules\Npds\Core\AdminController->after(NULL)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(177): App\Modules\ArchiveStories\Controllers\Admin\AdminArchiveStories->after(NULL)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(397): Npds\Core\Controller->execute('configureArchiv...', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(435): Npds\Routing\Router->invokeController('App\\Modules\\Arc...', 'configureArchiv...', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(483): Npds\Routing\Router->invokeObject('App\\Modules\\Arc...', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(112): Npds\Routing\Router->dispatch()
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(33): require('F:\\Dev_Diver\\Np...')
+#10 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 26, 2024 1:52AM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Themes\Npdsboost_sk\Layouts\frontend.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(187): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Core\BaseController.php(138): Npds\view\View::layout('frontend', Array)
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Core\FrontController.php(37): App\Controllers\Core\BaseController->after(Object(Npds\view\View))
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(46): App\Modules\Npds\Core\FrontController->after(NULL)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(177): App\Controllers\Welcome->after(NULL)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(397): Npds\Core\Controller->execute('welcome', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(435): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(483): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(112): Npds\Routing\Router->dispatch()
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(33): require('F:\\Dev_Diver\\Np...')
+#10 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 26, 2024 2:27AM
+
+           Message: Call to undefined function App\Modules\Npds\Core\site_utl()
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Core\AdminController.php
+
+           Line: 339
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Core\AdminController.php(164): App\Modules\Npds\Core\AdminController->GraphicAdmin()
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Controllers\Admin\AdminDashboard.php(74): App\Modules\Npds\Core\AdminController->after(NULL)
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(184): App\Modules\Npds\Controllers\Admin\AdminDashboard->after(NULL)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(397): Npds\Core\Controller->execute('adminMain', Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(435): Npds\Routing\Router->invokeController('App\\Modules\\Npd...', 'adminMain', Array)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(483): Npds\Routing\Router->invokeObject('App\\Modules\\Npd...', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(112): Npds\Routing\Router->dispatch()
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(33): require('F:\\Dev_Diver\\Np...')
+#8 {main}
+
+           ---------
+

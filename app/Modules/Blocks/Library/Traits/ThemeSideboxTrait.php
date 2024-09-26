@@ -26,18 +26,19 @@ trait ThemeSideboxTrait
         $inclusion = false;
     
         $theme = with(get_instance())->template();
+        $theme_dir = with(get_instance())->template_dir();
 
-        if (file_exists(theme_path($theme . "/Fragments/bloc-right.php")) and ($bloc_side == "RIGHT")) {
-            $inclusion = theme_path($theme . '/Fragments/bloc-right.php');
+        if (file_exists(theme_path($theme_dir .'/'. $theme . "/Fragments/bloc-right.php")) and ($bloc_side == "RIGHT")) {
+            $inclusion = theme_path($theme_dir .'/'. $theme . '/Fragments/bloc-right.php');
         }
     
-        if (file_exists(theme_path($theme . "/Fragments/bloc-left.php")) and ($bloc_side == "LEFT")) {
-            $inclusion = theme_path($theme . '/Fragments/bloc-left.php');
+        if (file_exists(theme_path($theme_dir .'/'. $theme . "/Fragments/bloc-left.php")) and ($bloc_side == "LEFT")) {
+            $inclusion = theme_path($theme_dir .'/'. $theme . '/Fragments/bloc-left.php');
         }
     
         if (!$inclusion) {
-            if (file_exists(theme_path($theme . "/Fragments/bloc.php"))) {
-                $inclusion = theme_path($theme . '/Fragments/bloc.php');
+            if (file_exists(theme_path($theme_dir .'/'. $theme . "/Fragments/bloc.php"))) {
+                $inclusion = theme_path($theme_dir .'/'. $theme . '/Fragments/bloc.php');
 
             } elseif (file_exists(module_path("Themes/Views/Fragments/bloc.php"))) {
                 $inclusion = module_path('Themes/Views/Fragments/bloc.php');

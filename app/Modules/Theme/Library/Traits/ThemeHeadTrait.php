@@ -29,6 +29,8 @@ trait ThemeHeadTrait
         // support metalang 
         Config::set('npds.theme', $this->theme); 
 
+        $theme_dir = with(get_instance())->template_dir();
+
         settype($m_keywords, 'string');
         settype($m_description, 'string');
     
@@ -43,8 +45,8 @@ trait ThemeHeadTrait
         }
     
         // Favicon
-        if (file_exists(theme_path($this->theme."/assets/images/favicon.ico"))) {
-            $favico = theme_path($this->theme."/assets/images/favicon.ico");
+        if (file_exists(theme_path($theme_dir .'/'. $this->theme."/assets/images/favicon.ico"))) {
+            $favico = theme_path($theme_dir .'/'. $this->theme."/assets/images/favicon.ico");
         } else {
             $favico = 'assets/images/favicon.ico';
         }
@@ -99,8 +101,8 @@ trait ThemeHeadTrait
             echo $hH;
         }
     
-        if (file_exists(theme_path($this->theme."/Support/Include/header_head.php"))) {
-            include(theme_path($this->theme."/Support/Include/header_head.php"));
+        if (file_exists(theme_path($theme_dir .'/'. $this->theme."/Support/Include/header_head.php"))) {
+            include(theme_path($theme_dir .'/'. $this->theme."/Support/Include/header_head.php"));
         }
     
         echo Css::import_css($this->theme, '', $css_pages_ref, $css);

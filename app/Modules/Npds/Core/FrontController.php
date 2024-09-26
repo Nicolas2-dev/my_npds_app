@@ -8,10 +8,27 @@ use App\Controllers\Core\BaseController;
 class FrontController extends BaseController
 {
 
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
     protected $layout = 'frontend';
 
-
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
     protected $template = 'Npdsboost_sk';
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    protected $template_dir = 'Frontend';
+
 
     /**
      * Call the parent construct

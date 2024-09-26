@@ -34,12 +34,13 @@ trait ThemeStorieTrait
      */
     public function themeindex($aid, $informant, $time, $title, $counter, $topic, $thetext, $notes, $morelink, $topicname, $topicimage, $topictext, $id)
     {
-        global $theme;
-    
         $inclusion = false;
     
-        if (file_exists(app_path("Themes/" . $theme . "/views/index-news.html"))) {
-            $inclusion = app_path("Themes/" . $theme . "/views/index-news.html");
+        $theme = with(get_instance())->template();
+        $theme_dir = with(get_instance())->template_dir();
+
+        if (file_exists(theme_path($theme_dir .'/'. $theme . "/views/index-news.html"))) {
+            $inclusion = theme_path($theme_dir .'/'. $theme . "/views/index-news.html");
 
         } elseif (file_exists(app_path("Themes/default/views/index-news.html"))) {
             $inclusion = app_path("Themes/default/views/index-news.html");
@@ -147,12 +148,15 @@ trait ThemeStorieTrait
      */
     public function themearticle($aid, $informant, $time, $title, $thetext, $topic, $topicname, $topicimage, $topictext, $id, $previous_sid, $next_sid, $archive)
     {
-        global $theme, $counter, $boxtitle, $boxstuff, $user;
+        global $counter, $boxtitle, $boxstuff, $user;
     
         $inclusion = false;
     
-        if (file_exists(app_path("Themes/" . $theme . "/views/detail-news.html"))) {
-            $inclusion = app_path("Themes/" . $theme . "/views/detail-news.html");
+        $theme = with(get_instance())->template();
+        $theme_dir = with(get_instance())->template_dir();
+
+        if (file_exists(theme_path($theme_dir .'/'. $theme . "/views/detail-news.html"))) {
+            $inclusion = theme_path($theme_dir .'/'. $theme . "/views/detail-news.html");
 
         } elseif (file_exists(app_path("Themes/default/views/detail-news.html"))) {
             $inclusion = app_path("Themes/default/views/detail-news.html");
