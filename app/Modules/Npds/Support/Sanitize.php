@@ -2,6 +2,7 @@
 
 namespace App\Modules\Npds\Support;
 
+use App\Modules\Npds\Support\Facades\Mailer;
 use App\Modules\Npds\Contracts\SanitizeInterface;
 
 /**
@@ -55,13 +56,11 @@ class Sanitize implements SanitizeInterface
      */
     public static function conv2br($txt)
     {
-        $Xcontent = str_replace("\r\n", "<br />", $txt);
-        $Xcontent = str_replace("\r", "<br />", $Xcontent);
-        $Xcontent = str_replace("\n", "<br />", $Xcontent);
-        $Xcontent = str_replace("<BR />", "<br />", $Xcontent);
-        $Xcontent = str_replace("<BR>", "<br />", $Xcontent);
-
-        return $Xcontent;
+        return str_replace(
+            ["\r\n", "\r", "\n", "<BR />", "<BR>"], 
+            ["<br />", "<br />", "<br />", "<br />", "<br />"], 
+            $txt
+        );
     }
 
     /**
@@ -121,10 +120,7 @@ class Sanitize implements SanitizeInterface
      */
     public static function wrh($ibid)
     {
-        $tmp = number_format($ibid, 0, ',', ' ');
-        $tmp = str_replace(' ', '&nbsp;', $tmp);
-
-        return $tmp;
+        return str_replace(' ', '&nbsp;', number_format($ibid, 0, ',', ' '));
     }
 
     /**
@@ -136,8 +132,11 @@ class Sanitize implements SanitizeInterface
      */
     public static function FixQuotes($what = '')
     {
-        $what = str_replace("&#39;", "'", $what);
-        $what = str_replace("'", "''", $what);
+        $what = str_replace(
+            ["&#39;", "'"], 
+            ["'", "''"], 
+            $what
+        );
 
         while (preg_match("#\\\\'#", $what)) {
             $what = preg_replace("#\\\\'#", "'", $what);
@@ -210,11 +209,10 @@ class Sanitize implements SanitizeInterface
      */
     public static function make_clickable($text)
     {
-        $ret = '';
-        $ret = preg_replace('#(^|\s)(http|https|ftp|sftp)(://)([^\s]*)#i', ' <a href="$2$3$4" target="_blank">$2$3$4</a>', $text);
-        $ret = preg_replace_callback('#([_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4})#i', 'fakedmail', $ret);
-    
-        return $ret;
+        $str = preg_replace('#(^|\s)(http|https|ftp|sftp)(://)([^\s]*)#i', ' <a href="$2$3$4" target="_blank">$2$3$4</a>', $text);
+
+        return preg_replace_callback('#([_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4})#i', [Mailer::class, 'fakedmail'], $str);
+
     }
     
     /**
@@ -226,12 +224,11 @@ class Sanitize implements SanitizeInterface
      */
     public static function undo_htmlspecialchars($input)
     {
-        $input = preg_replace("/&gt;/i", ">", $input);
-        $input = preg_replace("/&lt;/i", "<", $input);
-        $input = preg_replace("/&quot;/i", "\"", $input);
-        $input = preg_replace("/&amp;/i", "&", $input);
-    
-        return $input;
+        return preg_replace(
+            ["/&gt;/i", "/&lt;/i", "/&quot;/i", "/&amp;/i"], 
+            [">", "<", "\"", "&"], 
+            $input
+        );
     }
 
 }

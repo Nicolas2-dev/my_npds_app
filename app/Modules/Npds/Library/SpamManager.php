@@ -331,8 +331,8 @@ class SpamManager implements SpamInterface
     public function spam_boot() 
     {
         // First of all : Spam from IP / |5 indicate that the same IP has passed 6 times with status KO in the anti_spambot function
-        if (file_exists(storage_path('logs/spam.log'))) {
-            $tab_spam = str_replace("\r\n", "", file(storage_path('logs/spam.log')));
+        if (file_exists(storage_path('/logs/spam.log'))) {
+            $tab_spam = str_replace("\r\n", "", file(storage_path('/logs/spam.log')));
         }
 
         if (is_array($tab_spam)) {

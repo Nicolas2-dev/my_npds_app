@@ -1,8 +1,17 @@
 <?php
-
+/**
+ * Npds - Modules/Users/contracts/UserInterface.php
+ *
+ * @author  Nicolas Devoy
+ * @email   nicolas@nicodev.fr 
+ * @version 1.0.0
+ * @date    26 Septembre 2024
+ */
 namespace App\Modules\Users\Contracts;
 
-
+/**
+ * Undocumented interface
+ */
 interface UserInterface {
 
     /**
@@ -69,13 +78,11 @@ interface UserInterface {
     public function get_userdata($username);
     
     /**
-     * [member_menu description]
+     * Undocumented function
      *
-     * @param   [type]  $mns  [$mns description]
-     * @param   [type]  $qui  [$qui description]
-     *
-     * @return  [type]        [return description]
+     * @param [type] $userinfo
+     * @return void
      */
-    public function member_menu($mns, $qui);
+    public function member_menu($userinfo);
 
 }

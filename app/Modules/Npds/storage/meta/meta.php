@@ -14,7 +14,7 @@ if ($meta_doctype=="")
 else
    $l_meta=$meta_doctype."\n<html lang=\"$lang\">\n<head>\n";
 $l_meta.="<meta charset=\"utf-8\" />\n";
-$l_meta.="<title>".Config::get('npds.Titlesitename')."</title>\n";
+$l_meta.="<title>".(isset($Titlesitename) ? $Titlesitename : '')."</title>\n";
 $l_meta.="<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\" />\n";
 $l_meta.="<meta http-equiv=\"content-script-type\" content=\"text/javascript\" />\n";
 $l_meta.="<meta http-equiv=\"content-style-type\" content=\"text/css\" />\n";

@@ -74,7 +74,18 @@ function site_url($path = '')
  */
 function base_path($path = '')
 {
-    return BASEPATH .(! empty($path) ? DS .$path : $path);
+    return BASEPATH .(! isset($path) ? DS .$path : $path);
+}
+
+/**
+ * Undocumented function
+ *
+ * @param string $path
+ * @return void
+ */
+function web_path($path = '')
+{
+    return WEBPATH .(! isset($path) ? DS .$path : $path);
 }
 
 /**
@@ -86,7 +97,7 @@ function base_path($path = '')
  */
 function app_path($path = '')
 {
-    return APPPATH .(! empty($path) ? DS .$path : $path);
+    return APPPATH .(! isset($path) ? DS .$path : $path);
 }
 
 /**
@@ -98,7 +109,7 @@ function app_path($path = '')
  */
 function theme_path($path = '')
 {
-    return THEMEPATH .(! empty($path) ? DS .$path : $path);
+    return THEMEPATH .(! isset($path) ? DS .$path : $path);
 }
 
 /**
@@ -110,7 +121,7 @@ function theme_path($path = '')
  */
 function module_path($path = '')
 {
-    return MODULEPATH .(! empty($path) ? $path : $path);
+    return MODULEPATH .(! isset($path) ? $path : $path);
 }
 
 /**
@@ -122,7 +133,7 @@ function module_path($path = '')
  */
 function storage_path($path = '')
 {
-    return STORAGE_PATH .(! empty($path) ? DS .$path : $path);
+    return STORAGE_PATH .(! isset($path) ? DS .$path : $path);
 }
 
 /**
@@ -132,9 +143,9 @@ function storage_path($path = '')
  *
  * @return  [type]        [return description]
  */
-function config($key)
+function config($key, $default = null)
 {
-    return Config::get($key);
+    return Config::get($key, $default);
 }
 
 /**

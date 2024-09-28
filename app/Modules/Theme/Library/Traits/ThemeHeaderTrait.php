@@ -3,6 +3,8 @@
 namespace App\Modules\Theme\Library\Traits;
 
 use Npds\Config\Config;
+use Npds\Events\Manager as Events;
+use App\Modules\Npds\Support\Counter;
 use App\Modules\Npds\Support\Facades\Css;
 use App\Modules\Blocks\Support\Facades\Block;
 use App\Modules\Npds\Support\Facades\Language;
@@ -73,6 +75,10 @@ trait ThemeHeaderTrait
         }
 
         // referer
+		Events::sendEvent('referer');
+
+        // counter
+		Events::sendEvent('counter');
 
         if (file_exists(module_path("Themes/Support/Include/header_after.php"))) {
             include(module_path("Themes/Support/Include/header_after.php"));

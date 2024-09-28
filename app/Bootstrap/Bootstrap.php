@@ -106,7 +106,7 @@ Events::initialize();
 Session::initialize();
 
 // dd(DB::table('config')->get());
-// vd(Config::all());
+//vd(Config::all());
 
 /** Execute the Request dispatching by Router. */
 $router->dispatch();

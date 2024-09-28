@@ -157,6 +157,11 @@ trait ThemefooterTrait
                 break;
         }
 
+        $tiny_mce_init=true;
+        $tiny_mce=true;
+        $tiny_mce_theme="full"; //  "short"
+        $tiny_mce_relurl="";
+
         if (Config::get('npds.tiny_mce')) {
             echo Editeur::aff_editeur('tiny_mce', 'end');
         }

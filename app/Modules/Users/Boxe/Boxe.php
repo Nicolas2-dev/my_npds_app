@@ -1,6 +1,6 @@
 <?php
 /**
- * Two - Modules/Users/boxe/Boxe.php
+ * Npds - Modules/Users/boxe/Boxe.php
  *
  * @author  Nicolas Devoy
  * @email   nicolas@nicodev.fr 
@@ -16,7 +16,7 @@ use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Theme\Support\Facades\Theme;
 
-use function time;
+//use function time;
 
 /**
  * Bloc Login

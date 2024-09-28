@@ -74,6 +74,11 @@ trait ThemeHeadTrait
         <link href="backend.php?op=ATOM" title="' . Config::get('npds.sitename') . ' - ATOM" rel="alternate" type="application/atom+xml" />
         ';
     
+        $tiny_mce_init=true;
+        $tiny_mce=true;
+        $tiny_mce_theme="full"; //  "short"
+        $tiny_mce_relurl="";
+
         // Tiny_mce
         if ($tiny_mce_init) {
             echo Editeur::aff_editeur("tiny_mce", "begin");

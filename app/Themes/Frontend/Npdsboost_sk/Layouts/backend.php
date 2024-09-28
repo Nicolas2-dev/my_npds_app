@@ -4,7 +4,7 @@
  */
 
 use Npds\Support\Assets;
-use Npds\Support\Profiler;
+use App\Modules\Theme\Support\Facades\Theme;
 
 ?>
 <!DOCTYPE html>
@@ -22,6 +22,8 @@ use Npds\Support\Profiler;
     }
 	?>
 	<title><?= $title.' - '.SITE_TITLE; ?></title>
+
+    <?= Theme::head(); ?>
 
 	<!-- CSS -->
 	<?php
@@ -42,8 +44,6 @@ use Npds\Support\Profiler;
     //Add Controller specific JS files.
     Assets::js($headerJScripts);
 
-    Theme::head();
-
 	?>
 </head>
 <body>
@@ -61,11 +61,9 @@ use Npds\Support\Profiler;
 <!-- Content Area -->
 <?= $content; ?>
 
-
 <?php if (isset($adminfoot)): ?>
     <?= $adminfoot; ?>
 <?php endif; ?>
-
 
 <?php Theme::theme_footer($pdst)?>
 
@@ -78,7 +76,6 @@ Assets::js(array(
 //Add Controller specific JS files.
 Assets::js($footerJScripts);
 ?>
-
 
 </body>
 </html>

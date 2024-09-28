@@ -67,13 +67,22 @@ if(is_dir(BASEPATH .'app'.DS.'Modules')) {
 }
 
 if(is_dir(BASEPATH .'app'.DS.'Themes')) {
-    $path = str_replace('/', DS, BASEPATH .'app/Themes/*');
+    $path = str_replace('/', DS, BASEPATH .'app/Themes/Frontend/*');
 
     $dirs = glob($path , GLOB_ONLYDIR);
 
     foreach($dirs as $theme) {
-        $workPaths[] = str_replace('/', DS, 'app/Themes/'.basename($theme));
+        $workPaths[] = str_replace('/', DS, 'app/Themes/Frontend/'.basename($theme));
     }
+
+    $path = str_replace('/', DS, BASEPATH .'app/Themes/Backend/*');
+
+    $dirs = glob($path , GLOB_ONLYDIR);
+
+    foreach($dirs as $theme) {
+        $workPaths[] = str_replace('/', DS, 'app/Themes/Backend/'.basename($theme));
+    }
+
 }
 
 //

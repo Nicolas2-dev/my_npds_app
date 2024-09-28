@@ -70,7 +70,7 @@ return array(
 
     'mod_admin_news' => 0,
 
-    'not_admin_count' => 1,
+    'not_admin_count' => 0,
 
     'Default_Theme' => "Npdsboost_sk",
 
@@ -219,7 +219,7 @@ return array(
     
     'adminmail'         => "webmaster@site.fr",
 
-    'mail_fonction'     => "1",
+    'mail_fonction'     => "2",
 
     'notify'            => 1,
 
@@ -356,7 +356,7 @@ return array(
 
     'Npds_Key'          => "66b9e3da1fcbc",
 
-    'Version_Num '      => "v.16.8",
+    'Version_Num'      => "v.16.8",
 
     'Version_Id'        => "Npds",
 

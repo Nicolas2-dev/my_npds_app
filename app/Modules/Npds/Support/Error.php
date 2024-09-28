@@ -124,17 +124,17 @@ class Error implements ErrorInterface
         if ($e_code == "0101")
             $error_msg = __d('npds', 'Vous ne pouvez répondre à ce message.');
     
-        if (!isset($header)) {
-            include("header.php");
-        }
+        // if (!isset($header)) {
+        //     include("header.php");
+        // }
     
         echo '<div class="alert alert-danger"><strong>' . Config::get('npds.sitename') . '<br />' . __d('npds', 'Erreur du forum') . '</strong><br />';
         echo __d('npds', 'Code d\'erreur :') . ' ' . $e_code . '<br /><br />';
         echo $error_msg . '<br /><br />';
         echo '<a href="javascript:history.go(-1)" class="btn btn-secondary">' . __d('npds', 'Retour en arrière') . '</a><br /></div>';
     
-        include("footer.php");
-        die('');
+        // include("footer.php");
+        // die('');
     }
 
 }

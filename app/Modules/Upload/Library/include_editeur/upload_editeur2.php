@@ -28,7 +28,7 @@ $Titlesitename = __d('upload', 'Télécharg.');
 include("storage/meta/meta.php");
 
 if ($url_upload_css) {
-    $url_upload_cssX = str_replace('style.css', "Config::get('npds.language')-style.css", $url_upload_css);
+    $url_upload_cssX = str_replace('style.css', Config::get('npds.language') ."-style.css", $url_upload_css);
 
     if (is_readable($url_upload . $url_upload_cssX))
         $url_upload_css = $url_upload_cssX;

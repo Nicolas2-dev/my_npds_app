@@ -2,10 +2,10 @@
 
 namespace App\Modules\Npds\Core;
 
-use App\Controllers\Core\BaseController;
+use App\Modules\Npds\Core\AccessError;
 
 
-class FrontController extends BaseController
+class FrontController extends AccessError
 {
 
     /**

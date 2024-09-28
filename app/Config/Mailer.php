@@ -4,19 +4,19 @@
 return array(
 
     # Configurer le serveur SMTP
-    'smtp_host' => "",
+    'smtp_host' => "sandbox.smtp.mailtrap.io",
 
     # Port TCP, utilisez 587 si vous avez activé le chiffrement TLS
-    'smtp_port' => "",
+    'smtp_port' => "2525",
 
     # Activer l'authentification SMTP
-    'smtp_auth' => 0,
+    'smtp_auth' => true,
 
     # Nom d'utilisateur SMTP
-    'smtp_username' => "",
+    'smtp_username' => "53475359ed57b5",
 
     # Mot de passe SMTP
-    'smtp_password' => "",
+    'smtp_password' => "461c674f990dc6",
 
     # Activer le chiffrement TLS
     'smtp_secure' => 0,

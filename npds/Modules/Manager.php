@@ -47,7 +47,7 @@ class Manager
      */
     public static function boot_config($module)
     {
-        $filePath = str_replace('/', DS, APPPATH.'Modules/'.$module.'/config');
+        $filePath = str_replace('/', DS, APPPATH.'Modules/'.$module.'/Config');
         
         // Load the configuration files.
         foreach (glob($filePath.'/*.php') as $path) {

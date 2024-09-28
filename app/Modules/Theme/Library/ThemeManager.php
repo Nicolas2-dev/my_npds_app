@@ -117,6 +117,33 @@ class ThemeManager implements ThemeInterface
     }
 
     /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    function showimage()
+    {
+        echo "
+        <script type=\"text/javascript\">
+        //<![CDATA[
+        function showimage() {
+        if (!document.images)
+            return
+            document.images.avatar.src=\n";
+    
+        if ($ibid = theme_image("forum/avatar/blank.gif"))
+            $imgtmp = substr($ibid, 0, strrpos($ibid, "/") + 1);
+        else
+            $imgtmp = "assets/images/forum/avatar/";
+    
+        echo "'". site_url($imgtmp) ."' + document.Register.user_avatar.options[document.Register.user_avatar.selectedIndex].value\n";
+    
+        echo "}
+        //]]>
+        </script>";
+    }
+
+    /**
      * [themepreview description]
      *
      * @param   [type]  $title     [$title description]

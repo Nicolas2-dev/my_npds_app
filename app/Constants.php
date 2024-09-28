@@ -34,4 +34,4 @@ define('SITE_EMAIL', 'email@domain.com');
 /**
  * Setup the Storage Path.
  */
-define('STORAGE_PATH', BASEPATH .'storage');
+define('STORAGE_PATH', BASEPATH .'storage'. DS);

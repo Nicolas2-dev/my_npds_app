@@ -47,7 +47,7 @@ class LogManager implements LogInterface
         // $req_log= a phrase describe the infos
         //
         // $mot_log= if "" the Ip is recorded, else extend status infos
-        $logfile = "storage/logs/$fic_log.log";
+        $logfile = storage_path("logs/$fic_log.log");
 
         $fp = fopen($logfile, 'a');
         flock($fp, 2);

@@ -2,7 +2,9 @@
 
 namespace App\Modules\Npds\Support;
 
+use Npds\Routing\Url;
 use Npds\Config\Config;
+use Npds\Events\Manager as Events;
 use App\Modules\npds\Contracts\SecureInterface;
 
 /**
@@ -45,7 +47,7 @@ class Secure implements SecureInterface
             or
             count(static::badname_in_uri()) > 0
         ) {
-            access_denied();
+            return Url::redirect('denied');
         }
     }
 
@@ -75,7 +77,7 @@ class Secure implements SecureInterface
             or
             count(static::badname_in_uri()) > 0
         ) {
-            access_denied();
+            return Url::redirect('denied');
         }
     }
 

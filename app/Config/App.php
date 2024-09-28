@@ -54,6 +54,7 @@ return array(
         'Session'       => 'App\Modules\Npds\Support\Facades\Session',    
         'Sform'         => 'App\Modules\Npds\Support\Facades\Sform',    
         'Spam'          => 'App\Modules\Npds\Support\Facades\Spam',    
+        'Sanitize'      => 'App\Modules\Npds\Support\Sanitize',    
         'Subscribe'     => 'App\Modules\Npds\Support\Facades\Subscribe',    
         'Url'           => 'App\Modules\Npds\Support\Facades\Url',    
 

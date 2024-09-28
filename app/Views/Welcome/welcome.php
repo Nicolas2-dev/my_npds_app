@@ -5,6 +5,15 @@
 
 ?>
 
+ggggg
+
+<?php if (isset($message) or isset($logout)): ?>
+    <?= $message; ?>
+    <?= $logout; ?>
+<?php endif; ?>
+
+fffff
+
 <div class="page-header">
 	<h1><?php echo $title ?></h1>
 </div>

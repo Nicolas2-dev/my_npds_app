@@ -2,7 +2,7 @@
 
 namespace Npds\Support;
 
-use Npds\Net\Session;
+use Npds\Session\Session;
 
 /**
  * Undocumented class

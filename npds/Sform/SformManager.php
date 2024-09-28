@@ -118,6 +118,12 @@ class SformManager
      */
     public  $field_size = 50; 
 
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
+    private $form_fileds_globals = [];
 
     /**
      * Undocumented function
@@ -160,6 +166,27 @@ class SformManager
         }
 
         return $number;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $en
+     * @return void
+     */
+    public function add_form_fields_globals($form_globals)
+    {
+        $this->form_fileds_globals = array_merge($this->form_fileds_globals, $form_globals);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function get_form_fields_globals()
+    {
+        return $this->form_fileds_globals;
     }
 
     /**
@@ -509,7 +536,7 @@ class SformManager
      * @param [type] $bg
      * @return void
      */
-    public function print_form($bg)
+    public function print_form($bg, $retour = '')
     {
         if (isset($this->form_id)) {
             $id_form = 'id="' . $this->form_id . '"';
@@ -922,7 +949,11 @@ class SformManager
             $str .= "//]]></script>\n";
         }
 
-        return $str;
+        if ($retour != 'not_echo') {
+            echo $str;
+        } else {
+            return $str;
+        }
     }
 
     /**
@@ -1222,11 +1253,24 @@ class SformManager
 
                 $num_extender = $this->interro_fields($this->form_fields[$i]['name'] . "extender");
 
-                if (array_key_exists($this->form_fields[$i]['name'], $GLOBALS)){
-                    $field = $GLOBALS[$this->form_fields[$i]['name']];
+                // if (array_key_exists($this->form_fields[$i]['name'], $GLOBALS)){
+                //     $field = $GLOBALS[$this->form_fields[$i]['name']];
+                // } else {
+                //     $field = '';
+                // }
+
+                if (array_key_exists($this->form_fields[$i]['name'], $this->form_fileds_globals)) {
+                    $field = $this->form_fileds_globals[$this->form_fields[$i]['name']];
                 } else {
                     $field = '';
                 }
+
+                // if (isset($this->form_fields[$i]['value'])) {
+                //     $field = $this->form_fields[$i]['value'];
+                // } else {
+                //     $field = '';
+                // }
+
             } else {
                 $num_extender = 'no';
             }

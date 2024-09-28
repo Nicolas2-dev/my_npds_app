@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Modules\Upload\Library;
+
 /*
  ************************************************************************
  * © Sloppycode.net All rights reserved.
@@ -84,7 +87,7 @@ class Upload
                     $this->errors  = __d('upload', 'Erreur de téléchargement du fichier - fichier non sauvegardé.');
                     @chmod($all, $mode);
                 }
-
+ 
                 return $noerrors;
             } elseif ($this->HTTP_POST_FILES[$field]['size'] > $this->maxupload_size) {
                 $this->errors = __d('upload', 'La taille de ce fichier excède la taille maximum autorisée') . " => " . number_format(($this->maxupload_size / 1024), 2) . " Kbs";

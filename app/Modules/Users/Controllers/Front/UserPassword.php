@@ -2,24 +2,30 @@
 
 namespace App\Modules\Users\Controllers\Front;
 
-
 use Npds\Routing\Url;
 use Npds\Http\Request;
+use Npds\Config\Config;
+use Npds\Session\Session;
 use Npds\Support\Facades\DB;
-use App\Modules\Npds\Support\Facades\Css;
 use App\Modules\Npds\Core\FrontController;
 use App\Modules\Npds\Support\Facades\Hack;
 use App\Modules\Npds\Support\Facades\Crypt;
-use App\Modules\Users\Support\Facades\User;
-use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Npds\Support\Facades\Mailer;
 use App\Modules\Npds\Support\Facades\Password;
+use App\Modules\Users\Validator\ValidatorUserForgetPassword;
 
 /**
  * [UserLogin description]
  */
 class UserPassword extends FrontController
 {
+    
+    /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    protected $pdst = 0;
 
     /**
      * [__construct description]
@@ -28,35 +34,7 @@ class UserPassword extends FrontController
      */
     public function __construct()
     {
-        parent::__construct();
-
-        //     case 'forgetpassword':
-        //         ForgetPassword();
-        //         break;
-        
-        //     case "mailpasswd":
-        //         if ($uname != '' and $code != '') {
-        //             if (strlen($code) >= Config::get('npds.minpass'))
-        //                 mail_password($uname, $code);
-        //             else
-        //                 message_error("<i class=\"fa fa-exclamation\"></i>&nbsp;" . __d('users', 'Mot de passe erroné, refaites un essai.') . "<br /><br />", "");
-        //         } else
-        //             main($user);
-        //         break;
-        
-        //     case 'validpasswd':
-        //         if ($code != '')
-        //             valid_password($code);
-        //         else
-        //             main($user);
-        //         break;
-        
-        //     case 'updatepasswd':
-        //         if ($code != '' and $passwd != '')
-        //             update_password($code, $passwd);
-        //         else
-        //             main($user);
-        //         break;        
+        parent::__construct();      
     }
 
     /**
@@ -90,49 +68,13 @@ class UserPassword extends FrontController
      *
      * @return  [type]  [return description]
      */
-    public function ForgetPassword()
+    public function forget_password()
     {
-        echo '
-        <h2 class="mb-3">' . __d('users', 'Utilisateur') . '</h2>
-        <div class="card card-body">
-            <div class="alert alert-danger lead"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Vous avez perdu votre mot de passe ?') . '</div>
-            <div class="alert alert-success"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Pas de problème. Saisissez votre identifiant et le nouveau mot de passe que vous souhaitez utiliser puis cliquez sur envoyer pour recevoir un Email de confirmation.') . '</div>
-            <form id="forgetpassword" action="user.php" method="post">
-                <div class="row g-2">
-                    <div class="col-sm-6 ">
-                    <div class="mb-3 form-floating">
-                        <input type="text" class="form-control" name="uname" id="inputuser" placeholder="' . __d('users', 'Identifiant') . '" required="required" />
-                        <label for="inputuser">' . __d('users', 'Identifiant') . '</label>
-                    </div>
-                    </div>
-                    <div class="col-sm-6">
-                    <div class="mb-3 form-floating">
-                        <input type="password" class="form-control" name="code" id="inputpassuser" placeholder="' . __d('users', 'Mot de passe') . '" required="required" />
-                        <label for="inputpassuser">' . __d('users', 'Mot de passe') . '</label>
-                    </div>
-                    <div class="progress" style="height: 0.4rem;">
-                        <div id="passwordMeter_cont" class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                    </div>
-                    </div>
-                </div>
-                <input type="hidden" name="op" value="mailpasswd" />
-                <input class="btn btn-primary btn-lg my-3" type="submit" value ="' . __d('users', 'Envoyer') . '" />
-            </form>
-        </div>';
-    
-        $fv_parametres = '
-            code: {
-                validators: {
-                    checkPassword: {
-                    message: "Le mot de passe est trop simple."
-                    },
-                }
-            },';
-    
-        $arg1 = '
-            var formulid = ["forgetpassword"];';
-    
-        Css::adminfoot('fv', $fv_parametres, $arg1, 'foo');
+        $this->title(__('Vous avez perdu votre mot de passe'));
+            
+        $this->set('message', Session::message('message'));
+
+        with(new ValidatorUserForgetPassword())->display();
     }
     
     /**
@@ -143,35 +85,46 @@ class UserPassword extends FrontController
      *
      * @return  [type]          [return description]
      */
-    public function mail_password($uname, $code)
+    public function mail_password()
     {
-        
-    
-        $uname = Hack::remove(stripslashes(htmlspecialchars(urldecode($uname), ENT_QUOTES, cur_charset)));
-    
-        $result = sql_query("SELECT uname, email, pass FROM users WHERE uname='$uname'");
-        $tmp_result = sql_fetch_row($result);
-    
-        if (!$tmp_result) {
-            User::message_error(__d('users', 'Désolé, aucune information correspondante pour cet utlilisateur n\'a été trouvée') . "<br /><br />", '');
+        $this->title(__('Vous avez perdu votre mot de passe'));
+            
+        $input = Request::post();
+
+        if ($input['uname'] != '' and $input['code'] != '') {
+            if (strlen($input['code']) >= Config::get('npds.minpass')) {
+
+                $__uname = Hack::remove(stripslashes(htmlspecialchars(urldecode($input['uname']), ENT_QUOTES, 'utf-8')));
+            
+                $user_temp = DB::table('users')->select('uname', 'email', 'pass')->where('uname', $__uname)->first();
+
+                if (!$user_temp) {
+                    $this->set('error_not_user', true);
+                } else {
+                    $host_name = Request::getip();
+
+                    // On envoie une URL avec dans le contenu : username, email, le MD5 du passwd retenu et le timestamp
+                    $url = site_url("user/validpasswd?code=" . urlencode(Crypt::encrypt($user_temp['uname']) . "#fpwd#" . Crypt::encryptK($user_temp['email'] . "#fpwd#" . $input['code'] . "#fpwd#" . time(), $user_temp['pass'])));
+            
+                    $message = __d('users', 'Le compte utilisateur') . ' ' . $user_temp['uname'] . ' ' . __d('users', 'at') . ' ' . Config::get('npds.sitename') . ' ' . __d('users', 'est associé à votre Email.') . "\n\n";
+                    $message .= __d('users', 'Un utilisateur web ayant l\'adresse IP ') . " $host_name " . __d('users', 'vient de demander une confirmation pour changer de mot de passe.') . "\n\n" . __d('users', 'Votre url de confirmation est :') . " <a href=\"$url\">$url</a> \n\n" . __d('users', 'Si vous n\'avez rien demandé, ne vous inquiétez pas. Effacez juste ce Email. ') . "\n\n";
+                    
+                    $message .= Config::get('signat.message');
+            
+                    $subject = __d('users', 'Confirmation du code pour') . ' ' . $user_temp['uname'];
+            
+                    Mailer::send_email($user_temp['email'], $subject, $message, '', true, 'html', '');
+                    
+                    $this->set('message_pass', true);
+                    $this->set('uname', $user_temp['uname']);
+
+                    Ecr_Log('security', 'Lost_password_request : ' . $user_temp['uname'], '');
+                }
+            } else {
+                $this->set('error_pass', true);
+            }
         } else {
-            $host_name = Request::getip();
-            list($uname, $email, $pass) = $tmp_result;
-    
-            // On envoie une URL avec dans le contenu : username, email, le MD5 du passwd retenu et le timestamp
-            $url = "Config::get('npds.nuke_url')/user.php?op=validpasswd&code=" . urlencode(Crypt::encrypt($uname) . "#fpwd#" . Crypt::encryptK($email . "#fpwd#" . $code . "#fpwd#" . time(), $pass));
-    
-            $message = __d('users', 'Le compte utilisateur') . ' ' . $uname . ' ' . __d('users', 'at') . ' ' . Config::get('npds.sitename') . ' ' . __d('users', 'est associé à votre Email.') . "\n\n";
-            $message .= __d('users', 'Un utilisateur web ayant l\'adresse IP ') . " $host_name " . __d('users', 'vient de demander une confirmation pour changer de mot de passe.') . "\n\n" . __d('users', 'Votre url de confirmation est :') . " <a href=\"$url\">$url</a> \n\n" . __d('users', 'Si vous n\'avez rien demandé, ne vous inquiétez pas. Effacez juste ce Email. ') . "\n\n";
-            
-            include("signat.php");
-    
-            $subject = __d('users', 'Confirmation du code pour') . ' ' . $uname;
-    
-            Mailer::send_email($email, $subject, $message, '', true, 'html', '');
-            User::message_pass('<div class="alert alert-success lead text-center"><i class="fa fa-exclamation"></i>&nbsp;' . __d('users', 'Confirmation du code pour') . ' ' . $uname . ' ' . __d('users', 'envoyée par courrier.') . '</div>');
-            
-            Ecr_Log('security', 'Lost_password_request : ' . $uname, '');
+            Url::redirect('user/login'); 
         }
     }
     
@@ -182,52 +135,41 @@ class UserPassword extends FrontController
      *
      * @return  [type]         [return description]
      */
-    public function valid_password($code)
+    public function valid_password()
     {
+        $this->title(__('Vous avez perdu votre mot de passe'));
+
+        $code = Request::query('code');
+
+        if ($code != '') {
+
+            $ibid = explode("#fpwd#", $code);
         
-    
-        $ibid = explode("#fpwd#", $code);
-    
-        $result = sql_query("SELECT email,pass FROM users WHERE uname='" . Crypt::decrypt($ibid[0]) . "'");
-        list($email, $pass) = sql_fetch_row($result);
-    
-        if ($email != '') {
-            $ibid = explode("#fpwd#", Crypt::decryptK($ibid[1], $pass));
-    
-            if ($email == $ibid[0]) {
-                echo '
-                <p class="lead">' . __d('users', 'Vous avez perdu votre mot de passe ?') . '</p>
-                <div class="card border rounded p-3">
-                    <div class="row">
-                        <div class="col-sm-7">
-                        <div class="blockquote">' . __d('users', 'Pour valider votre nouveau mot de passe, merci de le re-saisir.') . '<br />' . __d('users', 'Votre mot de passe est : ') . ' <strong>' . $ibid[1] . '</strong></div>
-                        </div>
-                        <div class="col-sm-5">
-                        <form id="lostpassword" action="user.php" method="post">
-                            <div class="mb-3 row">
-                                <label class="col-form-label col-sm-12" for="passwd">' . __d('users', 'Mot de passe') . '</label>
-                                <div class="col-sm-12">
-                                    <input type="password" class="form-control" name="passwd" placeholder="' . $ibid[1] . '" required="required" />
-                                </div>
-                            </div>
-                            <input type="hidden" name="op" value="updatepasswd" />
-                            <input type="hidden" name="code" value="' . $code . '" />
-                            <div class="mb-3 row">
-                                <div class="col-sm-12">
-                                    <input class="btn btn-primary" type="submit" value="' . __d('users', 'Valider') . '" />
-                                </div>
-                            </div>
-                        </form>
-                        </div>
-                    </div>
-                </div>';
+            $user_temp = DB::table('users')->select('email', 'pass')->where('uname', Crypt::decrypt($ibid[0]))->first();
+
+            if ($user_temp['email'] != '') {
+                $ibid = explode("#fpwd#", Crypt::decryptK($ibid[1], $user_temp['pass']));
+        
+                if ($user_temp['email'] == $ibid[0]) {    
+                    $this->set('not_match', false);
+                    $this->set('user_mail', $user_temp['email']);
+                    $this->set('ibid', $ibid);
+                    $this->set('code', $code);
+
+                } else {
+                    // not_match
+                    $this->set('not_match', true);
+
+                    Ecr_Log('security', 'Lost_password_valid NOK Mail not match : ' . $ibid[0], '');
+                }
             } else {
-                User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . '</div>');
-                Ecr_Log('security', 'Lost_password_valid NOK Mail not match : ' . $ibid[0], '');
+                // dad_hash
+                $this->set('not_match', true);
+
+                Ecr_Log('security', 'Lost_password_valid NOK Bad hash : ' . $ibid[0], '');
             }
         } else {
-            User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . '</div>');
-            Ecr_Log('security', 'Lost_password_valid NOK Bad hash : ' . $ibid[0], '');
+            Url::redirect('user/login'); 
         }
     }
     
@@ -239,49 +181,58 @@ class UserPassword extends FrontController
      *
      * @return  [type]           [return description]
      */
-    public function update_password($code, $passwd)
+    public function update_password()
     {
+        if (Request::post('code') != '' and Request::post('passwd') != '') {
+
+            $ibid   = explode("#fpwd#", Request::post('code'));
+
+            $user_temp = DB::table('users')->select('email', 'pass')->where('uname', $uname = urlencode(Crypt::decrypt($ibid[0])))->first();
+
+            if ($user_temp['email'] != '') {
+                $ibid = explode("#fpwd#", Crypt::decryptK($ibid[1], $user_temp['pass']));
         
-    
-        $ibid = explode("#fpwd#", $code);
-        $uname = urlencode(Crypt::decrypt($ibid[0]));
-    
-        $result = sql_query("SELECT email,pass FROM users WHERE uname='$uname'");
-        list($email, $pass) = sql_fetch_row($result);
-    
-        if ($email != '') {
-            $ibid = explode("#fpwd#", Crypt::decryptK($ibid[1], $pass));
-    
-            if ($email == $ibid[0]) {
-                // Le lien doit avoir été généré dans les 24H00
-                if ((time() - $ibid[2]) < 86400) {
-                    // le mot de passe est-il identique
-                    if ($ibid[1] == $passwd) {
-                        $AlgoCrypt = PASSWORD_BCRYPT;
-                        $min_ms = 250;
-                        $options = ['cost' => Password::getOptimalBcryptCostParameter($ibid[1], $AlgoCrypt, $min_ms),];
-                        $hashpass = password_hash($ibid[1], $AlgoCrypt, $options);
-                        $cryptpass = crypt($ibid[1], $hashpass);
-    
-                        sql_query("UPDATE users SET pass='$cryptpass', hashkey='1' WHERE uname='$uname'");
-    
-                        User::message_pass('<div class="alert alert-success lead text-center"><a class="alert-link" href="user.php"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Mot de passe mis à jour. Merci de vous re-connecter') . '<i class="fas fa-sign-in-alt fa-lg ms-2"></i></a></div>');
-                        Ecr_Log('security', 'Lost_password_update OK : ' . $uname, '');
+                if ($user_temp['email'] == $ibid[0]) {
+
+                    // Le lien doit avoir été généré dans les 24H00
+                    if ((time() - $ibid[2]) < 86400) {
+
+                        // le mot de passe est-il identique
+                        if ($ibid[1] == Request::post('passwd')) {
+
+                            $hashpass   = Password::hash($ibid[1]);
+                            $cryptpass  = crypt($ibid[1], $hashpass);
+
+                            DB::table('users')->where('uname', $uname)->update([
+                                'pass'      => $cryptpass,
+                                'hashkey'   => 1
+                            ]);
+
+                            $this->set('password_update', true);
+                            
+                            Ecr_Log('security', 'Lost_password_update OK : ' . $uname, '');
+                        } else {
+                            $this->set('not_match', true);
+                            
+                            Ecr_Log('security', 'Lost_password_update Password not match : ' . $uname, '');
+                        }
                     } else {
-                        User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . ' : ' . __d('users', 'Les mots de passe sont différents. Ils doivent être identiques.') . '</div>');
-                        Ecr_Log('security', 'Lost_password_update Password not match : ' . $uname, '');
+                        $this->set('nok_time', true);
+                        
+                        Ecr_Log('security', 'Lost_password_update NOK Time > 24H00 : ' . $uname, '');
                     }
                 } else {
-                    User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . ' : ' . __d('users', 'Votre url de confirmation est expirée') . ' > 24 h</div>');
-                    Ecr_Log('security', 'Lost_password_update NOK Time > 24H00 : ' . $uname, '');
+                    $this->set('mail_not_match', true);
+                    
+                    Ecr_Log('security', 'Lost_password_update NOK Mail not match : ' . $uname, '');
                 }
             } else {
-                User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur : Email invalide') . '</div>');
-                Ecr_Log('security', 'Lost_password_update NOK Mail not match : ' . $uname, '');
+                $this->set('mail_bad_user', true);
+                
+                Ecr_Log('security', 'Lost_password_update NOK Empty Mail or bad user : ' . $uname, '');
             }
         } else {
-            User::message_pass('<div class="alert alert-danger lead text-center">' . __d('users', 'Erreur') . '</div>');
-            Ecr_Log('security', 'Lost_password_update NOK Empty Mail or bad user : ' . $uname, '');
+            Url::redirect('user/login'); 
         }
     }
 

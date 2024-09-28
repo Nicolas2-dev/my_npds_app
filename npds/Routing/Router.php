@@ -522,6 +522,12 @@ class Router
             $basePath = ucfirst($matches[1]) .DS .$matches[2];
 
             $filePath = APPPATH.$basePath.DS.'Assets'.DS.$matches[3];
+        }else if (preg_match('#^(modules)/(.+)/storage/(.*)$#i', $uri, $matches)) {
+            // We need to classify the path name (the Module/Theme path).
+            //$basePath = ucfirst($matches[1]) .DS .Inflector::classify($matches[2]);
+            $basePath = ucfirst($matches[1]) .DS .$matches[2];
+
+            $filePath = APPPATH.$basePath.DS.'storage'.DS.$matches[3];
         }
 
         if (! empty($filePath)) {

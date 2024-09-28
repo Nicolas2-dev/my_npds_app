@@ -54,13 +54,11 @@ class MailerManager implements MailerInterface
 
         if (preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $From_email)) {
             
-            include 'config/phpmailer.php';
-
-            if ($dkim_auto == 2) {
+            if (Config::get('mailer.dkim_auto') == 2) {
                 //Private key filename for this selector 
-                $privatekeyfile = 'storage/phpmailer/key/' . Config::get('npds.Npds_Key') . '_dkim_private.pem';
+                $privatekeyfile = module_path('Npds/storage/phpmailer/key/' . Config::get('npds.Npds_Key') . '_dkim_private.pem');
                 //Public key filename for this selector 
-                $publickeyfile = 'storage/phpmailer/key/' . Config::get('npds.Npds_Key') . '_dkim_public.pem';
+                $publickeyfile = module_path('Npds/storage/phpmailer/key/' . Config::get('npds.Npds_Key') . '_dkim_public.pem');
 
                 if (!file_exists($privatekeyfile)) {
                     //Create a 2048-bit RSA key with an SHA256 digest 
@@ -89,20 +87,20 @@ class MailerManager implements MailerInterface
                 //Server settings config smtp 
                 if (Config::get('npds.mail_fonction') == 2) {
                     $mail->isSMTP();
-                    $mail->Host       = $smtp_host;
-                    $mail->SMTPAuth   = $smtp_auth;
-                    $mail->Username   = $smtp_username;
-                    $mail->Password   = $smtp_password;
+                    $mail->Host       = Config::get('mailer.smtp_host');
+                    $mail->SMTPAuth   = Config::get('mailer.smtp_auth');
+                    $mail->Username   = Config::get('mailer.smtp_username');
+                    $mail->Password   = Config::get('mailer.smtp_password');
 
-                    if ($smtp_secure) {
-                        if ($smtp_crypt === 'tls') {
+                    if (Config::get('mailer.smtp_secure')) {
+                        if (Config::get('mailer.smtp_crypt') === 'tls') {
                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                        } elseif ($smtp_crypt === 'ssl') {
+                        } elseif (Config::get('mailer.smtp_crypt') === 'ssl') {
                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                         }
                     }
 
-                    $mail->Port = $smtp_port;
+                    $mail->Port = Config::get('mailer.smtp_port');
                 }
 
                 $mail->CharSet = cur_charset;
@@ -148,7 +146,7 @@ class MailerManager implements MailerInterface
                     $mail->Body = sprintf($stub_mail, $message);
                 }
 
-                if ($dkim_auto == 2) {
+                if (Config::get('mailer.dkim_auto') == 2) {
                     $mail->DKIM_domain = str_replace(['http://', 'https://'], ['', ''], Config::get('npds.nuke_url'));
                     $mail->DKIM_private = $privatekeyfile;;
                     $mail->DKIM_selector = Config::get('npds.Npds_Key');
@@ -242,7 +240,7 @@ class MailerManager implements MailerInterface
     public function isbadmailuser($utilisateur)
     {
         $contents = '';
-        $filename = "storage/users_private/usersbadmail.txt";
+        $filename = module_path("Users/storage/users_private/usersbadmail.txt");
         $handle = fopen($filename, "r");
     
         if (filesize($filename) > 0)

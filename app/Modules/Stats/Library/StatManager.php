@@ -91,8 +91,6 @@ class StatManager implements StatInterface
      */
     public function theme_stat()
     {
-        
-
         $resultX = sql_query("SELECT DISTINCT(theme) FROM users");
         
         while (list($themelist) = sql_fetch_row($resultX)) {

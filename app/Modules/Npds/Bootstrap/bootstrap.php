@@ -12,6 +12,8 @@ include $configDir .'Support/Metalang.php';
 
 include $configDir .'Boxe/Boxe.php';
 
+include $configDir .'Events/events.php';
+
 include $configDir .'Routes/web/routes.php';
 
 include $configDir .'Routes/api/routes.php';

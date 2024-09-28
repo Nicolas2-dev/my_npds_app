@@ -122,30 +122,29 @@ class CookieManager extends Cookie implements CookieInterface
      * @param [type] $id
      * @return void
      */
-    public function cookie_get_user($id)
-    {
-        global $user;
+    // public function cookie_get_user($id)
+    // {
+    //     global $user;
 
-        $cookie = $this->cookiedecode($user);
+    //     $cookie = $this->cookiedecode($user);
         
-        return $cookie[$id]; 
-    }
+    //     return $cookie[$id]; 
+    // }
 
     /**
-     * Undocumented function
+     * Undocumented function A revoir !!!!! pas bonne
      *
      * @param [type] $id
      * @return void
      */
     public function cookie_user($id = '')
     {
-        if (!empty($id)) {
+        if (!is_null($this->user_cookie)) {
             return $this->user_cookie[$id];
         } else {
             return $this->user_cookie;
         }
     }
-
 
     /**
      * [docookie description]

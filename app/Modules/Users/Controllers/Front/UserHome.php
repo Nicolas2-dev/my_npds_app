@@ -5,21 +5,29 @@ namespace App\Modules\Users\Controllers\Front;
 use Npds\Routing\Url;
 use Npds\Http\Request;
 use Npds\Config\Config;
+use Npds\Session\Session;
 use App\Modules\Users\Models\User;
 use App\Modules\Npds\Support\Sanitize;
+use Npds\Supercache\SuperCacheManager;
 use App\Modules\Npds\Core\FrontController;
-use App\Modules\Npds\Support\Facades\Css;
+use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Hack;
 use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Users\Support\Facades\User as H_User;
-use App\Modules\Npds\Library\Supercache\SuperCacheManager;
-
+use App\Modules\Users\Validator\ValidatorUserEditeHome;
 
 /**
  * [UserLogin description]
  */
 class UserHome extends FrontController
 {
+
+    /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    protected $pdst = 0;
 
     /**
      * [__construct description]
@@ -62,40 +70,24 @@ class UserHome extends FrontController
      *
      * @return  [type]  [return description]
      */
-    public function edithome()
+    public function edit_home()
     {
-        global $user;
-
-        if ($user) {
+        if (Auth::guard('user')) {
             
             $this->title(__('Editer votre page principale'));
             
-            $userinfo = H_User::getusrinfo($user);
+            $this->set('message', Session::message('message'));
+
+            $userinfo = H_User::getusrinfo(Auth::check('user'));
         
-            if ($userinfo['theme'] == '') {
-                $userinfo['theme'] = Config::get('npds.Default_Theme') + Config::get('npds.Default_Skin');
+            if (empty($userinfo['theme'])) {
+                $userinfo['theme'] = (Config::get('npds.Default_Theme') .'+'. Config::get('npds.Default_Skin'));
             }
 
-            $fv_parametres = '
-            storynum: {
-                validators: {
-                    regexp: {
-                        regexp:/^[1-9](\d{0,2})$/,
-                        message: "0-9"
-                    },
-                    between: {
-                        min: 1,
-                        max: 127,
-                        message: "1 ... 127"
-                    }
-                }
-            },';
-        
-            $arg1 = 'var formulid=["changehome"];';
+            with(new ValidatorUserEditeHome())->display();
 
             $this->set('userinfo',  $userinfo);
-            $this->set('adminfoot', Css::adminfoot('fv', $fv_parametres, $arg1, 'foo'));
-            $this->set('user_menu', H_User::member_menu($userinfo['mns'], $userinfo['uname']));
+            $this->set('user_menu', H_User::member_menu($userinfo));
 
         } else {
             Url::redirect('index');
@@ -114,13 +106,17 @@ class UserHome extends FrontController
      *
      * @return  [type]             [return description]
      */
-    public function savehome()
+    public function save_home()
     {
-        $userinfo = User::find(Request::post('id'));
+        $userinfo = User::find(Request::post('uid'));
 
-        if ((Request::post('uname') == Cookie::cookie_get_user(1)) 
-        and (Request::post('id')    == $userinfo->id) 
-        and (Request::post('op')    == 'savehome')) 
+        $cookie = Cookie::cookiedecode(Auth::check('user'));
+
+        //if ((Request::post('uname') == Cookie::cookie_user(1)) 
+        if ((Request::post('uname') == $cookie[1]) 
+        and (Request::post('uid')   == $userinfo->uid) 
+        and (Request::post('op')    == 'savehome')
+        and (Request::isPost())) 
         {
             $userinfo->storynum = Request::post('storynum');
             $userinfo->ublockon = (Request::post('ublockon') ? 1 : 0);
@@ -128,7 +124,7 @@ class UserHome extends FrontController
             $userinfo->save();
 
             Cookie::docookie(
-                $userinfo->id, 
+                $userinfo->uid, 
                 $userinfo->uname, 
                 $userinfo->pass, 
                 $userinfo->storynum, 
@@ -146,7 +142,9 @@ class UserHome extends FrontController
             $cache_obj = new SuperCacheManager();
             $cache_obj->UsercacheCleanup();
     
-            Url::redirect('user/home');
+            Session::set('message', ['type' => 'success', 'text' => __d('users', 'Votre home a été sauvegarder avec success.')]);
+
+            Url::redirect('user/edithome#message');
         } else {
             Url::redirect('index');
         }

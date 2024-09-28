@@ -6,6 +6,7 @@ namespace App\Modules\Users\Controllers\Front;
 use Npds\view\View;
 use Npds\Routing\Url;
 use Npds\Config\Config;
+use Npds\Session\Session;
 use App\Modules\Npds\Core\FrontController;
 use App\Modules\Npds\Support\Facades\Date;
 use App\Modules\Npds\Support\Facades\Hack;
@@ -19,6 +20,19 @@ use App\Modules\Npds\Support\Facades\Cookie;
 class UserMain extends FrontController
 {
 
+    /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    protected $pdst = 0;
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    // protected $layout = 'users';   
 
     /**
      * [__construct description]
@@ -69,6 +83,26 @@ class UserMain extends FrontController
     {
         // Do some processing there, even deciding to stop the Flight, if case.
 
+        // if (($result === false) || ! $this->autoRender) {
+        //     // Errors in called Method or isn't wanted the auto-Rendering; stop the Flight.
+        //     return false;
+        // }
+
+        // if (($result === true) || is_null($result)) {
+        //     $result = View::make($this->method(), $this->data());
+        // }
+
+        // if ($result instanceof View) {
+        //     if ($this->useLayout) {
+        //         View::module_layout($this->layout(), $this->data())->withContent($result)->display();
+        //     } else {
+        //         $result->display();
+        //     }
+
+        //     // Stop the Flight.
+        //     return false;
+        // }
+
         // Leave to parent's method the Flight decisions.
         return parent::after($result);
     }
@@ -107,21 +141,25 @@ class UserMain extends FrontController
      */
     public function userinfo($uname)
     {
-        global $admin;
-        global $user;
-        global $name, $email, $url, $bio, $user_avatar, $user_from, $user_occ, $user_intrest, $user_sig, $user_journal, $C7, $C8;
+        global $admin, $user, $cookie, $theme;
+        //global $name, $email, $url, $bio, $user_avatar, $user_from, $user_occ, $user_intrest, $user_sig, $user_journal, $C7, $C8;
     
+        $this->set('message', Session::message('message'));
+
         $uname = Hack::remove($uname);
-    
+    //vd($uname);
         $result = sql_query("SELECT uid, name, femail, url, bio, user_avatar, user_from, user_occ, user_intrest, user_sig, user_journal, mns FROM users WHERE uname='$uname'");
-        list($uid, $name, $femail, $url, $bio, $user_avatar, $user_from, $user_occ, $user_intrest, $user_sig, $user_journal, $mns) = sql_fetch_row($result);
         
+        list($uid, $name, $femail, $url, $bio, $user_avatar, $user_from, $user_occ, $user_intrest, $user_sig, $user_journal, $mns) = sql_fetch_row($result);
+
+
+
+        //global $uname;
+//vd($uname);
         if (!$uid) {
             Url::redirect('index');
         }
-    
-        global $cookie;
-    
+
         $email          = Hack::remove($femail);
         $name           = stripslashes(Hack::remove($name));
         $url            = Hack::remove($url);
@@ -132,12 +170,11 @@ class UserMain extends FrontController
         $user_sig       = nl2br(Hack::remove($user_sig));
         $user_journal   = stripslashes(Hack::remove($user_journal));
     
-        $op = 'userinfo';
-    
+
+
         if (stristr($user_avatar, 'users_private')) {
             $direktori = '';
         } else {
-            global $theme;
             $direktori = 'assets/images/forum/avatar/';
     
             if (function_exists('theme_image')) {
@@ -147,11 +184,55 @@ class UserMain extends FrontController
             }
         }
     
+
+    
+        $posterdata = get_userdata_from_id($uid);
+    
+
+        
+        $useroutils = '';
+    
+        if (($user) and ($uid != 1)) {
+            $useroutils .= '<a class=" text-primary me-3" href="powerpack.php?op=instant_message&amp;to_userid=' . $posterdata["uname"] . '" ><i class="far fa-envelope fa-2x" title="' . __d('users', 'Envoyer un message interne') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
+        }
+
+        if (array_key_exists('femail', $posterdata)) {
+            if ($posterdata['femail'] != '')  {
+                $useroutils .= '<a class=" text-primary me-3" href="mailto:' . anti_spam($posterdata['femail'], 1) . '" target="_blank" ><i class="fa fa-at fa-2x" title="' . __d('users', 'Email') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
+            }
+        }
+
+        if (array_key_exists('url', $posterdata)) {
+            if ($posterdata['url'] != '') {
+                $useroutils .= '<a class=" text-primary me-3" href="' . $posterdata['url'] . '" target="_blank" ><i class="fas fa-external-link-alt fa-2x" title="' . __d('users', 'Visiter ce site web') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
+            }
+        }
+
+        if (array_key_exists('mns', $posterdata)) {
+            if ($posterdata['mns']) {
+                $useroutils .= '<a class=" text-primary me-3" href="minisite.php?op=' . $posterdata['uname'] . '" target="_blank" ><i class="fa fa-desktop fa-2x" title="' . __d('users', 'Visitez le minisite') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
+            }
+        }
+
+        $userinfo = '
+        <div class="d-flex flex-row flex-wrap">
+            <div class="me-2 my-auto"><img src="' . $direktori . $user_avatar . '" class=" rounded-circle center-block n-ava-64 align-middle" /></div>
+            <div class="align-self-center">
+                <h2>' . __d('users', 'Utilisateur') . '<span class="d-inline-block text-muted ms-1">' . $uname . '</span></h2>';
+    
+        if (isset($cookie[1])) {
+            if ($uname !== $cookie[1]) {
+                $userinfo .= $useroutils;
+            }
+        }
+    
+// affichage reseaux sociaux 
+
         $socialnetworks     = [];
         $posterdata_extend  = [];
         $res_id             = [];
     
-        $my_rs = '';
+        $my_rs = 'ici reseau sociaux';
     
         $posterdata_extend = get_userdata_extend_from_id($uid);
     
@@ -190,45 +271,7 @@ class UserMain extends FrontController
                 }
             }
         }
-    
-        $posterdata = get_userdata_from_id($uid);
-    
-        $useroutils = '';
-    
-        if (($user) and ($uid != 1)) {
-            $useroutils .= '<a class=" text-primary me-3" href="powerpack.php?op=instant_message&amp;to_userid=' . $posterdata["uname"] . '" ><i class="far fa-envelope fa-2x" title="' . __d('users', 'Envoyer un message interne') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
-        }
 
-        if (array_key_exists('femail', $posterdata)) {
-            if ($posterdata['femail'] != '')  {
-                $useroutils .= '<a class=" text-primary me-3" href="mailto:' . anti_spam($posterdata['femail'], 1) . '" target="_blank" ><i class="fa fa-at fa-2x" title="' . __d('users', 'Email') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
-            }
-        }
-
-        if (array_key_exists('url', $posterdata)) {
-            if ($posterdata['url'] != '') {
-                $useroutils .= '<a class=" text-primary me-3" href="' . $posterdata['url'] . '" target="_blank" ><i class="fas fa-external-link-alt fa-2x" title="' . __d('users', 'Visiter ce site web') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
-            }
-        }
-
-        if (array_key_exists('mns', $posterdata)) {
-            if ($posterdata['mns']) {
-                $useroutils .= '<a class=" text-primary me-3" href="minisite.php?op=' . $posterdata['uname'] . '" target="_blank" ><i class="fa fa-desktop fa-2x" title="' . __d('users', 'Visitez le minisite') . '" data-bs-toggle="tooltip"></i></a>&nbsp;';
-            }
-        }
-
-        $userinfo = '
-        <div class="d-flex flex-row flex-wrap">
-            <div class="me-2 my-auto"><img src="' . $direktori . $user_avatar . '" class=" rounded-circle center-block n-ava-64 align-middle" /></div>
-            <div class="align-self-center">
-                <h2>' . __d('users', 'Utilisateur') . '<span class="d-inline-block text-muted ms-1">' . $uname . '</span></h2>';
-    
-        if (isset($cookie[1])) {
-            if ($uname !== $cookie[1]) {
-                $userinfo .= $useroutils;
-            }
-        }
-    
         $userinfo .= $my_rs;
     
         if (isset($cookie[1])) {
@@ -242,11 +285,15 @@ class UserMain extends FrontController
         </div>
         <hr />';
     
-        if (isset($cookie[1])) {
-            if ($uname == $cookie[1]) {
-                $userinfo .= User::member_menu($mns, $uname);
-            }
+// user menu
+
+
+        if (isset($cookie[1]) and ($uname == $cookie[1])) {
+            $userinfo .= User::member_menu($posterdata);
         }
+
+// Geoloc carte
+
 
         $userinfo .= '
         <div class="card card-body">
@@ -265,10 +312,17 @@ class UserMain extends FrontController
             }
         }
 
-        $userinfo .= include(module_path('Users/Sform/aff_extend-user.php'));
+
+        //vd($posterdata_extend, $userdata, array_merge($userdata, $posterdata_extend));
+
+        $op = 'userinfo';
+        $userinfo .= include(module_path('Users/Sform/deprecated/aff_extend-user.php'));
     
         $userinfo .= '</div>';
     
+
+//vd($posterdata);
+
         //==> geoloc
         if (array_key_exists($ch_lat, $posterdata_extend) and array_key_exists($ch_lon, $posterdata_extend)) {
             if ($posterdata_extend[$ch_lat] != '' and $posterdata_extend[$ch_lon] != '') {
@@ -398,6 +452,10 @@ class UserMain extends FrontController
             </div>
         </div>';
     
+
+// Journal en ligne de user.
+
+
         if ($uid != 1) {
             $userinfo .= '
             <br />
@@ -408,7 +466,7 @@ class UserMain extends FrontController
         $file = '';
         $handle = opendir(module_path('Comments/Config'));
 
-vd(module_path('Comments/Config'), readdir($handle));
+        // vd(module_path('Comments/Config'), readdir($handle));
 
         while (false !== ($file = readdir($handle))) {
             if (!preg_match('#_config\.php$#i', $file)) {
@@ -417,7 +475,7 @@ vd(module_path('Comments/Config'), readdir($handle));
 
             $topic = "#topic#";
     
-vd(explode('.php', $file)[0], Config::get('comments.'.explode('.php', $file)[0].'.forum'));
+            // vd(explode('.php', $file)[0], Config::get('comments.'.explode('.php', $file)[0].'.forum'));
 
             $forum = Config::get('comments.'.explode('.php', $file)[0].'.forum');
             $url_ret = Config::get('comments.'.explode('.php', $file)[0].'.url_ret');
@@ -431,9 +489,13 @@ vd(explode('.php', $file)[0], Config::get('comments.'.explode('.php', $file)[0].
     
         closedir($handle);
     
-vd($filelist);
+        // vd($filelist);
 
-//dd();
+        //dd();
+
+
+// Les derniers commentaires de
+
 
         $userinfo .= '
         <h4 class="my-3">' . __d('users', 'Les derniers commentaires de') . ' ' . $uname . '.</h4>
@@ -446,7 +508,7 @@ vd($filelist);
         while (list($topic_id, $forum_id, $post_text, $post_time) = sql_fetch_row($result)) {
     
 
-vd($filelist[$forum_id]($topic_id, 0));
+            // vd($filelist[$forum_id]($topic_id, 0));
 
             $url = str_replace("#topic#", $topic_id, $filelist[$forum_id]($topic_id, 0));
             $userinfo .= '<p><a href="' . $url . '">' . __d('users', 'Posté : ') . Date::convertdate($post_time) . '</a></p>';
@@ -483,6 +545,10 @@ vd($filelist[$forum_id]($topic_id, 0));
             </div>';
         }
     
+
+// Les dernières contributions de
+
+
         $userinfo .= '
         </div>
         <h4 class="my-3">' . __d('users', 'Les dernières contributions de') . ' ' . $uname . '</h4>';

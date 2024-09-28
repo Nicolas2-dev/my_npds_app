@@ -19,10 +19,13 @@ if ($op != 'userinfo') {
 }
 
 if (($op == 'userinfo') and ($user)) {
-    global $act_uname;
+    //global $act_uname; // pour sform global
 
     $act_uname = "<a href='powerpack.php?op=instant_message&amp;to_userid=$uname' title='" . __d('users', 'Envoyer un message interne') . "'>$uname</a>";
     
+    $posterdata = array_merge($posterdata, ['act_uname' => $act_uname]);
+
+    //vd($uname);
     $m->add_field('act_uname', __d('users', 'ID utilisateur (pseudo)'), $act_uname, 'text', true, 25, '', '');
 } else {
     $m->add_field('uname', __d('users', 'ID utilisateur (pseudo)'), $uname, 'text', true, 25, '', '');

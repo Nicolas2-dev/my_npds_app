@@ -17,7 +17,7 @@
 </div>
 <div class="card card-body">
     <h3 class="mb-4"><i class="fas fa-sign-in-alt fa-lg me-2 align-middle"></i><?= __d('users', 'Connexion'); ?></h3>
-    <form action="<?= site_url('user/submit'); ?>" method="post" name="userlogin">
+    <form action="<?= site_url('user/login'); ?>" method="post" name="userlogin">
         <div class="row g-2">
             <div class="col-sm-6">
                 <div class="mb-3 form-floating">
@@ -30,7 +30,7 @@
                     <input type="password" class="form-control" name="pass" id="inputPassuser" placeholder="<?= __d('users', 'Mot de passe'); ?>" required="required" autocomplete="off" />
                     <label for="inputPassuser"><?= __d('users', 'Mot de passe'); ?></label>
                 </div>
-                <span class="help-block small float-end"><a href="user.php?op=forgetpassword" title="<?= __d('users', 'Vous avez perdu votre mot de passe ?'); ?>"><?= __d('users', 'Vous avez perdu votre mot de passe ?'); ?></a></span>
+                <span class="help-block small float-end"><a href="<?= site_url('user/forgetpassword'); ?>" title="<?= __d('users', 'Vous avez perdu votre mot de passe ?'); ?>"><?= __d('users', 'Vous avez perdu votre mot de passe ?'); ?></a></span>
             </div>
         </div>
         <input type="hidden" name="op" value="login" />
@@ -40,3 +40,7 @@
 <script type="text/javascript">
     //<![CDATA[document.userlogin.uname.focus();//]]>
 </script>
+
+<?php if (isset($user_include)): ?>
+    <?= $user_include; ?>
+<?php endif; ?>

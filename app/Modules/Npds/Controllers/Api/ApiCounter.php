@@ -1,14 +1,59 @@
 <?php
 
-namespace App\Modules\Npds\Support;
+namespace App\Modules\Npds\Controllers\Api;
 
 use Npds\Config\Config;
+use Npds\Support\Facades\DB;
+use App\Controllers\Core\BaseController;
+use App\Modules\Npds\Support\Facades\Auth;
 
-/**
- * Counter class
- */
-class Counter
+
+class ApiCounter extends BaseController
 {
+
+    /**
+     * Undocumented variable
+     *
+     * @var boolean
+     */
+    protected $autoRender = false;
+
+
+    /**
+     * [__construct description]
+     *
+     * @return  [type]  [return description]
+     */
+    public function __construct()
+    {
+        parent::__construct();              
+    }
+
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
 
     /**
      * Undocumented function
@@ -17,9 +62,7 @@ class Counter
      */
     public static function update()
     {
-        global $admin;
-
-        if ((!$admin) or (Config::get('npds.not_admin_count') != 1)) {
+        if ((!Auth::guard('admin')) or (Config::get('npds.not_admin_count') != 1)) {
             $user_agent = getenv("HTTP_USER_AGENT");
         
             if ((stristr($user_agent, "Nav")) 
@@ -76,9 +119,18 @@ class Counter
             else 
                 $os = "Other";
         
-            sql_query("UPDATE counter SET count=count+1 WHERE (type='total' AND var='hits') OR (var='$browser' AND type='browser') OR (var='$os' AND type='os')");
+            $data = array(
+                'count' => DB::raw('count+1')
+            );
+
+            DB::table('counter')
+            		->where('type', 'total')
+                    ->where('var', 'hits')
+                    ->orwhere('var', $browser)
+                    ->orwhere('var', $os)
+                    ->update($data);
+
         }
-        
     }
 
 }

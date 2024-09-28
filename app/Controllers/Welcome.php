@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use Npds\View\View;
 use Npds\Config\Config;
+use Npds\Session\Session;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Models\UserStatus;
 use App\Modules\Npds\Core\FrontController;
@@ -72,6 +73,10 @@ class Welcome extends FrontController
 
 // vd(Config::all(), Theme::config('config.long_chain', 15), Theme::config('config.theme'));
 
+$this->set('message', Session::message('message'));
+$this->set('logout', Session::message('logout'));
+
+
 
         $message = __('Hello, welcome from the welcome controller! <br/>
 This content can be changed in <code>{0}</code>', $filePath);
@@ -90,6 +95,9 @@ This content can be changed in <code>{0}</code>', $filePath);
         $viewName = $this->method();
 
         $filePath = $this->basePath .$viewName .'.php';
+
+        $this->set('message', Session::message('message'));
+        $this->set('logout', Session::message('logout'));
 
         $message = __('Hello, welcome from the welcome controller and subpage method! <br/>
 This content can be changed in <code>{0}</code>', $filePath);

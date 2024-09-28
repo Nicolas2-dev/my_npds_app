@@ -43,12 +43,12 @@ switch ($skinname) {
 }
 
 if (autorisation(-1)) {
-    $btn_con = '<a class="dropdown-item" href="user.php">
+    $btn_con = '<a class="dropdown-item" href="'. site_url('user') .'">
             <i class="fas fa-sign-in-alt fa-lg me-2 align-middle"></i>
             ' . __d('npdsboost_sk', 'Connexion') . '
         </a>';
 
-    $ava = '<a class="dropdown-item" href="user.php">
+    $ava = '<a class="dropdown-item" href="'. site_url('user') .'">
             <i class="fa fa-user fa-3x text-muted"></i>
         </a>';
 
@@ -59,12 +59,12 @@ if (autorisation(-1)) {
     
     $menuser .= '
         <li>
-            <a class="dropdown-item" href="user.php?op=edituser" title="' . __d('npdsboost_sk', 'Vous') . '"  >
+            <a class="dropdown-item" href="'. site_url('user/edituser?op=edituser') .'" title="' . __d('npdsboost_sk', 'Vous') . '"  >
                 <i class="fa fa-user-edit fa-lg me-2"></i>' . __d('npdsboost_sk', 'Vous') . '
             </a>
         </li>
         <li>
-            <a class="dropdown-item" href="user.php?op=editjournal" title="' . __d('npdsboost_sk', 'Editer votre journal') . '" >
+            <a class="dropdown-item" href="'. site_url('user/editjournal?op=editjournal') .'" title="' . __d('npdsboost_sk', 'Editer votre journal') . '" >
                 <i class="fa fa-edit fa-lg me-2"></i>' . __d('npdsboost_sk', 'Journal') . '
             </a>
         </li>';
@@ -85,22 +85,22 @@ if (autorisation(-1)) {
     }
     */
     $menuser .= '<li>
-            <a class="dropdown-item " href="user.php?op=edithome" title="' . __d('npdsboost_sk', 'Editer votre page principale') . '" >
+            <a class="dropdown-item " href="'. site_url('user/edithome?op=edithome') .'" title="' . __d('npdsboost_sk', 'Editer votre page principale') . '" >
                 <i class="fa fa-edit fa-lg me-2 "></i>' . __d('npdsboost_sk', 'Page') . '
             </a>
         </li>
         <li>
-            <a class="dropdown-item " href="user.php?op=chgtheme" title="' . __d('npdsboost_sk', 'Changer le thème') . '" >
+            <a class="dropdown-item " href="'. site_url('user/chgtheme?op=chgtheme') .'" title="' . __d('npdsboost_sk', 'Changer le thème') . '" >
                 <i class="fa fa-paint-brush fa-lg me-2"></i>' . __d('npdsboost_sk', 'Thème') . '
             </a>
         </li>
         <li>
-            <a class="dropdown-item " href="modules.php?ModPath=reseaux-sociaux&amp;ModStart=reseaux-sociaux" title="' . __d('npdsboost_sk', 'Réseaux sociaux') . '" >
+            <a class="dropdown-item " href="'. site_url('reseaux?op=sociaux') .'" title="' . __d('npdsboost_sk', 'Réseaux sociaux') . '" >
                 <i class="fa fa-share-alt-square fa-lg me-2"></i>' . __d('npdsboost_sk', 'Réseaux sociaux') . '
             </a>
         </li>
         <li>
-            <a class="dropdown-item " href="viewpmsg.php" title="' . __d('npdsboost_sk', 'Message personnel') . '" >
+            <a class="dropdown-item " href="'. site_url('messenger/viewpmsg?op=viewpmsg') .'" title="' . __d('npdsboost_sk', 'Message personnel') . '" >
                 <i class="fa fa-envelope fa-lg me-2 ' . $cl . '"></i>' . __d('npdsboost_sk', 'Message') . '
             </a>
         </li>';
@@ -135,12 +135,12 @@ if (autorisation(-1)) {
         </li>';
     }
 
-    $ava = '<a class="dropdown-item" href="user.php" >
+    $ava = '<a class="dropdown-item" href="'. site_url('user?op=dashboard') .'" >
         <img src="' . site_url($imgtmp) . '" class="n-ava-64" alt="avatar" title="' . __d('npdsboost_sk', 'Votre compte') . '" data-bs-toggle="tooltip" data-bs-placement="right" />
     </a>
     <li class="dropdown-divider"></li>';
 
-    $btn_con = '<a class="dropdown-item" href="user.php?op=logout">
+    $btn_con = '<a class="dropdown-item" href="'. site_url('user/logout?op=logout') .'">
         <i class="fas fa-sign-out-alt fa-lg text-danger me-2"></i>' . __d('npdsboost_sk', 'Déconnexion') . '
     </a>';
 }

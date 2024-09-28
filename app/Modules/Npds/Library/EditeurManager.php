@@ -42,9 +42,16 @@ class EditeurManager implements EditeurInterface
      */
     public function aff_editeur($Xzone, $Xactiv)
     {
-        global $tmp_theme, $tiny_mce_theme, $tiny_mce_relurl;
+        global $tmp_theme, $tiny_mce_theme, $tiny_mce_relurl, $tiny_mce_theme, $tiny_mce_relurl;
 
         $tmp = '';
+
+        $tmp_theme = with(get_instance())->template();
+
+        $tiny_mce_init=true;
+        $tiny_mce=true;
+        $tiny_mce_theme="full"; //  "short"
+        $tiny_mce_relurl="";
 
         if (Config::get('npds.tiny_mce')) {
             static $tmp_Xzone;
@@ -66,7 +73,7 @@ class EditeurManager implements EditeurInterface
                                 mobile: {menubar: true},
                                 language : '" . language_iso(1, '', '') . "',";
 
-                        include("assets/shared/editeur/tinymce/themes/advanced/App.conf.php");
+                        include(web_path('assets/shared/editeur/tinymce/themes/advanced/npds.conf.php'));
 
                         $tmp .= '
                                 });
@@ -75,7 +82,7 @@ class EditeurManager implements EditeurInterface
                         </script>';
                     }
                 } else {
-                    $tmp .= '<script type="text/javascript" src="assets/shared/editeur/tinymce/tinymce.min.js"></script>';
+                    $tmp .= '<script type="text/javascript" src="'. site_url('assets/shared/editeur/tinymce/tinymce.min.js') .'"></script>';
                 }
             } else {
                 $tmp_Xzone .= $Xzone != 'custom' ? $Xzone . ',' : $Xactiv . ',';

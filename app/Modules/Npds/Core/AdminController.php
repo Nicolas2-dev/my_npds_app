@@ -4,14 +4,14 @@ namespace App\Modules\Npds\Core;
 
 use Npds\view\View;
 use Npds\Config\Config;
+use App\Modules\Npds\Core\AccessError;
 use App\Modules\Npds\Support\AlertNpds;
-use App\Controllers\Core\BaseController;
 use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Npds\Support\Facades\Language;
 
 
-class AdminController extends BaseController
+class AdminController extends AccessError
 {
 
     /**
@@ -629,26 +629,6 @@ class AdminController extends BaseController
         </html>';
 
         die();
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    protected function access_error()
-    {
-        //include(module_path("Npds/Controllers/Admin/Die.php"));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    protected function access_denied()
-    {
-        //include(module_path("Npds/Controllers/Admin/Die.php"));
     }
 
     // Getters

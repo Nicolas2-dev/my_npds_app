@@ -2,16 +2,12 @@
 
 namespace App\Modules\Users\Controllers\Front;
 
-
-use Npds\Routing\Url;
-use Npds\Http\Request;
 use Npds\Config\Config;
-use Npds\Support\Facades\DB;
 use App\Modules\Npds\Core\FrontController;
 use App\Modules\Npds\Support\Facades\Spam;
 use App\Modules\Users\Support\Facades\User;
-use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Npds\Support\Facades\Mailer;
+use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Npds\Support\Facades\Language;
 use App\Modules\Npds\Support\Facades\Metalang;
 use App\Modules\Npds\Support\Facades\Password;
@@ -23,6 +19,13 @@ class UserNews extends FrontController
 {
 
     /**
+     * Undocumented variable
+     *
+     * @var integer
+     */
+    protected $pdst = 0;
+
+    /**
      * [__construct description]
      *
      * @return  [type]  [return description]
@@ -30,20 +33,6 @@ class UserNews extends FrontController
     public function __construct()
     {
         parent::__construct();
-
-        //     case 'only_newuser':
-        
-        //         if (Config::get('npds.CloseRegUser') == 0)
-        //             Only_NewUser();
-        //         else {
-        //             include("header.php");
-        
-        //             if (file_exists("storage/static/closed.txt"))
-        //                 include("storage/static/closed.txt");
-        
-        //             include("footer.php");
-        //         }
-
     }
 
     /**
@@ -81,12 +70,14 @@ class UserNews extends FrontController
     {
         global $user;
 
+        //         if (Config::get('npds.CloseRegUser') == 0)
+
         if (Config::get('npds.CloseRegUser') == 0) {
 
             if (!$user) {
                 global $uname, $name, $email, $user_avatar, $user_occ, $user_from, $user_intrest, $user_sig, $user_viewemail, $pass, $vpass, $C1, $C2, $C3, $C4, $C5, $C6, $C7, $C8, $M1, $M2, $T1, $T2, $B1;
                         
-                User::showimage();
+                Theme::showimage();
         
                 echo '
                 <div>
@@ -127,6 +118,12 @@ class UserNews extends FrontController
             if (file_exists("storage/static/closed.txt"))
                 include("storage/static/closed.txt");
         }
+        //         else {
+        
+        //             if (file_exists("storage/static/closed.txt"))
+        //                 include("storage/static/closed.txt");
+        
+        //         }
     }
 
     /**

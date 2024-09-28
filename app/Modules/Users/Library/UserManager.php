@@ -2,8 +2,12 @@
 
 namespace App\Modules\Users\Library;
 
+use Npds\Http\Request;
 use Npds\Config\Config;
 use Npds\Support\Facades\DB;
+use App\Modules\Npds\Support\Facades\Auth;
+use App\Modules\Npds\Support\Facades\Cookie;
+use App\Modules\Npds\Support\Facades\Mailer;
 use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Users\Contracts\UserInterface;
 
@@ -74,18 +78,16 @@ class UserManager implements UserInterface
      */
     public function AutoReg()
     {
-        global $user;
+        $user = Auth::guard('user');
 
         if (!Config::get('npds.AutoRegUser')) {
             if (isset($user)) {
                 $cookie = explode(':', base64_decode($user));
 
-                list($test) = sql_fetch_row(sql_query("SELECT open 
-                                                    FROM users_status 
-                                                    WHERE uid='$cookie[0]'"));
+                $status = DB::table('users_status')->select('open')->where('uid', $cookie[0])->first();
 
-                if (!$test) {
-                    setcookie('user', '', 0);
+                if (!$status['open']) {
+                    Cookie::set('user', '', 0);
 
                     return false;
                 } else {
@@ -239,6 +241,7 @@ class UserManager implements UserInterface
         
         echo '
         </div>';
+
     }
     
     function message_pass($ibid)
@@ -251,149 +254,71 @@ class UserManager implements UserInterface
         $stop = '';
     
         if ((!$email) || ($email == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email)))
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : Email invalide');
+            $stop = __d('users', 'Erreur : Email invalide');
     
         if (strrpos($email, ' ') > 0)
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : une adresse Email ne peut pas contenir d\'espaces');
+            $stop = __d('users', 'Erreur : une adresse Email ne peut pas contenir d\'espaces');
     
-        if (checkdnsmail($email) === false)
-            $stop = __d('users', 'Erreur : DNS ou serveur de mail incorrect') . '!<br />';
+        if (Mailer::checkdnsmail($email) === false)
+            $stop = __d('users', 'Erreur : DNS ou serveur de mail incorrect !');
     
         if ((!$uname) || ($uname == '') || (preg_match('#[^a-zA-Z0-9_-]#', $uname)))
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : identifiant invalide');
+            $stop = __d('users', 'Erreur : identifiant invalide');
     
         if (strlen($uname) > 25)
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Votre surnom est trop long. Il doit faire moins de 25 caractères.');
+            $stop = __d('users', 'Votre surnom est trop long. Il doit faire moins de 25 caractères.');
     
         if (preg_match('#^(root|adm|linux|webmaster|admin|god|administrator|administrador|nobody|anonymous|anonimo|an€nimo|operator|dune|netadm)$#i', $uname))
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : nom existant.');
+            $stop = __d('users', 'Erreur : nom existant.');
     
         if (strrpos($uname, ' ') > 0)
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Il ne peut pas y avoir d\'espace dans le surnom.');
+            $stop = __d('users', 'Il ne peut pas y avoir d\'espace dans le surnom.');
     
         if (sql_num_rows(sql_query("SELECT uname FROM users WHERE uname='$uname'")) > 0)
-            $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : cet identifiant est déjà utilisé');
+            $stop = __d('users', 'Erreur : cet identifiant est déjà utilisé');
     
         if ($uname != 'edituser')
             if (sql_num_rows(sql_query("SELECT email FROM users WHERE email='$email'")) > 0)
-                $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Erreur : adresse Email déjà utilisée');
+                $stop = __d('users', 'Erreur : adresse Email déjà utilisée');
     
-        return ($stop);
-    }
-    
-    function makePass()
-    {
-        $makepass = '';
-    
-        $syllables = 'Er@1,In@2,Ti#a3,D#un4,F_e5,P_re6,V!et7,J!o8,Ne%s9,A%l0,L*en1,So*n2,Ch$a3,I$r4,L^er5,Bo^6,Ok@7,!Tio8,N@ar9,0Sim,1P$le,2B*la,3Te!n,4T~oe,5Ch~o,6Co,7Lat,8Spe,9Ak,0Er,1Po,2Co,3Lor,4Pen,5Cil!,6Li!,7Ght,8_Wh,9_At,T#he0,#He1,@Ck2,Is@3,M1am@,B2o+,3No@,Fi-4,0Ve!,A9ny#,Wa7y$,P8ol%,Iti^6,Cs~5,Ra*,@Dio,+Sou,-Rce,!Sea,#Rch,$Pa,&Per,^Com,~Bo,*Sp,Eak1*,S2t~,Fi^,R3st&,Gr#,O5up@,!Boy,Ea!,Gle*,4Tr*,+A1il,B0i+,_Bl9e,Br8b_,P7ri#,De6e!,$Ka3y,1En$,2Be-,4Se-';
-        $syllable_array = explode(',', $syllables);
-        
-        srand((float)microtime() * 1000000);
-        
-        for ($count = 1; $count <= 4; $count++) {
-            if (rand() % 10 == 1)
-                $makepass .= sprintf("%0.0f", (rand() % 50) + 1);
-            else
-                $makepass .= sprintf("%s", $syllable_array[rand() % 62]);
-        }
-    
-        return ($makepass);
-    }
-    
-    function showimage()
-    {
-        echo "
-        <script type=\"text/javascript\">
-        //<![CDATA[
-        function showimage() {
-        if (!document.images)
-            return
-            document.images.avatar.src=\n";
-    
-        if ($ibid = theme_image("forum/avatar/blank.gif"))
-            $imgtmp = substr($ibid, 0, strrpos($ibid, "/") + 1);
-        else
-            $imgtmp = "assets/images/forum/avatar/";
-    
-        echo "'$imgtmp' + document.Register.user_avatar.options[document.Register.user_avatar.selectedIndex].value\n";
-    
-        echo "}
-        //]]>
-        </script>";
-    }
-
-    function hidden_form()
-    {
-        global $uname, $name, $email, $user_avatar, $user_occ, $user_from, $user_intrest, $user_sig, $user_viewemail, $pass, $vpass, $C1, $C2, $C3, $C4, $C5, $C6, $C7, $C8, $M1, $M2, $T1, $T2, $B1, $charte, $user_lnl;
-        
-        if (!$user_avatar) {
-            $user_avatar = "blank.gif";
-        }
-    
-        echo '
-        <form action="user.php" method="post">
-            <input type="hidden" name="uname" value="' . $uname . '" />
-            <input type="hidden" name="name" value="' . removeHack($name) . '" />
-            <input type="hidden" name="email" value="' . $email . '" />
-            <input type="hidden" name="user_avatar" value="' . $user_avatar . '" />
-            <input type="hidden" name="user_from" value="' . StripSlashes(removeHack($user_from)) . '" />
-            <input type="hidden" name="user_occ" value="' . StripSlashes(removeHack($user_occ)) . '" />
-            <input type="hidden" name="user_intrest" value="' . StripSlashes(removeHack($user_intrest)) . '" />
-            <input type="hidden" name="user_sig" value="' . StripSlashes(removeHack($user_sig)) . '" />
-            <input type="hidden" name="user_viewemail" value="' . $user_viewemail . '" />
-            <input type="hidden" name="pass" value="' . removeHack($pass) . '" />
-            <input type="hidden" name="user_lnl" value="' . removeHack($user_lnl) . '" />
-            <input type="hidden" name="C1" value="' . StripSlashes(removeHack($C1)) . '" />
-            <input type="hidden" name="C2" value="' . StripSlashes(removeHack($C2)) . '" />
-            <input type="hidden" name="C3" value="' . StripSlashes(removeHack($C3)) . '" />
-            <input type="hidden" name="C4" value="' . StripSlashes(removeHack($C4)) . '" />
-            <input type="hidden" name="C5" value="' . StripSlashes(removeHack($C5)) . '" />
-            <input type="hidden" name="C6" value="' . StripSlashes(removeHack($C6)) . '" />
-            <input type="hidden" name="C7" value="' . StripSlashes(removeHack($C7)) . '" />
-            <input type="hidden" name="C8" value="' . StripSlashes(removeHack($C8)) . '" />
-            <input type="hidden" name="M1" value="' . StripSlashes(removeHack($M1)) . '" />
-            <input type="hidden" name="M2" value="' . StripSlashes(removeHack($M2)) . '" />
-            <input type="hidden" name="T1" value="' . StripSlashes(removeHack($T1)) . '" />
-            <input type="hidden" name="T2" value="' . StripSlashes(removeHack($T2)) . '" />
-            <input type="hidden" name="B1" value="' . StripSlashes(removeHack($B1)) . '" />';
+        return $stop;
     }
 
     /**
-     * [member_menu description]
+     * Undocumented function
      *
-     * @param   [type]  $mns  [$mns description]
-     * @param   [type]  $qui  [$qui description]
-     *
-     * @return  [type]        [return description]
+     * @param [type] $userinfo
+     * @return void
      */
-    public function member_menu($mns, $qui)
+    public function member_menu($userinfo)
     {
-        global $op;
+        $op = Request::post('op') ?: Request::query('op');
+
 
         $ed_u = $op == 'edituser' ? 'active' : '';
         $cl_edj = $op == 'editjournal' ? 'active' : '';
         $cl_edh = $op == 'edithome' ? 'active' : '';
         $cl_cht = $op == 'chgtheme' ? 'active' : '';
         $cl_edjh = ($op == 'editjournal' or $op == 'edithome') ? 'active' : '';
-        $cl_u = $_SERVER['REQUEST_URI'] == '/user' ? 'active' : '';
-        $cl_pm = strstr($_SERVER['REQUEST_URI'], '/viewpmsg') ? 'active' : '';
-        $cl_rs = ($_SERVER['QUERY_STRING'] == 'ModPath=reseaux-sociaux&ModStart=reseaux-sociaux' or $_SERVER['QUERY_STRING'] == 'ModPath=reseaux-sociaux&ModStart=reseaux-sociaux&op=EditReseaux') ? 'active' : '';
+        $cl_u = $op  == 'dashboard' ? 'active' : '';
+        $cl_pm = $op = 'viewpmsg' ? 'active' : '';
+        $cl_rs = $op == 'sociaux' ? 'active' : '';
         
         $menu = '
         <ul class="nav nav-tabs d-flex flex-wrap"> 
-            <li class="nav-item"><a class="nav-link ' . $cl_u . '" href="user.php" title="' . __d('users', 'Votre compte') . '" data-bs-toggle="tooltip" ><i class="fas fa-user fa-2x d-xl-none"></i><span class="d-none d-xl-inline"><i class="fas fa-user fa-lg"></i></span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $ed_u . '" href="user.php?op=edituser" title="' . __d('users', 'Vous') . '" data-bs-toggle="tooltip" ><i class="fas fa-user-edit fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Vous') . '</span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $cl_u . '" href="'. site_url('user?op=dashboard') .'" title="' . __d('users', 'Votre compte') . '" data-bs-toggle="tooltip" ><i class="fas fa-user fa-2x d-xl-none"></i><span class="d-none d-xl-inline"><i class="fas fa-user fa-lg"></i></span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $ed_u . '" href="'. site_url('user/edituser?op=edituser') .'" title="' . __d('users', 'Vous') . '" data-bs-toggle="tooltip" ><i class="fas fa-user-edit fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Vous') . '</span></a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle tooltipbyclass ' . $cl_edjh . '" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" data-bs-html="true" title="' . __d('users', 'Editer votre journal') . '<br />' . __d('users', 'Editer votre page principale') . '"><i class="fas fa-edit fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">Editer</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item ' . $cl_edj . '" href="user.php?op=editjournal" title="' . __d('users', 'Editer votre journal') . '" data-bs-toggle="tooltip">' . __d('users', 'Journal') . '</a></li>
-                    <li><a class="dropdown-item ' . $cl_edh . '" href="user.php?op=edithome" title="' . __d('users', 'Editer votre page principale') . '" data-bs-toggle="tooltip">' . __d('users', 'Page') . '</a></li>
+                    <li><a class="dropdown-item ' . $cl_edj . '" href="'. site_url('user/editjournal?op=editjournal') .'" title="' . __d('users', 'Editer votre journal') . '" data-bs-toggle="tooltip">' . __d('users', 'Journal') . '</a></li>
+                    <li><a class="dropdown-item ' . $cl_edh . '" href="'. site_url('user/edithome?op=edithome') .'" title="' . __d('users', 'Editer votre page principale') . '" data-bs-toggle="tooltip">' . __d('users', 'Page') . '</a></li>
                 </ul>
             </li>';
     
         // include("modules/upload/config/upload.conf.php");
     
-        // if (($mns) and ($autorise_upload_p)) {
+        // if (($userinfo['mns']) and ($autorise_upload_p)) {
         //     include_once("modules/blog/upload_minisite.php");
     
         //     $PopUp = win_upload("popup");
@@ -402,17 +327,17 @@ class UserManager implements UserInterface
         //     <li class="nav-item dropdown">
         //         <a class="nav-link dropdown-toggle tooltipbyclass" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="' . __d('users', 'Gérer votre miniSite') . '"><i class="fas fa-desktop fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">' . __d('users', 'MiniSite') . '</span></a>
         //         <ul class="dropdown-menu">
-        //             <li><a class="dropdown-item" href="minisite.php?op=' . $qui . '" target="_blank">' . __d('users', 'MiniSite') . '</a></li>
+        //             <li><a class="dropdown-item" href="minisite.php?op=' . $userinfo['uname'] . '" target="_blank">' . __d('users', 'MiniSite') . '</a></li>
         //             <li><a class="dropdown-item" href="javascript:void(0);" onclick="window.open(' . $PopUp . ')" >' . __d('users', 'Gérer votre miniSite') . '</a></li>
         //         </ul>
         //     </li>';
         // }
     
         $menu .= '
-            <li class="nav-item"><a class="nav-link ' . $cl_cht . '" href="user.php?op=chgtheme" title="' . __d('users', 'Changer le thème') . '"  data-bs-toggle="tooltip" ><i class="fas fa-paint-brush fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Thème') . '</span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $cl_rs . '" href="modules.php?ModPath=reseaux-sociaux&amp;ModStart=reseaux-sociaux" title="' . __d('users', 'Réseaux sociaux') . '"  data-bs-toggle="tooltip" ><i class="fas fa-share-alt-square fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Réseaux sociaux') . '</span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $cl_pm . '" href="viewpmsg.php" title="' . __d('users', 'Message personnel') . '"  data-bs-toggle="tooltip" ><i class="far fa-envelope fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Message') . '</span></a></li>
-            <li class="nav-item"><a class="nav-link " href="user.php?op=logout" title="' . __d('users', 'Déconnexion') . '" data-bs-toggle="tooltip" ><i class="fas fa-sign-out-alt fa-2x text-danger d-xl-none"></i><span class="d-none d-xl-inline text-danger">&nbsp;' . __d('users', 'Déconnexion') . '</span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $cl_cht . '" href="'. site_url('user/chgtheme?op=chgtheme') .'" title="' . __d('users', 'Changer le thème') . '"  data-bs-toggle="tooltip" ><i class="fas fa-paint-brush fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Thème') . '</span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $cl_rs . '" href="'. site_url('reseaux?op=sociaux') .'" title="' . __d('users', 'Réseaux sociaux') . '"  data-bs-toggle="tooltip" ><i class="fas fa-share-alt-square fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Réseaux sociaux') . '</span></a></li>
+            <li class="nav-item"><a class="nav-link ' . $cl_pm . '" href="'. site_url('messenger/viewpmsg?op=viewpmsgviewpmsg') .'" title="' . __d('users', 'Message personnel') . '"  data-bs-toggle="tooltip" ><i class="far fa-envelope fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Message') . '</span></a></li>
+            <li class="nav-item"><a class="nav-link " href="'. site_url('user/logout?op=logout') .'" title="' . __d('users', 'Déconnexion') . '" data-bs-toggle="tooltip" ><i class="fas fa-sign-out-alt fa-2x text-danger d-xl-none"></i><span class="d-none d-xl-inline text-danger">&nbsp;' . __d('users', 'Déconnexion') . '</span></a></li>
         </ul>
         <div class="mt-3"></div>';
 

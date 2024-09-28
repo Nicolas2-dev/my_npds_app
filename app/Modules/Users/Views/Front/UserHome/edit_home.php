@@ -1,5 +1,9 @@
 <?= $user_menu; ?>
 
+<?php if (isset($message)): ?>
+    <?= $message; ?>
+<?php endif; ?>
+
 <h2 class="mb-3"><?= __d('users', 'Editer votre page principale') ; ?></h2>
 <form id="changehome" action="<?= site_url('user/savehome'); ?>" method="post">
     <div class="mb-3 row">
@@ -11,7 +15,7 @@
     <div class="mb-3 row">
         <div class="col-sm-10">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="ublockon" name="ublockon" value="1" <?= ($userinfo['ublockon']==1 ? 'checked="checked"' : '' ) ; ?> />
+                <input class="form-check-input" type="checkbox" id="ublockon" name="ublockon" value="1" <?= ($userinfo['ublockon'] == 1 ? 'checked="checked"' : '' ) ; ?> />
                 <label class="form-check-label" for="ublockon"><?= __d('users', 'Activer votre menu personnel') ; ?></label>
             </div>
         </div>
@@ -27,12 +31,10 @@
     </div>
     <div class="mb-3 row">
         <input type="hidden" name="uname" value="<?= $userinfo['uname'] ; ?>" />
-        <input type="hidden" name="id" value="<?= $userinfo['id'] ; ?>" />
+        <input type="hidden" name="uid" value="<?= $userinfo['uid'] ; ?>" />
         <input type="hidden" name="op" value="savehome" />
         <div class="col-sm-12">
             <input class="btn btn-primary" type="submit" value="<?= __d('users', 'Sauver les modifications') ; ?>" />
         </div>
     </div>
 </form>
-
-<?= $adminfoot; ?>

@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'Access denied !' => '',
+  'Access error !' => '',
   'Cannot initialize the Table Fields' => '',
   'Editer votre page principale' => '',
   'Error 404' => '',

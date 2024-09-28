@@ -1,4 +1,6 @@
 <?php
+
+use Npds\Config\Config;
 /************************************************************************/
 /* DUNE by App                                                         */
 /* ===========================                                          */
@@ -11,7 +13,7 @@
 /************************************************************************/
 
 
-$tinylangmenu = Config::get('npds.multi_langue')!==false ? 'App_langue' : '' ;
+$tinylangmenu = Config::get('npds.multi_langue')!==false ? 'npds_langue' : '' ;
 // skin : "oxide" ou "oxide-dark"
 $tmp.='
             promotion : false,
@@ -21,47 +23,47 @@ $tmp.='
             templates : [
                {
                   title: "Une colonne",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/txt_1_col_12.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_1_col_12.html') .'",
                   description: "Texte sur une colonne"
                },
                {
                   title: "Deux colonnes (50% 50%)",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/txt_2_col_6-6.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_2_col_6-6.html') .'",
                   description: "Texte sur deux colonnes de largeurs égales"
                },
                {
                   title: "Trois colonnes (33% 33% 33%)",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/txt_3_col_4-4-4.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_3_col_4-4-4.html') .'",
                   description: "Texte sur trois colonnes de largeurs égales"
                },
                {
                   title: "Deux colonnes (33% 66%)",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/txt_2_col_4-8.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_2_col_4-8.html') .'",
                   description: "Texte sur deux colonnes de largeurs inégales"
                },
                {
                   title: "Deux colonnes (66% 33%)",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/txt_2_col_8-4.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_2_col_8-4.html') .'",
                   description: "Texte sur deux colonnes de largeurs inégales"
                },
                {
                   title: "Trois colonnes (25% 50% 25%)",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/txt_3_col_3-6-3.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_3_col_3-6-3.html') .'",
                   description: "Texte sur trois colonnes de largeurs inégales"
                },
                {
                   title: "Deux colonnes image/texte (33% 66%)",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/img_txt_2_col_4-8.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/img_txt_2_col_4-8.html') .'",
                   description: "Image, texte sur deux colonnes de largeurs inégales"
                },
                {
                   title: "Deux colonnes image/texte (17% 83%)",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/img_txt_2_col_2-10.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/img_txt_2_col_2-10.html') .'",
                   description: "Image, texte sur deux colonnes de largeurs inégales"
                },
                {
                   title: "Trois colonnes image/texte/image (25% 50% 25%)",
-                  url: "'.Config::get('npds.nuke_url').'/assets/shared/editeur/tinymce/plugins/template/img_txt_img_3_col_3-6-3.html",
+                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/img_txt_img_3_col_3-6-3.html') .'",
                   description: "Texte sur trois colonnes de largeurs inégales"
                }
                ],';
@@ -74,7 +76,7 @@ if (!array_key_exists(1,$setup)) $setup[1]='';
 // Full Theme
 if ($tiny_mce_theme=='full') {
    $tmp.= "
-            plugins: ['quickbars', 'autoresize', 'preview', 'importcss', 'searchreplace', 'autolink', 'autosave', 'save', 'directionality', 'code', 'visualblocks', 'visualchars', 'fullscreen', 'image', 'link', 'media', 'template', 'codesample', 'table', 'charmap', 'pagebreak', 'nonbreaking', 'anchor', 'insertdatetime', 'advlist', 'lists', 'wordcount', 'help', 'charmap', 'emoticons', 'App'],
+            plugins: ['quickbars', 'autoresize', 'preview', 'importcss', 'searchreplace', 'autolink', 'autosave', 'save', 'directionality', 'code', 'visualblocks', 'visualchars', 'fullscreen', 'image', 'link', 'media', 'template', 'codesample', 'table', 'charmap', 'pagebreak', 'nonbreaking', 'anchor', 'insertdatetime', 'advlist', 'lists', 'wordcount', 'help', 'charmap', 'emoticons', 'npds'],
 //            extended_valid_elements : 'img[class|src|alt|title|width|loading=lazy]',
 
   extended_valid_elements: 'img[class=img-fluid|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|loading=lazy]',
@@ -97,16 +99,16 @@ if ($tiny_mce_theme=='full') {
             }}],
             font_family_formats: 'Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
             font_size_formats: '0.4rem 0.5rem 0.6rem 0.7rem 0.8rem 0.9rem 1rem 1.1rem 1.2rem 1.3rem 1.4rem 1.5rem 1.6rem 1.7rem 1.8rem 1.9rem 2rem',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen preview save print | image media template link anchor codesample | ltr rtl help | App_img App_perso App_metal App_upl App_mns ".$tinylangmenu."',";
+            toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen preview save print | image media template link anchor codesample | ltr rtl help | npds_img npds_perso npds_metal npds_upl npds_mns ".$tinylangmenu."',";
 
 } else if ($tiny_mce_theme=='short') {
    // Short Theme
    $tmp.=" 
-            plugins : ['quickbars', 'autoresize', 'autolink', 'wordcount', 'image', 'table', 'link', 'media', 'App'],
-            toolbar : 'bold italic underline strikethrough | pastetext pasteword | justifyleft justifycenter justifyright justifyfull | fontsizeselect | bullist numlist outdent indent forecolor backcolor | search link unlink code | image media App_img App_perso App_mns App_upl App_metal ".$tinylangmenu."',\n";
+            plugins : ['quickbars', 'autoresize', 'autolink', 'wordcount', 'image', 'table', 'link', 'media', 'npds'],
+            toolbar : 'bold italic underline strikethrough | pastetext pasteword | justifyleft justifycenter justifyright justifyfull | fontsizeselect | bullist numlist outdent indent forecolor backcolor | search link unlink code | image media npds_img npds_perso npds_mns npds_upl npds_metal ".$tinylangmenu."',\n";
 }
 $tmp.="
-            content_css : ' assets/shared/font-awesome/css/all.min.css,assets/shared/bootstrap/dist/css/bootstrap.min.css,assets/shared/editeur/tinymce/themes/advanced/App.css',
+            content_css : ' ". site_url('assets/shared/font-awesome/css/all.min.css') .",". site_url('assets/shared/bootstrap/dist/css/bootstrap.min.css') .",". site_url('assets/shared/editeur/tinymce/themes/advanced/npds.css') ."',
             extended_valid_elements : 'hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]',
             directionality: 'ltr',
 //            auto_focus: '".substr($tmp_Xzone,0,strpos($tmp_Xzone,",",0))."',

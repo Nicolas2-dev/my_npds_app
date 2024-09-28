@@ -19,9 +19,9 @@ if (!stristr($_SERVER['PHP_SELF'], 'modules.php'))
 /*****************************************************/
 $forum = $IdForum;
 
-include_once("auth.php");
-include_once("functions.php");
-include_once("modules/upload/lang/upload.lang-Config::get('npds.language').php");
+// include_once("auth.php");
+// include_once("functions.php");
+// include_once("modules/upload/lang/upload.lang-Config::get('npds.language').php");
 include_once("modules/upload/include_forum/upload.conf.forum.php");
 include_once("modules/upload/include_forum/upload.func.forum.php");
 include_once("library/filesystem/file.class.php");
