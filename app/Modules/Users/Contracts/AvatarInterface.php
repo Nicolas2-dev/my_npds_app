@@ -20,6 +20,27 @@ interface AvatarInterface {
      * @param [type] $input
      * @return void
      */
-    public static function user_avatar_update($input);
+    public function user_avatar_update($input);
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function path();
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function url();
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function directory();
 
 }

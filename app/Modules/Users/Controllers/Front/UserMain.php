@@ -20,6 +20,7 @@ use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Npds\Support\Facades\Metalang;
 use App\Modules\Groupes\Support\Facades\Groupe;
+use App\Modules\Users\Support\Facades\UserMenu;
 
 /**
  * [UserLogin description]
@@ -190,7 +191,7 @@ class UserMain extends FrontController
             }
 
             if (isset($cookie[1]) and ($uname == $cookie[1])) {
-                $this->set('user_menu', User::member_menu($posterdata));
+                $this->set('user_menu', UserMenu::member($posterdata));
             }
 
             // Geoloc carte

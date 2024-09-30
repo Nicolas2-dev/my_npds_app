@@ -18,6 +18,7 @@ use App\Modules\Users\Support\Facades\User;
 use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Npds\Support\Facades\Password;
+use App\Modules\Users\Support\Facades\UserMenu;
 use App\Modules\Users\Library\Traits\UserLogoutTrait;
 
 /**
@@ -92,7 +93,7 @@ class UserEdit extends FrontController
 
             $this->set('user_edite_sform', with(new SformUserEdite($userinfo))->display());
 
-            $this->set('user_menu', User::member_menu($userinfo));
+            $this->set('user_menu', UserMenu::member($userinfo));
 
         } else {
             Url::redirect('index');

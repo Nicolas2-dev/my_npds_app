@@ -60,7 +60,7 @@ class SformUserNew
      *
      * @return void
      */
-    private function forum_hidden()
+    private function form_hidden()
     {
         $this->sform->add_field('op', '', 'new user', 'hidden', false);
     }
@@ -301,7 +301,7 @@ class SformUserNew
         $this->consentement();
 
         //  
-        $this->forum_hidden();
+        $this->form_hidden();
 
         //
         $this->form_submit();

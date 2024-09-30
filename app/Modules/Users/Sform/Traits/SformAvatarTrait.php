@@ -4,8 +4,7 @@ namespace App\Modules\Users\Sform\Traits;
 
 use Npds\view\View;
 use Npds\Config\Config;
-use App\Modules\Users\Support\Avatar;
-use App\Modules\Theme\Support\Facades\Theme;
+use App\Modules\Users\Support\Facades\Avatar;
 
 /**
  * Undocumented trait

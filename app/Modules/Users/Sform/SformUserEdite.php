@@ -61,7 +61,7 @@ class SformUserEdite
      *
      * @return void
      */
-    private function forum_hidden()
+    private function form_hidden()
     {
         $this->sform->add_field('csrfToken', '', Csrf::makeToken(), 'hidden', false);
         $this->sform->add_field('op', '', 'saveuser', 'hidden', false);
@@ -411,7 +411,7 @@ class SformUserEdite
         $this->consentement();
 
         //  
-        $this->forum_hidden();
+        $this->form_hidden();
 
         //
         $this->form_submit();

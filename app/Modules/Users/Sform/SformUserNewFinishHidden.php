@@ -55,7 +55,7 @@ class SformUserNewFinishHidden
      *
      * @return void
      */
-    private function forum_hidden()
+    private function form_hidden()
     {
         if (Request::post('charte', 0) == 0) {
 
@@ -106,7 +106,7 @@ class SformUserNewFinishHidden
         $this->form_method();
 
         //  
-        $this->forum_hidden();
+        $this->form_hidden();
 
         //
         $this->form_submit();

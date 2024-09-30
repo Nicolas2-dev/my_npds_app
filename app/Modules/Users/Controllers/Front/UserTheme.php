@@ -13,6 +13,7 @@ use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Users\Support\Facades\User;
 use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Theme\Support\Facades\Theme;
+use App\Modules\Users\Support\Facades\UserMenu;
 
 /**
  * [UserLogin description]
@@ -81,7 +82,7 @@ class UserTheme extends FrontController
         if (Auth::guard('user')) {
             $userinfo = User::getuserinfo(Auth::check('user'));
             
-            $this->set('user_menu', User::member_menu($userinfo));
+            $this->set('user_menu', UserMenu::member($userinfo));
         
             $this->set('userinfo', $userinfo);
 

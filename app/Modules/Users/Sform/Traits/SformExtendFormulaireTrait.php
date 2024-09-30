@@ -140,7 +140,7 @@ trait SformExtendFormulaireTrait
         $geofield   = array($ch_lat, $ch_lon);
         $fieldrest  = array_diff($fielddispo, $geofield);
 
-        //reset($fieldrest);
+        // reset($fieldrest);
         foreach ($fieldrest as $k => $v) {
             $this->sform->add_field($v, $v, '', 'hidden', false);
         }

@@ -295,62 +295,6 @@ class UserManager implements UserInterface
         return $rang_img;
     }
 
-    /**
-     * Undocumented function
-     *
-     * @param [type] $userinfo
-     * @return void
-     */
-    public function member_menu($userinfo)
-    {
-        $op = Request::post('op') ?: Request::query('op');
-
-
-        $ed_u = $op == 'edituser' ? 'active' : '';
-        $cl_edj = $op == 'editjournal' ? 'active' : '';
-        $cl_edh = $op == 'edithome' ? 'active' : '';
-        $cl_cht = $op == 'chgtheme' ? 'active' : '';
-        $cl_edjh = ($op == 'editjournal' or $op == 'edithome') ? 'active' : '';
-        $cl_u = $op  == 'dashboard' ? 'active' : '';
-        $cl_pm = $op == 'viewpmsg' ? 'active' : '';
-        $cl_rs = $op == 'sociaux' ? 'active' : '';
-        
-        $menu = '
-        <ul class="nav nav-tabs d-flex flex-wrap"> 
-            <li class="nav-item"><a class="nav-link ' . $cl_u . '" href="'. site_url('user?op=dashboard') .'" title="' . __d('users', 'Votre compte') . '" data-bs-toggle="tooltip" ><i class="fas fa-user fa-2x d-xl-none"></i><span class="d-none d-xl-inline"><i class="fas fa-user fa-lg"></i></span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $ed_u . '" href="'. site_url('user/edituser?op=edituser') .'" title="' . __d('users', 'Vous') . '" data-bs-toggle="tooltip" ><i class="fas fa-user-edit fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Vous') . '</span></a></li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle tooltipbyclass ' . $cl_edjh . '" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" data-bs-html="true" title="' . __d('users', 'Editer votre journal') . '<br />' . __d('users', 'Editer votre page principale') . '"><i class="fas fa-edit fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">Editer</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item ' . $cl_edj . '" href="'. site_url('user/editjournal?op=editjournal') .'" title="' . __d('users', 'Editer votre journal') . '" data-bs-toggle="tooltip">' . __d('users', 'Journal') . '</a></li>
-                    <li><a class="dropdown-item ' . $cl_edh . '" href="'. site_url('user/edithome?op=edithome') .'" title="' . __d('users', 'Editer votre page principale') . '" data-bs-toggle="tooltip">' . __d('users', 'Page') . '</a></li>
-                </ul>
-            </li>';
-    
-        if (($userinfo['mns']) and (Config::get('upload.config.autorise_upload_p'))) {
-            
-            $PopUp = minisite_win_upload("popup");
-    
-            $menu .= '
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle tooltipbyclass" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="' . __d('users', 'Gérer votre miniSite') . '"><i class="fas fa-desktop fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">' . __d('users', 'MiniSite') . '</span></a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="minisite.php?op=' . $userinfo['uname'] . '" target="_blank">' . __d('users', 'MiniSite') . '</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0);" onclick="window.open(' . $PopUp . ')" >' . __d('users', 'Gérer votre miniSite') . '</a></li>
-                </ul>
-            </li>';
-        }
-    
-        $menu .= '
-            <li class="nav-item"><a class="nav-link ' . $cl_cht . '" href="'. site_url('user/chgtheme?op=chgtheme') .'" title="' . __d('users', 'Changer le thème') . '"  data-bs-toggle="tooltip" ><i class="fas fa-paint-brush fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Thème') . '</span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $cl_rs . '" href="'. site_url('reseaux?op=sociaux') .'" title="' . __d('users', 'Réseaux sociaux') . '"  data-bs-toggle="tooltip" ><i class="fas fa-share-alt-square fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Réseaux sociaux') . '</span></a></li>
-            <li class="nav-item"><a class="nav-link ' . $cl_pm . '" href="'. site_url('messenger/viewpmsg?op=viewpmsgviewpmsg') .'" title="' . __d('users', 'Message personnel') . '"  data-bs-toggle="tooltip" ><i class="far fa-envelope fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Message') . '</span></a></li>
-            <li class="nav-item"><a class="nav-link " href="'. site_url('user/logout?op=logout') .'" title="' . __d('users', 'Déconnexion') . '" data-bs-toggle="tooltip" ><i class="fas fa-sign-out-alt fa-2x text-danger d-xl-none"></i><span class="d-none d-xl-inline text-danger">&nbsp;' . __d('users', 'Déconnexion') . '</span></a></li>
-        </ul>
-        <div class="mt-3"></div>';
-
-        return $menu;
-    }
 
     #autodoc userpopover($who, $dim, $avpop) : à partir du nom de l'utilisateur ($who) $avpop à 1 : affiche son avatar (ou avatar defaut) au dimension ($dim qui défini la class n-ava-$dim)<br /> $avpop à 2 : l'avatar affiché commande un popover contenant diverses info de cet utilisateur et liens associés
     public function userpopover($who, $dim, $avpop)

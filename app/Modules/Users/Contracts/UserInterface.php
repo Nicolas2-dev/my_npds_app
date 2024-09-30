@@ -77,12 +77,4 @@ interface UserInterface {
      */
     public function get_userdata($username);
     
-    /**
-     * Undocumented function
-     *
-     * @param [type] $userinfo
-     * @return void
-     */
-    public function member_menu($userinfo);
-
 }

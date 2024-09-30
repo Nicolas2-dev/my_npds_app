@@ -13,6 +13,7 @@ use App\Modules\Npds\Core\FrontController;
 use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Hack;
 use App\Modules\Npds\Support\Facades\Cookie;
+use App\Modules\Users\Support\Facades\UserMenu;
 use App\Modules\Users\Support\Facades\User as H_User;
 use App\Modules\Users\Validator\ValidatorUserEditeHome;
 
@@ -87,7 +88,7 @@ class UserHome extends FrontController
             with(new ValidatorUserEditeHome())->display();
 
             $this->set('userinfo',  $userinfo);
-            $this->set('user_menu', H_User::member_menu($userinfo));
+            $this->set('user_menu', UserMenu::member($userinfo));
 
         } else {
             Url::redirect('index');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Users\Support;
+namespace App\Modules\Users\Library;
 
 use Npds\Http\Request;
 use Npds\Config\Config;
@@ -12,8 +12,30 @@ use App\Modules\Users\Contracts\AvatarInterface;
 /**
  * Undocumented class
  */
-class Avatar implements AvatarInterface
+class AvatarManager implements AvatarInterface 
 {
+
+    /**
+     * [$instance description]
+     *
+     * @var [type]
+     */
+    protected static $instance;
+
+
+    /**
+     * [getInstance description]
+     *
+     * @return  [type]  [return description]
+     */
+    public static function getInstance()
+    {
+        if (isset(static::$instance)) {
+            return static::$instance;
+        }
+
+        return static::$instance = new static();
+    }
 
     /**
      * Undocumented function
@@ -21,7 +43,7 @@ class Avatar implements AvatarInterface
      * @param [type] $input
      * @return void
      */
-    public static function user_avatar_update($input)
+    public function user_avatar_update($input)
     {
         $user_avatar    = Request::post('user_avatar', false);
         $raz_avatar     = Request::post('raz_avatar', false);
@@ -39,7 +61,7 @@ class Avatar implements AvatarInterface
 
             $racine = Config::get('upload.config.racine');
 
-            $user_dir = $racine . static::path() . $input['uname'] . '/';
+            $user_dir = $racine . $this->path() . $input['uname'] . '/';
 
             if (($suffix == 'gif') or ($suffix == 'jpg') or ($suffix == 'png') or ($suffix == 'jpeg')) {
 
@@ -56,16 +78,16 @@ class Avatar implements AvatarInterface
                                 $fp = fopen($rep . $user_dir . 'index.html', 'w');
                                 fclose($fp);
                             } else {
-                                $user_dir = $racine . static::path();
+                                $user_dir = $racine . $this->path();
                             }
                         }
                     } else {
-                        $user_dir = $racine . static::path();
+                        $user_dir = $racine . $this->path();
                     }
 
                     if ($upload->saveAs($input['uname'] . '.' . $suffix, $rep . $user_dir, 'B1', true)) {
 
-                        $user_avatar_url    = static::url() . $input['uname'] . '/';
+                        $user_avatar_url    = $this->url() . $input['uname'] . '/';
                         $user_avatar        = site_url($user_avatar_url . $input['uname'] . '.' . $suffix);
                         $img_size           = @getimagesize($rep . $user_dir . $input['uname'] . '.' . $suffix);
 
@@ -98,7 +120,7 @@ class Avatar implements AvatarInterface
      *
      * @return void
      */
-    public static function path()
+    public function path()
     {
         return 'app/Modules/Users/storage/users_private/';
     }
@@ -108,7 +130,7 @@ class Avatar implements AvatarInterface
      *
      * @return void
      */
-    public static function url()
+    public function url()
     {
         return 'modules/users/storage/users_private/';
     }
@@ -118,7 +140,7 @@ class Avatar implements AvatarInterface
      *
      * @return void
      */
-    public static function directory()
+    public function directory()
     {
         $theme      = with(get_instance())->template();
         $theme_dir  = with(get_instance())->template_dir();

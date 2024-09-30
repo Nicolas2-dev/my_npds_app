@@ -1,0 +1,268 @@
+2024-09-30 18:34PM - Class "App\Modules\Users\Support\Facades\Avatar" not found in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Foundation\AliasLoader.php on line 33
+
+Exception information:
+
+           Date: Sep 30, 2024 19:01PM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules/Users/Partials/Menu/user_menu.php.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(158): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserMenuManager.php(59): Npds\view\View::make('Modules/Users/P...', Array)
+#2 [internal function]: App\Modules\Users\Library\UserMenuManager->member(Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserMenu.php(17): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Controllers\Front\UserEdit.php(96): App\Modules\Users\Support\Facades\UserMenu::__callStatic('member', Array)
+#5 [internal function]: App\Modules\Users\Controllers\Front\UserEdit->edit_user()
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('edit_user', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Modules\\Use...', 'edit_user', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Modules\\Use...', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(111): Npds\Routing\Router->dispatch()
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#12 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 30, 2024 19:01PM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules/Users/Partials/Menu/user_menu.php.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(158): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserMenuManager.php(59): Npds\view\View::make('Modules/Users/P...', Array)
+#2 [internal function]: App\Modules\Users\Library\UserMenuManager->member(Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserMenu.php(17): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Controllers\Front\UserEdit.php(96): App\Modules\Users\Support\Facades\UserMenu::__callStatic('member', Array)
+#5 [internal function]: App\Modules\Users\Controllers\Front\UserEdit->edit_user()
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('edit_user', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Modules\\Use...', 'edit_user', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Modules\\Use...', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(111): Npds\Routing\Router->dispatch()
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#12 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 30, 2024 19:01PM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules/Users/Partials/Menu/user_menu.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(158): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserMenuManager.php(59): Npds\view\View::make('Modules/Users/P...', Array)
+#2 [internal function]: App\Modules\Users\Library\UserMenuManager->member(Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserMenu.php(17): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Controllers\Front\UserEdit.php(96): App\Modules\Users\Support\Facades\UserMenu::__callStatic('member', Array)
+#5 [internal function]: App\Modules\Users\Controllers\Front\UserEdit->edit_user()
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('edit_user', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Modules\\Use...', 'edit_user', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Modules\\Use...', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(111): Npds\Routing\Router->dispatch()
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#12 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 30, 2024 19:03PM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users/Partials/Menu/user_menu.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(158): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserMenuManager.php(59): Npds\view\View::make('F:\\Dev_Diver\\Np...', Array)
+#2 [internal function]: App\Modules\Users\Library\UserMenuManager->member(Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserMenu.php(17): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Controllers\Front\UserEdit.php(96): App\Modules\Users\Support\Facades\UserMenu::__callStatic('member', Array)
+#5 [internal function]: App\Modules\Users\Controllers\Front\UserEdit->edit_user()
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('edit_user', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Modules\\Use...', 'edit_user', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Modules\\Use...', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(111): Npds\Routing\Router->dispatch()
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#12 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 30, 2024 19:03PM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users/Partials/Menu/user_menu.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(158): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserMenuManager.php(59): Npds\view\View::make('F:\\Dev_Diver\\Np...', Array)
+#2 [internal function]: App\Modules\Users\Library\UserMenuManager->member(Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserMenu.php(17): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Controllers\Front\UserEdit.php(96): App\Modules\Users\Support\Facades\UserMenu::__callStatic('member', Array)
+#5 [internal function]: App\Modules\Users\Controllers\Front\UserEdit->edit_user()
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('edit_user', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Modules\\Use...', 'edit_user', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Modules\\Use...', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(111): Npds\Routing\Router->dispatch()
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#12 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 30, 2024 19:04PM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules/Users/Partials/Menu/user_menu.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(158): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserMenuManager.php(59): Npds\view\View::make('Modules/Users/P...', Array)
+#2 [internal function]: App\Modules\Users\Library\UserMenuManager->member(Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserMenu.php(17): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Controllers\Front\UserEdit.php(96): App\Modules\Users\Support\Facades\UserMenu::__callStatic('member', Array)
+#5 [internal function]: App\Modules\Users\Controllers\Front\UserEdit->edit_user()
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('edit_user', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Modules\\Use...', 'edit_user', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Modules\\Use...', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(111): Npds\Routing\Router->dispatch()
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#12 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 30, 2024 19:04PM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules/Users/Partials/Menu/user_menu.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(158): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserMenuManager.php(59): Npds\view\View::make('Modules/Users/P...', Array)
+#2 [internal function]: App\Modules\Users\Library\UserMenuManager->member(Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserMenu.php(17): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Controllers\Front\UserEdit.php(96): App\Modules\Users\Support\Facades\UserMenu::__callStatic('member', Array)
+#5 [internal function]: App\Modules\Users\Controllers\Front\UserEdit->edit_user()
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('edit_user', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Modules\\Use...', 'edit_user', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Modules\\Use...', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(111): Npds\Routing\Router->dispatch()
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#12 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Sep 30, 2024 19:04PM
+
+           Message: File not found: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules/Users/Partials/Menu/user_menu.php
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php
+
+           Line: 48
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(158): Npds\view\View->__construct('F:\\Dev_Diver\\Np...', Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserMenuManager.php(59): Npds\view\View::make('Modules/Users/P...', Array)
+#2 [internal function]: App\Modules\Users\Library\UserMenuManager->member(Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserMenu.php(17): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Controllers\Front\UserEdit.php(96): App\Modules\Users\Support\Facades\UserMenu::__callStatic('member', Array)
+#5 [internal function]: App\Modules\Users\Controllers\Front\UserEdit->edit_user()
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('edit_user', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Modules\\Use...', 'edit_user', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Modules\\Use...', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(111): Npds\Routing\Router->dispatch()
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#12 {main}
+
+           ---------
+
+2024-09-30 19:05PM - Undefined variable $cl_u in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 3
+
+2024-09-30 19:05PM - Undefined variable $cl_u in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 3
+
+2024-09-30 19:06PM - Undefined variable $cl_u in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 3
+
+2024-09-30 19:08PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 33
+
+2024-09-30 19:09PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 33
+
+2024-09-30 19:11PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 32
+
+2024-09-30 19:12PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 32
+
+2024-09-30 19:13PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 32
+
+2024-09-30 19:14PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 32
+
+2024-09-30 19:14PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 32
+
+2024-09-30 19:15PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 32
+
+2024-09-30 19:17PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 32
+
+2024-09-30 19:17PM - Undefined variable $userinfo in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\Menu\user_menu.php on line 32
+
