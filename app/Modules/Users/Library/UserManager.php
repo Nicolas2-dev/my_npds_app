@@ -2,7 +2,6 @@
 
 namespace App\Modules\Users\Library;
 
-use Npds\Http\Request;
 use Npds\Config\Config;
 use Npds\Support\Facades\DB;
 use App\Modules\Npds\Support\Facades\Auth;
@@ -229,33 +228,42 @@ class UserManager implements UserInterface
     {
         $stop = '';
     
-        if ((!$email) || ($email == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email)))
+        if ((!$email) || ($email == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email))) {
             $stop = __d('users', 'Erreur : Email invalide');
+        }
     
-        if (strrpos($email, ' ') > 0)
+        if (strrpos($email, ' ') > 0) {
             $stop = __d('users', 'Erreur : une adresse Email ne peut pas contenir d\'espaces');
+        }
     
-        if (Mailer::checkdnsmail($email) === false)
+        if (Mailer::checkdnsmail($email) === false) {
             $stop = __d('users', 'Erreur : DNS ou serveur de mail incorrect !');
+        }
     
-        if ((!$uname) || ($uname == '') || (preg_match('#[^a-zA-Z0-9_-]#', $uname)))
+        if ((!$uname) || ($uname == '') || (preg_match('#[^a-zA-Z0-9_-]#', $uname))) {
             $stop = __d('users', 'Erreur : identifiant invalide');
+        }
     
-        if (strlen($uname) > 25)
+        if (strlen($uname) > 25) {
             $stop = __d('users', 'Votre surnom est trop long. Il doit faire moins de 25 caractères.');
+        }
     
-        if (preg_match('#^(root|adm|linux|webmaster|admin|god|administrator|administrador|nobody|anonymous|anonimo|an€nimo|operator|dune|netadm)$#i', $uname))
+        if (preg_match('#^(root|adm|linux|webmaster|admin|god|administrator|administrador|nobody|anonymous|anonimo|an€nimo|operator|dune|netadm)$#i', $uname)) {
             $stop = __d('users', 'Erreur : nom existant.');
+        }
     
-        if (strrpos($uname, ' ') > 0)
+        if (strrpos($uname, ' ') > 0) {
             $stop = __d('users', 'Il ne peut pas y avoir d\'espace dans le surnom.');
+        }
     
-        if (sql_num_rows(sql_query("SELECT uname FROM users WHERE uname='$uname'")) > 0)
+        if (sql_num_rows(sql_query("SELECT uname FROM users WHERE uname='$uname'")) > 0) {
             $stop = __d('users', 'Erreur : cet identifiant est déjà utilisé');
+        }
     
         if ($uname != 'edituser')
-            if (sql_num_rows(sql_query("SELECT email FROM users WHERE email='$email'")) > 0)
+            if (sql_num_rows(sql_query("SELECT email FROM users WHERE email='$email'")) > 0) {
                 $stop = __d('users', 'Erreur : adresse Email déjà utilisée');
+            }
     
         return $stop;
     }
@@ -274,27 +282,21 @@ class UserManager implements UserInterface
         if ($user_rang['rang']) {
 
             if ($rank = DBQ_Select(DB::table('config')->select('rank1', 'rank2', 'rank3', 'rank4', 'rank5')->first(), 86400)) {
+                
                 if (!empty($rank['rank1'])) {
                     $messR = 'rank' . $rank['rank'. $user_rang['rang']];
                 } else {
                     $messR = '';
                 }
             }
-
-            if ($ibidR = Theme::theme_image("forum/rank/" . $user_rang['rang'] . ".png")) {
-                $imgtmp = $ibidR;
-            } else {
-                $imgtmp = "assets/images/forum/rank/" . $user_rang['rang'] . ".png";
-            }
-            
-            $rang_img = '<img src="' . site_url($imgtmp) . '" border="0" alt="' . Language::aff_langue($messR) . '" title="' . Language::aff_langue($messR) . '" loading="lazy" />';
+ 
+            $rang_img = '<img src="' . Theme::theme_image_row('forum/rank/' . $user_rang['rang'] . '.png', 'forum') . '" border="0" alt="' . Language::aff_langue($messR) . '" title="' . Language::aff_langue($messR) . '" loading="lazy" />';
         } else {
             $rang_img = '&nbsp;';
         } 
                 
         return $rang_img;
     }
-
 
     #autodoc userpopover($who, $dim, $avpop) : à partir du nom de l'utilisateur ($who) $avpop à 1 : affiche son avatar (ou avatar defaut) au dimension ($dim qui défini la class n-ava-$dim)<br /> $avpop à 2 : l'avatar affiché commande un popover contenant diverses info de cet utilisateur et liens associés
     public function userpopover($who, $dim, $avpop)
@@ -390,22 +392,33 @@ class UserManager implements UserInterface
                 $useroutils .= '<li><a class="dropdown-item text-center text-md-start" href="minisite.php?op=' . $temp_user['uname'] . '" target="_blank" target="_blank" title="' . __d('users', 'Visitez le minisite') . '" ><i class="fa fa-lg fa-desktop align-middle fa-fw"></i><span class="ms-2 d-none d-md-inline">' . __d('users', 'Visitez le minisite') . '</span></a></li>';
             }
 
+            // if (stristr($temp_user['user_avatar'], 'users_private')) {
+            //     $imgtmp = $temp_user['user_avatar'];
+            // } else {
+            //     if ($ibid = theme_image('forum/avatar/' . $temp_user['user_avatar'])) {
+            //         $imgtmp = $ibid;
+            //     } else {
+            //         $imgtmp = 'assets/images/forum/avatar/' . $temp_user['user_avatar'];
+            //     }
+            // }
+
             if (stristr($temp_user['user_avatar'], 'users_private')) {
-                $imgtmp = $temp_user['user_avatar'];
+                $avatar_url = $temp_user['user_avatar'];
             } else {
-                if ($ibid = theme_image('forum/avatar/' . $temp_user['user_avatar'])) {
-                    $imgtmp = $ibid;
-                } else {
-                    $imgtmp = 'assets/images/forum/avatar/' . $temp_user['user_avatar'];
+                $avatar_url  = site_url('assets/images/forum/avatar/' . $temp_user['user_avatar']);
+        
+                if (method_exists(Theme::class, 'theme_image_row')) {
+                    $avatar_url = Theme::theme_image_row('images/forum/avatar/' . $temp_user['user_avatar']);
                 }
             }
-    
+
+
             $userpop = $avpop == 1 
-                ? '<img class="btn-outline-primary img-thumbnail img-fluid n-ava-' . $dim . ' me-2" src="' . $imgtmp . '" alt="' . $temp_user['uname'] . '" loading="lazy" />' 
+                ? '<img class="btn-outline-primary img-thumbnail img-fluid n-ava-' . $dim . ' me-2" src="' . $avatar_url . '" alt="' . $temp_user['uname'] . '" loading="lazy" />' 
                 : //'<a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-html="true" data-bs-title="'.$temp_user['uname'].'" data-bs-content=\'<div class="list-group mb-3 text-center">'.$useroutils.'</div><div class="mx-auto text-center" style="max-width:170px;">'.$my_rs.'</div>\'></i><img data-bs-html="true" class="btn-outline-primary img-thumbnail img-fluid n-ava-'.$dim.' me-2" src="'.$imgtmp.'" alt="'.$temp_user['uname'].'" loading="lazy" /></a>' ;
                   '<div class="dropdown d-inline-block me-4 dropend">
                       <a class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                          <img class=" btn-outline-primary img-fluid n-ava-' . $dim . ' me-0" src="' . $imgtmp . '" alt="' . $temp_user['uname'] . '" />
+                          <img class=" btn-outline-primary img-fluid n-ava-' . $dim . ' me-0" src="' . $avatar_url . '" alt="' . $temp_user['uname'] . '" />
                       </a>
                       <ul class="dropdown-menu bg-light">
                           <li><span class="dropdown-item-text text-center py-0 my-0">' . $this->userpopover($who, 64, 1) . '</span></li>
@@ -420,7 +433,5 @@ class UserManager implements UserInterface
             return $userpop;
         }
     }
-
-
 
 }

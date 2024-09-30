@@ -69,7 +69,7 @@ set_exception_handler('Npds\Log\Logger::ExceptionHandler');
 set_error_handler('Npds\Log\Logger::ErrorHandler');
 
 // // Initialize the Aliases Loader.
-AliasLoader::initialize();
+AliasLoader::getInstance(Config::get('app.aliases', array()))->register();
 
 /** A useful alias for the Query Builder Facade. */
 class_alias('\Npds\Database\Query\Builder\Facade', 'Npds\QB');

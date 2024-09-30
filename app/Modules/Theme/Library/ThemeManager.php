@@ -135,13 +135,39 @@ class ThemeManager implements ThemeInterface
      *
      * @return  [type]              [return description]
      */
-    public function theme_image($theme_img)
+    public function theme_image($theme_img,)
     {
         $theme      = with(get_instance())->template();
         $theme_dir  = with(get_instance())->template_dir();
 
         if (@file_exists(theme_path($theme_dir .'/'. $theme .'/assets/images/'. $theme_img))) {
             return site_url('themes/'. $theme_dir .'/'. $theme .'/assets/images/'. $theme_img);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * [theme_image description]
+     *
+     * @param   [type]  $theme_img  [$theme_img description]
+     *
+     * @return  [type]              [return description]
+     */
+    public function theme_image_row($theme_img, $package = '')
+    {
+        $theme      = with(get_instance())->template();
+        $theme_dir  = with(get_instance())->template_dir();
+
+        if (@file_exists(theme_path($theme_dir .'/'. $theme .'/assets/images/'. $theme_img))) {
+            return site_url('themes/' .strtolower($theme_dir) .'/'. strtolower($theme) .'/assets/images/'.$theme_img);
+        
+        } elseif (@file_exists(module_path($package .'/assets/images/'. $theme_img)) and ($package != '')) {
+            return site_url('modules/'. $package .'/assets/images/'.$theme_img);
+        
+        } elseif (@file_exists(web_path('assets/images/'. $theme_img))) {
+            return site_url('assets/images/'.$theme_img);
+
         } else {
             return false;
         }

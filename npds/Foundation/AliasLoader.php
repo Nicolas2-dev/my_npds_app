@@ -2,8 +2,8 @@
 
 namespace Npds\Foundation;
 
-use Npds\Config\Config;
-use RuntimeException;
+// use Npds\Config\Config;
+// use RuntimeException;
 
 /**
  * Undocumented class
@@ -12,26 +12,155 @@ class AliasLoader
 {
 
     /**
-     * [initialize description]
+     * Le tableau des alias de classe.
      *
-     * @return  [type]  [return description]
+     * @var array
      */
-    public static function initialize()
+    protected $aliases;
+
+    /**
+     * Indique si un chargeur a été enregistré.
+     *
+     * @var bool
+     */
+    protected $registered = false;
+
+    /**
+     * L'instance singleton du chargeur.
+     *
+     * @var \Npds\Foundation\AliasLoader
+     */
+    protected static $instance;
+
+
+    /**
+     * Créez une nouvelle instance de chargeur d'alias de classe.
+     *
+     * @param  array  $aliases
+     * @return void
+     */
+    public function __construct(array $aliases = array())
     {
-        $classes = Config::get('app.aliases', array());
+        $this->aliases = $aliases;
+    }
 
-        foreach ($classes as $classAlias => $className) {
-            // This ensures the alias is created in the global namespace.
-            $classAlias = '\\' .ltrim($classAlias, '\\');
+    /**
+     * Obtenez ou créez l'instance de chargeur d'alias singleton.
+     *
+     * @param  array  $aliases
+     * @return \Npds\Foundation\AliasLoader
+     */
+    public static function getInstance(array $aliases = array())
+    {
+        if (is_null(static::$instance)) return static::$instance = new static($aliases);
 
-            // Check if the Class already exists.
-            if (class_exists($classAlias)) {
-                // Bail out, a Class already exists with the same name.
-                throw new RuntimeException('A class [' .$classAlias .'] already exists with the same name.');
-            }
+        $aliases = array_merge(static::$instance->getAliases(), $aliases);
 
-            class_alias($className, $classAlias);
+        static::$instance->setAliases($aliases);
+
+        return static::$instance;
+    }
+
+    /**
+     * Charger un alias de classe s'il est enregistré.
+     *
+     * @param  string  $alias
+     * @return void
+     */
+    public function load($alias)
+    {
+        if (isset($this->aliases[$alias])) {
+            return class_alias($this->aliases[$alias], $alias);
         }
     }
-    
+
+    /**
+     * Ajouter un alias au chargeur.
+     *
+     * @param  string  $class
+     * @param  string  $alias
+     * @return void
+     */
+    public function alias($class, $alias)
+    {
+        $this->aliases[$class] = $alias;
+    }
+
+    /**
+     * Enregistrez le chargeur sur la pile de chargeurs automatiques.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        if (! $this->registered) {
+            $this->prependToLoaderStack();
+
+            $this->registered = true;
+        }
+    }
+
+    /**
+     * Ajoutez la méthode de chargement à la pile du chargeur automatique.
+     *
+     * @return void
+     */
+    protected function prependToLoaderStack()
+    {
+        spl_autoload_register(array($this, 'load'), true, true);
+    }
+
+    /**
+     * Obtenez les alias enregistrés.
+     *
+     * @return array
+     */
+    public function getAliases()
+    {
+        return $this->aliases;
+    }
+
+    /**
+     * Définissez les alias enregistrés.
+     *
+     * @param  array  $aliases
+     * @return void
+     */
+    public function setAliases(array $aliases)
+    {
+        $this->aliases = $aliases;
+    }
+
+    /**
+     * Indique si le chargeur a été enregistré.
+     *
+     * @return bool
+     */
+    public function isRegistered()
+    {
+        return $this->registered;
+    }
+
+    /**
+     * Définissez l'état "enregistré" du chargeur.
+     *
+     * @param  bool  $value
+     * @return void
+     */
+    public function setRegistered($value)
+    {
+        $this->registered = $value;
+    }
+
+    /**
+     * Définissez la valeur du chargeur d'alias singleton.
+     *
+     * @param  \Npds\Foundation\AliasLoader  $loader
+     * @return void
+     */
+    public static function setInstance($loader)
+    {
+        static::$instance = $loader;
+    }
+
 }

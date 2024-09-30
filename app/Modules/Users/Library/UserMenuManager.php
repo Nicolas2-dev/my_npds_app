@@ -2,10 +2,8 @@
 
 namespace App\Modules\Users\Library;
 
-
 use Npds\view\View;
 use Npds\Http\Request;
-use Npds\Config\Config;
 use App\Modules\Users\Contracts\UserMenuInterface;
 
 /**

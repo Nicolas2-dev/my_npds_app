@@ -20,6 +20,8 @@ fffff
 
 <p><?php echo $welcome_message ?></p>
 
+<?php echo $rs ?>
+
 <a class="btn btn-md btn-success" href="<?= site_url('subpage'); ?>">
 	<?php echo __('Open subpage'); ?>
 </a>

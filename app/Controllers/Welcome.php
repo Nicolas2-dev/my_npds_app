@@ -3,14 +3,13 @@
 
 namespace App\Controllers;
 
-use Npds\View\View;
-use Npds\Config\Config;
+
 use Npds\Session\Session;
-use App\Modules\Users\Models\User;
-use App\Modules\Users\Models\UserStatus;
+
+
+use Npds\Foundation\AliasLoader;
 use App\Modules\Npds\Core\FrontController;
-use App\Modules\Theme\Support\Facades\Theme;
-use App\Exceptions\Handler as ExceptionHandler;
+use App\Modules\Users\Support\Facades\User;
 
 /**
  * Sample controller showing a construct and 2 methods and their typical usage.
@@ -57,6 +56,12 @@ class Welcome extends FrontController
         $filePath = $this->basePath .$viewName .'.php';
 
 
+        $rs = User::userpopover('user', 40, 2);
+
+
+vd(AliasLoader::getInstance()->getAliases(),AliasLoader::getInstance()->isRegistered());
+
+
 // $uss = User::where('id', 2)->first();
 
 
@@ -73,6 +78,7 @@ class Welcome extends FrontController
 
 // vd(Config::all(), Theme::config('config.long_chain', 15), Theme::config('config.theme'));
 
+$this->set('rs', $rs);
 $this->set('message', Session::message('message'));
 $this->set('logout', Session::message('logout'));
 

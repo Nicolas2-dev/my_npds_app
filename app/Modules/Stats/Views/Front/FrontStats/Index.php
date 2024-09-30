@@ -16,7 +16,7 @@
         </thead>
         <tbody>
             <tr>
-                <td><img src="<?= Theme::theme_image('stats/explorer.gif') ?: site_url('assets/images/stats/explorer.gif'); ?>" alt="MSIE_ico" loading="lazy"/> MSIE </td>
+                <td><img src="<?= Theme::theme_image_row('stats/explorer.gif', 'stats') ?>" alt="MSIE_ico" loading="lazy"/> MSIE </td>
                 <td>
                 <div class="text-center small"><?= $msie[1]; ?> %</div>
                 <div class="progress bg-light">

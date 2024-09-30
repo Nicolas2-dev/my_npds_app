@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Npds - Modules/Users/Bootstrap/bootstrap.php
  *
@@ -7,6 +8,9 @@
  * @version 1.0.0
  * @date    26 Septembre 2024
  */
+use App\Modules\Users\Bootstrap\ModuleUsersKernel;
+ 
+ModuleUsersKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

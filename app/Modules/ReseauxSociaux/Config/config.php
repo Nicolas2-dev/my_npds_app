@@ -1,7 +1,13 @@
 <?php
 
 
-use Npds\config\Config;
-use Nnpds\Events\Manager as Events;
+return array(
 
-
+    'rs' => array(
+        ['facebook',    'https://facebook.com/',        'facebook'],
+        ['twitter',     'https://twitter.com/',         'twitter'],
+        ['snapchat',    'https://www.snapchat.com/',    'snapchat'],
+        ['linkedin',    'https://www.linkedin.com/in/', 'linkedin'],
+        ['github',      'https://github.com/',          'github']
+    )
+);

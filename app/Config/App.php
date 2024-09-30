@@ -1,5 +1,7 @@
 <?php
 
+use App\Modules\Users\Bootstrap\UserKernel;
+
 
 return array(
 
@@ -94,12 +96,6 @@ return array(
 
         // Modules Messenger
         'Messenger'     => 'App\Modules\Messenger\Support\Facades\Messenger',
-
-        // Modules Users
-        'Online'        => 'App\Modules\Users\Support\Facades\Online',
-        'User'          => 'App\Modules\Users\Support\Facades\User',
-        'Avatar'        => 'App\Modules\Users\Support\Facades\Avatar',
-        'UserMenu'      => 'App\Modules\Users\Support\Facades\UserMenu',
 
         // Modules Author
         'Author'        => 'App\Modules\Authors\Support\Facades\Author',
