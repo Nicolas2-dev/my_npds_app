@@ -22,7 +22,7 @@ class FrontSubmit extends FrontController
         //     case 'Prévisualiser':
         //     case __d('news', 'Prévisualiser'):
         //         if ($user) {
-        //             $userinfo = getusrinfo($user);
+        //             $userinfo = getuserinfo($user);
         //             $name = $userinfo['uname'];
         //         } else
         //             $name = Config::get('npds.anonymous');
@@ -89,7 +89,7 @@ class FrontSubmit extends FrontController
         
             global $user;
             if ($user) 
-                $userinfo = getusrinfo($user);
+                $userinfo = getuserinfo($user);
         
             echo '
             <h2>' . __d('news', 'Proposer un article') . '</h2>

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Stats\Library;
 
+use Npds\Config\Config;
 use App\Modules\Users\Models\User;
 use App\Modules\Npds\Models\Counter;
 use App\Modules\Stats\Contracts\StatInterface;

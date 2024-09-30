@@ -81,7 +81,7 @@ function base_path($path = '')
  * Undocumented function
  *
  * @param string $path
- * @return void
+ * @return string
  */
 function web_path($path = '')
 {
@@ -122,6 +122,17 @@ function theme_path($path = '')
 function module_path($path = '')
 {
     return MODULEPATH .(! isset($path) ? $path : $path);
+}
+
+/**
+ * Undocumented function
+ *
+ * @param string $path
+ * @return void
+ */
+function shared_path($path = '')
+{
+    return SHAREDPATH .(! isset($path) ? $path : $path);
 }
 
 /**

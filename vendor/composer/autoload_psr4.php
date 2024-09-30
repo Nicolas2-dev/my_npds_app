@@ -6,12 +6,12 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Themes\\' => array($baseDir . '/themes'),
+    'Themes\\' => array($baseDir . '/app/themes'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
-    'Shared\\' => array($baseDir . '/shared'),
+    'Shared\\' => array($baseDir . '/app/shared'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Npds\\' => array($baseDir . '/npds'),
-    'Modules\\' => array($baseDir . '/modules'),
+    'Modules\\' => array($baseDir . '/app/modules'),
     'App\\' => array($baseDir . '/app'),
 );

@@ -30,7 +30,6 @@ Debug::Reporting('all');
 /** Log the Framework startup. */
 Console::logSpeed('START Npds Framework');
 
-
 /** Turn on output buffering. */
 ob_start();
 

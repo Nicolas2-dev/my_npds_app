@@ -34,7 +34,7 @@ class FormValidator
     /**
      * [description]
      */
-    protected $sql_num_row;
+    // protected $sql_num_row;
 
 
     /**
@@ -44,12 +44,12 @@ class FormValidator
      *
      * @return  [type]           [return description]
      */
-    public function sql_num_row($numrow)
-    {
-        $this->sql_num_row = $numrow;
+    // public function sql_num_row($numrow)
+    // {
+    //     $this->sql_num_row = $numrow;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * [parameters description]
@@ -123,6 +123,7 @@ class FormValidator
             'Modules/Npds/Views/Partials/Validator/ValidatorDisplay',
             [
                 'formId'       => $this->validator->formId(),
+                'extrasql'     => $this->validator->extra_sql(),
                 'arguments'    => $this->validator->arguments(),
                 'minPassword'  => $this->validator->minPassword(),
                 'locale'       => $this->validator->locale(),

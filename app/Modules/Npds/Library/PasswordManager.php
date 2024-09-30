@@ -81,9 +81,9 @@ class PasswordManager implements PasswordInterface
      * @param [type] $input
      * @return void
      */
-    public function crypt($input)
+    public function crypt($pass)
     {
-        return crypt($input['pass'], $this->hash($input['pass']));
+        return crypt($pass, $this->hash($pass));
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Modules\Theme\Library\Traits;
 
 use Npds\Config\Config;
 use App\Modules\Npds\Support\Facades\Css;
-use App\Modules\Npds\Support\Facades\Editeur;
+use Shared\Editeur\Support\Facades\Editeur;
 
 
 trait ThemeHeadTrait

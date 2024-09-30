@@ -1,6 +1,9 @@
 <script type="text/javascript">
 //<![CDATA[
     var formulid = <?=  $formId; ?>
+    <?php if(isset($extrasql)): ?>
+        <?= $extrasql; ?>
+    <?php endif; ?>
     <?=  $arguments; ?>
     var diff;
     document.addEventListener("DOMContentLoaded", function(e) {

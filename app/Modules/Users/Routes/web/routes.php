@@ -38,6 +38,16 @@ Router::get('user/editjournal', 'App\Modules\Users\Controllers\Front\UserJournal
 Router::post('user/savejournal', 'App\Modules\Users\Controllers\Front\UserJournal@save_journal');
 
 
+/**
+ * user journal
+ */
+Router::get('user/chgtheme', 'App\Modules\Users\Controllers\Front\UserTheme@chgt_heme');
+
+/**
+ * user journal submit
+ */
+Router::post('user/savetheme', 'App\Modules\Users\Controllers\Front\UserTheme@save_theme');
+
 
 /**
  * user Edite User
@@ -72,6 +82,22 @@ Router::post('user/updatepasswd', 'App\Modules\Users\Controllers\Front\UserPassw
 
 
 /**
+ * user password
+ */
+Router::get('user/newuser', 'App\Modules\Users\Controllers\Front\UserNews@only_new_user');
+
+/**
+ * 
+ */
+Router::post('user/newuser', 'App\Modules\Users\Controllers\Front\UserNews@confirm_new_user');
+
+/**
+ * 
+ */
+Router::post('user/finish', 'App\Modules\Users\Controllers\Front\UserNews@finish_new_user');
+
+
+/**
  * user login
  */
 Router::get('user/login', array(
@@ -84,6 +110,11 @@ Router::get('user/login', array(
  */
 Router::post('user/login', 'App\Modules\Users\Controllers\Front\UserLogin@submit');
  
+/**
+ * user login submit
+ */
+Router::get('user/login/auto', 'App\Modules\Users\Controllers\Front\UserLogin@submit');
+
 /**
  * user logout
  */

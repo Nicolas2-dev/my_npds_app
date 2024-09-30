@@ -42,6 +42,16 @@ class ValidatorUserEditeSform extends FormValidator
     }
 
     /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function extra_sql()
+    {
+        //
+    }
+
+    /**
      * [arguments description]
      *
      * @return  [type]  [return description]

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Npds\Contracts;
+namespace Shared\Editeur\Contracts;
 
 
 interface EditeurInterface {

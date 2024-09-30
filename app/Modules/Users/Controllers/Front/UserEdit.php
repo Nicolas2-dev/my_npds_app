@@ -8,8 +8,8 @@ use Npds\Support\Csrf;
 use Npds\Config\Config;
 use Npds\Session\Session;
 use Npds\Support\Facades\DB;
+use App\Modules\Users\Support\Avatar;
 use App\Modules\Npds\Support\Sanitize;
-use App\Modules\Upload\Library\Upload;
 use App\Modules\Npds\Core\FrontController;
 use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Hack;
@@ -84,7 +84,9 @@ class UserEdit extends FrontController
 
             $this->title(__('Editer votre page principale'));
             
-            $userinfo = getusrinfo(Auth::check('user'));
+            $this->set('message', Session::message('message'));
+
+            $userinfo = getuserinfo(Auth::check('user'));
         
             Theme::showimage();
 
@@ -98,44 +100,9 @@ class UserEdit extends FrontController
     }
     
     /**
-     * [saveuser description]
+     * Undocumented function
      *
-     * @param   [type]  $uid             [$uid description]
-     * @param   [type]  $name            [$name description]
-     * @param   [type]  $uname           [$uname description]
-     * @param   [type]  $email           [$email description]
-     * @param   [type]  $femail          [$femail description]
-     * @param   [type]  $url             [$url description]
-     * @param   [type]  $pass            [$pass description]
-     * @param   [type]  $vpass           [$vpass description]
-     * @param   [type]  $bio             [$bio description]
-     * @param   [type]  $user_avatar     [$user_avatar description]
-     * @param   [type]  $user_occ        [$user_occ description]
-     * @param   [type]  $user_from       [$user_from description]
-     * @param   [type]  $user_intrest    [$user_intrest description]
-     * @param   [type]  $user_sig        [$user_sig description]
-     * @param   [type]  $user_viewemail  [$user_viewemail description]
-     * @param   [type]  $attach          [$attach description]
-     * @param   [type]  $usend_email     [$usend_email description]
-     * @param   [type]  $uis_visible     [$uis_visible description]
-     * @param   [type]  $user_lnl        [$user_lnl description]
-     * @param   [type]  $C1              [$C1 description]
-     * @param   [type]  $C2              [$C2 description]
-     * @param   [type]  $C3              [$C3 description]
-     * @param   [type]  $C4              [$C4 description]
-     * @param   [type]  $C5              [$C5 description]
-     * @param   [type]  $C6              [$C6 description]
-     * @param   [type]  $C7              [$C7 description]
-     * @param   [type]  $C8              [$C8 description]
-     * @param   [type]  $M1              [$M1 description]
-     * @param   [type]  $M2              [$M2 description]
-     * @param   [type]  $T1              [$T1 description]
-     * @param   [type]  $T2              [$T2 description]
-     * @param   [type]  $B1              [$B1 description]
-     * @param   [type]  $MAX_FILE_SIZE   [$MAX_FILE_SIZE description]
-     * @param   [type]  $raz_avatar      [$raz_avatar description]
-     *
-     * @return  [type]                   [return description]
+     * @return void
      */
     public function save_user()
     {
@@ -176,7 +143,7 @@ class UserEdit extends FrontController
                             $this->white_users_bad_mail($input);
             
                             //
-                            $user_avatar = $this->user_avatar_update($input);
+                            $user_avatar = Avatar::user_avatar_update($input);
             
                             $a = (isset($input['user_viewemail']) ? 1 : 0);
                             $u = (isset($input['usend_email']) ? 1 : 0);
@@ -192,11 +159,11 @@ class UserEdit extends FrontController
                                 Cookie::cookiedecode($user);
                                 
                                 DB::table('users')->where('uid', $input['uid'])->update([
-                                    'name'            => $input['name'], 
+                                    'name'            => Hack::remove($input['name']), 
                                     'email'           => $input['email'], 
                                     'femail'          => Hack::remove($input['femail']), 
                                     'url'             => Hack::remove($input['url']), 
-                                    'pass'            => $checkpass = Password::crypt($input), 
+                                    'pass'            => $checkpass = Password::crypt($input['pass']), 
                                     'hashkey'         => 1, 
                                     'bio'             => Hack::remove($input['bio']), 
                                     'user_avatar'     => $user_avatar, 
@@ -231,8 +198,8 @@ class UserEdit extends FrontController
                                 }
                             } else { 
                                 DB::table('users')->where('uid', $input['uid'])->update([
-                                    'name'            => $input['name'], 
-                                    'email'           => $input['email'], 
+                                    'name'            => Hack::remove($input['name']), 
+                                    'email'           => Hack::remove($input['email']), 
                                     'femail'          => Hack::remove($input['femail']), 
                                     'url'             => Hack::remove($input['url']), 
                                     'bio'             => Hack::remove($input['bio']), 
@@ -282,7 +249,7 @@ class UserEdit extends FrontController
                             } else {
                                 Session::set('message', ['type' => 'success', 'text' => __d('users', 'Votre compte a été mis à jour avec success.')]);
 
-                                Url::redirect('user/edituser');
+                                Url::redirect('user?op=dashboard#message');
                             }
                         } else {
                             $this->set('error_check',   true);
@@ -299,7 +266,7 @@ class UserEdit extends FrontController
         } else {
             Session::set('message', ['type' => 'danger', 'text' => __d('users', 'Non autorié a modifier votre profile.')]);
 
-            Url::redirect('user'); 
+            Url::redirect('user?op=dashboard#message'); 
         }
     }
 
@@ -329,84 +296,6 @@ class UserEdit extends FrontController
 
         fwrite($file, $maj);
         fclose($file);
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param [type] $input
-     * @return void
-     */
-    private function user_avatar_update($input)
-    {
-        $user_avatar    = Request::post('user_avatar', false);
-        $raz_avatar     = Request::post('raz_avatar', false);
-        
-        if (!Request::post('B1', false)) {
-
-            $rep = !empty($DOCUMENTROOT = Config::get('upload.config.DOCUMENTROOT')) ? $DOCUMENTROOT : $_SERVER['DOCUMENT_ROOT'];
-
-            $upload = new Upload();
-
-            $upload->maxupload_size = $input['MAX_FILE_SIZE'];
-            $field1_filename = trim($upload->getFileName("B1"));
-
-            $suffix = strtoLower(substr(strrchr($field1_filename, '.'), 1));
-
-            $racine = Config::get('upload.config.racine');
-
-            $user_dir = $racine . 'app/Modules/Users/storage/users_private/' . $input['uname'] . '/';
-
-            if (($suffix == 'gif') or ($suffix == 'jpg') or ($suffix == 'png') or ($suffix == 'jpeg')) {
-
-                $field1_filename = Hack::remove(preg_replace('#[/\\\:\*\?"<>|]#i', '', rawurldecode($field1_filename)));
-                $field1_filename = preg_replace('#\.{2}|config.php|/etc#i', '', $field1_filename);
-
-                if ($field1_filename) {
-                    if (Config::get('upload.config.autorise_upload_p')) {
-
-                        if (!is_dir($rep . $user_dir)) {
-                            @umask("0000");
-
-                            if (@mkdir($rep . $user_dir, 0777)) {
-                                $fp = fopen($rep . $user_dir . 'index.html', 'w');
-                                fclose($fp);
-                            } else {
-                                $user_dir = $racine . 'app/Modules/Users/storage/users_private/';
-                            }
-                        }
-                    } else {
-                        $user_dir = $racine . 'app/Modules/Users/storage/users_private/';
-                    }
-
-                    if ($upload->saveAs($input['uname'] . '.' . $suffix, $rep . $user_dir, 'B1', true)) {
-
-                        $user_avatar_url    = 'modules/users/storage/users_private/' . $input['uname'] . '/';
-                        $user_avatar        = site_url($user_avatar_url . $input['uname'] . '.' . $suffix);
-                        $img_size           = @getimagesize($rep . $user_dir . $input['uname'] . '.' . $suffix);
-
-                        $avatar_limit       = explode("*", Config::get('npds.avatar_size', '80*100'));
-
-                        if (($img_size[0] > $avatar_limit[0]) or ($img_size[1] > $avatar_limit[1])) {
-                            $raz_avatar = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($raz_avatar) {
-
-            if (strstr($user_avatar, '/users_private')) {
-                if(!empty($user_avatar)) {
-                    @unlink($rep. $user_dir. $input['uname'] . '.' . strtoLower(substr(strrchr($user_avatar, '.'), 1)));
-                }
-            }
-
-            $user_avatar = 'blank.gif';
-        }
-        
-        return $user_avatar;
     }
 
 }

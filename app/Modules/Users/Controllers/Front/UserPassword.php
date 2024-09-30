@@ -200,11 +200,8 @@ class UserPassword extends FrontController
                         // le mot de passe est-il identique
                         if ($ibid[1] == Request::post('passwd')) {
 
-                            $hashpass   = Password::hash($ibid[1]);
-                            $cryptpass  = crypt($ibid[1], $hashpass);
-
                             DB::table('users')->where('uname', $uname)->update([
-                                'pass'      => $cryptpass,
+                                'pass'      => Password::crypt($ibid[1]),
                                 'hashkey'   => 1
                             ]);
 

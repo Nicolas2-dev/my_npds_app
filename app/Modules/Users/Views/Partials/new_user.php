@@ -1,14 +1,5 @@
 <?php
-/************************************************************************/
-/* App DUNE : Net Portal Dynamic System .                              */
-/* ===========================                                          */
-/*                                                                      */
-/* This version name App Copyright (c) 2001-2024 by Philippe Brunier   */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
+
 // OBJET : Ce fichier vous permet d'envoyer un MI personnalisé lorsqu'un nouveau membre s'inscrit sur votre site
 // Configuration :
 // $emetteur_id : id de l'émetteur du Message Interne lorsque un nouveau membre est créé : 1 = anonyme
@@ -16,9 +7,10 @@
 // $message     : contenu du message (html, meta-mot, ...) SANS les <br />, App fera le nécessaire
 
 
-$emetteur_id="1";
-$sujet="[french]Bonjour[/french][english]Hi[/english][chinese]你好[/chinese][spanish]Hola[/spanish][german]Hallo[/german]";
-$message="[french]Vous &#xEA;tes maintenant un membre &#xE0; part enti&#xE8;re.
+$emetteur_id    => "1";
+
+$sujet      =>  "[french]Bonjour[/french][english]Hi[/english][chinese]你好[/chinese][spanish]Hola[/spanish][german]Hallo[/german]";
+$message    =>  "[french]Vous &#xEA;tes maintenant un membre &#xE0; part enti&#xE8;re.
 Ce site vous offre de nombreuses ressources alors ne vous privez pas : participez !
 
 L'&#xE9;quipe du site.[/french][english]You are now a full member.

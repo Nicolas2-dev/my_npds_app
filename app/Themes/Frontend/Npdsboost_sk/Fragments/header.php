@@ -69,21 +69,17 @@ if (autorisation(-1)) {
             </a>
         </li>';
     
-    /*
-    include_once ("modules/upload/config/upload.conf.php");
-
-    if (($userdata['mns']) and ($autorise_upload_p)) {
-        include_once ("modules/blog/upload_minisite.php");
-        
-        $Pop = win_upload("popup");
+    if (($userdata['mns']) and (Config::get('upload.config.autorise_upload_p'))) {
+            
+        $PopUp = minisite_win_upload("popup");
         
         $menuser .= '<li>
-            <a class="dropdown-item" href="javascript:void(0);" onclick="window.open('.$Pop.')" title="'. __d('npdsboost_sk', 'Gérer votre miniSite') .'">
+            <a class="dropdown-item" href="javascript:void(0);" onclick="window.open('.$PopUp.')" title="'. __d('npdsboost_sk', 'Gérer votre miniSite') .'">
                 <i class="fa fa-desktop fa-lg me-2"></i>'. __d('npdsboost_sk', 'MiniSite') .'
                 </a>
             </li>';
     }
-    */
+ 
     $menuser .= '<li>
             <a class="dropdown-item " href="'. site_url('user/edithome?op=edithome') .'" title="' . __d('npdsboost_sk', 'Editer votre page principale') . '" >
                 <i class="fa fa-edit fa-lg me-2 "></i>' . __d('npdsboost_sk', 'Page') . '
@@ -109,21 +105,18 @@ if (autorisation(-1)) {
 
     list($user_avatar) = sql_fetch_row(sql_query("SELECT user_avatar FROM users WHERE uname='" . $username . "'"));
 
-    if (!$user_avatar) {
-        $imgtmp = 'assets/images/forum/avatar/blank.gif';
-
-    } else if (stristr($user_avatar, "users_private")) {
-        $imgtmp = $user_avatar;
-
+    if (stristr($user_avatar, 'users_private')) {
+        $direktori_url = '';
     } else {
-        if ($ibid = Theme::theme_image('forum/avatar/' . $user_avatar)) {
-            $imgtmp = $ibid;
-        } else {
-            $imgtmp = 'assets/images/forum/avatar/' . $user_avatar;
-        }
+        $theme      = with(get_instance())->template();
+        $theme_dir  = with(get_instance())->template_dir();
 
-        if (!file_exists($imgtmp)) {
-            $imgtmp = 'assets/images/forum/avatar/blank.gif';
+        $direktori_url  = site_url('assets/images/forum/avatar/');
+
+        if (method_exists(Theme::class, 'theme_image')) {
+            if (Theme::theme_image('forum/avatar/blank.gif')) {
+                $direktori_url  = site_url('themes/'. $theme_dir .'/'. $theme .'/assets/images/forum/avatar/');
+            }
         }
     }
 
@@ -136,7 +129,7 @@ if (autorisation(-1)) {
     }
 
     $ava = '<a class="dropdown-item" href="'. site_url('user?op=dashboard') .'" >
-        <img src="' . site_url($imgtmp) . '" class="n-ava-64" alt="avatar" title="' . __d('npdsboost_sk', 'Votre compte') . '" data-bs-toggle="tooltip" data-bs-placement="right" />
+        <img src="' . $direktori_url . $user_avatar . '" class="n-ava-64" alt="avatar" title="' . __d('npdsboost_sk', 'Votre compte') . '" data-bs-toggle="tooltip" data-bs-placement="right" />
     </a>
     <li class="dropdown-divider"></li>';
 

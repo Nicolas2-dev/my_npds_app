@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Npds\Support\Facades;
+namespace Shared\Editeur\Support\Facades;
 
-use App\Modules\Npds\Library\EditeurManager;
+use Shared\Editeur\EditeurManager;
 
 
 /**

@@ -78,7 +78,7 @@ class UserHome extends FrontController
             
             $this->set('message', Session::message('message'));
 
-            $userinfo = H_User::getusrinfo(Auth::check('user'));
+            $userinfo = H_User::getuserinfo(Auth::check('user'));
         
             if (empty($userinfo['theme'])) {
                 $userinfo['theme'] = (Config::get('npds.Default_Theme') .'+'. Config::get('npds.Default_Skin'));
@@ -112,7 +112,6 @@ class UserHome extends FrontController
 
         $cookie = Cookie::cookiedecode(Auth::check('user'));
 
-        //if ((Request::post('uname') == Cookie::cookie_user(1)) 
         if ((Request::post('uname') == $cookie[1]) 
         and (Request::post('uid')   == $userinfo->uid) 
         and (Request::post('op')    == 'savehome')
@@ -144,7 +143,7 @@ class UserHome extends FrontController
     
             Session::set('message', ['type' => 'success', 'text' => __d('users', 'Votre home a été sauvegarder avec success.')]);
 
-            Url::redirect('user/edithome#message');
+            Url::redirect('user?op=dashboard#message');
         } else {
             Url::redirect('index');
         }

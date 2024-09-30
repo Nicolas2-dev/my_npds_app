@@ -211,8 +211,8 @@ class SpamManager implements SpamInterface
 
         $ip = urldecode($ip);
 
-        if (file_exists("slogs/spam.log")) {
-            $tab_spam = str_replace("\r\n", '', file("slogs/spam.log"));
+        if (file_exists($filelog = storage_path('logs/spam.log'))) {
+            $tab_spam = str_replace("\r\n", '', file($filelog));
 
             if (in_array($ip . '|1', $tab_spam)) {
                 $cpt_sup = 2;
@@ -255,7 +255,7 @@ class SpamManager implements SpamInterface
         }
 
         if ($maj_fic) {
-            $file = fopen("slogs/spam.log", "w");
+            $file = fopen($filelog, 'w');
             
             foreach ($tab_spam as $key => $val) {
                 if ($val) {

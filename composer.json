@@ -3,9 +3,9 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Modules\\": "modules/",
-            "Themes\\": "themes/",
-            "Shared\\": "shared/",
+            "Modules\\": "app/modules/",
+            "Themes\\": "app/themes/",
+            "Shared\\": "app/shared/",
             "Npds\\": "npds/"
         },
         "files": [

@@ -29,10 +29,14 @@ return array(
      */
     'aliases' => array(
 
+        // core
+
         // Npds Class
         'Config'        => 'Npds\Config\Config',
         'View'          => 'Npds\View\View',
         'DB'            => 'Npds\Support\Facades\DB',
+
+        // module
 
         // Modules Npds
         'Auth'          => 'App\Modules\Npds\Support\Facades\Auth',    
@@ -60,9 +64,6 @@ return array(
 
         // Modules Theme
         'Theme'         => 'App\Modules\Theme\Support\Facades\Theme',
-
-        // Modules Editeur
-        'Editeur'       => 'App\Modules\Npds\Support\Facades\Editeur',
 
         // Modules Edito
         'Edito'         => 'App\Modules\Edito\Support\Facades\Edito',
@@ -103,6 +104,11 @@ return array(
 
         // Headline
         'Headline'        => 'App\Modules\Headline\Support\Facades\Headline',
+
+        // shared
+
+        // Editeur
+        'Editeur'       => 'Shared\Editeur\Support\Facades\Editeur',
 
     ),
 

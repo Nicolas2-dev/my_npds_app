@@ -4,6 +4,7 @@ namespace App\Modules\Users\Sform\Traits;
 
 use Npds\view\View;
 use Npds\Config\Config;
+use App\Modules\Users\Support\Avatar;
 use App\Modules\Theme\Support\Facades\Theme;
 
 /**
@@ -23,9 +24,9 @@ trait SformAvatarTrait
      *
      * @return void
      */
-    private function sform_avatar()
+    private function sform_avatar_user()
     {
-        if (config('npds.smilies')) {
+        if (Config::get('npds.smilies')) {
             if (stristr($this->user['user_avatar'], "users_private")) {
                 $this->sform->add_field(
                     'user_avatar', 
@@ -48,26 +49,8 @@ trait SformAvatarTrait
         
             } else {
 
-                $theme      = with(get_instance())->template();
-                $theme_dir  = with(get_instance())->template_dir();
-        
-                $direktori_path = web_path('assets/images/forum/avatar');
-                $direktori_url  = site_url('assets/images/forum/avatar');
-        
-                if (method_exists(Theme::class, 'theme_image')) {
-                    if (Theme::theme_image('forum/avatar/blank.gif')) {
-                        $direktori_path = theme_path($theme .'/assets/images/forum/avatar');
-                        $direktori_url  = site_url('themes/'. $theme_dir .'/'. $theme .'/assets/images/forum/avatar');
-                    }
-                }
-        
-                $handle = opendir($direktori_path);
-                while (false !== ($file = readdir($handle))) {
-                    $filelist[] = $file;
-                }
+                list($filelist, $url) = Avatar::directory();
 
-                asort($filelist);
-        
                 foreach ($filelist as $key => $file) {
                     if (!preg_match('#\.gif|\.jpg|\.jpeg|\.png$#i', $file)) {
                         continue;
@@ -82,7 +65,7 @@ trait SformAvatarTrait
                     }
                 }
         
-                $vatar_url = $direktori_url . '/' . $this->user['user_avatar'];
+                $vatar_url = $url . '/' . $this->user['user_avatar'];
 
                 $this->sform->add_select(
                     'user_avatar', 
@@ -144,6 +127,54 @@ trait SformAvatarTrait
                 View::make('Modules/Users/Views/Partials/Avatar/avatar_scrypt', ['user_avatar' => $this->user['user_avatar']])->fetch()
             );
         }        
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function sform_avatar_new_user()
+    {
+        if (Config::get('npds.smilies')) {
+        
+            list($filelist, $url) = Avatar::directory();
+        
+            foreach ($filelist as $key => $file) {
+                if (!preg_match('#\.gif|\.jpg|\.png$#i', $file)) {
+                    continue;
+                }
+        
+                $tmp_tempo[$file]['en'] = $file;
+                $tmp_tempo[$file]['selected'] = false;
+        
+                if ($file == 'blank.gif') {
+                    $tmp_tempo[$file]['selected'] = true;
+                }
+            }
+        
+            $this->sform->add_select('user_avatar', 
+                __d('users', 'Votre Avatar'), 
+                $tmp_tempo, 
+                false, 
+                '', 
+                false
+            );
+            
+            $this->sform->add_extender(
+                'user_avatar', 
+                'onkeyup="showimage();" onchange="showimage();"', 
+                '<img class="img-thumbnail n-ava mt-3" src="' . $url . '/blank.gif" name="avatar" alt="avatar" />'
+            );
+            
+            $this->sform->add_field(
+                'B1', 
+                'B1', 
+                '', 
+                'hidden', 
+                false
+            );
+        }
     }
 
 }

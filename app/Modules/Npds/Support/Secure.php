@@ -4,7 +4,7 @@ namespace App\Modules\Npds\Support;
 
 use Npds\Routing\Url;
 use Npds\Config\Config;
-use Npds\Events\Manager as Events;
+use App\Modules\Npds\Support\Facades\Spam;
 use App\Modules\npds\Contracts\SecureInterface;
 
 /**
@@ -20,6 +20,26 @@ class Secure implements SecureInterface
      */
     protected static $bad_uri_name = array('GLOBALS', '_SERVER', '_REQUEST', '_GET', '_POST', '_FILES', '_ENV', '_COOKIE', '_SESSION');
     
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public static function ghost_form()
+    {
+        if (!isset($_SERVER['HTTP_REFERER'])) {
+            Ecr_Log('security', 'Ghost form in user registration. => NO REFERER', '');
+            Spam::L_spambot('', "false");
+    
+            Url::redirect('denied');
+    
+        } else if ($_SERVER['HTTP_REFERER'] . Config::get('npds.Npds_Key') !== site_url('user/newuser') . Config::get('npds.Npds_Key')) {
+            Ecr_Log('security', 'Ghost form in user registration. => ' . $_SERVER["HTTP_REFERER"], '');
+            Spam::L_spambot('', "false");
+
+            Url::redirect('denied');
+        }        
+    }
 
     /**
      * [post description]

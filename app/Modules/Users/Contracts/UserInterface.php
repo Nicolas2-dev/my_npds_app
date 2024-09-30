@@ -15,13 +15,13 @@ namespace App\Modules\Users\Contracts;
 interface UserInterface {
 
     /**
-     * [getusrinfo description]
+     * [getuserinfo description]
      *
      * @param   [type]  $user  [$user description]
      *
      * @return  [type]         [return description]
      */
-    public function getusrinfo($user);
+    public function getuserinfo($user);
 
     /**
      * [AutoReg description]

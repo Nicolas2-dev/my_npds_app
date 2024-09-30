@@ -2,8 +2,17 @@
 
 namespace App\Modules\Users\Controllers\Front;
 
+use Npds\view\View;
+use Npds\Routing\Url;
+use Npds\Http\Request;
 use Npds\Config\Config;
+use Npds\Session\Session;
+use Npds\Support\Facades\DB;
+use App\Modules\Npds\Support\Secure;
+use App\Modules\Users\Sform\SformUserNew;
 use App\Modules\Npds\Core\FrontController;
+use App\Modules\Npds\Support\Facades\Auth;
+use App\Modules\Npds\Support\Facades\Hack;
 use App\Modules\Npds\Support\Facades\Spam;
 use App\Modules\Users\Support\Facades\User;
 use App\Modules\Npds\Support\Facades\Mailer;
@@ -11,6 +20,8 @@ use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Npds\Support\Facades\Language;
 use App\Modules\Npds\Support\Facades\Metalang;
 use App\Modules\Npds\Support\Facades\Password;
+use App\Modules\Users\Sform\SformUserNewFinish;
+use App\Modules\Users\Sform\SformUserNewFinishHidden;
 
 /**
  * [UserLogin description]
@@ -66,64 +77,26 @@ class UserNews extends FrontController
      *
      * @return  [type]  [return description]
      */
-    public function Only_NewUser()
+    public function only_new_user()
     {
-        global $user;
-
-        //         if (Config::get('npds.CloseRegUser') == 0)
-
         if (Config::get('npds.CloseRegUser') == 0) {
 
-            if (!$user) {
-                global $uname, $name, $email, $user_avatar, $user_occ, $user_from, $user_intrest, $user_sig, $user_viewemail, $pass, $vpass, $C1, $C2, $C3, $C4, $C5, $C6, $C7, $C8, $M1, $M2, $T1, $T2, $B1;
-                        
-                Theme::showimage();
-        
-                echo '
-                <div>
-                <h2 class="mb-3">' . __d('users', 'Utilisateur') . '</h2>
-                <div class="card card-body mb-3">
-                    <h3>' . __d('users', 'Notes') . '</h3>
-                    <p>
-                    ' . __d('users', 'Les préférences de compte fonctionnent sur la base des cookies.') . ' ' . __d('users', 'Nous ne vendons ni ne communiquons vos informations personnelles à autrui.') . ' ' . __d('users', 'En tant qu\'utilisateur enregistré vous pouvez') . ' : 
-                        <ul>
-                            <li>' . __d('users', 'Poster des commentaires signés') . '</li>
-                            <li>' . __d('users', 'Proposer des articles en votre nom') . '</li>
-                            <li>' . __d('users', 'Disposer d\'un bloc que vous seul verrez dans le menu (pour spécialistes, nécessite du code html)') . '</li>
-                            <li>' . __d('users', 'Télécharger un avatar personnel') . '</li>
-                            <li>' . __d('users', 'Sélectionner le nombre de news que vous souhaitez voir apparaître sur la page principale.') . '</li>
-                            <li>' . __d('users', 'Personnaliser les commentaires') . '</li>
-                            <li>' . __d('users', 'Choisir un look différent pour le site (si plusieurs proposés)') . '</li>
-                            <li>' . __d('users', 'Gérer d\'autres options et applications') . '</li>
-                        </ul>
-                    </p>';
-        
-                if (!Config::get('npds.memberpass')) {
-                    echo '<div class="alert alert-success lead"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Le mot de passe vous sera envoyé à l\'adresse Email indiquée.') . '</div>';
-                }
+            if (!Auth::guard('user')) {
+                $this->title(__('Editer votre page principale'));
+            
+                $this->set('message', Session::message('message'));
 
-                echo '
-                </div>
-                <div class="card card-body mb-3">';
-        
-                include("library/sform/extend-user/extend-user.php");
-        
-                echo '</div>';
-        
-                adminfoot('fv', $fv_parametres, $arg1, 'foo');
+                Theme::showimage();
+
+                $this->set('user_new_sform', with(new SformUserNew())->display());
             } else {
-                header("location: user.php");
+                Url::redirect('user');
             }
         } else {
-            if (file_exists("storage/static/closed.txt"))
-                include("storage/static/closed.txt");
+            // if (file_exists("storage/static/closed.txt"))
+            //     include("storage/static/closed.txt");
+            Url::redirect('site/closed'); // Note a finaliser !!!!
         }
-        //         else {
-        
-        //             if (file_exists("storage/static/closed.txt"))
-        //                 include("storage/static/closed.txt");
-        
-        //         }
     }
 
     /**
@@ -157,57 +130,36 @@ class UserNews extends FrontController
      *
      * @return  [type]                   [return description]
      */
-    public function confirmNewUser($uname, $name, $email, $user_avatar, $user_occ, $user_from, $user_intrest, $user_sig, $user_viewemail, $pass, $vpass, $user_lnl, $C1, $C2, $C3, $C4, $C5, $C6, $C7, $C8, $M1, $M2, $T1, $T2, $B1)
+    public function confirm_new_user()
     {
-        $uname = strip_tags($uname);
-    
-        if ($user_viewemail != 1) {
-            $user_viewemail = '0';
-        }
-    
-        $stop = User::userCheck($uname, $email);
+        $this->title(__('Editer votre page principale'));
+
+        $input = Request::post();
+
+        $uname  = strip_tags($input['uname']);
+        $stop   = User::userCheck($uname, $input['email']);
     
         if (Config::get('npds.memberpass')) {
-            if ((isset($pass)) and ($pass != $vpass)) {
-                $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Les mots de passe sont différents. Ils doivent être identiques.');
-            } elseif (strlen($pass) < Config::get('npds.minpass')) {
-                $stop = '<i class="fa fa-exclamation me-2"></i>' . __d('users', 'Désolé, votre mot de passe doit faire au moins') . ' <strong>' . Config::get('npds.minpass') . '</strong> ' . __d('users', 'caractères');
+            if ((isset($input['pass'])) and ($input['pass'] != $input['vpass'])) {
+                $this->set('pass_does_not_match', true);
+
+                $stop = __d('users', 'Les mots de passe sont différents. Ils doivent être identiques.');
+            
+            } elseif (strlen($input['pass']) < Config::get('npds.minpass')) {
+                $this->set('error_minpass', true);
+
+                $stop = __d('users', 'Désolé, votre mot de passe doit faire au moins <strong>{0}</strong> caractères', Config::get('npds.minpass'));
             }
         }
-    
+        
         if (!$stop) {
-            echo '
-            <h2>' . __d('users', 'Utilisateur') . '</h2>
-            <hr />
-            <h3 class="mb-3"><i class="fa fa-user me-2"></i>' . __d('users', 'Votre fiche d\'inscription') . '</h3>
-            <div class="card">
-                <div class="card-body">';
-    
-            include("library/sform/extend-user/aff_extend-user.php");
-    
-            echo '
-                </div>
-            </div>';
-    
-            User::hidden_form();
-    
-            global $charte;
-            if (!$charte) {
-                echo '
-                    <div class="alert alert-danger lead mt-3">
-                        <i class="fa fa-exclamation me-2"></i>' . __d('users', 'Vous devez accepter la charte d\'utilisation du site') . '
-                    </div>
-                    <input type="hidden" name="op" value="only_newuser" />
-                    <input class="btn btn-secondary mt-1" type="submit" value="' . __d('users', 'Retour en arrière') . '" />
-                    </form>';
-            } else {
-                echo '
-                    <input type="hidden" name="op" value="finish" /><br />
-                    <input class="btn btn-primary mt-2" type="submit" value="' . __d('users', 'Terminer') . '" />
-                    </form>';
-                }
+            $this->set('user_new_confirme_sform', with(new SformUserNewFinish())->display());
+
+            $this->set('user_new_hidden_sform', with(new SformUserNewFinishHidden())->display());
         } else {
-            User::message_error($stop, "new user");
+            $this->set('user_new_confirme_hidden_sform', with(new SformUserNewFinishHidden())->display());
+
+            $this->set('stop_message', $stop);
         }
     }
     
@@ -241,151 +193,195 @@ class UserNews extends FrontController
      *
      * @return  [type]                   [return description]
      */
-    public function finishNewUser($uname, $name, $email, $user_avatar, $user_occ, $user_from, $user_intrest, $user_sig, $user_viewemail, $pass, $user_lnl, $C1, $C2, $C3, $C4, $C5, $C6, $C7, $C8, $M1, $M2, $T1, $T2, $B1)
+    public function finish_new_user()
     {
-        global $makepass;
-    
-        if (!isset($_SERVER['HTTP_REFERER'])) {
-            Ecr_Log('security', 'Ghost form in user.php registration. => NO REFERER', '');
-            Spam::L_spambot('', "false");
-    
-            include('admin/die.php');
-            die();
-    
-        } else if ($_SERVER['HTTP_REFERER'] . Config::get('npds.Npds_Key') !== Config::get('npds.nuke_url') . '/user.php' . Config::get('npds.Npds_Key')) {
-            Ecr_Log('security', 'Ghost form in user.php registration. => ' . $_SERVER["HTTP_REFERER"], '');
-            Spam::L_spambot('', "false");
-    
-            include('admin/die.php');
-            die();
-        }
-    
-        $user_regdate = time() + ((int) Config::get('npds.gmt') * 3600);
-        $stop = User::userCheck($uname, $email);
-    
+        //
+        Secure::ghost_form();
+
+        $this->title(__('Editer votre page principale'));
+
+        $input = Request::post();
+
+        $stop = User::userCheck($input['uname'], $input['email']);
+
         if (!$stop) {
-    
-            if (!Config::get('npds.memberpass')) {
-                $makepass = User::makepass();
-            } else {
-                $makepass = $pass;
-            }
-    
-            $AlgoCrypt = PASSWORD_BCRYPT;
-            $min_ms = 100;
-            $options = ['cost' => Password::getOptimalBcryptCostParameter($makepass, $AlgoCrypt, $min_ms)];
-            $hashpass = password_hash($makepass, $AlgoCrypt, $options);
-            $cryptpass = crypt($makepass, $hashpass);
-            $hashkey = 1;
-    
-            $result = sql_query("INSERT INTO users VALUES (NULL,'$name','$uname','$email','','','$user_avatar','$user_regdate','$user_occ','$user_from','$user_intrest','$user_sig','$user_viewemail','','','$cryptpass', '1', '10','','0','0','0','','0','','Config::get('npds.Default_Theme')+Config::get('npds.Default_Skin')','10','0','0','1','0','','','$user_lnl')");
-    
-            list($usr_id) = sql_fetch_row(sql_query("SELECT uid FROM users WHERE uname='$uname'"));
-            $result = sql_query("INSERT INTO users_extend VALUES ('$usr_id','$C1','$C2','$C3','$C4','$C5','$C6','$C7','$C8','$M1','$M2','$T1','$T2', '$B1')");
-            
-            $attach = $user_sig ? 1 : 0;
-            
+
+            $makepass = (!Config::get('npds.memberpass') ? User::makepass() : $input['pass']);
+
+            $user_id = DB::table('users')->insert([
+                'name'              => stripslashes(Hack::remove($input['name'])),
+                'uname'             => stripslashes(Hack::remove($input['uname'])),
+                'email'             => stripslashes(Hack::remove($input['email'])),
+                'femail'            => '',
+                'url'               => '',
+                'user_avatar'       => stripslashes(Hack::remove($input['user_avatar'])),
+                'user_regdate'      => time() + ((int) Config::get('npds.gmt') * 3600),
+                'user_occ'          => stripslashes(Hack::remove($input['user_occ'])),
+                'user_from'         => stripslashes(Hack::remove($input['user_from'])),
+                'user_intrest'      => stripslashes(Hack::remove($input['user_intrest'])),
+                'user_sig'          => stripslashes(Hack::remove($input['user_sig'])),
+                'user_viewemail'    => stripslashes(Hack::remove($input['user_viewemail'])),
+                'user_theme'        => '',
+                'user_journal'      => '',
+                'pass'              => Password::crypt($makepass),
+                'hashkey'           => 1,
+                'storynum'          => 10,
+                'umode'             => '',
+                'uorder'            => 0,
+                'thold'             => 0,
+                'noscore'           => 0,
+                'bio'               => '',
+                'ublockon'          => 0,
+                'ublock'            => '',
+                'theme'             => Config::get('npds.Default_Theme'). '+' .Config::get('npds.Default_Skin'),
+                'commentmax'        => 10,
+                'counter'           => 0,
+                'send_email'        => 0,
+                'is_visible'        => 1,
+                'mns'               => 0,
+                'user_langue'       => '',
+                'user_lastvisit'    => '',
+                'user_lnl'          => $input['user_lnl'],             
+            ]);
+
+            DB::table('users_extend')->insert([
+                'uid'    => $user_id,
+                'C1'     => Request::post('C1', null),
+                'C2'     => Request::post('C2', null),
+                'C3'     => Request::post('C3', null),
+                'C4'     => Request::post('C4', null),
+                'C5'     => Request::post('C5', null),
+                'C6'     => Request::post('C6', null),
+                'C7'     => Request::post('C7', null),
+                'C8'     => Request::post('C8', null),
+                'M1'     => Request::post('M1', null),
+                'M2'     => Request::post('M2', null),
+                'T1'     => Request::post('T1', null),
+                'T2'     => Request::post('T2', null),
+                'B1'     => Request::post('B1', null),
+            ]);
+
             $AutoRegUser = Config::get('npds.AutoRegUser');
 
             if (($AutoRegUser == 1) or (!isset($AutoRegUser))) {
-                $result = sql_query("INSERT INTO users_status VALUES ('$usr_id','0','$attach','0','1','1','')");
+                DB::table('users_status')->insert([
+                    'uid'       => $user_id,
+                    'posts'     => 0,
+                    'attachsig' => ($input['user_sig'] ? 1 : 0),
+                    'rang'      => 0,
+                    'level'     => 1,
+                    'open'      => 1,
+                    'groupe'    => '',
+                ]);
             } else {
-                $result = sql_query("INSERT INTO users_status VALUES ('$usr_id','0','$attach','0','1','0','')");
+                DB::table('users_status')->insert([
+                    'uid'       => $user_id,
+                    'posts'     => 0,
+                    'attachsig' => ($input['user_sig'] ? 1 : 0),
+                    'rang'      => 0,
+                    'level'     => 1,
+                    'open'      => 0,
+                    'groupe'    => '',
+                ]);                
             }
 
-            if ($result) {
+            if ($user_id) {
                 if (Config::get('npds.memberpass')) {
-                    echo '
-                    <h2>' . __d('users', 'Utilisateur') . '</h2>
-                    <hr />
-                    <h2><i class="fa fa-user me-2"></i>' . __d('users', 'Inscription') . '</h2>
-                    <p class="lead">' . __d('users', 'Votre mot de passe est : ') . '<strong>' . $makepass . '</strong></p>
-                    <p class="lead">' . __d('users', 'Vous pourrez le modifier après vous être connecté sur') . ' : <br /><a href="user.php?op=login&amp;uname=' . $uname . '&amp;pass=' . urlencode($makepass) . '"><i class="fas fa-sign-in-alt fa-lg me-2"></i><strong>' . Config::get('npds.sitename') . '</strong></a></p>';
-    
-                    $message = __d('users', 'Bienvenue sur') . Config::get('npds.sitename') ."!\n\n" . __d('users', 'Vous, ou quelqu\'un d\'autre, a utilisé votre Email identifiant votre compte') . " ($email) " . __d('users', 'pour enregistrer un compte sur') . Config::get('npds.sitename')."\n\n" . __d('users', 'Informations sur l\'utilisateur :') . " : \n\n";
+
+                    $this->set('utilisateur_info', true);
+                    $this->set('uname', $input['uname']);
+                    $this->set('makepass', $makepass);
+                    $this->set('makepass_url_encode', urlencode($makepass));
+
+                    $message = __d('users', 'Bienvenue sur') . Config::get('npds.sitename') ."!\n\n" 
+                             . __d('users', 'Vous, ou quelqu\'un d\'autre, a utilisé votre Email identifiant votre compte') . " 
+                             (". $input['email'] .") " . __d('users', 'pour enregistrer un compte sur') . Config::get('npds.sitename')."\n\n" 
+
+                             . __d('users', 'Informations sur l\'utilisateur :') . " : \n\n";
+                             
                     $message .=
-                        __d('users', 'ID utilisateur (pseudo)') . ' : ' . $uname . "\n" .
-                        __d('users', 'Véritable adresse Email') . ' : ' . $email . "\n";
+                        __d('users', 'ID utilisateur (pseudo)') . ' : ' . $input['uname'] . "\n" .
+                        __d('users', 'Véritable adresse Email') . ' : ' . $input['email'] . "\n";
     
-                    if ($name != '') {
-                        $message .= __d('users', 'Votre véritable identité') . ' : ' . $name . "\n";
+                    if ($input['name'] != '') {
+                        $message .= __d('users', 'Votre véritable identité') . ' : ' . $input['name'] . "\n";
                     }
 
-                    if ($user_from != '') {
-                        $message .= __d('users', 'Votre situation géographique') . ' : ' . $user_from . "\n";
+                    if ($input['user_from'] != '') {
+                        $message .= __d('users', 'Votre situation géographique') . ' : ' . $input['user_from'] . "\n";
                     }
 
-                    if ($user_occ != '') {
-                        $message .= __d('users', 'Votre activité') . ' : ' . $user_occ . "\n";
+                    if ($input['user_occ'] != '') {
+                        $message .= __d('users', 'Votre activité') . ' : ' . $input['user_occ'] . "\n";
                     }
 
-                    if ($user_intrest != '') {
-                        $message .= __d('users', 'Vos centres d\'intérêt') . ' : ' . $user_intrest . "\n";
+                    if ($input['user_intrest'] != '') {
+                        $message .= __d('users', 'Vos centres d\'intérêt') . ' : ' . $input['user_intrest'] . "\n";
                     }
 
-                    if ($user_sig != '') {
-                        $message .= __d('users', 'Signature') . ' : ' . $user_sig . "\n";
+                    if ($input['user_sig'] != '') {
+                        $message .= __d('users', 'Signature') . ' : ' . $input['user_sig'] . "\n";
                     }
 
-                    if (isset($C1) and $C1 != '') {
-                        $message .= Language::aff_langue('[french]Activit&#x00E9; professionnelle[/french][english]Professional activity[/english][spanish]Actividad profesional[/spanish][german]Berufliche T&#xE4;tigkeit[/german]') . ' : ' . $C1 . "\n";
+                    if (isset($input['C1']) and $input['C1'] != '') {
+                        $message .= Language::aff_langue('[french]Activit&#x00E9; professionnelle[/french][english]Professional activity[/english][spanish]Actividad profesional[/spanish][german]Berufliche T&#xE4;tigkeit[/german]') . ' : ' . $input['C1'] . "\n";
                     }
 
-                    if (isset($C2) and $C2 != '') {
-                        $message .= Language::aff_langue('[french]Code postal[/french][english]Postal code[/english][spanish]C&#xF3;digo postal[/spanish][german]Postleitzahl[/german]') . ' : ' . $C2 . "\n";
+                    if (isset($input['C2']) and $input['C2'] != '') {
+                        $message .= Language::aff_langue('[french]Code postal[/french][english]Postal code[/english][spanish]C&#xF3;digo postal[/spanish][german]Postleitzahl[/german]') . ' : ' . $input['C2'] . "\n";
                     }
 
-                    if (isset($T1) and $T1 != '') {
-                        $message .= Language::aff_langue('[french]Date de naissance[/french][english]Birth date[/english][spanish]Fecha de nacimiento[/spanish][german]Geburtsdatum[/german]') . ' : ' . $T1 . "\n";
+                    if (isset($input['T1']) and $input['T1'] != '') {
+                        $message .= Language::aff_langue('[french]Date de naissance[/french][english]Birth date[/english][spanish]Fecha de nacimiento[/spanish][german]Geburtsdatum[/german]') . ' : ' . $input['T1'] . "\n";
                     }
 
                     $message .= "\n\n\n" . Language::aff_langue("[french]Conform&eacute;ment aux articles 38 et suivants de la loi fran&ccedil;aise n&deg; 78-17 du 6 janvier 1978 relative &agrave; l'informatique, aux fichiers et aux libert&eacute;s, tout membre dispose d&rsquo; un droit d&rsquo;acc&egrave;s, peut obtenir communication, rectification et/ou suppression des informations le concernant.[/french][english]In accordance with Articles 38 et seq. Of the French law n &deg; 78-17 of January 6, 1978 relating to data processing, files and freedoms, any member has a right of access, can obtain communication, rectification and / or deletion of information about him.[/english][chinese]&#26681;&#25454;1978&#24180;1&#26376;6&#26085;&#20851;&#20110;&#25968;&#25454;&#22788;&#29702;&#65292;&#26723;&#26696;&#21644;&#33258;&#30001;&#30340;&#27861;&#22269;78-17&#21495;&#27861;&#24459;&#65292;&#20219;&#20309;&#25104;&#21592;&#37117;&#26377;&#26435;&#36827;&#20837;&#65292;&#21487;&#20197;&#33719;&#24471;&#36890;&#20449;&#65292;&#32416;&#27491;&#21644;/&#25110; &#21024;&#38500;&#26377;&#20851;&#20182;&#30340;&#20449;&#24687;&#12290;[/chinese][spanish]De conformidad con los art&iacute;culos 38 y siguientes de la ley francesa n &deg; 78-17 del 6 de enero de 1978, relativa al procesamiento de datos, archivos y libertades, cualquier miembro tiene derecho de acceso, puede obtener comunicaci&oacute;n, rectificaci&oacute;n y / o supresi&oacute;n de informaci&oacute;n sobre &eacute;l.[/spanish][german]Gem&auml;&szlig; den Artikeln 38 ff. Des franz&ouml;sischen Gesetzes Nr. 78-17 vom 6. Januar 1978 in Bezug auf Datenverarbeitung, Akten und Freiheiten hat jedes Mitglied ein Recht auf Zugang, kann Kommunikation, Berichtigung und / oder L&ouml;schung von Informationen &uuml;ber ihn.[/german]");
                     $message .= "\n\n\n" . Language::aff_langue("[french]Ce message et les pi&egrave;ces jointes sont confidentiels et &eacute;tablis &agrave; l'attention exclusive de leur destinataire (aux adresses sp&eacute;cifiques auxquelles il a &eacute;t&eacute; adress&eacute;). Si vous n'&ecirc;tes pas le destinataire de ce message, vous devez imm&eacute;diatement en avertir l'exp&eacute;diteur et supprimer ce message et les pi&egrave;ces jointes de votre syst&egrave;me.[/french][english]This message and any attachments are confidential and intended to be received only by the addressee. If you are not the intended recipient, please notify immediately the sender by reply and delete the message and any attachments from your system.[/english][chinese]&#27492;&#28040;&#24687;&#21644;&#20219;&#20309;&#38468;&#20214;&#37117;&#26159;&#20445;&#23494;&#30340;&#65292;&#24182;&#19988;&#25171;&#31639;&#30001;&#25910;&#20214;&#20154;&#25509;&#25910;&#12290; &#22914;&#26524;&#24744;&#19981;&#26159;&#39044;&#26399;&#25910;&#20214;&#20154;&#65292;&#35831;&#31435;&#21363;&#36890;&#30693;&#21457;&#20214;&#20154;&#24182;&#22238;&#22797;&#37038;&#20214;&#21644;&#31995;&#32479;&#20013;&#30340;&#25152;&#26377;&#38468;&#20214;&#12290;[/chinese][spanish]Este mensaje y cualquier adjunto son confidenciales y est&aacute;n destinados a ser recibidos por el destinatario. Si no es el destinatario deseado, notif&iacute;quelo al remitente de inmediato y responda al mensaje y cualquier archivo adjunto de su sistema.[/spanish][german]Diese Nachricht und alle Anh&auml;nge sind vertraulich und sollen vom Empf&auml;nger empfangen werden. Wenn Sie nicht der beabsichtigte Empf&auml;nger sind, benachrichtigen Sie bitte sofort den Absender und antworten Sie auf die Nachricht und alle Anlagen von Ihrem System.[/german]") . "\n\n\n";
                     
-                    include("signat.php");
+                    $message .= Config::get('signat.message');
                     
-                    $subject = html_entity_decode(__d('users', 'Inscription'), ENT_COMPAT | ENT_HTML401, cur_charset) . ' ' . $uname;
+                    $subject = html_entity_decode(__d('users', 'Inscription'), ENT_COMPAT | ENT_HTML401, 'utf-8') . ' ' . $input['uname'];
                     
-                    Mailer::send_email($email, $subject, $message, '', true, 'html', '');
+                    Mailer::send_email($input['email'], $subject, $message, '', true, 'html', '');
                 } else {
-                    $message = __d('users', 'Bienvenue sur') . Config::get('npds.sitename') ." !\n\n" . __d('users', 'Vous, ou quelqu\'un d\'autre, a utilisé votre Email identifiant votre compte') . " ($email) " . __d('users', 'pour enregistrer un compte sur') . Config::get('npds.sitename') .".\n\n" . __d('users', 'Informations sur l\'utilisateur :') . "\n" . __d('users', '-Identifiant : ') . " $uname\n" . __d('users', '-Mot de passe : ') . " $makepass\n\n";
+
+                    $this->set('inscription_mail', true);
+
+                    $message = __d('users', 'Bienvenue sur') . Config::get('npds.sitename') ." !\n\n" . __d('users', 'Vous, ou quelqu\'un d\'autre, a utilisé votre Email identifiant votre compte') . " (". $input['email'] .") " . __d('users', 'pour enregistrer un compte sur') . Config::get('npds.sitename') .".\n\n" . __d('users', 'Informations sur l\'utilisateur :') . "\n" . __d('users', '-Identifiant : ') . " ". $input['uname'] ."\n" . __d('users', '-Mot de passe : ') . " $makepass\n\n";
                     
-                    include("signat.php");
+                    $message .= Config::get('signat.message');
                     
-                    $subject = html_entity_decode(__d('users', 'Mot de passe utilisateur pour'), ENT_COMPAT | ENT_HTML401, cur_charset) . ' ' . $uname;
+                    $subject = html_entity_decode(__d('users', 'Mot de passe utilisateur pour'), ENT_COMPAT | ENT_HTML401, 'utf-8') . ' ' . $input['uname'];
                     
-                    Mailer::send_email($email, $subject, $message, '', true, 'html', '');
-    
-                    echo '
-                    <h2>' . __d('users', 'Utilisateur') . '</h2>
-                    <h2><i class="fa fa-user me-2"></i>Inscription</h2>
-                    <div class="alert alert-success lead"><i class="fa fa-exclamation me-2"></i>' . __d('users', 'Vous êtes maintenant enregistré. Vous allez recevoir un code de confirmation dans votre boîte à lettres électronique.') . '</div>';
+                    Mailer::send_email($input['email'], $subject, $message, '', true, 'html', '');
                 }
     
-                //------------------------------------------------
-                if (file_exists("themes/default/include/new_user.inc")) {
-                    include("themes/default/include/new_user.inc");
-    
-                    $time = date(__d('users', 'dateinternal'), time() + ((int) Config::get('npds.gmt') * 3600));
-    
-                    $message = Metalang::meta_lang(AddSlashes(str_replace("\n", "<br />", $message)));
-    
-                    $sql = "INSERT INTO priv_msgs (msg_image, subject, from_userid, to_userid, msg_time, msg_text) ";
-                    $sql .= "VALUES ('', '$sujet', '$emetteur_id', '$usr_id', '$time', '$message')";
-                    sql_query($sql);
+                if (Config::has('users.new_user')) {
+                    DB::table('priv_msgs')->insert([
+                        'msg_image'     => '',
+                        'subject'       => Config::get('users.new_user.subject'),
+                        'from_userid'   => Config::get('users.new_user.emetteur_id'),
+                        'to_userid'     => $user_id,
+                        'msg_time'      => date(__d('users', 'd-m-Y H:i'), time() + ((int) Config::get('npds.gmt') * 3600)),
+                        'msg_text'      => Metalang::meta_lang(AddSlashes(str_replace("\n", "<br />", Config::get('users.new_user.message')))),
+                    ]);
                 }
     
-                //------------------------------------------------
-                $subject = html_entity_decode(__d('users', 'Inscription'), ENT_COMPAT | ENT_HTML401, cur_charset) . ' : ' . Config::get('npds.sitename');
+                $subject = html_entity_decode(__d('users', 'Inscription'), ENT_COMPAT | ENT_HTML401, 'utf-8') . ' : ' . Config::get('npds.sitename');
                 
-                Mailer::send_email(Config::get('npds.adminmail'), $subject, "Infos :
-                    Nom : $name
-                    ID : $uname
-                    Email : $email", '', false, "text", '');
+                Mailer::send_email(Config::get('npds.adminmail'), $subject, 'Infos :
+                    Nom     : '. $input['name'] .'
+                    ID      : '. $input['uname'] .'
+                    Email   : '. $input['email'], 
+                    '', 
+                    false, 
+                    "text", 
+                    ''
+                );
             }
     
         } else {
-            User::message_error($stop, 'finish');
+            $this->set('stop_message', $stop);
         }
     }
 

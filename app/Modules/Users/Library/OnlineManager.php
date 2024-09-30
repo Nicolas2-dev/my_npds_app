@@ -5,7 +5,9 @@ namespace App\Modules\Users\Library;
 use Npds\Config\Config;
 use App\Modules\Users\Contracts\OnlineInterface;
 
-
+/**
+ * Undocumented class
+ */
 class OnlineManager implements OnlineInterface 
 {
 

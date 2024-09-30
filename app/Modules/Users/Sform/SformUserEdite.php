@@ -47,7 +47,7 @@ class SformUserEdite
      *
      * @return void
      */
-    private function extend_user()
+    private function form_method()
     {
         $this->sform->add_form_title('Register');
         $this->sform->add_form_id('register');
@@ -235,7 +235,7 @@ class SformUserEdite
         }
 
         //
-        $this->sform_avatar();
+        $this->sform_avatar_user();
 
         //
         $this->sform->add_field(
@@ -399,7 +399,7 @@ class SformUserEdite
     public function display()
     {
         //
-        $this->extend_user();
+        $this->form_method();
 
         //
         $this->formulaire();

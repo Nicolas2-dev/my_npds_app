@@ -24,6 +24,9 @@ define('MODULEPATH', APPPATH .'Modules' .DS);
 define('THEMEPATH', APPPATH .'Themes' .DS);
 
 //
+define('SHAREDPATH', APPPATH .'Shared' .DS);
+
+//
 define('NPDSPATH', BASEPATH .'npds' .DS);
 
 //

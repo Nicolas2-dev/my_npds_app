@@ -8,4 +8,7 @@
  * @date    26 Septembre 2024
  */
 
-use Npds\config\Config;
+return array(
+
+
+);

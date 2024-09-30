@@ -13,7 +13,7 @@
 <?php endif; ?>
 
 <div class="card card-body mb-3">
-    <h3><a href="user.php?op=only_newuser" role="button" title="<?= __d('users', 'Nouveau membre'); ?>"><i class="fa fa-user-plus"></i>&nbsp;<?= __d('users', 'Nouveau membre'); ?></a></h3>
+    <h3><a href="<?= site_url('user/newuser?op=only_newuser'); ?>" role="button" title="<?= __d('users', 'Nouveau membre'); ?>"><i class="fa fa-user-plus"></i>&nbsp;<?= __d('users', 'Nouveau membre'); ?></a></h3>
 </div>
 <div class="card card-body">
     <h3 class="mb-4"><i class="fas fa-sign-in-alt fa-lg me-2 align-middle"></i><?= __d('users', 'Connexion'); ?></h3>

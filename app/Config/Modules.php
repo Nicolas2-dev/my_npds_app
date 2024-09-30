@@ -27,7 +27,7 @@ return array(
     'Links',
     'Memberlists',
     'Messenger',
-    'Minisite',
+    'Minisites',
     'Module',
     'News',
     'Newsletter',

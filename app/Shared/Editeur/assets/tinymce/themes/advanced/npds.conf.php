@@ -23,47 +23,47 @@ $tmp.='
             templates : [
                {
                   title: "Une colonne",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_1_col_12.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/txt_1_col_12.html') .'",
                   description: "Texte sur une colonne"
                },
                {
                   title: "Deux colonnes (50% 50%)",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_2_col_6-6.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/txt_2_col_6-6.html') .'",
                   description: "Texte sur deux colonnes de largeurs égales"
                },
                {
                   title: "Trois colonnes (33% 33% 33%)",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_3_col_4-4-4.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/txt_3_col_4-4-4.html') .'",
                   description: "Texte sur trois colonnes de largeurs égales"
                },
                {
                   title: "Deux colonnes (33% 66%)",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_2_col_4-8.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/txt_2_col_4-8.html') .'",
                   description: "Texte sur deux colonnes de largeurs inégales"
                },
                {
                   title: "Deux colonnes (66% 33%)",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_2_col_8-4.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/txt_2_col_8-4.html') .'",
                   description: "Texte sur deux colonnes de largeurs inégales"
                },
                {
                   title: "Trois colonnes (25% 50% 25%)",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/txt_3_col_3-6-3.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/txt_3_col_3-6-3.html') .'",
                   description: "Texte sur trois colonnes de largeurs inégales"
                },
                {
                   title: "Deux colonnes image/texte (33% 66%)",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/img_txt_2_col_4-8.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/img_txt_2_col_4-8.html') .'",
                   description: "Image, texte sur deux colonnes de largeurs inégales"
                },
                {
                   title: "Deux colonnes image/texte (17% 83%)",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/img_txt_2_col_2-10.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/img_txt_2_col_2-10.html') .'",
                   description: "Image, texte sur deux colonnes de largeurs inégales"
                },
                {
                   title: "Trois colonnes image/texte/image (25% 50% 25%)",
-                  url: "'.site_url('assets/shared/editeur/tinymce/plugins/template/img_txt_img_3_col_3-6-3.html') .'",
+                  url: "'.site_url('shared/editeur/assets/tinymce/plugins/template/img_txt_img_3_col_3-6-3.html') .'",
                   description: "Texte sur trois colonnes de largeurs inégales"
                }
                ],';
@@ -108,7 +108,7 @@ if ($tiny_mce_theme=='full') {
             toolbar : 'bold italic underline strikethrough | pastetext pasteword | justifyleft justifycenter justifyright justifyfull | fontsizeselect | bullist numlist outdent indent forecolor backcolor | search link unlink code | image media npds_img npds_perso npds_mns npds_upl npds_metal ".$tinylangmenu."',\n";
 }
 $tmp.="
-            content_css : ' ". site_url('assets/shared/font-awesome/css/all.min.css') .",". site_url('assets/shared/bootstrap/dist/css/bootstrap.min.css') .",". site_url('assets/shared/editeur/tinymce/themes/advanced/npds.css') ."',
+            content_css : ' ". site_url('assets/shared/font-awesome/css/all.min.css') .",". site_url('assets/shared/bootstrap/dist/css/bootstrap.min.css') .",". site_url('shared/editeur/assets/tinymce/themes/advanced/npds.css') ."',
             extended_valid_elements : 'hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]',
             directionality: 'ltr',
 //            auto_focus: '".substr($tmp_Xzone,0,strpos($tmp_Xzone,",",0))."',

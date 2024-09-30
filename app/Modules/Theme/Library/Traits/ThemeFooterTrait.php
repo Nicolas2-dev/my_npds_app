@@ -3,8 +3,8 @@
 namespace App\Modules\Theme\Library\Traits;
 
 use Npds\Config\Config;
+use Shared\Editeur\Support\Facades\Editeur;
 use App\Modules\Blocks\Support\Facades\Block;
-use App\Modules\Npds\Support\Facades\Editeur;
 use App\Modules\Npds\Support\Facades\Language;
 use App\Modules\Npds\Support\Facades\Metalang;
 

@@ -2,6 +2,8 @@
 
 namespace Npds\Sform;
 
+use Npds\Http\Request;
+
 /**
  * Undocumented class
  */
@@ -1253,23 +1255,29 @@ class SformManager
 
                 $num_extender = $this->interro_fields($this->form_fields[$i]['name'] . "extender");
 
+                //$this->form_fileds_globals = array_flip($this->form_fileds_globals);
+
+//vd('greee', $this->form_fileds_globals);
+
+
                 // if (array_key_exists($this->form_fields[$i]['name'], $GLOBALS)){
                 //     $field = $GLOBALS[$this->form_fields[$i]['name']];
-                // } else {
-                //     $field = '';
-                // }
 
+                // } 
+                // else
                 if (array_key_exists($this->form_fields[$i]['name'], $this->form_fileds_globals)) {
                     $field = $this->form_fileds_globals[$this->form_fields[$i]['name']];
-                } else {
+
+                } 
+                // elseif (array_key_exists($this->form_fields[$i]['name'], Request::post())) {
+
+                //     $field = Request::post($this->form_fields[$i]['name']);
+                // } 
+                else {
                     $field = '';
                 }
 
-                // if (isset($this->form_fields[$i]['value'])) {
-                //     $field = $this->form_fields[$i]['value'];
-                // } else {
-                //     $field = '';
-                // }
+//vd($GLOBALS, $this->form_fields[$i]['name'], $field, $this->form_fields[$i]);
 
             } else {
                 $num_extender = 'no';

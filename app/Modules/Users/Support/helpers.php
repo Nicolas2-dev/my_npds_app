@@ -4,18 +4,92 @@ use App\Modules\Users\Library\UserManager;
 use App\Modules\Users\Library\OnlineManager;
 
 
-if (! function_exists('getusrinfo'))
+
+// deprecated function
+
+// if (! function_exists('message_error'))
+// {
+//     function message_error($ibid, $op)
+//     {
+//         echo '
+//         <h2>' . __d('users', 'Utilisateur') . '</h2>
+//         <div class="alert alert-danger lead">';
+
+//         echo $ibid;
+
+//         if (($op == 'only_newuser') or ($op == 'new user') or ($op == 'finish')) {
+//             hidden_form();
+//             echo '
+//                 <input type="hidden" name="op" value="only_newuser" />
+//                 <button class="btn btn-secondary mt-2" type="submit">' . __d('users', 'Retour en arrière') . '</button>
+//             </form>';
+//         } else
+//             echo '<a class="btn btn-secondary mt-4" href="javascript:history.go(-1)" title="' . __d('users', 'Retour en arrière') . '">' . __d('users', 'Retour en arrière') . '</a>';
+        
+//         echo '
+//         </div>';
+
+//     }
+// }
+
+// if (! function_exists('hidden_form'))
+// {
+//     function hidden_form() {
+//         global $uname, $name, $email, $user_avatar, $user_occ, $user_from, $user_intrest, $user_sig, $user_viewemail, $pass, $vpass, $C1,$C2,$C3,$C4,$C5,$C6,$C7,$C8,$M1,$M2,$T1,$T2,$B1,$charte,$user_lnl;
+//         if (!$user_avatar) {$user_avatar="blank.gif";}
+//         echo '
+//         <form action="user.php" method="post">
+//         <input type="hidden" name="uname" value="'.$uname.'" />
+//         <input type="hidden" name="name" value="'.removeHack($name).'" />
+//         <input type="hidden" name="email" value="'.$email.'" />
+//         <input type="hidden" name="user_avatar" value="'.$user_avatar.'" />
+//         <input type="hidden" name="user_from" value="'.StripSlashes(removeHack($user_from)).'" />
+//         <input type="hidden" name="user_occ" value="'.StripSlashes(removeHack($user_occ)).'" />
+//         <input type="hidden" name="user_intrest" value="'.StripSlashes(removeHack($user_intrest)).'" />
+//         <input type="hidden" name="user_sig" value="'.StripSlashes(removeHack($user_sig)).'" />
+//         <input type="hidden" name="user_viewemail" value="'.$user_viewemail.'" />
+//         <input type="hidden" name="pass" value="'.removeHack($pass).'" />
+//         <input type="hidden" name="user_lnl" value="'.removeHack($user_lnl).'" />
+//         <input type="hidden" name="C1" value="'.StripSlashes(removeHack($C1)).'" />
+//         <input type="hidden" name="C2" value="'.StripSlashes(removeHack($C2)).'" />
+//         <input type="hidden" name="C3" value="'.StripSlashes(removeHack($C3)).'" />
+//         <input type="hidden" name="C4" value="'.StripSlashes(removeHack($C4)).'" />
+//         <input type="hidden" name="C5" value="'.StripSlashes(removeHack($C5)).'" />
+//         <input type="hidden" name="C6" value="'.StripSlashes(removeHack($C6)).'" />
+//         <input type="hidden" name="C7" value="'.StripSlashes(removeHack($C7)).'" />
+//         <input type="hidden" name="C8" value="'.StripSlashes(removeHack($C8)).'" />
+//         <input type="hidden" name="M1" value="'.StripSlashes(removeHack($M1)).'" />
+//         <input type="hidden" name="M2" value="'.StripSlashes(removeHack($M2)).'" />
+//         <input type="hidden" name="T1" value="'.StripSlashes(removeHack($T1)).'" />
+//         <input type="hidden" name="T2" value="'.StripSlashes(removeHack($T2)).'" />
+//         <input type="hidden" name="B1" value="'.StripSlashes(removeHack($B1)).'" />';
+//     }
+// }
+
+// if (! function_exists('message_pass'))
+// {
+//     function message_pass($ibid)
+//     {
+//         echo $ibid;
+//     }
+// }
+
+
+
+// 
+
+if (! function_exists('getuserinfo'))
 {
     /**
-     * [getusrinfo description]
+     * [getuserinfo description]
      *
      * @param   [type]  $user  [$user description]
      *
      * @return  [type]         [return description]
      */
-    function getusrinfo($user)
+    function getuserinfo($user)
     {
-        return UserManager::getInstance()->getusrinfo($user);
+        return UserManager::getInstance()->getuserinfo($user);
     }
 }
 

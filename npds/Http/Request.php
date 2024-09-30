@@ -84,13 +84,13 @@ class Request
      *
      * @return  [type]        [return description]
      */
-    public static function post($key = null)
+    public static function post($key = null, $default = null)
     {
         if ($key === null) {
             return isset($_POST) ? $_POST : null;
         }
 
-        return array_key_exists($key, $_POST)? $_POST[$key] : null;
+        return array_key_exists($key, $_POST)? $_POST[$key] : $default;
     }
 
     /**

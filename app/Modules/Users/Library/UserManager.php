@@ -9,9 +9,12 @@ use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Npds\Support\Facades\Mailer;
 use App\Modules\Theme\Support\Facades\Theme;
+use App\Modules\Npds\Support\Facades\Language;
 use App\Modules\Users\Contracts\UserInterface;
 
-
+/**
+ * Undocumented class
+ */
 class UserManager implements UserInterface 
 {
 
@@ -38,13 +41,13 @@ class UserManager implements UserInterface
     }
 
     /**
-     * [getusrinfo description]
+     * [getuserinfo description]
      *
      * @param   [type]  $user  [$user description]
      *
      * @return  [type]         [return description]
      */
-    public function getusrinfo($user)
+    public function getuserinfo($user)
     {
         $cookie = explode(':', base64_decode($user));
 
@@ -82,11 +85,11 @@ class UserManager implements UserInterface
 
         if (!Config::get('npds.AutoRegUser')) {
             if (isset($user)) {
-                $cookie = explode(':', base64_decode($user));
+                $cookie = explode(':', base64_decode(Auth::check('user')));
 
-                $status = DB::table('users_status')->select('open')->where('uid', $cookie[0])->first();
+                $status_temp = DB::table('users_status')->select('open')->where('uid', $cookie[0])->first();
 
-                if (!$status['open']) {
+                if (!$status_temp['open']) {
                     Cookie::set('user', '', 0);
 
                     return false;
@@ -222,33 +225,6 @@ class UserManager implements UserInterface
         return ($myrow);
     }
 
-    function message_error($ibid, $op)
-    {
-        echo '
-        <h2>' . __d('users', 'Utilisateur') . '</h2>
-        <div class="alert alert-danger lead">';
-    
-        echo $ibid;
-    
-        if (($op == 'only_newuser') or ($op == 'new user') or ($op == 'finish')) {
-            hidden_form();
-            echo '
-                <input type="hidden" name="op" value="only_newuser" />
-                <button class="btn btn-secondary mt-2" type="submit">' . __d('users', 'Retour en arrière') . '</button>
-            </form>';
-        } else
-            echo '<a class="btn btn-secondary mt-4" href="javascript:history.go(-1)" title="' . __d('users', 'Retour en arrière') . '">' . __d('users', 'Retour en arrière') . '</a>';
-        
-        echo '
-        </div>';
-
-    }
-    
-    function message_pass($ibid)
-    {
-        echo $ibid;
-    }
-    
     function userCheck($uname, $email)
     {
         $stop = '';
@@ -285,6 +261,41 @@ class UserManager implements UserInterface
     }
 
     /**
+     * [user_rank description]
+     *
+     * @param   [type]  $user_id [$userid description]
+     *
+     * @return  [type]           [return description]
+     */
+    public function user_rang($user_id)
+    {
+        $user_rang = DB::table('users_status')->select('rang')->where('uid', $user_id)->first();
+
+        if ($user_rang['rang']) {
+
+            if ($rank = DBQ_Select(DB::table('config')->select('rank1', 'rank2', 'rank3', 'rank4', 'rank5')->first(), 86400)) {
+                if (!empty($rank['rank1'])) {
+                    $messR = 'rank' . $rank['rank'. $user_rang['rang']];
+                } else {
+                    $messR = '';
+                }
+            }
+
+            if ($ibidR = Theme::theme_image("forum/rank/" . $user_rang['rang'] . ".png")) {
+                $imgtmp = $ibidR;
+            } else {
+                $imgtmp = "assets/images/forum/rank/" . $user_rang['rang'] . ".png";
+            }
+            
+            $rang_img = '<img src="' . site_url($imgtmp) . '" border="0" alt="' . Language::aff_langue($messR) . '" title="' . Language::aff_langue($messR) . '" loading="lazy" />';
+        } else {
+            $rang_img = '&nbsp;';
+        } 
+                
+        return $rang_img;
+    }
+
+    /**
      * Undocumented function
      *
      * @param [type] $userinfo
@@ -301,7 +312,7 @@ class UserManager implements UserInterface
         $cl_cht = $op == 'chgtheme' ? 'active' : '';
         $cl_edjh = ($op == 'editjournal' or $op == 'edithome') ? 'active' : '';
         $cl_u = $op  == 'dashboard' ? 'active' : '';
-        $cl_pm = $op = 'viewpmsg' ? 'active' : '';
+        $cl_pm = $op == 'viewpmsg' ? 'active' : '';
         $cl_rs = $op == 'sociaux' ? 'active' : '';
         
         $menu = '
@@ -316,22 +327,19 @@ class UserManager implements UserInterface
                 </ul>
             </li>';
     
-        // include("modules/upload/config/upload.conf.php");
+        if (($userinfo['mns']) and (Config::get('upload.config.autorise_upload_p'))) {
+            
+            $PopUp = minisite_win_upload("popup");
     
-        // if (($userinfo['mns']) and ($autorise_upload_p)) {
-        //     include_once("modules/blog/upload_minisite.php");
-    
-        //     $PopUp = win_upload("popup");
-    
-        //     $menu .= '
-        //     <li class="nav-item dropdown">
-        //         <a class="nav-link dropdown-toggle tooltipbyclass" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="' . __d('users', 'Gérer votre miniSite') . '"><i class="fas fa-desktop fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">' . __d('users', 'MiniSite') . '</span></a>
-        //         <ul class="dropdown-menu">
-        //             <li><a class="dropdown-item" href="minisite.php?op=' . $userinfo['uname'] . '" target="_blank">' . __d('users', 'MiniSite') . '</a></li>
-        //             <li><a class="dropdown-item" href="javascript:void(0);" onclick="window.open(' . $PopUp . ')" >' . __d('users', 'Gérer votre miniSite') . '</a></li>
-        //         </ul>
-        //     </li>';
-        // }
+            $menu .= '
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle tooltipbyclass" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" title="' . __d('users', 'Gérer votre miniSite') . '"><i class="fas fa-desktop fa-2x d-xl-none me-2"></i><span class="d-none d-xl-inline">' . __d('users', 'MiniSite') . '</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="minisite.php?op=' . $userinfo['uname'] . '" target="_blank">' . __d('users', 'MiniSite') . '</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0);" onclick="window.open(' . $PopUp . ')" >' . __d('users', 'Gérer votre miniSite') . '</a></li>
+                </ul>
+            </li>';
+        }
     
         $menu .= '
             <li class="nav-item"><a class="nav-link ' . $cl_cht . '" href="'. site_url('user/chgtheme?op=chgtheme') .'" title="' . __d('users', 'Changer le thème') . '"  data-bs-toggle="tooltip" ><i class="fas fa-paint-brush fa-2x d-xl-none"></i><span class="d-none d-xl-inline">&nbsp;' . __d('users', 'Thème') . '</span></a></li>
@@ -355,9 +363,9 @@ class UserManager implements UserInterface
     
             $temp_user = get_userdata($who);
     
-            $socialnetworks = array();
-            $posterdata_extend = array();
-            $res_id = array();
+            $socialnetworks     = array();
+            $posterdata_extend  = array();
+            $res_id             = array();
     
             $my_rs = '';
     
@@ -469,39 +477,6 @@ class UserManager implements UserInterface
         }
     }
 
-    /**
-     * [user_rank description]
-     *
-     * @param   [type]  $user_id [$userid description]
-     *
-     * @return  [type]           [return description]
-     */
-    public function user_rang($user_id)
-    {
-        $user_rang = DB::table('users_status')->select('rang')->where('uid', $user_id)->first();
 
-        if ($user_rang['rang']) {
-
-            if ($rank = DBQ_Select(DB::table('config')->select('rank1', 'rank2', 'rank3', 'rank4', 'rank5')->first(), 86400)) {
-                if (!empty($rank['rank1'])) {
-                    $messR = 'rank' . $rank['rank'. $user_rang['rang']];
-                } else {
-                    $messR = '';
-                }
-            }
-
-            if ($ibidR = Theme::theme_image("forum/rank/" . $user_rang['rang'] . ".png")) {
-                $imgtmp = $ibidR;
-            } else {
-                $imgtmp = "assets/images/forum/rank/" . $user_rang['rang'] . ".png";
-            }
-            
-            $rang_img = '<img src="' . site_url($imgtmp) . '" border="0" alt="' . aff_langue($messR) . '" title="' . aff_langue($messR) . '" loading="lazy" />';
-        } else {
-            $rang_img = '&nbsp;';
-        } 
-                
-        return $rang_img;
-    }
 
 }

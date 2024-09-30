@@ -73,7 +73,7 @@
 
 #pqp-console .main table { width: 100%; }
 #pqp-console td div { width: 100%; overflow: hidden; }
-#pqp-console td.type { font-family: "Lucida Grande", Tahoma, Arial, sans-serif; text-align:center; text-transform: uppercase; font-size: 9px; padding-top: 9px; color: #F4FCCA; vertical-align: top; width: 40px; }
+#pqp-console td.type { font-family: "Lucida Grande", Tahoma, Arial, sans-serif; text-align:center; text-transform: uppercase; font-size: 9px; padding-top: 9px; color: #F4FCCA; vertical-align: top; width: 55px; }
 .pQp .log-log td.type { background: #47740D !important; }
 .pQp .log-error td.type { background: #9B2700 !important; }
 .pQp .log-memory td.type { background:#D28C00 !important; }

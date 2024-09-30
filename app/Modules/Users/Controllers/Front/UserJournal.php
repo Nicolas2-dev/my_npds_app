@@ -5,6 +5,7 @@ namespace App\Modules\Users\Controllers\Front;
 use Npds\Routing\Url;
 use Npds\Http\Request;
 use Npds\Config\Config;
+use Npds\Console\Console;
 use Npds\Session\Session;
 use Npds\Support\Facades\DB;
 use App\Modules\Npds\Support\Sanitize;
@@ -44,6 +45,8 @@ class UserJournal extends FrontController
      */
     protected function before()
     {
+        Console::log('Controller : '. __CLASS__);
+
         // Leave to parent's method the Flight decisions.
         return parent::before();
     }
@@ -58,6 +61,8 @@ class UserJournal extends FrontController
     protected function after($result)
     {
         // Do some processing there, even deciding to stop the Flight, if case.
+
+        Console::logSpeed('START Controller : '. __CLASS__);
 
         // Leave to parent's method the Flight decisions.
         return parent::after($result);
@@ -76,7 +81,7 @@ class UserJournal extends FrontController
             
             $this->set('message', Session::message('message'));
 
-            $userinfo = User::getusrinfo(Auth::check('user'));
+            $userinfo = User::getuserinfo(Auth::check('user'));
         
             $this->set('userinfo',  $userinfo);
             $this->set('user_menu', User::member_menu($userinfo));
@@ -134,7 +139,7 @@ class UserJournal extends FrontController
 
             Session::set('message', ['type' => 'success', 'text' => __d('users', 'Votre Journal a été mis à jour avec success.')]);
 
-            Url::redirect('user');
+            Url::redirect('user?opdashboard#message');
         } else {
             Url::redirect('index');
         }

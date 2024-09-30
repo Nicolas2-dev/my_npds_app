@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Modules\Npds\Library;
+namespace Shared\Editeur;
 
 use Npds\Config\Config;
-use App\Modules\Npds\Contracts\EditeurInterface;
+use Shared\Editeur\Contracts\EditeurInterface;
 
-
-
+/**
+ * Undocumented class
+ */
 class EditeurManager implements EditeurInterface 
 {
 
@@ -73,7 +74,7 @@ class EditeurManager implements EditeurInterface
                                 mobile: {menubar: true},
                                 language : '" . language_iso(1, '', '') . "',";
 
-                        include(web_path('assets/shared/editeur/tinymce/themes/advanced/npds.conf.php'));
+                        include(shared_path('Editeur/assets/tinymce/themes/advanced/npds.conf.php'));
 
                         $tmp .= '
                                 });
@@ -82,7 +83,7 @@ class EditeurManager implements EditeurInterface
                         </script>';
                     }
                 } else {
-                    $tmp .= '<script type="text/javascript" src="'. site_url('assets/shared/editeur/tinymce/tinymce.min.js') .'"></script>';
+                    $tmp .= '<script type="text/javascript" src="'. site_url('shared/editeur/assets/tinymce/tinymce.min.js') .'"></script>';
                 }
             } else {
                 $tmp_Xzone .= $Xzone != 'custom' ? $Xzone . ',' : $Xactiv . ',';

@@ -47,7 +47,7 @@ class ComposerStaticInit0c54a28caf1dc39ea08fe28f6409d516
     public static $prefixDirsPsr4 = array (
         'Themes\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/themes',
+            0 => __DIR__ . '/../..' . '/app/themes',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
@@ -59,7 +59,7 @@ class ComposerStaticInit0c54a28caf1dc39ea08fe28f6409d516
         ),
         'Shared\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/shared',
+            0 => __DIR__ . '/../..' . '/app/shared',
         ),
         'PHPMailer\\PHPMailer\\' => 
         array (
@@ -71,7 +71,7 @@ class ComposerStaticInit0c54a28caf1dc39ea08fe28f6409d516
         ),
         'Modules\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/modules',
+            0 => __DIR__ . '/../..' . '/app/modules',
         ),
         'App\\' => 
         array (

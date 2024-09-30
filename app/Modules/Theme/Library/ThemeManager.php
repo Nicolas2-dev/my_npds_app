@@ -61,27 +61,57 @@ class ThemeManager implements ThemeInterface
      *
      * @return  [type]  [return description]
      */
-    public function lists()
+    public function lists($dir, $explode = false)
     {
-        $handle = opendir(theme_path());
+        $handle = opendir(theme_path($dir));
 
         while (false !== ($file = readdir($handle))) {
-            if (($file[0] !== '_') 
-            and (!strstr($file, '.')) 
-            //and (!strstr($file, 'themes-dynamic')) 
-            //and (!strstr($file, 'documentations')) 
-            and (!strstr($file, 'Default'))
-            and (!strstr($file, 'Backend'))
-            and (!strstr($file, 'default_')))
+            if (($file[0] !== '_') and (!strstr($file, '.'))) {
                 $themelist[] = $file;
+            }
         }
         
         natcasesort($themelist);
         
-        $themelist = implode(' ', $themelist);
+        if ($explode) {
+            $themelist = implode(' ', $themelist);
+        }
+
         closedir($handle);   
         
         return $themelist;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function skin_lists()
+    {
+        $handle = opendir(web_path('assets/skins'));
+        
+        while (false !== ($file = readdir($handle))) {
+            if (($file[0] !== '_') 
+            and (!strstr($file, '.')))  
+            {
+                $skins[] = array('name'         => $file, 
+                                'description'   => '', 
+                                'thumbnail'     => $file . '/thumbnail', 
+                                'preview'       => $file . '/', 
+                                'css'           => $file . '/bootstrap.css', 
+                                'cssMin'        => $file . '/bootstrap.min.css', 
+                                'cssxtra'       => $file . '/extra.css', 
+                                'scss'          => $file . '/_bootswatch.scss', 
+                                'scssVariables' => $file . '/_variables.scss');
+            }
+        }
+    
+        closedir($handle);
+    
+        asort($skins);
+        
+        return $skins;
     }
 
     /**
@@ -107,10 +137,11 @@ class ThemeManager implements ThemeInterface
      */
     public function theme_image($theme_img)
     {
-        $theme = with(get_instance())->template();
+        $theme      = with(get_instance())->template();
+        $theme_dir  = with(get_instance())->template_dir();
 
-        if (@file_exists(theme_path($theme .'/assets/images/'. $theme_img))) {
-            return site_url('themes/'. $theme .'/assets/images/'. $theme_img);
+        if (@file_exists(theme_path($theme_dir .'/'. $theme .'/assets/images/'. $theme_img))) {
+            return site_url('themes/'. $theme_dir .'/'. $theme .'/assets/images/'. $theme_img);
         } else {
             return false;
         }

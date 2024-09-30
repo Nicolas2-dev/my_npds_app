@@ -2,6 +2,7 @@
 
 namespace App\Modules\Users\Sform\Traits;
 
+use Npds\Http\Request;
 use Npds\Config\Config;
 use Npds\Support\Facades\DB;
 use App\Modules\Npds\Support\Facades\Language;
@@ -19,10 +20,17 @@ trait SformExtendFormulaireTrait
      */
     public function extend_formulaire()
     {
-        $users_extend = DB::table('users_extend')
-                        ->select('C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'M1', 'M2', 'T1', 'T2', 'B1')
-                        ->where('uid', $this->user['uid'])
-                        ->first();
+        if (!is_null($this->user)) {
+            $users_extend = DB::table('users_extend')
+                            ->select('C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'M1', 'M2', 'T1', 'T2', 'B1')
+                            ->where('uid', $this->user['uid'])
+                            ->first();
+        } else {
+            $users_extend = [];
+        }
+
+        $ch_lat = Config::get('geoloc.config.ch_lat');
+        $ch_lon = Config::get('geoloc.config.ch_lon');
 
         $this->sform->add_comment(
             '<div class="row">
@@ -35,7 +43,7 @@ trait SformExtendFormulaireTrait
         $this->sform->add_field(
             'C1',
             __d('users', 'Activité professionnelle'), 
-            ($users_extend['C1'] ?: ''), 
+            (!is_null($this->user) ? $users_extend['C1'] : Request::post('C1')),
             'text', 
             false, 
             100, 
@@ -52,7 +60,7 @@ trait SformExtendFormulaireTrait
         $this->sform->add_field(
             'C2', 
             __d('users', 'Code postal'), 
-            ($users_extend['C2'] ?: ''), 
+            (!is_null($this->user) ? $users_extend['C2'] : Request::post('C2')), 
             'text', 
             false, 
             5, 
@@ -69,7 +77,7 @@ trait SformExtendFormulaireTrait
         $this->sform->add_date(
             'T1', 
             __d('users', 'Date de naissance'), 
-            ($users_extend['T1'] ?: ''), 
+            (!is_null($this->user) ? $users_extend['T1'] : Request::post('T1')),
             'text', 
             '', 
             false, 
@@ -85,7 +93,7 @@ trait SformExtendFormulaireTrait
         $this->sform->add_field(
             'M2', 
             "Réseaux sociaux", 
-            ($users_extend['M2'] ?: ''), 
+            (!is_null($this->user) ? $users_extend['M2'] : Request::post('M2')),
             'hidden', 
             false
         );
@@ -107,7 +115,7 @@ trait SformExtendFormulaireTrait
         $this->sform->add_field(
             $ch_lat, 
             __d('users', 'Latitude'), 
-            ($users_extend[$ch_lat] ?: ''),
+            (!is_null($this->user) ? $users_extend[$ch_lat] : Request::post($ch_lat)),
             'text', 
             false, 
             '', 
@@ -118,7 +126,7 @@ trait SformExtendFormulaireTrait
         $this->sform->add_field(
             $ch_lon, 
             __d('users', 'Longitude'), 
-            ($users_extend[$ch_lon] ?: ''), 
+            (!is_null($this->user) ? $users_extend[$ch_lon] : Request::post($ch_lon)),
             'text', 
             false, 
             '', 

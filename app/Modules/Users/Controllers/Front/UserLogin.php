@@ -88,8 +88,8 @@ class UserLogin extends FrontController
      */
     public function submit()
     {
-        $uname  = Request::post('uname');
-        $pass   = Request::post('pass');
+        $uname  = (Request::query('uname') ?: Request::post('uname'));
+        $pass   = (Request::query('pass') ?: Request::post('pass'));
 
         if ($setinfo = DB::table('users')
                         ->select('pass', 'hashkey', 'uid', 'uname', 'storynum', 'umode', 'uorder', 'thold', 'noscore', 'ublockon', 'theme', 'commentmax', 'user_langue')
