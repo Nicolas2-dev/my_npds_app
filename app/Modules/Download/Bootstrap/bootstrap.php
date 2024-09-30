@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Download\Bootstrap\DownloadKernel;
+
+DownloadKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

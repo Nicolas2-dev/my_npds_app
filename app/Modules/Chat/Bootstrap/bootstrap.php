@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Chat\Bootstrap\ChatKernel;
+
+ChatKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

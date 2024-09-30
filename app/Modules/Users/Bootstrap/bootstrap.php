@@ -8,9 +8,9 @@
  * @version 1.0.0
  * @date    26 Septembre 2024
  */
-use App\Modules\Users\Bootstrap\ModuleUsersKernel;
+use App\Modules\Users\Bootstrap\UsersKernel;
  
-ModuleUsersKernel::aliases_loader();
+UsersKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

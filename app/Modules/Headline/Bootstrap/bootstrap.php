@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Headline\Bootstrap\HeadlineKernel;
+
+HeadlineKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

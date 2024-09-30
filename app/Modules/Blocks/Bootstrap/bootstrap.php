@@ -1,5 +1,9 @@
 <?php
 
+use App\Modules\Blocks\Bootstrap\BlocksKernel;
+
+BlocksKernel::aliases_loader();
+
 $configDir = dirname(dirname(__FILE__)) .DS;
 
 //

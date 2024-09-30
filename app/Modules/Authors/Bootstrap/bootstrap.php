@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Authors\Bootstrap\AuthorsKernel;
+
+AuthorsKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

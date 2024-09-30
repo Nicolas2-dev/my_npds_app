@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Messenger\Bootstrap\MessengerKernel;
+
+MessengerKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

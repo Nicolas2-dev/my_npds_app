@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Npds\Bootstrap\NpdsKernel;
+
+NpdsKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

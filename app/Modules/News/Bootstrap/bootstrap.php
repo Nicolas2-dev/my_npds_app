@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\News\Bootstrap\NewsKernel;
+
+NewsKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Theme\Bootstrap\ThemeKernel;
+
+ThemeKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

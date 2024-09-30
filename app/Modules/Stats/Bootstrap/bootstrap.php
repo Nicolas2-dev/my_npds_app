@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Stats\Bootstrap\StatsKernel;
+
+StatsKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

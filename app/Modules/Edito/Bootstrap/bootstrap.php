@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Edito\Bootstrap\EditoKernel;
+
+EditoKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

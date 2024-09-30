@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Groupes\Bootstrap\GroupesKernel;
+
+GroupesKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

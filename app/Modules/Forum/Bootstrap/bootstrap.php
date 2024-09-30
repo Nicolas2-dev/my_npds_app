@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Forum\Bootstrap\ForumKernel;
+
+ForumKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 
