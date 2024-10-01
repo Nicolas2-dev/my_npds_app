@@ -1,5 +1,5 @@
 {
-    "name": "nicol/revolution_16",
+    "name": "nicolas2-dev/my_npds_fram",
     "autoload": {
         "psr-4": {
             "App\\": "app/",
