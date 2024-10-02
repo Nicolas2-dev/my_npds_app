@@ -9,9 +9,9 @@ use Npds\Console\Console;
 use Npds\Session\Session;
 use Npds\Foundation\AliasLoader;
 use Npds\Events\Manager as Events;
+use Npds\Themes\Manager as Themes;
 use App\Modules\Npds\Support\Debug;
 use Npds\Modules\Manager as Modules;
-use Npds\Themes\Manager as Themes;
 use Npds\Packages\Manager as Packages;
 
 
@@ -39,6 +39,9 @@ require APPPATH .'constants.php';
 
 /** Load the System's helper functions. */
 //require NPDSPATH .'functions.php';
+
+// require APPPATH .'Support'. DS .'Helpers.php';
+// require NPDSPATH .'Support'. DS .'Helpers.php';
 
 /** Load the application Configuration. */
 require APPPATH .'config.php';

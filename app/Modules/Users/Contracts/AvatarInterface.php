@@ -27,14 +27,7 @@ interface AvatarInterface {
      *
      * @return void
      */
-    public function path();
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function url();
+    public function url($temp_user);
 
     /**
      * Undocumented function

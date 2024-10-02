@@ -61,7 +61,7 @@ class AvatarManager implements AvatarInterface
 
             $racine = Config::get('upload.config.racine');
 
-            $user_dir = $racine . $this->path() . $input['uname'] . '/';
+            $user_dir = $racine . 'app/Modules/Users/storage/users_private/' . $input['uname'] . '/';
 
             if (($suffix == 'gif') or ($suffix == 'jpg') or ($suffix == 'png') or ($suffix == 'jpeg')) {
 
@@ -78,16 +78,16 @@ class AvatarManager implements AvatarInterface
                                 $fp = fopen($rep . $user_dir . 'index.html', 'w');
                                 fclose($fp);
                             } else {
-                                $user_dir = $racine . $this->path();
+                                $user_dir = $racine . 'app/Modules/Users/storage/users_private/';
                             }
                         }
                     } else {
-                        $user_dir = $racine . $this->path();
+                        $user_dir = $racine . 'app/Modules/Users/storage/users_private/';
                     }
 
                     if ($upload->saveAs($input['uname'] . '.' . $suffix, $rep . $user_dir, 'B1', true)) {
 
-                        $user_avatar_url    = $this->url() . $input['uname'] . '/';
+                        $user_avatar_url    = 'modules/users/storage/users_private/' . $input['uname'] . '/';
                         $user_avatar        = site_url($user_avatar_url . $input['uname'] . '.' . $suffix);
                         $img_size           = @getimagesize($rep . $user_dir . $input['uname'] . '.' . $suffix);
 
@@ -120,19 +120,19 @@ class AvatarManager implements AvatarInterface
      *
      * @return void
      */
-    public function path()
+    public function url($temp_user)
     {
-        return 'app/Modules/Users/storage/users_private/';
-    }
+        $avatar_url  = site_url('assets/images/forum/avatar/' . $temp_user['user_avatar']);
 
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function url()
-    {
-        return 'modules/users/storage/users_private/';
+        if (stristr($temp_user['user_avatar'], 'users_private')) {
+            $avatar_url = $temp_user['user_avatar'];
+        } else {
+            if (method_exists(Theme::class, 'theme_image_row')) {
+                $avatar_url = Theme::theme_image_row('images/forum/avatar/' . $temp_user['user_avatar']);
+            }
+        }
+
+        return $avatar_url;
     }
 
     /**

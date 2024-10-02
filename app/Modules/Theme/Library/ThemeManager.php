@@ -12,7 +12,9 @@ use App\Modules\Theme\Library\Traits\ThemeHeaderTrait;
 use App\Modules\Blocks\Library\Traits\ThemeSideboxTrait;
 use App\Modules\Theme\Library\Traits\ThemeOnloadBodyTrait;
 
-
+/**
+ * Undocumented class
+ */
 class ThemeManager implements ThemeInterface 
 {
 
@@ -39,7 +41,7 @@ class ThemeManager implements ThemeInterface
      */
     public function __construct()
     {
-        $this->theme = with(get_instance())->template();
+        $this->theme      = with(get_instance()->template());       
     }
 
     /**
@@ -156,8 +158,9 @@ class ThemeManager implements ThemeInterface
      */
     public function theme_image_row($theme_img, $package = '')
     {
-        $theme      = with(get_instance())->template();
-        $theme_dir  = with(get_instance())->template_dir();
+        $instance   = get_instance();
+        $theme      = $instance->template();
+        $theme_dir  = $instance->template_dir();
 
         if (@file_exists(theme_path($theme_dir .'/'. $theme .'/assets/images/'. $theme_img))) {
             return site_url('themes/' .strtolower($theme_dir) .'/'. strtolower($theme) .'/assets/images/'.$theme_img);

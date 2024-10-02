@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\ReseauxSociaux\Bootstrap\ReseauxKernel;
+
+ReseauxKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

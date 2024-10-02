@@ -22,4 +22,11 @@ return array(
         'NpdsAdmin',
     ),
 
+
+    'template' => 'Npdsboost_sk',
+
+
+    'path' => theme_path('Frontend'). DS,
+
+
 );
