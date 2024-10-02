@@ -142,11 +142,17 @@ class UserMain extends FrontController
             $this->set('uname', $uname);
 
             // user outil
-            $this->set('useroutils', $this->user_outils($cookie, $user, $user_temp['uid'], $uname, $posterdata));
+            if (isset($cookie[1])) {
+                if ($uname !== $cookie[1]) {
+                    $this->set('user_links',    true);                    
+                    $this->set('user_uid',      $user_temp['uid']);                    
+                    $this->set('posterdata',    $posterdata);
+                }
+            }
 
             $this->set('reseaux_sociaux', Reseaux::reseaux_list($posterdata_extend));
 
-            if (isset($cookie[1])) {
+            if (!isset($cookie[1])) {
                 if ($uname == $cookie[1]) {
                     $this->set('personnaliser', true);
                 }
@@ -195,60 +201,6 @@ class UserMain extends FrontController
         } else {
             Url::redirect('user/login');
         }
-    }
-
-    // library UserOutils a faire !
-
-    /**
-     * Undocumented function
-     *
-     * @param [type] $cookie
-     * @param [type] $user
-     * @param [type] $uid
-     * @param [type] $uname
-     * @param [type] $posterdata
-     * @return void
-     */
-    private function user_outils($cookie, $user, $uid, $uname, $posterdata)
-    {
-        if (isset($cookie[1])) {
-           if ($uname !== $cookie[1]) {
-    
-                $useroutils = '';
-                
-                if (($user) and ($uid != 1)) {
-                    $useroutils .= '<a class=" text-primary me-3" href="'. site_url('messenger?op=instant_message&amp;to_userid=' . $posterdata["uname"]) . '" >
-                        <i class="far fa-envelope fa-2x" title="' . __d('users', 'Envoyer un message interne') . '" data-bs-toggle="tooltip"></i>
-                    </a>&nbsp;';
-                }
-    
-                if (array_key_exists('femail', $posterdata)) {
-                    if ($posterdata['femail'] != '')  {
-                        $useroutils .= '<a class=" text-primary me-3" href="mailto:' . Spam::anti_spam($posterdata['femail'], 1) . '" target="_blank" >
-                            <i class="fa fa-at fa-2x" title="' . __d('users', 'Email') . '" data-bs-toggle="tooltip"></i>
-                        </a>&nbsp;';
-                    }
-                }
-    
-                if (array_key_exists('url', $posterdata)) {
-                    if ($posterdata['url'] != '') {
-                        $useroutils .= '<a class=" text-primary me-3" href="' . $posterdata['url'] . '" target="_blank" >
-                            <i class="fas fa-external-link-alt fa-2x" title="' . __d('users', 'Visiter ce site web') . '" data-bs-toggle="tooltip"></i>
-                        </a>&nbsp;';
-                    }
-                }
-    
-                if (array_key_exists('mns', $posterdata)) {
-                    if ($posterdata['mns']) {
-                        $useroutils .= '<a class=" text-primary me-3" href="'. site_url('minisite?op=' . $posterdata['uname']) . '" target="_blank" >
-                            <i class="fa fa-desktop fa-2x" title="' . __d('users', 'Visitez le minisite') . '" data-bs-toggle="tooltip"></i>
-                        </a>&nbsp;';
-                    }
-                }
-    
-                return $useroutils;
-            }
-        }    
     }
 
 }
