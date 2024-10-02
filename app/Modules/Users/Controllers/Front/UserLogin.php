@@ -70,11 +70,9 @@ class UserLogin extends FrontController
      */
     public function login()
     {
-        $stop = Request::query('stop');
-
         $this->title(__('user login'));
 
-        $this->set('stop', $stop);
+        $this->set('stop', Request::query('stop'));
 
         if (View::exists('Modules/Users/Views/Partials/user')) {
             $this->set('user_include', View::make('Modules/Users/Views/Partials/user')->fetch());
@@ -128,9 +126,7 @@ class UserLogin extends FrontController
     
             $ip = Request::getip();
 
-            $result = DB::table('session')->where('host_addr', $ip)->where('guest', 1)->count();
-
-            if ($result == 1) {
+            if (DB::table('session')->where('host_addr', $ip)->where('guest', 1)->count() == 1) {
                 DB::table('session')->where('host_addr', $ip)->where('guest', 1)->delete();
             }
     

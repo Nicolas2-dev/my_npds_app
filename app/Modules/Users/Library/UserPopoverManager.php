@@ -2,14 +2,11 @@
 
 namespace App\Modules\Users\Library;
 
-
 use Npds\view\View;
 use Npds\Config\Config;
 use Npds\Support\Facades\DB;
 use App\Modules\Npds\Support\Facades\Auth;
-use App\Modules\Npds\Support\Facades\Spam;
 use App\Modules\Users\Support\Facades\User;
-use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Users\Support\Facades\Avatar;
 use App\Modules\Users\Contracts\UserPopoverInterface;
 use App\Modules\ReseauxSociaux\Support\Facades\Reseaux;
@@ -63,7 +60,7 @@ class UserPopoverManager implements UserPopoverInterface
                 $posterdata_extend = User::get_userdata_extend_from_id($temp_user['uid']);
                 
                 if (Config::get('reseauxsociaux.config.reseaux_actif') and $temp_user['uid'] != 1) {
-                    $my_rs = Reseaux::reseaux_list($posterdata_extend);
+                    $user_reseaux = Reseaux::reseaux_list($posterdata_extend);
                 }
 
                 if (Auth::guard('user') or Auth::autorisation(-127)) {
@@ -95,7 +92,7 @@ class UserPopoverManager implements UserPopoverInterface
                 'avatar_url'    => Avatar::url($temp_user),
 
                 // reseaux sociaux
-                'my_rs'         => (isset($my_rs) ? $my_rs : false),
+                'user_reseaux'  => (isset($user_reseaux) ? $user_reseaux : false),
             ]);        
         }
     }

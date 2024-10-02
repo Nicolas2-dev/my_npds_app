@@ -75,12 +75,12 @@
                     </li>
                 <?php endif; ?>
             <?php endif; ?>
-            <?php if ($my_rs): ?>
+            <?php if ($user_reseaux): ?>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
                 <li>
-                    <div class="mx-auto text-center" style="max-width:170px;"><?= $my_rs; ?></div>
+                    <div class="mx-auto text-center" style="max-width:170px;"><?= $user_reseaux; ?></div>
                 </li>
             <?php endif; ?>
         </ul>

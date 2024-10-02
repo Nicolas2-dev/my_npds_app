@@ -2,7 +2,6 @@
 
 namespace App\Modules\Users\Controllers\Front;
 
-use Npds\view\View;
 use Npds\Routing\Url;
 use Npds\Http\Request;
 use Npds\Config\Config;
@@ -13,7 +12,6 @@ use App\Modules\Users\Sform\SformUserNew;
 use App\Modules\Npds\Core\FrontController;
 use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Hack;
-use App\Modules\Npds\Support\Facades\Spam;
 use App\Modules\Users\Support\Facades\User;
 use App\Modules\Npds\Support\Facades\Mailer;
 use App\Modules\Theme\Support\Facades\Theme;
@@ -246,19 +244,19 @@ class UserNews extends FrontController
 
             DB::table('users_extend')->insert([
                 'uid'    => $user_id,
-                'C1'     => Request::post('C1', null),
-                'C2'     => Request::post('C2', null),
-                'C3'     => Request::post('C3', null),
-                'C4'     => Request::post('C4', null),
-                'C5'     => Request::post('C5', null),
-                'C6'     => Request::post('C6', null),
-                'C7'     => Request::post('C7', null),
-                'C8'     => Request::post('C8', null),
-                'M1'     => Request::post('M1', null),
-                'M2'     => Request::post('M2', null),
-                'T1'     => Request::post('T1', null),
-                'T2'     => Request::post('T2', null),
-                'B1'     => Request::post('B1', null),
+                'C1'     => Request::post('C1'),
+                'C2'     => Request::post('C2'),
+                'C3'     => Request::post('C3'),
+                'C4'     => Request::post('C4'),
+                'C5'     => Request::post('C5'),
+                'C6'     => Request::post('C6'),
+                'C7'     => Request::post('C7'),
+                'C8'     => Request::post('C8'),
+                'M1'     => Request::post('M1'),
+                'M2'     => Request::post('M2'),
+                'T1'     => Request::post('T1'),
+                'T2'     => Request::post('T2'),
+                'B1'     => Request::post('B1'),
             ]);
 
             $AutoRegUser = Config::get('npds.AutoRegUser');
@@ -324,19 +322,19 @@ class UserNews extends FrontController
                     }
 
                     if (isset($input['C1']) and $input['C1'] != '') {
-                        $message .= Language::aff_langue('[french]Activit&#x00E9; professionnelle[/french][english]Professional activity[/english][spanish]Actividad profesional[/spanish][german]Berufliche T&#xE4;tigkeit[/german]') . ' : ' . $input['C1'] . "\n";
+                        $message .= __d('users', 'Activité') . ' : ' . $input['C1'] . "\n";
                     }
 
                     if (isset($input['C2']) and $input['C2'] != '') {
-                        $message .= Language::aff_langue('[french]Code postal[/french][english]Postal code[/english][spanish]C&#xF3;digo postal[/spanish][german]Postleitzahl[/german]') . ' : ' . $input['C2'] . "\n";
+                        $message .= __d('users', 'Code postal') . ' : ' . $input['C2'] . "\n";
                     }
 
                     if (isset($input['T1']) and $input['T1'] != '') {
-                        $message .= Language::aff_langue('[french]Date de naissance[/french][english]Birth date[/english][spanish]Fecha de nacimiento[/spanish][german]Geburtsdatum[/german]') . ' : ' . $input['T1'] . "\n";
+                        $message .= __d('users', 'Date de naissance') . ' : ' . $input['T1'] . "\n";
                     }
 
-                    $message .= "\n\n\n" . Language::aff_langue("[french]Conform&eacute;ment aux articles 38 et suivants de la loi fran&ccedil;aise n&deg; 78-17 du 6 janvier 1978 relative &agrave; l'informatique, aux fichiers et aux libert&eacute;s, tout membre dispose d&rsquo; un droit d&rsquo;acc&egrave;s, peut obtenir communication, rectification et/ou suppression des informations le concernant.[/french][english]In accordance with Articles 38 et seq. Of the French law n &deg; 78-17 of January 6, 1978 relating to data processing, files and freedoms, any member has a right of access, can obtain communication, rectification and / or deletion of information about him.[/english][chinese]&#26681;&#25454;1978&#24180;1&#26376;6&#26085;&#20851;&#20110;&#25968;&#25454;&#22788;&#29702;&#65292;&#26723;&#26696;&#21644;&#33258;&#30001;&#30340;&#27861;&#22269;78-17&#21495;&#27861;&#24459;&#65292;&#20219;&#20309;&#25104;&#21592;&#37117;&#26377;&#26435;&#36827;&#20837;&#65292;&#21487;&#20197;&#33719;&#24471;&#36890;&#20449;&#65292;&#32416;&#27491;&#21644;/&#25110; &#21024;&#38500;&#26377;&#20851;&#20182;&#30340;&#20449;&#24687;&#12290;[/chinese][spanish]De conformidad con los art&iacute;culos 38 y siguientes de la ley francesa n &deg; 78-17 del 6 de enero de 1978, relativa al procesamiento de datos, archivos y libertades, cualquier miembro tiene derecho de acceso, puede obtener comunicaci&oacute;n, rectificaci&oacute;n y / o supresi&oacute;n de informaci&oacute;n sobre &eacute;l.[/spanish][german]Gem&auml;&szlig; den Artikeln 38 ff. Des franz&ouml;sischen Gesetzes Nr. 78-17 vom 6. Januar 1978 in Bezug auf Datenverarbeitung, Akten und Freiheiten hat jedes Mitglied ein Recht auf Zugang, kann Kommunikation, Berichtigung und / oder L&ouml;schung von Informationen &uuml;ber ihn.[/german]");
-                    $message .= "\n\n\n" . Language::aff_langue("[french]Ce message et les pi&egrave;ces jointes sont confidentiels et &eacute;tablis &agrave; l'attention exclusive de leur destinataire (aux adresses sp&eacute;cifiques auxquelles il a &eacute;t&eacute; adress&eacute;). Si vous n'&ecirc;tes pas le destinataire de ce message, vous devez imm&eacute;diatement en avertir l'exp&eacute;diteur et supprimer ce message et les pi&egrave;ces jointes de votre syst&egrave;me.[/french][english]This message and any attachments are confidential and intended to be received only by the addressee. If you are not the intended recipient, please notify immediately the sender by reply and delete the message and any attachments from your system.[/english][chinese]&#27492;&#28040;&#24687;&#21644;&#20219;&#20309;&#38468;&#20214;&#37117;&#26159;&#20445;&#23494;&#30340;&#65292;&#24182;&#19988;&#25171;&#31639;&#30001;&#25910;&#20214;&#20154;&#25509;&#25910;&#12290; &#22914;&#26524;&#24744;&#19981;&#26159;&#39044;&#26399;&#25910;&#20214;&#20154;&#65292;&#35831;&#31435;&#21363;&#36890;&#30693;&#21457;&#20214;&#20154;&#24182;&#22238;&#22797;&#37038;&#20214;&#21644;&#31995;&#32479;&#20013;&#30340;&#25152;&#26377;&#38468;&#20214;&#12290;[/chinese][spanish]Este mensaje y cualquier adjunto son confidenciales y est&aacute;n destinados a ser recibidos por el destinatario. Si no es el destinatario deseado, notif&iacute;quelo al remitente de inmediato y responda al mensaje y cualquier archivo adjunto de su sistema.[/spanish][german]Diese Nachricht und alle Anh&auml;nge sind vertraulich und sollen vom Empf&auml;nger empfangen werden. Wenn Sie nicht der beabsichtigte Empf&auml;nger sind, benachrichtigen Sie bitte sofort den Absender und antworten Sie auf die Nachricht und alle Anlagen von Ihrem System.[/german]") . "\n\n\n";
+                    $message .= "\n\n\n" . __d('users', 'Conform&eacute;ment aux articles 38 et suivants de la loi française n&deg; 78-17 du 6 janvier 1978 relative &agrave; l\'informatique, aux fichiers et aux libert&eacute;s, tout membre dispose d&rsquo; un droit d&rsquo;acc&egrave;s, peut obtenir communication, rectification et/ou suppression des informations le concernant.');
+                    $message .= "\n\n\n" . __d('users', 'Ce message et les pi&egrave;ces jointes sont confidentiels et &eacute;tablis &agrave; l\'attention exclusive de leur destinataire (aux adresses sp&eacute;cifiques auxquelles il a &eacute;t&eacute; adress&eacute;). Si vous n\'&ecirc;tes pas le destinataire de ce message, vous devez imm&eacute;diatement en avertir l\'exp&eacute;diteur et supprimer ce message et les pi&egrave;ces jointes de votre syst&egrave;me.') . "\n\n\n";
                     
                     $message .= Config::get('signat.message');
                     
@@ -363,7 +361,7 @@ class UserNews extends FrontController
                         'from_userid'   => Config::get('users.new_user.emetteur_id'),
                         'to_userid'     => $user_id,
                         'msg_time'      => date(__d('users', 'd-m-Y H:i'), time() + ((int) Config::get('npds.gmt') * 3600)),
-                        'msg_text'      => Metalang::meta_lang(AddSlashes(str_replace("\n", "<br />", Config::get('users.new_user.message')))),
+                        'msg_text'      => Metalang::meta_lang(addslashes(str_replace("\n", "<br />", Config::get('users.new_user.message')))),
                     ]);
                 }
     

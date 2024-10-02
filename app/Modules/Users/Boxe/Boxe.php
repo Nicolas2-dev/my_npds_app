@@ -32,7 +32,7 @@ function loginbox(): void
     if (!Auth::guard('user')) {
         Theme::themesidebox(
             ($block_title ?: __d('users', 'Se connecter')), 
-            View::make('Modules/Users/Views/Boxe/Boxe_Login')
+            View::make('Modules/Users/Views/Boxe/boxe_login')
         );
     }
 }
@@ -94,7 +94,7 @@ function online(): void
 
     Theme::themesidebox(
         ($block_title ?: __d('users', 'Qui est en ligne ?')), 
-        View::make('Modules/Users/Views/Boxe/Boxe_Online',
+        View::make('Modules/Users/Views/Boxe/boxe_online',
             [
                 'user'              => $user,
                 'count_msg'         => ($user ? $count_pmsg->priv_msg()->count() : 0),

@@ -45,7 +45,7 @@ use Npds\Support\Assets;
 </head>
 <body>
 
-vraiment good je peut aller chercher des layout dans les module et non dans le theme !!!!
+vraiment good je peut aller chercher des layout dans les modules et non dans le theme !!!!
 
 <!-- Content Area -->
 <?= $content; ?>

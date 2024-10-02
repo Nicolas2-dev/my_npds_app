@@ -1373,6 +1373,20 @@ if (! function_exists('autorisation'))
     }
 }
 
+if (! function_exists('guard'))
+{
+    /**
+     * Undocumented function
+     *
+     * @param [type] $auth
+     * @return void
+     */
+    function guard($auth)
+    {
+        return AuthManager::getInstance()->is_admin($auth);
+    }
+}
+
 if (! function_exists('is_admin'))
 {
     /**

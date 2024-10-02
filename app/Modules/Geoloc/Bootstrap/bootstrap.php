@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Geoloc\Bootstrap\GeolocKernel;
+
+GeolocKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

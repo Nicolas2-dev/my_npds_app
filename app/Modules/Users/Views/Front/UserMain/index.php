@@ -1,5 +1,5 @@
 <div class="d-flex flex-row flex-wrap">
-    <div class="me-2 my-auto"><img src="<?= $direktori_url; ?>" class=" rounded-circle center-block n-ava-64 align-middle" /></div>
+    <div class="me-2 my-auto"><img src="<?= $user_avatar; ?>" class=" rounded-circle center-block n-ava-64 align-middle" /></div>
     <div class="align-self-center">
         <h2><?= __d('users', 'Utilisateur'); ?><span class="d-inline-block text-muted ms-1"><?= $uname; ?></span></h2>
         <?= $useroutils; ?>
