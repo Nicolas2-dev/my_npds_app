@@ -1,0 +1,88 @@
+Exception information:
+
+           Date: Oct 02, 2024 5:52AM
+
+           Message: call_user_func_array(): Argument #1 ($callback) must be a valid callback, class App\Modules\Users\Library\UserPopoverManager does not have a method "userpopover"
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserPopover.php
+
+           Line: 17
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserPopover.php(17): call_user_func_array(Array, Array)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(57): App\Modules\Users\Support\Facades\UserPopover::__callStatic('userpopover', Array)
+#2 [internal function]: App\Controllers\Welcome->welcome()
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('welcome', Array)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(114): Npds\Routing\Router->dispatch()
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#9 {main}
+
+           ---------
+
+2024-10-02 6:03AM - Undefined variable $ch_lat in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 138
+
+2024-10-02 6:03AM - Undefined variable $ch_lat in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 138
+
+2024-10-02 6:05AM - Undefined variable $user in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 102
+
+2024-10-02 6:05AM - Undefined variable $imgtmp in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 185
+
+Exception information:
+
+           Date: Oct 02, 2024 6:14AM
+
+           Message: sort(): Argument #1 ($array) must be of type array, null given
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php
+
+           Line: 70
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php(70): sort(NULL)
+#1 [internal function]: App\Modules\Users\Library\UserPopoverManager->userpopover('user', 40, 2)
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserPopover.php(17): call_user_func_array(Array, Array)
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(57): App\Modules\Users\Support\Facades\UserPopover::__callStatic('userpopover', Array)
+#4 [internal function]: App\Controllers\Welcome->welcome()
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('welcome', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(114): Npds\Routing\Router->dispatch()
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#11 {main}
+
+           ---------
+
+2024-10-02 6:21AM - Undefined array key "M2" in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 63
+
+2024-10-02 6:26AM - Undefined variable $posterdata_extend in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 145
+
+2024-10-02 6:27AM - Undefined variable $posterdata_extend in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 145
+
+2024-10-02 6:27AM - Undefined variable $posterdata_extend in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 145
+
+2024-10-02 6:30AM - Undefined variable $my_rs in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 202
+
+2024-10-02 6:35AM - Array to string conversion in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 85
+
+2024-10-02 6:36AM - Array to string conversion in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 87
+
+2024-10-02 6:36AM - Array to string conversion in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 87
+
+2024-10-02 6:40AM - session_start(): open(c:/wamp64/tmp\sess_9ppi8e3an5chjs74k3jol3lce1, O_RDWR) failed: Permission denied (13) in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Session\Session.php on line 27
+
+2024-10-02 6:41AM - Undefined variable $my_rs in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 199
+
+2024-10-02 7:22AM - Undefined variable $vpop in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 58
+
+2024-10-02 7:25AM - Undefined variable $useroutils in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 153
+

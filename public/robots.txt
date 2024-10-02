@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: admin.php
+Disallow: /admin
+Disallow: /storage/logs
+Disallow: /storage/cache
+Allow: /storage/sitemap/sitemap.xml
+Disallow: /database/sql
+## doit etre une url absolue .!
+#Sitemap: storage/sitemap/sitemap.xml
+##
