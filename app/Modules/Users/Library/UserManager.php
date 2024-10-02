@@ -4,6 +4,7 @@ namespace App\Modules\Users\Library;
 
 use Npds\Config\Config;
 use Npds\Support\Facades\DB;
+use App\Modules\Npds\Support\Error;
 use App\Modules\Npds\Support\Facades\Auth;
 use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Npds\Support\Facades\Mailer;
@@ -80,9 +81,10 @@ class UserManager implements UserInterface
      */
     public function AutoReg()
     {
-        $user = Auth::guard('user');
-
         if (!Config::get('npds.AutoRegUser')) {
+
+            $user = Auth::guard('user'); 
+
             if (isset($user)) {
                 $cookie = explode(':', base64_decode(Auth::check('user')));
 
@@ -114,10 +116,12 @@ class UserManager implements UserInterface
     {
         $user_id = str_replace(",", "' or uid='", $user_id);
     
-        if ($user_id == 0)
-            return ("None");
+        if ($user_id == 0) {
+            return 'none';
+        }
     
-        $rowQ1 = Q_Select("SELECT uname FROM users WHERE id='$user_id'", 3600);
+        $rowQ1 = Q_Select("SELECT uname FROM users WHERE uid='$user_id'", 3600);
+        
         $modslist = '';
     
         foreach ($rowQ1 as $modnames) {
@@ -126,7 +130,7 @@ class UserManager implements UserInterface
             }
         }
     
-        return (chop($modslist));
+        return chop($modslist);
     }
     
     /**
@@ -140,19 +144,17 @@ class UserManager implements UserInterface
      */
     public function user_is_moderator($uidX, $passwordX, $forum_accessX)
     {
-        $result1 = sql_query("SELECT pass FROM users WHERE uid = '$uidX'");
-        $result2 = sql_query("SELECT level FROM users_status WHERE uid = '$uidX'");
+        $result1    = sql_query("SELECT pass FROM users WHERE uid = '$uidX'");
+        $userX      = sql_fetch_assoc($result1);
     
-        $userX = sql_fetch_assoc($result1);
+        $result2    = sql_query("SELECT level FROM users_status WHERE uid = '$uidX'");        
+        $userX      = sql_fetch_assoc($result2);
     
-        $password = $userX['pass'];
-    
-        $userX = sql_fetch_assoc($result2);
-    
-        if ((md5($password) == $passwordX) and ($forum_accessX <= $userX['level']) and ($userX['level'] > 1))
-            return ($userX['level']);
-        else
-            return (false);
+        if ((md5($userX['pass']) == $passwordX) and ($forum_accessX <= $userX['level']) and ($userX['level'] > 1)) {
+            return $userX['level'];
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -167,15 +169,17 @@ class UserManager implements UserInterface
         $sql1 = "SELECT * FROM users WHERE uid='$userid'";
         $sql2 = "SELECT * FROM users_status WHERE uid='$userid'";
     
-        if (!$result = sql_query($sql1))
-            forumerror('0016');
+        if (!$result = sql_query($sql1)) {
+            Error::code('0016');
+        }
     
-        if (!$myrow = sql_fetch_assoc($result))
+        if (!$myrow = sql_fetch_assoc($result)) {
             $myrow = array("uid" => 1);
-        else
-            $myrow = array_merge($myrow, (array)sql_fetch_assoc(sql_query($sql2)));
+        } else {
+            $myrow = array_merge($myrow, (array) sql_fetch_assoc(sql_query($sql2)));
+        }
     
-        return ($myrow);
+        return $myrow;
     }
     
     /**
@@ -190,18 +194,20 @@ class UserManager implements UserInterface
         $sql1 = "SELECT * FROM users_extend WHERE uid='$userid'";
         /*   $sql2 = "SELECT * FROM users_status WHERE uid='$userid'";
     
-        if (!$result = sql_query($sql1))  
-            forumerror('0016');
+        if (!$result = sql_query($sql1)) { 
+            Error::code('0016');
+        }
     
-        if (!$myrow = sql_fetch_assoc($result))
-            $myrow = array( "id" => 1);
-        else
-            $myrow=array_merge($myrow,(array)sql_fetch_assoc(sql_query($sql1)));
+        if (!$myrow = sql_fetch_assoc($result)) {
+            $myrow = array( "uid" => 1);
+        } else {
+            $myrow = array_merge($myrow, (array) sql_fetch_assoc(sql_query($sql1)));
+        }
         */
     
-        $myrow = (array)sql_fetch_assoc(sql_query($sql1));
+        $myrow = (array) sql_fetch_assoc(sql_query($sql1));
     
-        return ($myrow);
+        return $myrow;
     }
     
     /**
@@ -215,15 +221,24 @@ class UserManager implements UserInterface
     {
         $sql = "SELECT * FROM users WHERE uname='$username'";
     
-        if (!$result = sql_query($sql))
-            forumerror('0016');
+        if (!$result = sql_query($sql)) {
+            Error::code('0016');
+        }
     
-        if (!$myrow = sql_fetch_assoc($result))
+        if (!$myrow = sql_fetch_assoc($result)) {
             $myrow = array("uid" => 1);
+        }
     
-        return ($myrow);
+        return $myrow;
     }
 
+    /**
+     *  
+     *
+     * @param [type] $uname
+     * @param [type] $email
+     * @return void
+     */
     function userCheck($uname, $email)
     {
         $stop = '';
@@ -256,14 +271,15 @@ class UserManager implements UserInterface
             $stop = __d('users', 'Il ne peut pas y avoir d\'espace dans le surnom.');
         }
     
-        if (sql_num_rows(sql_query("SELECT uname FROM users WHERE uname='$uname'")) > 0) {
+        if (DB::table('user')->where('uname', $uname)->count() > 0) {
             $stop = __d('users', 'Erreur : cet identifiant est déjà utilisé');
         }
     
-        if ($uname != 'edituser')
-            if (sql_num_rows(sql_query("SELECT email FROM users WHERE email='$email'")) > 0) {
+        if ($uname != 'edituser') {
+            if (DB::table('user')->where('email', $email)->count() > 0) {
                 $stop = __d('users', 'Erreur : adresse Email déjà utilisée');
             }
+        }
     
         return $stop;
     }
@@ -275,29 +291,23 @@ class UserManager implements UserInterface
      *
      * @return  [type]           [return description]
      */
-    public function user_rang($user_id)
+    public function user_rang($user_uid)
     {
-        $user_rang = DB::table('users_status')->select('rang')->where('uid', $user_id)->first();
+        $rang_img = '&nbsp;';
+    
+        $user_rang = DB::table('users_status')->select('rang')->where('uid', $user_uid)->first();
 
         if ($user_rang['rang']) {
 
             if ($rank = DBQ_Select(DB::table('config')->select('rank1', 'rank2', 'rank3', 'rank4', 'rank5')->first(), 86400)) {
                 
-                if (!empty($rank['rank1'])) {
-                    $messR = 'rank' . $rank['rank'. $user_rang['rang']];
-                } else {
-                    $messR = '';
-                }
+                $messR = (!empty($rank['rank1']) ? Language::aff_langue('rank' . $rank['rank'. $user_rang['rang']]) : '');
+                
+                $rang_img = '<img src="' . Theme::theme_image_row('forum/rank/' . $user_rang['rang'] . '.png', 'forum') . '" border="0" alt="' . $messR . '" title="' . $messR . '" loading="lazy" />';
             }
- 
-            $rang_img = '<img src="' . Theme::theme_image_row('forum/rank/' . $user_rang['rang'] . '.png', 'forum') . '" border="0" alt="' . Language::aff_langue($messR) . '" title="' . Language::aff_langue($messR) . '" loading="lazy" />';
-        } else {
-            $rang_img = '&nbsp;';
-        } 
+        }
                 
         return $rang_img;
     }
-
-
 
 }

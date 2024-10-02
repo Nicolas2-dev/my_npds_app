@@ -54,7 +54,11 @@ class Welcome extends FrontController
         $filePath = $this->basePath .$viewName .'.php';
 
 
-        $rs = UserPopover::userpopover('user', 40, 64, 0);
+        $rs = UserPopover::userpopover('user', 40, 0, 64);
+        // $rs = UserPopover::userpopover('user', 40, 1, 64);
+
+        // $rs = UserPopover::userpopover('user', 40, 0);
+        // $rs = UserPopover::userpopover('user', 40, 1);
 
 $this->set('rs', $rs);
 $this->set('message', Session::message('message'));

@@ -38,13 +38,11 @@ class ReseauxManager implements ReseauxInterface
     /**
      * Undocumented function
      *
-     * @param [type] $temp_user
+     * @param [type] $posterdata_extend
      * @return void
      */
-    public function reseaux_list($temp_user)
+    public function reseaux_list($posterdata_extend)
     {
-        $posterdata_extend = User::get_userdata_extend_from_id($temp_user['uid']);
-
         if (Auth::guard('user') or Auth::autorisation(-127)) {
             if ($posterdata_extend['M2'] != '') {
 

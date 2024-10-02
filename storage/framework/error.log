@@ -86,3 +86,187 @@ Exception information:
 
 2024-10-02 7:25AM - Undefined variable $useroutils in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 153
 
+Exception information:
+
+           Date: Oct 02, 2024 16:32PM
+
+           Message: syntax error, unexpected token "}", expecting ";"
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php
+
+           Line: 170
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('F:\\Dev_Diver\\Np...')
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserPopover.php(15): Composer\Autoload\ClassLoader->loadClass('App\\Modules\\Use...')
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(57): App\Modules\Users\Support\Facades\UserPopover::__callStatic('userpopover', Array)
+#3 [internal function]: App\Controllers\Welcome->welcome()
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('welcome', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(114): Npds\Routing\Router->dispatch()
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#10 {main}
+
+           ---------
+
+2024-10-02 16:33PM - Undefined variable $my_rs in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 169
+
+2024-10-02 16:34PM - Undefined variable $avpop in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\user_popover.php on line 1
+
+2024-10-02 16:54PM - Undefined variable $useroutils in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php on line 142
+
+Exception information:
+
+           Date: Oct 02, 2024 16:56PM
+
+           Message: Too few arguments to function App\Modules\Users\Library\UserPopoverManager::userpopover(), 3 passed and exactly 4 expected
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php
+
+           Line: 53
+
+           Stack trace:
+
+           #0 [internal function]: App\Modules\Users\Library\UserPopoverManager->userpopover('user', 40, 0)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserPopover.php(17): call_user_func_array(Array, Array)
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(58): App\Modules\Users\Support\Facades\UserPopover::__callStatic('userpopover', Array)
+#3 [internal function]: App\Controllers\Welcome->welcome()
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('welcome', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(114): Npds\Routing\Router->dispatch()
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#10 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Oct 02, 2024 16:57PM
+
+           Message: Too few arguments to function App\Modules\Users\Library\UserPopoverManager::userpopover(), 3 passed and exactly 4 expected
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php
+
+           Line: 53
+
+           Stack trace:
+
+           #0 [internal function]: App\Modules\Users\Library\UserPopoverManager->userpopover('user', 40, 0)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserPopover.php(17): call_user_func_array(Array, Array)
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(58): App\Modules\Users\Support\Facades\UserPopover::__callStatic('userpopover', Array)
+#3 [internal function]: App\Controllers\Welcome->welcome()
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('welcome', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(114): Npds\Routing\Router->dispatch()
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#10 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Oct 02, 2024 16:57PM
+
+           Message: Too few arguments to function App\Modules\Users\Library\UserPopoverManager::userpopover(), 3 passed and exactly 4 expected
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php
+
+           Line: 53
+
+           Stack trace:
+
+           #0 [internal function]: App\Modules\Users\Library\UserPopoverManager->userpopover('user', 40, 0)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserPopover.php(17): call_user_func_array(Array, Array)
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(58): App\Modules\Users\Support\Facades\UserPopover::__callStatic('userpopover', Array)
+#3 [internal function]: App\Controllers\Welcome->welcome()
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('welcome', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(114): Npds\Routing\Router->dispatch()
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#10 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Oct 02, 2024 16:57PM
+
+           Message: Too few arguments to function App\Modules\Users\Library\UserPopoverManager::userpopover(), 3 passed and exactly 4 expected
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Library\UserPopoverManager.php
+
+           Line: 53
+
+           Stack trace:
+
+           #0 [internal function]: App\Modules\Users\Library\UserPopoverManager->userpopover('user', 40, 0)
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Support\Facades\UserPopover.php(17): call_user_func_array(Array, Array)
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(58): App\Modules\Users\Support\Facades\UserPopover::__callStatic('userpopover', Array)
+#3 [internal function]: App\Controllers\Welcome->welcome()
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(181): call_user_func_array(Array, Array)
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('welcome', Array)
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(114): Npds\Routing\Router->dispatch()
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#10 {main}
+
+           ---------
+
+2024-10-02 18:11PM - Undefined variable $temp_user in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\user_popover.php on line 40
+
+2024-10-02 18:11PM - Undefined variable $temp_user in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\user_popover.php on line 40
+
+2024-10-02 18:19PM - Undefined variable $temp_user in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\user_popover.php on line 54
+
+Exception information:
+
+           Date: Oct 02, 2024 18:27PM
+
+           Message: syntax error, unexpected token "endif", expecting end of file
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Users\Views\Partials\user_popover.php
+
+           Line: 96
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(267): Npds\view\View->render()
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(296): Npds\view\View->fetch()
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(251): Npds\view\View->data()
+#3 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\View\View.php(281): Npds\view\View->render()
+#4 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Core\BaseController.php(138): Npds\view\View->display()
+#5 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Core\AccessError.php(43): App\Controllers\Core\BaseController->after(Object(Npds\view\View))
+#6 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Npds\Core\FrontController.php(54): App\Modules\Npds\Core\AccessError->after(NULL)
+#7 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Controllers\Welcome.php(44): App\Modules\Npds\Core\FrontController->after(NULL)
+#8 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Core\Controller.php(184): App\Controllers\Welcome->after(NULL)
+#9 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(395): Npds\Core\Controller->execute('welcome', Array)
+#10 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(433): Npds\Routing\Router->invokeController('App\\Controllers...', 'welcome', Array)
+#11 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Routing\Router.php(481): Npds\Routing\Router->invokeObject('App\\Controllers...', Array)
+#12 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(114): Npds\Routing\Router->dispatch()
+#13 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#14 {main}
+
+           ---------
+
