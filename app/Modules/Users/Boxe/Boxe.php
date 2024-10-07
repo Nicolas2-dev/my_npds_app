@@ -96,7 +96,6 @@ function online(): void
         ($block_title ?: __d('users', 'Qui est en ligne ?')), 
         View::make('Modules/Users/Views/Boxe/boxe_online',
             [
-                'user'              => $user,
                 'count_msg'         => ($user ? $count_pmsg->priv_msg()->count() : 0),
                 'username'          => $username,
                 'guest_online_num'  => DB::table('session')->select('username')->where('guest', 1)->count(),

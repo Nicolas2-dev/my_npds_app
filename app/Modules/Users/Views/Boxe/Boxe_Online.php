@@ -3,7 +3,7 @@
     <span class="badge bg-secondary"><?= $guest_online_num; ?></span> <?= __d('users', 'visiteur(s) et'); ?> 
     <span class="badge bg-secondary"><?= $member_online_num; ?></span> <?= __d('users', 'membre(s) en ligne.'); ?>
     <br />
-    <?php if (!is_null($user)): ?>
+    <?php if (guard('user')): ?>
         <br />
         <?= __d('users', 'Vous êtes connecté en tant que ',); ?> <strong><?= $username; ?></strong>.<br />
         <?= __d('users', 'Vous avez'); ?> 

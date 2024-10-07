@@ -3,6 +3,9 @@
 namespace App\Modules\Users\Library;
 
 use Npds\Config\Config;
+use Npds\Support\Facades\DB;
+use App\Modules\Npds\Support\Facades\Auth;
+use App\Modules\Npds\Support\Facades\Cookie;
 use App\Modules\Users\Contracts\OnlineInterface;
 
 /**
@@ -52,16 +55,15 @@ class OnlineManager implements OnlineInterface
      */
     public function Who_Online_Sub()
     {
-        global $user, $cookie;
-    
         list($member_online_num, $guest_online_num) = $this->site_load();
 
         $content1 =  __d('users', '{0} visiteur(s) et {1} membre(s) en ligne.', $guest_online_num, $member_online_num);
     
-        if ($user) {
-            $content2 = __d('users', 'Vous êtes connecté en tant que <b>{0}</b>', $cookie[1]);
+        if (Auth::guard('user')) {
+
+            $content2 = __d('users', 'Vous êtes connecté en tant que <b>{0}</b>', Cookie::explode(Auth::check('user'))[1]);
         } else {
-            $content2 = __d('users', 'Devenez membre privilégié en cliquant') . ' <a href="user.php?op=only_newuser">' . __d('users', 'ici') . '</a>';
+            $content2 = __d('users', 'Devenez membre privilégié en cliquant') . ' <a href="'. site_url('user/newuser ') .'">' . __d('users', 'ici') . '</a>';
         }
     
         return array($content1, $content2);
@@ -74,27 +76,23 @@ class OnlineManager implements OnlineInterface
      */
     public function Site_Load()
     {
-        global $who_online_num;
+        $guest_online_num   = 0;
+        $member_online_num  = 0;
     
-        $guest_online_num = 0;
-        $member_online_num = 0;
-    
-        $result = sql_query("SELECT COUNT(username) AS TheCount, guest 
-                             FROM session 
-                             GROUP BY guest");
-    
-        while ($TheResult = sql_fetch_assoc($result)) {
-            if ($TheResult['guest'] == 0) {
-                $member_online_num = $TheResult['TheCount'];
+        $session_temp = DB::table('session')->select(DB::raw('count(username) AS TheCount, guest'))->groupBy('guest')->asAssoc()->get();
+
+        foreach ($session_temp as $TheResultk) {
+            if ($TheResultk['guest'] == 0) {
+                $member_online_num = $TheResultk['TheCount'];
             } else {
-                $guest_online_num = $TheResult['TheCount'];
+                $guest_online_num = $TheResultk['TheCount'];
             }
         }
     
         $who_online_num = $guest_online_num + $member_online_num;
     
         if (Config::get('SuperCache.SuperCache')) {
-            $file = fopen("storage/cache/site_load.log", "w");
+            $file = fopen(storage_path('cache/site_load.log'), 'w');
             fwrite($file, $who_online_num);
             fclose($file);
         }
@@ -109,21 +107,21 @@ class OnlineManager implements OnlineInterface
      */
     public function online_members()
     {
-        $result = sql_query("SELECT username, guest, time FROM session WHERE guest='0' ORDER BY username ASC");
+        $session_temp = DB::table('session')->select('username', 'guest', 'time')->where('guest', 0)->orderBy('username', 'asc');
 
         $i = 0; 
 
-        $members_online[$i] = sql_num_rows($result);
-    
-        while ($session = sql_fetch_assoc($result)) {
-            if (isset($session['guest']) and $session['guest'] == 0) {
+        $members_onlinef[$i] = $session_temp->count();
+
+        foreach ($session_temp->get() as $sessionf) {
+            if (isset($sessionf['guest']) and $sessionf['guest'] == 0) {
                 $i++;
-                $members_online[$i]['username'] = $session['username'];
-                $members_online[$i]['time'] = $session['time'];
+                $members_onlinef[$i]['username'] = $sessionf['username'];
+                $members_onlinef[$i]['time'] = $sessionf['time'];
             }
         }
-    
-        return $members_online;
+
+        return $members_onlinef;
     }
 
 }

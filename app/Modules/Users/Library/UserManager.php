@@ -174,7 +174,7 @@ class UserManager implements UserInterface
         }
     
         if (!$myrow = sql_fetch_assoc($result)) {
-            $myrow = array("uid" => 1);
+            $myrow = array('uid' => 1);
         } else {
             $myrow = array_merge($myrow, (array) sql_fetch_assoc(sql_query($sql2)));
         }
@@ -226,7 +226,7 @@ class UserManager implements UserInterface
         }
     
         if (!$myrow = sql_fetch_assoc($result)) {
-            $myrow = array("uid" => 1);
+            $myrow = array('uid' => 1);
         }
     
         return $myrow;

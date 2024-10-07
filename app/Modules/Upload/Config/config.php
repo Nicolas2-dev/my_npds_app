@@ -15,7 +15,7 @@ return array(
      * vous pouvez en spécifier une ici (c'est le chemin physique d'accès à la racine de votre site en partant de / ou C:\)
      * par exemple /data/web/mon_site OU c:\web\mon_site SINON LAISSER cette variable VIDE
      */
-    'DOCUMENTROOT' => 'F:/Dev_Diver/Npds/Npds_Mini/revolution_16_mini/',
+    'DOCUMENTROOT' => base_path(), //'F:/Dev_Diver/Npds/Npds_Mini/revolution_16_mini/',
 
     //'DOCUMENTROOT2' => null,
 
@@ -26,9 +26,9 @@ return array(
  
     /**
      * Sous répertoire : n'utiliser que si votre App n'est pas directement dans la racine de votre site
-     * par exemple si : www.mon_site/App/.... alors $racine="/App" (avec le / DEVANT) sinon $racine="";
+     * par exemple si : www.mon_site/App/.... alors $racine="app/" sinon $racine="";
      */
-    'racine' => '',
+    'racine' => 'app/',
 
     /**
      * Répertoire de téléchargement (avec le / terminal)

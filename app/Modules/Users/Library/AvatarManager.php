@@ -61,7 +61,7 @@ class AvatarManager implements AvatarInterface
 
             $racine = Config::get('upload.config.racine');
 
-            $user_dir = $racine . 'app/Modules/Users/storage/users_private/' . $input['uname'] . '/';
+            $user_dir = $racine . 'Modules/Users/storage/users_private/' . $input['uname'] . '/';
 
             if (($suffix == 'gif') or ($suffix == 'jpg') or ($suffix == 'png') or ($suffix == 'jpeg')) {
 
@@ -78,11 +78,11 @@ class AvatarManager implements AvatarInterface
                                 $fp = fopen($rep . $user_dir . 'index.html', 'w');
                                 fclose($fp);
                             } else {
-                                $user_dir = $racine . 'app/Modules/Users/storage/users_private/';
+                                $user_dir = $racine . 'Modules/Users/storage/users_private/';
                             }
                         }
                     } else {
-                        $user_dir = $racine . 'app/Modules/Users/storage/users_private/';
+                        $user_dir = $racine . 'Modules/Users/storage/users_private/';
                     }
 
                     if ($upload->saveAs($input['uname'] . '.' . $suffix, $rep . $user_dir, 'B1', true)) {

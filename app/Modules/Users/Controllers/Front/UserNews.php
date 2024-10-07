@@ -91,9 +91,7 @@ class UserNews extends FrontController
                 Url::redirect('user');
             }
         } else {
-            // if (file_exists("storage/static/closed.txt"))
-            //     include("storage/static/closed.txt");
-            Url::redirect('site/closed'); // Note a finaliser !!!!
+            Url::redirect('site/closed'); 
         }
     }
 
