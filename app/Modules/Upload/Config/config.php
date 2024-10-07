@@ -15,7 +15,7 @@ return array(
      * vous pouvez en spécifier une ici (c'est le chemin physique d'accès à la racine de votre site en partant de / ou C:\)
      * par exemple /data/web/mon_site OU c:\web\mon_site SINON LAISSER cette variable VIDE
      */
-    'DOCUMENTROOT' => base_path(), //'F:/Dev_Diver/Npds/Npds_Mini/revolution_16_mini/',
+    'DOCUMENTROOT' => base_path(),
 
     //'DOCUMENTROOT2' => null,
 
