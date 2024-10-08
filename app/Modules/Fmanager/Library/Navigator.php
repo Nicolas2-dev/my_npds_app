@@ -1,34 +1,37 @@
 <?php
 
-/************************************************************************/
-/* DUNE by App                                                         */
-/* ===========================                                          */
-/*                                                                      */
-/* App Copyright (c) 2002-2024 by Philippe Brunier                     */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
+namespace App\Modules\Fmanager\Library;
 
-// Constantes
-define('DateFormat', __d('fmanager', 'dateinternal'));
-
+/**
+ * Undocumented class
+ */
 class Navigator
 {
-    // Vars
-    var $GetDirSz;
 
-    var $CurDir;
+    /**
+     * 
+     */
+    private $GetDirSz;
 
-    var $DirsList  =  array(
+    /**
+     * 
+     */
+    private $CurDir;
+
+    /**
+     * 
+     */
+    private $DirsList  =  array(
         "Name" => array(),
         "DateM" => array(),
         "Size" => array(),
         "Perms" => array()
     );
 
-    var $FilesList =  array(
+    /**
+     * 
+     */
+    private $FilesList =  array(
         "Name" => array(),
         "DateM" => array(),
         "Size" => array(),
@@ -36,35 +39,82 @@ class Navigator
         "View" => array()
     );
 
-    var $Handle;
+    /**
+     * 
+     */
+    private $Handle;
 
-    var $Errors;
+    /**
+     * 
+     */
+    private $Errors;
 
-    var $Path;
+    /**
+     * 
+     */
+    private $Path; 
 
-    var $OrderArrD = array();
+    /**
+     * 
+     */
+    private $OrderArrD = array();
 
-    var $OrderArrF = array();
+    /**
+     * 
+     */
+    private $OrderArrF = array();
 
-    var $PointerPosD;
+    /**
+     * 
+     */
+    private $PointerPosD;
 
-    var $PointerPosF;
+    /**
+     * 
+     */
+    private $PointerPosF;
 
-    var $Extension = array();
+    /**
+     * 
+     */
+    private $Extension = array();
 
-    var $FieldName;
+    /**
+     * 
+     */
+    private $FieldName; 
 
-    var $FieldDate;
+    /**
+     * 
+     */
+    private $FieldDate; 
 
-    var $FieldSize;
+    /**
+     * 
+     */
+    private $FieldSize; 
 
-    var $FieldPerms;
+    /**
+     * 
+     */
+    private $FieldPerms; 
 
-    var $FieldView;
+    /**
+     * 
+     */
+    private $FieldView; 
 
 
-    // Constructor
-    function File_Navigator($parm, $sort_filed = "N", $dir = "ASC", $DirSize = false)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $parm
+     * @param string $sort_filed
+     * @param string $dir
+     * @param boolean $DirSize
+     * @return void
+     */
+    public function __construct($parm, $sort_filed = "N", $dir = "ASC", $DirSize = false)
     {
         if (!isset($parm)) 
             $parm = ".";
@@ -91,8 +141,12 @@ class Navigator
             return (false);
     }
 
-    // load directories list and files list
-    function LoadList()
+    /**
+     * load directories list and files list
+     *
+     * @return void
+     */
+    public function LoadList()
     {
         while (false !== ($file = readdir($this->Handle))) {
             if (@is_dir($file) && $file != "." && $file != "..") {
@@ -116,8 +170,13 @@ class Navigator
         }
     }
 
-    // convert permission to string like -rwxr-xr-- (755)
-    function GetPerms($file)
+    /**
+     * convert permission to string like -rwxr-xr-- (755)
+     *
+     * @param [type] $file
+     * @return void
+     */
+    public function GetPerms($file)
     {
         switch (filetype($file)) {
             case "dir";
@@ -183,7 +242,13 @@ class Navigator
         return ($tab);
     }
 
-    function PresPerms($ibid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $ibid
+     * @return void
+     */
+    public function PresPerms($ibid)
     {
         if ($ibid[0] == 766 or $ibid[0] == 777) 
             $ibid[0] = '<span class="text-success">' . $ibid[0] . '</span>';
@@ -191,12 +256,23 @@ class Navigator
         return ("$ibid[0]&nbsp;($ibid[1])");
     }
 
-    function LastUpdate($file)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $file
+     * @return void
+     */
+    public function LastUpdate($file)
     {
         return date(DateFormat, filemtime($file));
     }
 
-    function NextFile()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function NextFile()
     {
         if (isset($this->OrderArrF)) {
             $keyz = array_keys($this->OrderArrF);
@@ -217,7 +293,12 @@ class Navigator
         } else return false;
     }
 
-    function NextDir()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function NextDir()
     {
         if (isset($this->OrderArrD)) {
             $keyz = array_keys($this->OrderArrD);
@@ -236,8 +317,14 @@ class Navigator
         } else return false;
     }
 
-    // sort the files list
-    function SortListF($what, $direction = "ASC")
+    /**
+     * sort the files list
+     *
+     * @param [type] $what
+     * @param string $direction
+     * @return void
+     */
+    public function SortListF($what, $direction = "ASC")
     {
         unset($this->OrderArrF);
 
@@ -302,12 +389,17 @@ class Navigator
                 elseif (isset($this->OrderArrF)) 
                     krsort($this->OrderArrF);
                 break;
-                //----------------------------------
         }
     }
-
-    // sort the dirs list
-    function SortListD($what, $direction = "ASC")
+ 
+    /**
+     * sort the dirs list
+     *
+     * @param [type] $what
+     * @param string $direction
+     * @return void
+     */
+    public function SortListD($what, $direction = "ASC")
     {
         unset($this->OrderArrD);
 
@@ -369,9 +461,14 @@ class Navigator
                 //----------------------------------
         }
     }
-
-    // return element's number  what: d total dirs, f: total files
-    function Count($what = "")
+ 
+    /**
+     * return element's number  what: d total dirs, f: total files
+     *
+     * @param string $what
+     * @return void
+     */
+    public function Count($what = "")
     {
         switch ($what) {
             case "d":
@@ -388,14 +485,23 @@ class Navigator
         }
     }
 
-    // current directory
-    function Pwd()
+    /**
+     * current directory
+     *
+     * @return void
+     */
+    public function Pwd()
     {
         return (getcwd());
     }
 
-    // get all directory size
-    function GetDirSize($dir)
+    /**
+     * get all directory size
+     *
+     * @param [type] $dir
+     * @return string
+     */
+    public function GetDirSize($dir)
     {
         $total = 0;
 
@@ -418,8 +524,14 @@ class Navigator
         return $total;
     }
 
-    // get all files in all directoies that contain $search
-    function SearchFile($dir, $search)
+    /**
+     * get all files in all directoies that contain $search
+     *
+     * @param [type] $dir
+     * @param [type] $search
+     * @return void
+     */
+    public function SearchFile($dir, $search)
     {
         $dossier = opendir($dir);
         $list = "";
@@ -449,8 +561,13 @@ class Navigator
         return $list;
     }
 
-    // get all directory in a string separated by |
-    function GetDirArbo($dir)
+    /**
+     * get all directory in a string separated by |
+     *
+     * @param [type] $dir
+     * @return void
+     */    
+    public function GetDirArbo($dir)
     {
         $dossier = @opendir($dir);
         $ibid = "";
@@ -469,8 +586,14 @@ class Navigator
         return ($ibid);
     }
 
-    // chmod
-    function ChgPerms($file, $perms = '644')
+    /**
+     * chmod
+     *
+     * @param [type] $file
+     * @param string $perms
+     * @return void
+     */
+    public function ChgPerms($file, $perms = '644')
     {
         if ($perms == 400)
             $ibid = @chmod($file, 0400);
@@ -520,8 +643,14 @@ class Navigator
             return (true);
     }
 
-    // renaming
-    function Rename($old, $new)
+    /**
+     * renaming
+     *
+     * @param [type] $old
+     * @param [type] $new
+     * @return void
+     */
+    public function Rename($old, $new)
     {
         if (file_exists($old)) {
             if (!file_exists($new)) 
@@ -538,8 +667,14 @@ class Navigator
             return (true);
     }
 
-    // moving
-    function Move($old, $new)
+    /**
+     * moving
+     *
+     * @param [type] $old
+     * @param [type] $new
+     * @return void
+     */
+    public function Move($old, $new)
     {
         if (file_exists($old)) {
             if (!file_exists($new)) 
@@ -556,8 +691,14 @@ class Navigator
             return (true);
     }
 
-    // copying
-    function Copy($old, $new)
+    /**
+     * copying
+     *
+     * @param [type] $old
+     * @param [type] $new
+     * @return void
+     */
+    public function Copy($old, $new)
     {
         if (file_exists($old)) {
             if (!file_exists($new)) 
@@ -579,8 +720,14 @@ class Navigator
             return (true);
     }
 
-    // Create file/dir
-    function Create($what, $name)
+    /**
+     * Create file/dir
+     *
+     * @param [type] $what
+     * @param [type] $name
+     * @return void
+     */
+    public function Create($what, $name)
     {
         @umask("0000");
 
@@ -610,8 +757,13 @@ class Navigator
             return (true);
     }
 
-    // remove a file
-    function Remove($file)
+    /**
+     * remove a file
+     *
+     * @param [type] $file
+     * @return void
+     */
+    public function Remove($file)
     {
         if (is_file($file)) {
             if (!@unlink($file))
@@ -624,8 +776,13 @@ class Navigator
             return (true);
     }
 
-    // remove directory
-    function RemoveDir($dir)
+    /**
+     * remove directory
+     *
+     * @param [type] $dir
+     * @return void
+     */
+    public function RemoveDir($dir)
     {
         if ($handle = @opendir($dir)) {
             closedir($handle);
@@ -639,9 +796,14 @@ class Navigator
         else 
             return (true);
     }
-
-    // convert size to KB, MB, GB
-    function ConvertSize($sz)
+ 
+    /**
+     * convert size to KB, MB, GB
+     *
+     * @param [type] $sz
+     * @return void
+     */
+    public function ConvertSize($sz)
     {
         if ($sz >= 1073741824) {
             $sz = round($sz / 1073741824 * 100) / 100 . " Gb";

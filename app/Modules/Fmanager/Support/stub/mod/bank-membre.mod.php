@@ -1,15 +1,6 @@
 <?php
 
-/************************************************************************/
-/* App DUNE : Net Portal Dynamic System .                              */
-/* ===========================                                          */
-/*                                                                      */
-/* This version name App Copyright (c) 2001-2024 by Philippe Brunier   */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
+use Npds\Config\Config;
 
 // cette variable fonctionne si $url_fma_modifier=true;
 // $url_modifier permet de modifier le comportement du lien (a href ....) se trouvant sur les fichiers affichés par FMA
