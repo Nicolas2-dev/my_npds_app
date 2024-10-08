@@ -7,7 +7,7 @@ use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Password;
 use App\Modules\Authors\Support\Facades\Author as L_Author;
 
-class AdminAddAuthor extends AdminController
+class AuthorAdd extends AdminController
 {
 
     /**

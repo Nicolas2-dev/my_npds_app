@@ -5,7 +5,7 @@ namespace App\Modules\Authors\Controllers\Admin;
 use App\Modules\Authors\Models\Author;
 use App\Modules\Npds\Core\AdminController;
 
-class AdminDeleteConfAuthor extends AdminController
+class AuthorDeleteConf extends AdminController
 {
 
     /**

@@ -6,7 +6,7 @@ use Npds\Config\Config;
 use App\Modules\Npds\Support\Facades\Css;
 use App\Modules\Npds\Core\AdminController;
 
-class AdminAuthors extends AdminController
+class Authors extends AdminController
 {
 
     /**

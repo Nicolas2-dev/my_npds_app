@@ -11,7 +11,7 @@ use App\Modules\Npds\Support\Facades\Mailer;
 use App\Modules\Npds\Support\Facades\Password;
 use App\Modules\Authors\Support\Facades\Author as L_Author;
 
-class AdminUpdateAuthor extends AdminController
+class AuthorUpdate extends AdminController
 {
 
     /**
