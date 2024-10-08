@@ -8,7 +8,7 @@ use App\Modules\npds\Core\AdminController;
 /**
  * Undocumented class
  */
-class AdminMblock extends AdminController
+class BlockMember extends AdminController
 {
 
     /**

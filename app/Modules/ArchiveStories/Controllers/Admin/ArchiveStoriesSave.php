@@ -8,7 +8,7 @@ use Npds\Session\Session;
 use App\Modules\Npds\Support\ConfigSave;
 use App\Modules\Npds\Core\AdminController;
 
-class AdminArchiveStoriesSave extends AdminController
+class ArchiveStoriesSave extends AdminController
 {
 
     /**

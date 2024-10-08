@@ -9,7 +9,7 @@ use App\Modules\Npds\Support\Facades\Language;
 /**
  * Undocumented class
  */
-class Admin extends AdminController
+class Banners extends AdminController
 {
 
     /**

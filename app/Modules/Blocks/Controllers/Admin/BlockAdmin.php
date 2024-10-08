@@ -9,7 +9,7 @@ use App\Modules\Npds\Support\Facades\Css;
 /**
  * Undocumented class
  */
-class AdminaBlock extends AdminController
+class BlockAdmin extends AdminController
 {
 
     /**

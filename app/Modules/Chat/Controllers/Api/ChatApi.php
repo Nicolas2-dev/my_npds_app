@@ -5,7 +5,7 @@ namespace App\Controllers\Api;
 use App\Controllers\Core\FrontController;
 
 
-class ApiPowerpack extends FrontController
+class ChatApi extends FrontController
 {
 
 

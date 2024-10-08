@@ -5,7 +5,7 @@ namespace App\Modules\Users\Controllers\Admin;
 use App\Modules\Npds\Core\AdminController;
 
 
-class AdminEmailUser extends AdminController
+class UserEmail extends AdminController
 {
 /**
      * [$pdst description]

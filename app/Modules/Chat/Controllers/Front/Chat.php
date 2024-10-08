@@ -5,7 +5,7 @@ namespace App\Controllers\Front;
 use App\Controllers\Core\FrontController;
 
 
-class FrontChat extends FrontController
+class Chat extends FrontController
 {
 
 

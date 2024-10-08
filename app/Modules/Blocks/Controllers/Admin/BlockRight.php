@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Blocks\Controllers\Admin;
+namespace App\Modules\blocks\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
 
 /**
  * Undocumented class
  */
-class AdminLblock extends AdminController
+class blockright extends AdminController
 {
 
     /**
@@ -96,8 +96,8 @@ class AdminLblock extends AdminController
         // //<== controle droit
         
 
-        // $hlpfile = "language/manuels/Config::get('npds.language')/leftblocks.html";
-  
+        // $hlpfile = "language/manuels/Config::get('npds.language')/rightblocks.html";
+
         // settype($css, 'integer');
 
         // $Mmember = isset($Mmember) ? $Mmember : '';
@@ -106,25 +106,25 @@ class AdminLblock extends AdminController
         // settype($SHTML, 'string');
         
         // switch ($op) {
-        //     case 'makelblock':
-        //         makelblock($title, $xtext, $members, $Mmember, $index, $Scache, $Baide, $SHTML, $css);
+        //     case 'makerblock':
+        //         makerblock($title, $xtext, $members, $Mmember, $index, $Scache, $Baide, $SHTML, $css);
         //         break;
         
-        //     case 'deletelblock':
-        //         deletelblock($id);
+        //     case 'deleterblock':
+        //         deleterblock($id);
         //         break;
         
-        //     case 'changelblock':
-        //         changelblock($id, $title, $content, $members, $Mmember, $Lindex, $Scache, $Sactif, $BLaide, $css);
+        //     case 'changerblock':
+        //         changerblock($id, $title, $content, $members, $Mmember, $Rindex, $Scache, $Sactif, $BRaide, $css);
         //         break;
                 
-        //     case 'droitelblock':
-        //         changedroitelblock($id, $title, $content, $members, $Mmember, $Lindex, $Scache, $Sactif, $BLaide, $css);
+        //     case 'gaucherblock':
+        //         changegaucherblock($id, $title, $content, $members, $Mmember, $Rindex, $Scache, $Sactif, $BRaide, $css);
         //         break;
         // }
     // }
 
-    function makelblock($title, $content, $members, $Mmember, $Lindex, $Scache, $BLaide, $SHTML, $css)
+    function makerblock($title, $content, $members, $Mmember, $Rindex, $Scache, $BRaide, $SHTML, $css)
     {
         
     
@@ -135,24 +135,24 @@ class AdminLblock extends AdminController
                 $members = 1;
         }
     
-        if (empty($Lindex)) 
-            $Lindex = 0;
+        if (empty($Rindex)) 
+            $Rindex = 0;
     
         $title = stripslashes(FixQuotes($title));
         $content = stripslashes(FixQuotes($content));
     
         if ($SHTML != 'ON')
-            $content = strip_tags(str_replace('<br />', '\n', $content));
+            $content = strip_tags(str_replace('<br />', "\n", $content));
     
-        sql_query("INSERT INTO lblocks VALUES (NULL,'$title','$content','$members', '$Lindex', '$Scache', '1','$css', '$BLaide')");
+        sql_query("INSERT INTO rblocks VALUES (NULL,'$title','$content', '$members', '$Rindex', '$Scache', '1', '$css', '$BRaide')");
     
         global $aid;
-        Ecr_Log('security', "MakeLeftBlock(" . aff_langue($title) . ") by AID : $aid", "");
+        Ecr_Log('security', "MakeRightBlock(" . aff_langue($title) . ") by AID : $aid", '');
     
         Header("Location: admin.php?op=blocks");
     }
     
-    function changelblock($id, $title, $content, $members, $Mmember, $Lindex, $Scache, $Sactif, $BLaide, $css)
+    function changerblock($id, $title, $content, $members, $Mmember, $Rindex, $Scache, $Sactif, $BRaide, $css)
     {
         
     
@@ -163,8 +163,8 @@ class AdminLblock extends AdminController
                 $members = 1;
         }
     
-        if (empty($Lindex)) 
-            $Lindex = 0;
+        if (empty($Rindex)) 
+            $Rindex = 0;
     
         $title = stripslashes(FixQuotes($title));
     
@@ -173,23 +173,16 @@ class AdminLblock extends AdminController
         else 
             $Sactif = 0;
     
-        if ($css) 
-            $css = 1;
-        else 
-            $css = 0;
-    
         $content = stripslashes(FixQuotes($content));
-        $BLaide = stripslashes(FixQuotes($BLaide));
-    
-        sql_query("UPDATE lblocks SET title='$title', content='$content', member='$members', Lindex='$Lindex', cache='$Scache', actif='$Sactif', aide='$BLaide', css='$css' WHERE id='$id'");
+        sql_query("UPDATE rblocks SET title='$title', content='$content', member='$members', Rindex='$Rindex', cache='$Scache', actif='$Sactif', css='$css', aide='$BRaide' WHERE id='$id'");
     
         global $aid;
-        Ecr_Log('security', "ChangeLeftBlock(" . aff_langue($title) . " - $id) by AID : $aid", '');
+        Ecr_Log('security', "ChangeRightBlock(" . aff_langue($title) . " - $id) by AID : $aid", '');
     
         Header("Location: admin.php?op=blocks");
     }
     
-    function changedroitelblock($id, $title, $content, $members, $Mmember, $Lindex, $Scache, $Sactif, $BLaide, $css)
+    function changegaucherblock($id, $title, $content, $members, $Mmember, $Rindex, $Scache, $Sactif, $BRaide, $css)
     {
         
     
@@ -200,42 +193,35 @@ class AdminLblock extends AdminController
                 $members = 1;
         }
     
-        if (empty($Lindex)) {
-            $Lindex = 0;
-        }
+        if (empty($Rindex)) 
+            $Rindex = 0;
     
         $title = stripslashes(FixQuotes($title));
     
         if ($Sactif == 'ON') 
             $Sactif = 1;
-        else    
+        else 
             $Sactif = 0;
     
-        if ($css) 
-            $css = 1;
-        else 
-            $css = 0;
-    
         $content = stripslashes(FixQuotes($content));
-        $BLaide = stripslashes(FixQuotes($BLaide));
     
-        sql_query("INSERT INTO rblocks VALUES (NULL,'$title','$content', '$members', '$Lindex', '$Scache', '$Sactif', '$css', '$BLaide')");
-        sql_query("DELETE FROM lblocks WHERE id='$id'");
+        sql_query("INSERT INTO lblocks VALUES (NULL,'$title','$content','$members', '$Rindex', '$Scache', '$Sactif', '$css', '$BRaide')");
+        sql_query("DELETE FROM rblocks WHERE id='$id'");
     
         global $aid;
-        Ecr_Log('security', "MoveLeftBlockToRight(" . aff_langue($title) . " - $id) by AID : $aid", '');
+        Ecr_Log('security', "MoveRightBlockToLeft(" . aff_langue($title) . " - $id) by AID : $aid", '');
     
         Header("Location: admin.php?op=blocks");
     }
     
-    function deletelblock($id)
+    function deleterblock($id)
     {
         
     
-        sql_query("DELETE FROM lblocks WHERE id='$id'");
+        sql_query("DELETE FROM rblocks WHERE id='$id'");
     
         global $aid;
-        Ecr_Log('security', "DeleteLeftBlock($id) by AID : $aid", '');
+        Ecr_Log('security', "DeleteRightBlock($id) by AID : $aid", '');
     
         Header("Location: admin.php?op=blocks");
     }

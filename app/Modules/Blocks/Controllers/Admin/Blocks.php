@@ -8,7 +8,7 @@ use App\Modules\Npds\Support\Facades\Css;
 /**
  * Undocumented class
  */
-class AdminBlock extends AdminController
+class Blocks extends AdminController
 {
 
     /**

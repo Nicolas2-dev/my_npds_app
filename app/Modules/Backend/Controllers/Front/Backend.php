@@ -9,7 +9,7 @@ use App\Modules\Npds\Support\Facades\Date;
 use App\Modules\Npds\Support\Facades\Language;
 use App\Modules\Npds\Support\Facades\Metalang;
 
-class FrontBackend extends FrontController
+class Backend extends FrontController
 {
 
     /**

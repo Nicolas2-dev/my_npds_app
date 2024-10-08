@@ -7,7 +7,7 @@ use Npds\Session\Session;
 use App\Modules\Npds\Support\Facades\Css;
 use App\Modules\Npds\Core\AdminController;
 
-class AdminArchiveStories extends AdminController
+class ArchiveStories extends AdminController
 {
 
     /**

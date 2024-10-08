@@ -13,7 +13,7 @@ use App\Modules\Npds\Support\Facades\Language;
 /**
  * Undocumented class
  */
-class Front extends FrontController
+class Banners extends FrontController
 {
 
     /**
