@@ -10,7 +10,6 @@ use App\Modules\Npds\Support\Facades\Css;
 use App\Modules\Npds\Core\FrontController;
 use App\Modules\Npds\Support\Facades\Cookie;
 
-
 /**
  * [UserLogin description]
  */
@@ -71,7 +70,6 @@ class AuthorLogin extends FrontController
         $this->title(__d('authors', 'Administration login'));
 
         $this->set('adminfoot', Css::adminfoot('fv', '', 'var formulid = ["adminlogin"];', ''));
-
     }
 
     /**
@@ -145,23 +143,6 @@ class AuthorLogin extends FrontController
         } else {
             Url::redirect('admin/login');
         }
-    }
-
-    /**
-     * [logout description]
-     *
-     * @return  [type]  [return description]
-     */
-    public function logout()
-    {
-        global $admin;
-
-        Cookie::set("admin");
-        Cookie::set("adm_exp");
-        
-        unset($admin);
-                    
-        Url::redirect('index');
-    }    
+    }   
 
 }

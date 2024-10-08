@@ -19,6 +19,8 @@ use App\Modules\Npds\Support\Facades\Language;
  */
 function adminblock()
 {
+    global $block_title;
+
     if (Auth::guard('admin')) {
 
         $admin = Auth::check('admin');
@@ -77,31 +79,31 @@ function adminblock()
 
         $block = DB::table('block')->select('title', 'content')->find(2);
 
-        global $block_title;
-        $title = $block['title'] == '' ? $block_title : aff_langue($block['title']);
+        Theme::themesidebox(
+            $block['title'] = '' ? $block_title : Language::aff_langue($block['title']), 
+            View::make('Modules/Authors/Views/Boxe/AdminBlock', 
+                [
+                    //
+                    'content'       => Language::aff_langue(
+                                            preg_replace_callback(
+                                                '#<a href=[^>]*(&)[^>]*>#', 
+                                                [Sanitize::class, 'changetoampadm'], 
+                                                $block['content']
+                                            )
+                                        ),
+                    //
+                    'radminsuper'   => $Q['radminsuper'],
 
-        Theme::themesidebox($title, View::make('Modules/Authors/Views/Boxe/AdminBlock', 
-            [
-                //
-                'content'       => Language::aff_langue(
-                                        preg_replace_callback(
-                                            '#<a href=[^>]*(&)[^>]*>#', 
-                                            [Sanitize::class, 'changetoampadm'], 
-                                            $block['content']
-                                        )
-                                    ),
-                //
-                'radminsuper'   => $Q['radminsuper'],
+                    // 
+                    'bloc_foncts_A' => $bloc_foncts_A,
 
-                // 
-                'bloc_foncts_A' => $bloc_foncts_A,
+                    //
+                    'alert_npds'    => AlertNpds::display(),
 
-                //
-                'alert_npds'    => AlertNpds::display(),
-
-                //
-                'aid'           => $aid
-            ]
-        ));
+                    //
+                    'aid'           => $aid
+                ]
+            )
+        );
     }
 }

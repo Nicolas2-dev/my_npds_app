@@ -10,4 +10,4 @@ Router::get('admin/login', 'App\Modules\Authors\Controllers\Front\AuthorLogin@lo
 Router::post('admin/login/submit', 'App\Modules\Authors\Controllers\Front\AuthorLogin@submit');
 
 // logout
-Router::get('admin/logout', 'App\Modules\Authors\Controllers\Front\AuthorLogin@logout');
+Router::get('admin/logout', 'App\Modules\Authors\Controllers\Front\AuthorLogout@logout');

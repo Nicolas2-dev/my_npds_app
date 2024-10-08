@@ -1,10 +1,11 @@
 <?php
 
+// a faire disparaitre !
+
 /**
  * [description]
  */
 define('ENVIRONMENT', 'development');
-
 
 /**
  * Set a default language.

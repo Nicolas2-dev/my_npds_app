@@ -34,17 +34,3 @@ require BASEPATH.'vendor'.DS.'autoload.php';
 
 //
 require APPPATH .'Bootstrap'.DS.'Bootstrap.php';
-
-
-// echo BASEPATH.'<br />';
-// echo WEBPATH.'<br />';
-// echo APPPATH.'<br />';
-// echo NPDSPATH.'<br />';
-// echo MODULEPATH.'<br />';
-// echo THEMEPATH.'<br />';
-
-// echo '<br />';
-
-// vd(Config::all());
-
-// echo 'good !!!';
