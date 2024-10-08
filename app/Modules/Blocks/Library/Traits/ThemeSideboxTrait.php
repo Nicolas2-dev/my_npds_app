@@ -60,11 +60,11 @@ trait ThemeSideboxTrait
         }
     
         $App_METALANG_words = array(
-            "'!B_title!'i" => $title,
-            "'!B_class_title!'i" => $B_class_title,
-            "'!B_class_content!'i" => $B_class_content,
-            "'!B_content!'i" => $content,
-            "'!site_url!'i" => Config::get('npds.nuke_url'),
+            "'!B_title!'i"          => $title,
+            "'!B_class_title!'i"    => $B_class_title,
+            "'!B_class_content!'i"  => $B_class_content,
+            "'!B_content!'i"        => $content,
+            "'!site_url!'i"         => Config::get('npds.nuke_url'),
         );
     
         echo $htvar; 

@@ -13,12 +13,12 @@
 /* it under the terms of the GNU General Public License as published by */
 /* the Free Software Foundation; either version 3 of the License.       */
 /************************************************************************/
-if (!function_exists("Mysql_Connexion")) {
-    include("mainfile.php");
-}
+// if (!function_exists("Mysql_Connexion")) {
+//     include("mainfile.php");
+// }
 
-include("modules/push/language/push-lang-Config::get('npds.language').php");
-include("push.conf.php");
+// include("modules/push/language/push-lang-Config::get('npds.language').php");
+// include("push.conf.php");
 
 function push_menu()
 {
@@ -91,7 +91,7 @@ function push_news()
     global $push_news_limit;
     
 
-    settype($push_news_limit, "integer");
+    // settype($push_news_limit, "integer");
 
     $result = sql_query("SELECT sid, title, ihome, catid FROM stories ORDER BY sid DESC limit $push_news_limit");
 
@@ -270,8 +270,8 @@ function push_members()
     $offset = 0;
     $count_user = 0;
 
-    settype($page, "integer");
-    settype($push_member_limit, "integer");
+    // settype($page, "integer");
+    // settype($push_member_limit, "integer");
 
     $result = sql_query("SELECT uname FROM users ORDER BY uname ASC LIMIT $page,$push_member_limit");
 
@@ -410,7 +410,7 @@ function viewlink_show($cid, $min)
         echo "document.write('<br />');\n";
     }
 
-    settype($min, "integer");
+    // settype($min, "integer");
 
     $result = sql_query("SELECT lid, title FROM links_links WHERE cid='$cid' AND sid=0 ORDER BY $orderby LIMIT $min,Config::get('npds.perpage')");
     $fullcountresult = sql_query("SELECT lid, title FROM links_links WHERE cid='$cid' AND sid=0");

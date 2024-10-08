@@ -1,7 +1,9 @@
 <?php
 
-
-return array(
+/**
+ * 
+ */
+return [
 
     /**
     * Temps de rétention cache en secondes
@@ -9,12 +11,16 @@ return array(
     */
     'archivestsories'  => [
 
-        //
+        /**
+         * 
+         */
         'querys'  => 'admin/archive',
 
-        //
+        /**
+         * 
+         */
         'timings'  => 83000,
 
     ],
 
-);
+];

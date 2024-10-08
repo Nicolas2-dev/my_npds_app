@@ -1,21 +1,21 @@
 <?php
 
 
-if (!function_exists("Mysql_Connexion"))
-    die();
+// if (!function_exists("Mysql_Connexion"))
+//     die();
 
 
-include('auth.php');
-include('modules/geoloc/geoloc_locip.php');
+// include('auth.php');
+// include('modules/geoloc/geoloc_locip.php');
 
-filtre_module($file_name);
+// filtre_module($file_name);
 
-if (file_exists("modules/comments/$file_name.conf.php"))
-    include("modules/comments/$file_name.conf.php");
-else
-    die();
+// if (file_exists("modules/comments/$file_name.conf.php"))
+//     include("modules/comments/$file_name.conf.php");
+// else
+//     die();
 
-settype($forum, 'integer');
+// settype($forum, 'integer');
 
 if ($forum >= 0)
     die();
@@ -63,7 +63,7 @@ if ($Mmod) {
             break;
 
         case 'viewip':
-            include("header.php");
+            // include("header.php");
 
             $sql = "SELECT u.uname, p.poster_ip, p.poster_dns FROM users u, posts p WHERE p.post_id = '$post' AND u.uid = p.poster_id";
             
@@ -103,7 +103,7 @@ if ($Mmod) {
             </div>
             <p><a href="' . rawurldecode($url_ret) . '" class="btn btn-secondary">' . __d('comments', 'Retour en arrière') . '</a></p>';
 
-            include("footer.php");
+            // include("footer.php");
             break;
 
         case 'aff':
@@ -123,11 +123,11 @@ if ($Mmod) {
             break;
     }
 } else {
-    include("header.php");
+    // include("header.php");
 
     echo '
         <p class="text-center">' . __d('comments', 'Vous n\'êtes pas identifié comme modérateur de ce forum. Opération interdite.') . '<br /><br />
         <a href="javascript:history.go(-1)" class="btn btn-secondary">' . __d('comments', 'Retour en arrière') . '</a></p>';
 
-    include("footer.php");
+    // include("footer.php");
 }

@@ -1,7 +1,10 @@
 <?php
 
+/**
+ * 
+ */
+return [
 
-use Npds\config\Config;
-use Nnpds\Events\Manager as Events;
 
 
+];

@@ -2,8 +2,10 @@
 
 use Npds\Support\Facades\DB;
 
-
-return array(
+/**
+ * 
+ */
+return [
 
     // racine du nom de ce fichier  (article, pollBoth, ...)
     'file_name' => 'article',
@@ -50,4 +52,4 @@ return array(
         ]);
     },
 
-);
+];

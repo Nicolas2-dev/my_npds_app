@@ -1,23 +1,23 @@
 <?php
 
 
-if (!function_exists("Mysql_Connexion"))
-    die();
+// if (!function_exists("Mysql_Connexion"))
+//     die();
 
 
-include('auth.php');
+// include('auth.php');
 
-filtre_module($file_name);
+// filtre_module($file_name);
 
-if (file_exists("modules/comments/$file_name.conf.php"))
-    include("modules/comments/$file_name.conf.php");
-else
-    die();
+// if (file_exists("modules/comments/$file_name.conf.php"))
+//     include("modules/comments/$file_name.conf.php");
+// else
+//     die();
 
 if (isset($cancel))
     header("Location: $url_ret");
 
-settype($forum, 'integer');
+// settype($forum, 'integer');
 
 if ($forum >= 0)
     die();
@@ -52,7 +52,7 @@ if (isset($submitS)) {
         if ($forum_access == 0) {
             $userdata = array('uid' => 1);
 
-            include('header.php');
+            // include('header.php');
         } else {
             if (($username == '') or ($password == ''))
                 forumerror('0027');
@@ -65,7 +65,7 @@ if (isset($submitS)) {
                 if ((strcmp($passwd, $pass) == 0) and ($pass != '')) {
                     $userdata = get_userdata($username);
 
-                    include('header.php');
+                    // include('header.php');
                 } else
                     forumerror('0028');
             }
@@ -75,7 +75,7 @@ if (isset($submitS)) {
         $userdata = explode(':', $userX);
         $userdata = get_userdata($userdata[1]);
 
-        include("header.php");
+        // include("header.php");
     }
 
     // Either valid user/pass, or valid session. continue with post.
@@ -150,7 +150,7 @@ if (isset($submitS)) {
         <p><a href="javascript:history.go(-1)" class="btn btn-primary">' . __d('comments', 'Retour en arrière') . '</a></p>';
     }
 } else {
-    include('header.php');
+    // include('header.php');
 
     if ($allow_bbcode == 1)
         include("library/javascript/formhelp.java.php");
@@ -409,4 +409,4 @@ if (isset($submitS)) {
     }
 }
 
-include('footer.php');
+// include('footer.php');

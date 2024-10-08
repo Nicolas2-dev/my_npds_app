@@ -22,13 +22,13 @@ class FrontChat extends FrontController
     public function chatinput()
     {
         // chatbox avec salon privatif - on utilise id pour filtrer les messages -> id = l'id du groupe au sens autorisation de App (-127,-1,0,1,2...126))
-        settype($id, 'integer');
+        // settype($id, 'integer');
 
         if ($id === '' || unserialize(decrypt($auto)) != $id) 
             die();
 
-        if (!function_exists("makeChatBox")) 
-            include("powerpack_f.php");
+        // if (!function_exists("makeChatBox")) 
+        //     include("powerpack_f.php");
 
 
 
@@ -42,32 +42,32 @@ class FrontChat extends FrontController
 
         global $user;
 
-        if (isset($user) and $user != '') {
-            global $cookie;
+        // if (isset($user) and $user != '') {
+        //     global $cookie;
 
-            if ($cookie[9] != '') {
-                $ibix = explode('+', urldecode($cookie[9]));
-                if (array_key_exists(0, $ibix)) 
-                    $theme = $ibix[0];
-                else 
-                    $theme = Config::get('npds.Default_Theme');
+        //     if ($cookie[9] != '') {
+        //         $ibix = explode('+', urldecode($cookie[9]));
+        //         if (array_key_exists(0, $ibix)) 
+        //             $theme = $ibix[0];
+        //         else 
+        //             $theme = Config::get('npds.Default_Theme');
 
-                if (array_key_exists(1, $ibix)) 
-                    $skin = $ibix[1];
-                else 
-                    $skin = Config::get('npds.Default_Skin'); //$skin=''; 
+        //         if (array_key_exists(1, $ibix)) 
+        //             $skin = $ibix[1];
+        //         else 
+        //             $skin = Config::get('npds.Default_Skin'); //$skin=''; 
 
-                $tmp_theme = $theme;
+        //         $tmp_theme = $theme;
 
-                if (!$file = @opendir("themes/$theme")) 
-                    $tmp_theme = Config::get('npds.Default_Theme');
-            } else
-                $tmp_theme = Config::get('npds.Default_Theme');
-        } else {
-            $theme = Config::get('npds.Default_Theme');
-            $skin = Config::get('npds.Default_Skin');
-            $tmp_theme = $theme;
-        }
+        //         if (!$file = @opendir("themes/$theme")) 
+        //             $tmp_theme = Config::get('npds.Default_Theme');
+        //     } else
+        //         $tmp_theme = Config::get('npds.Default_Theme');
+        // } else {
+        //     $theme = Config::get('npds.Default_Theme');
+        //     $skin = Config::get('npds.Default_Skin');
+        //     $tmp_theme = $theme;
+        // }
 
         $Titlesitename = 'Npds';
 
@@ -117,7 +117,7 @@ class FrontChat extends FrontController
             </body>
         </html>';
 
-        settype($op, 'string');
+        // settype($op, 'string');
 
         switch ($op) {
             case 'set':
@@ -138,7 +138,7 @@ class FrontChat extends FrontController
     public function chatrafraich()
     {
         // chatbox avec salon privatif - on utilise id pour filtrer les messages -> id = l'id du groupe au sens autorisation de App (-127,-1,0,1,2...126))
-        settype($id, 'integer');
+        // settype($id, 'integer');
 
         if ($id === '' || unserialize(decrypt($auto)) != $id)
             die();
@@ -147,11 +147,9 @@ class FrontChat extends FrontController
             include("powerpack_f.php");
         }
 
-
-
-        settype($repere, 'integer');
-        settype($aff_entetes, 'integer');
-        settype($connectes, 'integer');
+        // settype($repere, 'integer');
+        // settype($aff_entetes, 'integer');
+        // settype($connectes, 'integer');
 
         // Savoir si le 'connecté' a le droit à ce chat ?
         if (!autorisation($id))
@@ -159,32 +157,32 @@ class FrontChat extends FrontController
 
         global $user;
 
-        if (isset($user) and $user != '') {
-            global $cookie;
+        // if (isset($user) and $user != '') {
+        //     global $cookie;
 
-            if ($cookie[9] != '') {
-                $ibix = explode('+', urldecode($cookie[9]));
+        //     if ($cookie[9] != '') {
+        //         $ibix = explode('+', urldecode($cookie[9]));
 
-                if (array_key_exists(0, $ibix))
-                    $theme = $ibix[0];
-                else
-                    $theme = Config::get('npds.Default_Theme');
+        //         if (array_key_exists(0, $ibix))
+        //             $theme = $ibix[0];
+        //         else
+        //             $theme = Config::get('npds.Default_Theme');
 
-                if (array_key_exists(1, $ibix))
-                    $skin = $ibix[1];
-                else
-                    $skin = Config::get('npds.Default_Skin'); //$skin=''; 
+        //         if (array_key_exists(1, $ibix))
+        //             $skin = $ibix[1];
+        //         else
+        //             $skin = Config::get('npds.Default_Skin'); //$skin=''; 
 
-                $tmp_theme = $theme;
-                if (!$file = @opendir("themes/$theme"))
-                    $tmp_theme = Config::get('npds.Default_Theme');
-            } else
-                $tmp_theme = Config::get('npds.Default_Theme');
-        } else {
-            $theme = Config::get('npds.Default_Theme');
-            $skin = Config::get('npds.Default_Skin');
-            $tmp_theme = $theme;
-        }
+        //         $tmp_theme = $theme;
+        //         if (!$file = @opendir("themes/$theme"))
+        //             $tmp_theme = Config::get('npds.Default_Theme');
+        //     } else
+        //         $tmp_theme = Config::get('npds.Default_Theme');
+        // } else {
+        //     $theme = Config::get('npds.Default_Theme');
+        //     $skin = Config::get('npds.Default_Skin');
+        //     $tmp_theme = $theme;
+        // }
 
         
 
@@ -307,7 +305,7 @@ class FrontChat extends FrontController
         $nuke_url = '';
         $meta_op = '';
 
-        include("mainfile.php");
+        // include("mainfile.php");
         include('meta/meta.php');
 
         echo '

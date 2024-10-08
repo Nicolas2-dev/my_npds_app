@@ -1,0 +1,9 @@
+{
+    "providers": [
+        "App\\Modules\\Users\\Providers\\UsersServiceProvider"
+    ],
+    "eager": [
+        "App\\Modules\\Users\\Providers\\UsersServiceProvider"
+    ],
+    "deferred": []
+}

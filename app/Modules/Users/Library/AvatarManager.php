@@ -142,8 +142,13 @@ class AvatarManager implements AvatarInterface
      */
     public function directory()
     {
-        $theme      = with(get_instance())->template();
-        $theme_dir  = with(get_instance())->template_dir();
+        if($instance = get_instance()) {
+            $theme      = $instance->template();
+            $theme_dir  = $instance->template_dir();
+        } else {
+            $theme      = Config::get('themes.template');
+            $theme_dir  = Config::get('themes.path');
+        }
 
         $path = web_path('assets/images/forum/avatar');
         $url  = site_url('assets/images/forum/avatar');

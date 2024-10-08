@@ -48,7 +48,7 @@ class User extends BaseModel
      */
     public function user_status()
     {
-        return $this->hasMany('App\Modules\Users\Models\UserStatus', 'user_id');
+        return $this->hasMany('App\Modules\Users\Models\UserStatus', 'uid');
     }
 
     /**

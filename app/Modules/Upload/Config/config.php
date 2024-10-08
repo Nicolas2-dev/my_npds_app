@@ -1,9 +1,11 @@
 <?php
 
+use Npds\Config\Config;
 
-use Npds\config\Config;
-
-return array(
+/**
+ * 
+ */
+return [
 
     /**
      * Taille maxi des fichiers en octets
@@ -109,4 +111,4 @@ return array(
      */
     'quota' => 733999999,
 
-);
+];

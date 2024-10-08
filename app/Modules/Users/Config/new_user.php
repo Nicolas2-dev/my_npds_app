@@ -11,7 +11,7 @@
 /*
  * Ce fichier vous permet d'envoyer un MI personnalisé lorsqu'un nouveau membre s'inscrit sur votre site
  */
-return array(
+return [
 
     /*
      * id de l'émetteur du Message Interne lorsque un nouveau membre est créé : 1 = anonyme
@@ -30,4 +30,5 @@ return array(
 Ce site vous offre de nombreuses ressources alors ne vous privez pas : participez !
 
 L\'équipe du site.'),
-);
+
+];

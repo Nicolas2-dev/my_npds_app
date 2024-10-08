@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * 
+ */
+return [
 
-use Npds\config\Config;
 
+
+];

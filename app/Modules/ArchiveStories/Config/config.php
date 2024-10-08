@@ -1,7 +1,9 @@
 <?php
 
-
-return array(
+/**
+ * 
+ */
+return [
 
     /**
     * Nombre de Stories par page
@@ -27,4 +29,4 @@ return array(
     */
     'retcache'  => '83000',
 
-);
+];

@@ -655,4 +655,5 @@ class Navigator
         
         return $sz;
     }
+    
 }

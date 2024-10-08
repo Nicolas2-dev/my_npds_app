@@ -1,12 +1,12 @@
 <?php
 
 
-if (!function_exists("Mysql_Connexion"))
-    die();
+// if (!function_exists("Mysql_Connexion"))
+//     die();
 
-include_once('auth.php');
+// include_once('auth.php');
 
-settype($forum, 'integer');
+// settype($forum, 'integer');
 
 if ($forum >= 0) die();
 
@@ -57,7 +57,7 @@ if ($allow_to_post)
 if (!isset($C_start))
     $C_start = 0;
 
-settype($comments_per_page, 'integer');
+// settype($comments_per_page, 'integer');
 
 $result = sql_query("SELECT COUNT(*) AS total FROM posts WHERE forum_id='$forum' AND topic_id='$topic' AND post_aff='1'");
 list($total) = sql_fetch_row($result);
