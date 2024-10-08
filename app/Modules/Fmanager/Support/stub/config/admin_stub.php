@@ -91,9 +91,9 @@ return [
      * position 5 = Permissions
      * position 6 = Pic-Manager
      * 
-     * dirpres_fma => '111011'
+     * dirpres_fma => 111011
      */
-    'dirpres_fma' => '111011',
+    'dirpres_fma' => 111011,
 
     /**
      * permet de contrôler les actions autorisées relatives aux répertoires (0 non-autorisé / 1 autorisé)
@@ -104,9 +104,9 @@ return [
      * position 4 = chmod
      * position 5 = not used
      * 
-     * dircmd_fma => '10000'
+     * dircmd_fma => 10000
      */
-    'dircmd_fma' => '11110',
+    'dircmd_fma' => 11110,
 
     // FICHIERS
 
@@ -150,7 +150,7 @@ return [
      *     'config.php' => 'admin'
      * ]
      */
-    'ficlimit_fma' => array(),
+    'ficlimit_fma' => [],
  
     /**
      * permet d'inclure automatiquement un fichier particulier (par exemple une bannière ...) s'il se trouve dans le répertoire courant
@@ -166,9 +166,9 @@ return [
      * position 4 = Taille
      * position 5 = Permissions
      * 
-     * ficpres_fma => '11101'
+     * ficpres_fma => 11101
      */
-    'ficpres_fma' => '11111',
+    'ficpres_fma' => 11111,
 
     /**
      * permet de contrôler les actions autorisées relatives aux fichiers (0 non-autorisé / 1 autorisé)
@@ -180,9 +180,9 @@ return [
      * position 5 = edit
      * position 6 = move
      * 
-     * ficcmd_fma => '100011'
+     * ficcmd_fma => 100011
      */
-    'ficcmd_fma' => '111111',
+    'ficcmd_fma' => 111111,
  
     /**
      * url_fma_modifier permet d'adjoindre un fichier de type fmanager.mod.xxxxx associé à 
@@ -198,12 +198,12 @@ return [
      * Vous pouvez spécifier les fichiers de thème utilisés 
      * par ce fichier de configuration fichier du thème général
      */
-    'themeG_fma' => 'f-manager.html',
+    'themeG_fma' => 'f-manager',
  
     /**
      * fichier utilisé lors des actions (delete, edit, ...)
      */
-    'themeC_fma' => 'f-manager-cmd.html',
+    'themeC_fma' => 'f-manager-cmd',
 
     /**
      * Vous pouvez spécifier la représentation de la racine
@@ -225,12 +225,19 @@ return [
      * Cette option n'a de sens que si npds_fma => false
      */
     'css_fma' => function() {
-        if ((Config::get('fmanager.admin.npds_fma') === false) and (file_exists("themes/".Config::get('npds.Default_Theme')."/style/f-manager.css"))) {
-            $css = "themes/".Config::get('npds.Default_Theme')."/style/f-manager.css";
-        } else {
-            $css = "themes/".Config::get('npds.Default_Theme')."/style/style.css"; 
+        
+        // NOTE: gestion du theme a revoir, non finalise
+
+        if ((Config::get('fmanager.STUB_FILE.npds_fma') === false) 
+        and (file_exists(theme_path(Config::get('npds.Default_Theme') .'/assets/css/f-manager.css')))) 
+        {
+            $css = site_url('themes/'. Config::get('npds.Default_Theme') .'/assets/css/f-manager.css');
+        } else { 
+            $css = site_url('themes/'. Config::get('npds.Default_Theme') .'/assets/css/style.css');
         }
+         
         return $css;
+
     },
 
     /**
