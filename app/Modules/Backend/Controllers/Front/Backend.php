@@ -3,11 +3,14 @@
 namespace App\Controllers\Front;
 
 use Npds\Config\Config;
+use App\Modules\Backend\Library\FeedItem;
+use App\Modules\Backend\Library\FeedImage;
 use App\Modules\News\Support\Facades\News;
 use App\Modules\Npds\Core\FrontController;
 use App\Modules\Npds\Support\Facades\Date;
 use App\Modules\Npds\Support\Facades\Language;
 use App\Modules\Npds\Support\Facades\Metalang;
+use App\Modules\Backend\Library\UniversalFeedCreator;
 
 class Backend extends FrontController
 {
