@@ -16,7 +16,7 @@ class EditoKernel
      * @var array
      */
     protected static $aliases = [
-        // Modules Edito
+        // Module Edito
         'Edito'         => 'App\Modules\Edito\Support\Facades\Edito',
     ];
 

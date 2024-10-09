@@ -38,5 +38,5 @@ function ephemblock()
         $count = 1;        
     }
 
-    Theme::themesidebox(($block_title ?: __d('ephemerids', 'Ephémérides')), View::make('Modules/Ephemerids/Views/Boxe/Ephem_Boxe', compact('ephem_data')));
+    Theme::themesidebox(($block_title ?: __d('ephemerids', 'Ephémérides')), View::make('Modules/Ephemerids/Views/Boxe/ephem_boxe', compact('ephem_data')));
 }
