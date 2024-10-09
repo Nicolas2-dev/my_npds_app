@@ -1,0 +1,46 @@
+
+
+2024-10-07 23:48PM - session_start(): Session cannot be started after headers have already been sent in F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Session\Session.php on line 27
+
+Exception information:
+
+           Date: Oct 08, 2024 20:15PM
+
+           Message: syntax error, unexpected token ";", expecting "]"
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Fmanager\Config\default.php
+
+           Line: 11
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Modules\Manager.php(37): Npds\Modules\Manager::boot_config('Fmanager')
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(88): Npds\Modules\Manager::bootstrap()
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#3 {main}
+
+           ---------
+
+Exception information:
+
+           Date: Oct 08, 2024 20:51PM
+
+           Message: syntax error, unexpected token ";", expecting "]"
+
+           Code: 0
+
+           File: F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Modules\Fmanager\Config\download.php
+
+           Line: 11
+
+           Stack trace:
+
+           #0 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\npds\Modules\Manager.php(37): Npds\Modules\Manager::boot_config('Fmanager')
+#1 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\app\Bootstrap\Bootstrap.php(88): Npds\Modules\Manager::bootstrap()
+#2 F:\Dev_Diver\Npds\Npds_Mini\revolution_16_mini\public\index.php(36): require('F:\\Dev_Diver\\Np...')
+#3 {main}
+
+           ---------
+
