@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Modules\Banners\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Front;
 
-use App\Modules\Npds\Core\AdminController;
+use Npds\Config\Config;
+use App\Modules\Npds\Core\FrontController;
+use App\Modules\Npds\Support\Facades\Language;
 
 /**
  * Undocumented class
  */
-class BannerFinishDelete extends AdminController
+class BannerClick extends FrontController
 {
 
     /**
@@ -17,41 +19,15 @@ class BannerFinishDelete extends AdminController
      */
     protected $pdst = 0;
 
+
     /**
-     * [$hlpfile description]
+     * [__construct description]
      *
-     * @var [type]
-     */
-    protected $hlpfile = 'banners';
-
-    /**
-     * [$short_menu_admin description]
-     *
-     * @var bool
-     */
-    protected $short_menu_admin = true;
-
-    /**
-     * [$adminhead description]
-     *
-     * @var [type]
-     */
-    protected $adminhead = true;
-
-    /**
-     * [$f_meta_nom description]
-     *
-     * @var [type]
-     */
-    protected $f_meta_nom = 'BannersAdmin';
-
-
-    /**
-     * Call the parent construct
+     * @return  [type]  [return description]
      */
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();              
     }
 
     /**
@@ -61,8 +37,6 @@ class BannerFinishDelete extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('banners', 'Administration des bannières');
-
         // Leave to parent's method the Flight decisions.
         return parent::before();
     }
@@ -81,18 +55,26 @@ class BannerFinishDelete extends AdminController
         // Leave to parent's method the Flight decisions.
         return parent::after($result);
     }
-
+    
     /**
      * Undocumented function
      *
      * @param [type] $bid
      * @return void
      */
-    public function BannerFinishDelete($bid)
+    public function clickbanner($bid)
     {
-        sql_query("DELETE FROM bannerfinish WHERE bid='$bid'");
+        $bresult = sql_query("SELECT clickurl FROM banner WHERE bid='$bid'");
+        list($clickurl) = sql_fetch_row($bresult);
     
-        Header("Location: admin.php?op=BannersAdmin");
+        sql_query("UPDATE banner SET clicks=clicks+1 WHERE bid='$bid'");
+        sql_free_result($bresult);
+    
+        if ($clickurl == '') {
+            $clickurl = Config::get('npds.nuke_url');
+        }
+    
+        Header("Location: " . Language::aff_langue($clickurl));
     }
 
 }

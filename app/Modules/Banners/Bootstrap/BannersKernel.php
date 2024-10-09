@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Authors\Bootstrap;
+namespace App\Modules\Banners\Bootstrap;
 
 use Npds\Foundation\AliasLoader;
 
 /**
  * Undocumented class
  */
-class AuthorsKernel
+class BannersKernel
 {
 
     /**
@@ -16,8 +16,8 @@ class AuthorsKernel
      * @var array
      */
     protected static $aliases = [
-        // Module Authors
-        'Author'        => 'App\Modules\Authors\Support\Facades\Author',
+        // Module Banners
+        'Banner'         => 'App\Modules\Banners\Support\Facades\Banner',
     ];
 
     /**

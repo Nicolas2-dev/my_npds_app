@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Css;
@@ -9,7 +9,7 @@ use App\Modules\Npds\Support\Facades\Language;
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannerClientDelete extends AdminController
 {
 
     /**
@@ -84,7 +84,14 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannerClientDelete($cid, $ok = 0)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $cid
+     * @param integer $ok
+     * @return void
+     */
+    public function BannerClientDelete($cid, $ok = 0)
     {
         if ($ok == 1) {
             sql_query("DELETE FROM banner WHERE cid='$cid'");

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
-use App\Modules\Npds\Support\Facades\Css;
-use App\Modules\Npds\Support\Facades\Language;
 
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannerChange extends AdminController
 {
 
     /**
@@ -84,7 +82,19 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannerChange($bid, $cid, $imptotal, $impadded, $imageurl, $clickurl, $userlevel)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $bid
+     * @param [type] $cid
+     * @param [type] $imptotal
+     * @param [type] $impadded
+     * @param [type] $imageurl
+     * @param [type] $clickurl
+     * @param [type] $userlevel
+     * @return void
+     */
+    public function BannerChange($bid, $cid, $imptotal, $impadded, $imageurl, $clickurl, $userlevel)
     {
         $imp = $imptotal + $impadded;
 

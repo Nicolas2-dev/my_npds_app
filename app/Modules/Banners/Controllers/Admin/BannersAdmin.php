@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Css;
@@ -9,7 +9,7 @@ use App\Modules\Npds\Support\Facades\Language;
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannersAdmin extends AdminController
 {
 
     /**
@@ -84,7 +84,12 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannersAdmin()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function BannersAdmin()
     {
         echo '
         <hr />

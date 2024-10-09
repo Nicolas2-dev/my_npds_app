@@ -1,7 +1,6 @@
 <?php
 
-use App\Modules\chat\Library\ChatManager;
-
+use App\Modules\Chat\Support\Facades\Chat;
 
 if (! function_exists('if_chat($pour)'))
 {
@@ -14,7 +13,7 @@ if (! function_exists('if_chat($pour)'))
      */
     function if_chat($pour)
     {
-        return ChatManager::getInstance()->if_chat($pour);
+        return Chat::if_chat($pour);
     }
 }
 
@@ -32,6 +31,6 @@ if (! function_exists('insertChat'))
      */
     function insertChat($username, $message, $dbname, $id)
     {
-        return ChatManager::getInstance()->insertChat($username, $message, $dbname, $id);
+        return Chat::insertChat($username, $message, $dbname, $id);
     }
 }

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
-use App\Modules\Npds\Support\Facades\Css;
-use App\Modules\Npds\Support\Facades\Language;
 
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannerClientchange extends AdminController
 {
 
     /**
@@ -84,7 +82,19 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannerClientChange($cid, $name, $contact, $email, $extrainfo, $login, $passwd)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $cid
+     * @param [type] $name
+     * @param [type] $contact
+     * @param [type] $email
+     * @param [type] $extrainfo
+     * @param [type] $login
+     * @param [type] $passwd
+     * @return void
+     */
+    public function BannerClientChange($cid, $name, $contact, $email, $extrainfo, $login, $passwd)
     {
         sql_query("UPDATE bannerclient SET name='$name', contact='$contact', email='$email', login='$login', passwd='$passwd', extrainfo='$extrainfo' WHERE cid='$cid'");
         

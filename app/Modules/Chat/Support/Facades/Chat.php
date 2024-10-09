@@ -4,8 +4,9 @@ namespace App\Modules\Chat\Support\Facades;
 
 use App\Modules\Chat\Library\ChatManager;
 
-
-
+/**
+ * Undocumented class
+ */
 class Chat
 {
 
@@ -15,4 +16,5 @@ class Chat
 
         return call_user_func_array(array($instance, $method), $parameters);
     }
+
 }

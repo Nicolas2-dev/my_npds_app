@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
+
 
 use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Css;
-use App\Modules\Npds\Support\Facades\Language;
 
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannerClientEdite extends AdminController
 {
 
     /**
@@ -84,7 +84,13 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannerClientEdit($cid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $cid
+     * @return void
+     */
+    public function BannerClientEdit($cid)
     {
         $result = sql_query("SELECT name, contact, email, login, passwd, extrainfo FROM bannerclient WHERE cid='$cid'");
         list($name, $contact, $email, $login, $passwd, $extrainfo) = sql_fetch_row($result);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Css;
@@ -9,7 +9,7 @@ use App\Modules\Npds\Support\Facades\Language;
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannerEdite extends AdminController
 {
 
     /**
@@ -84,7 +84,13 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannerEdit($bid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $bid
+     * @return void
+     */
+    public function BannerEdit($bid)
     {
         $result = sql_query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, userlevel FROM banner WHERE bid='$bid'");
         list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $userlevel) = sql_fetch_row($result);

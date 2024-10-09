@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace App\Modules\Backend\Controllers\Front;
 
 use Npds\Config\Config;
 use App\Modules\Backend\Library\FeedItem;
@@ -111,7 +111,7 @@ class Backend extends FrontController
      *
      * @return  [type]             [return description]
      */
-    public function fab_feed($type, $filename, $timeout)
+    private function fab_feed($type, $filename, $timeout)
     {
         $rss = new UniversalFeedCreator();
 

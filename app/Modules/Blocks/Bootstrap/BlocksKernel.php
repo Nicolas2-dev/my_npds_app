@@ -16,7 +16,7 @@ class BlocksKernel
      * @var array
      */
     protected static $aliases = [
-        // Modules Block
+        // Module Blocks
         'Block'         => 'App\Modules\Blocks\Support\Facades\Block',
     ];
 

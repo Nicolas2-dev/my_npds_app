@@ -1,5 +1,9 @@
 <?php
 
+use App\Modules\Banners\Bootstrap\BannersKernel;
+
+BannersKernel::aliases_loader();
+
 $configDir = dirname(dirname(__FILE__)) .DS;
 
 //

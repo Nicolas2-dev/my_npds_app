@@ -1,23 +1,8 @@
 <?php
 
 
-// if (!function_exists("Mysql_Connexion"))
-//     die();
-
-
-// include('auth.php');
-
-// filtre_module($file_name);
-
-// if (file_exists("modules/comments/$file_name.conf.php"))
-//     include("modules/comments/$file_name.conf.php");
-// else
-//     die();
-
 if (isset($cancel))
     header("Location: $url_ret");
-
-// settype($forum, 'integer');
 
 if ($forum >= 0)
     die();

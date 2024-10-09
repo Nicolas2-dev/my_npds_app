@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
 use App\Modules\Npds\Support\Facades\Css;
@@ -9,7 +9,7 @@ use App\Modules\Npds\Support\Facades\Language;
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannerDelete extends AdminController
 {
 
     /**
@@ -84,7 +84,14 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannerDelete($bid, $ok = 0)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $bid
+     * @param integer $ok
+     * @return void
+     */
+    public function BannerDelete($bid, $ok = 0)
     {
         // global $f_meta_nom, $f_titre;
     

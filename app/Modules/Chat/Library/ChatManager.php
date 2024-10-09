@@ -2,11 +2,15 @@
 
 namespace App\Modules\Chat\Library;
 
-
-use App\Modules\Blocks\Library\BlockManager;
+use Npds\Http\Request;
+use App\Modules\Npds\Support\Sanitize;
+use App\Modules\Npds\Support\Facades\Hack;
+use App\Modules\Blocks\Support\Facades\Block;
 use App\Modules\Chat\Contracts\ChatInterface;
 
-
+/**
+ * Undocumented class
+ */
 class ChatManager implements ChatInterface 
 {
 
@@ -41,18 +45,17 @@ class ChatManager implements ChatInterface
     */
     public function if_chat($pour)
     {
-        
-    
-        $auto = BlockManager::getInstance()->autorisation_block("params#" . $pour);
-        $dimauto = count($auto);
-        $numofchatters = 0;
+        $auto = Block::autorisation_block("params#" . $pour);
+
+        $dimauto        = count($auto);
+        $numofchatters  = 0;
     
         if ($dimauto <= 1) {
             $result = sql_query("SELECT DISTINCT ip FROM chatbox WHERE id='" . $auto[0] . "' AND date >= " . (time() - (60 * 3)) . "");
             $numofchatters = sql_num_rows($result);
         }
     
-        return ($numofchatters);
+        return $numofchatters;
     }
     
     /**
@@ -67,18 +70,13 @@ class ChatManager implements ChatInterface
      */
     public function insertChat($username, $message, $dbname, $id)
     {
-        
-    
         if ($message != '') {
-            $username = removeHack(stripslashes(FixQuotes(strip_tags(trim($username)))));
-            $message =  removeHack(stripslashes(FixQuotes(strip_tags(trim($message)))));
+            $username = Hack::remove(stripslashes(Sanitize::FixQuotes(strip_tags(trim($username)))));
+            $message =  Hack::remove(stripslashes(Sanitize::FixQuotes(strip_tags(trim($message)))));
     
-            $ip = getip();
-    
-            settype($id, 'integer');
-            settype($dbname, 'integer');
-    
-            $result = sql_query("INSERT INTO chatbox VALUES ('" . $username . "', '" . $ip . "', '" . $message . "', '" . time() . "', '$id', " . $dbname . ")");
+            $ip = Request::getip();
+
+            sql_query("INSERT INTO chatbox VALUES ('" . $username . "', '" . $ip . "', '" . $message . "', '" . time() . "', '$id', " . $dbname . ")");
         }
     }
 

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
-use App\Modules\Npds\Support\Facades\Css;
-use App\Modules\Npds\Support\Facades\Language;
 
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannerAdd extends AdminController
 {
 
     /**
@@ -84,7 +82,17 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannersAdd($cid, $imptotal, $imageurl, $clickurl, $userlevel)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $cid
+     * @param [type] $imptotal
+     * @param [type] $imageurl
+     * @param [type] $clickurl
+     * @param [type] $userlevel
+     * @return void
+     */
+    public function BannersAdd($cid, $imptotal, $imageurl, $clickurl, $userlevel)
     {
         sql_query("INSERT INTO banner VALUES (NULL, '$cid', '$imptotal', '1', '0', '$imageurl', '$clickurl', '$userlevel', now())");
         

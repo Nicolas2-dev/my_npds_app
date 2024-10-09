@@ -1,13 +1,6 @@
 <?php
 
 
-// if (!function_exists("Mysql_Connexion"))
-//     die();
-
-// include_once('auth.php');
-
-// settype($forum, 'integer');
-
 if ($forum >= 0) die();
 
 // gestion des params du 'forum' : type, accès, modérateur ...

@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace App\Modules\chat\Controllers\Front;
 
-use App\Controllers\Core\FrontController;
-
+use App\Modules\Npds\Core\FrontController;
 
 class Chat extends FrontController
 {
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    // protected $pdst = 0; // Note : pas de blocks pour le chat
 
 
     /**
@@ -16,21 +22,46 @@ class Chat extends FrontController
      */
     public function __construct()
     {
-
+        parent::__construct();              
     }
 
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function chatinput()
     {
         // chatbox avec salon privatif - on utilise id pour filtrer les messages -> id = l'id du groupe au sens autorisation de App (-127,-1,0,1,2...126))
-        // settype($id, 'integer');
 
         if ($id === '' || unserialize(decrypt($auto)) != $id) 
             die();
-
-        // if (!function_exists("makeChatBox")) 
-        //     include("powerpack_f.php");
-
-
 
         // Savoir si le 'connecté' a le droit à ce chat ?
         // le problème c'est que tous les groupes qui existent on le droit au chat ... donc il faut trouver une solution pour pouvoir l'interdire
@@ -135,21 +166,17 @@ class Chat extends FrontController
 
     }
 
-    public function chatrafraich()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    private function chatrafraich()
     {
         // chatbox avec salon privatif - on utilise id pour filtrer les messages -> id = l'id du groupe au sens autorisation de App (-127,-1,0,1,2...126))
-        // settype($id, 'integer');
 
         if ($id === '' || unserialize(decrypt($auto)) != $id)
             die();
-
-        if (!function_exists("makeChatBox")) {
-            include("powerpack_f.php");
-        }
-
-        // settype($repere, 'integer');
-        // settype($aff_entetes, 'integer');
-        // settype($connectes, 'integer');
 
         // Savoir si le 'connecté' a le droit à ce chat ?
         if (!autorisation($id))
@@ -183,8 +210,6 @@ class Chat extends FrontController
         //     $skin = Config::get('npds.Default_Skin');
         //     $tmp_theme = $theme;
         // }
-
-        
 
         $result = sql_query("SELECT username, message, dbname, date FROM chatbox WHERE id='$id' AND date>'$repere' ORDER BY date ASC");
         $thing = '';
@@ -298,14 +323,18 @@ class Chat extends FrontController
                 
     }
 
-    public function chattop()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    private function chattop()
     {
         $Titlesitename = 'Npds';
 
         $nuke_url = '';
         $meta_op = '';
 
-        // include("mainfile.php");
         include('meta/meta.php');
 
         echo '
@@ -315,7 +344,12 @@ class Chat extends FrontController
         </html>';
     }
 
-    public function chat()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    private function chat()
     {
         $Titlesitename = 'Npds';
         $meta_op = '';

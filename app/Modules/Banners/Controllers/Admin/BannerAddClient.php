@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Modules\Banners\Controllers\Admin;
 
 use App\Modules\Npds\Core\AdminController;
-use App\Modules\Npds\Support\Facades\Css;
-use App\Modules\Npds\Support\Facades\Language;
 
 /**
  * Undocumented class
  */
-class Banners extends AdminController
+class BannerAddClient extends AdminController
 {
 
     /**
@@ -84,7 +82,18 @@ class Banners extends AdminController
         return parent::after($result);
     }
 
-    function BannerAddClient($name, $contact, $email, $login, $passwd, $extrainfo)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $name
+     * @param [type] $contact
+     * @param [type] $email
+     * @param [type] $login
+     * @param [type] $passwd
+     * @param [type] $extrainfo
+     * @return void
+     */
+    public function BannerAddClient($name, $contact, $email, $login, $passwd, $extrainfo)
     {
         sql_query("INSERT INTO bannerclient VALUES (NULL, '$name', '$contact', '$email', '$login', '$passwd', '$extrainfo')");
         
