@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Comments\Bootstrap\CommentsKernel;
+
+CommentsKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

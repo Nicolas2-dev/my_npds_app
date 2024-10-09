@@ -20,7 +20,7 @@ function topdownload()
 
     Theme::themesidebox(
         ($block_title ?: __d('download', 'Les plus téléchargés')), 
-        View::make('Modules/Download/Views/Boxe/Top_Download', compact('download_data'))
+        View::make('Modules/Download/Views/Boxe/top_download', compact('download_data'))
     );
 }
 
@@ -39,7 +39,7 @@ function lastdownload()
 
     Theme::themesidebox(
         ($block_title ?: __d('download', 'Fichiers les plus récents')), 
-        View::make('Modules/Download/Views/Boxe/Last_Download', compact('download_data'))
+        View::make('Modules/Download/Views/Boxe/last_download', compact('download_data'))
     );
 
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\download\Support\Facades;
+namespace App\Modules\Comments\Support\Facades;
 
-use App\Modules\download\Library\DownloadManager;
+use App\Modules\Comments\Library\CommentManager;
 
 /**
  * Undocumented class
  */
-class Download
+class Comment
 {
 
     /**
@@ -19,7 +19,7 @@ class Download
      */
     public static function __callStatic($method, $parameters)
     {
-        $instance = DownloadManager::getInstance();
+        $instance = CommentManager::getInstance();
 
         return call_user_func_array(array($instance, $method), $parameters);
     }

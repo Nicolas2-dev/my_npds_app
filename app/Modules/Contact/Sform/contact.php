@@ -19,8 +19,6 @@ $m->add_form_id('formcontact');
 $m->add_form_method('post');
 $m->add_form_check('false');
 $m->add_url('modules.php');
-$m->add_field('ModStart', '', $ModStart, 'hidden', false);
-$m->add_field('ModPath', '', $ModPath, 'hidden', false);
 $m->add_submit_value('subok');
 $m->add_field('subok', '', 'Submit', 'hidden', false);
 

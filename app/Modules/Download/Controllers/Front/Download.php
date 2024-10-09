@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Contact\Controllers\Front;
+namespace App\Modules\Download\Controllers\Front;
 
 use App\Modules\Npds\Core\FrontController;
 
 /**
  * Undocumented class
  */
-class Comments extends FrontController
+class DownloadAdmin extends FrontController
 {
  
     /**
@@ -59,9 +59,25 @@ class Comments extends FrontController
      *
      * @return void
      */
-    public function index()
+    public function main()
     {
-        include_once('contact/sform/contact.php');
+        global $dcategory, $sortby, $sortorder;
+    
+        $dcategory  = removeHack(stripslashes(htmlspecialchars(urldecode($dcategory ?: ''), ENT_QUOTES, cur_charset))); // electrobug
+        $dcategory = str_replace("&#039;", "\'", $dcategory);
+        $sortby  = removeHack(stripslashes(htmlspecialchars(urldecode($sortby ?: ''), ENT_QUOTES, cur_charset))); // electrobug
+    
+        echo '
+        <h2>' . __d('download', 'Chargement de fichiers') . '</h2>
+        <hr />';
+    
+        tlist();
+    
+        if ($dcategory != __d('download', 'Aucune catégorie'))
+            listdownloads($dcategory, $sortby, $sortorder);
+    
+        if (file_exists("static/download_ban.txt"))
+            include("static/download_ban.txt");
     }
 
 }

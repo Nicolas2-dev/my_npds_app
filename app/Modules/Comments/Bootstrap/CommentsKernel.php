@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Download\Bootstrap;
+namespace App\Modules\Comments\Bootstrap;
 
 use Npds\Foundation\AliasLoader;
 
 /**
  * Undocumented class
  */
-class DownloadKernel
+class CommentsKernel
 {
 
     /**
@@ -16,8 +16,8 @@ class DownloadKernel
      * @var array
      */
     protected static $aliases = [
-        // Module Download
-        'Download'      => 'App\Modules\Download\Support\Facades\Download',
+        // Module Comments
+        'Comment'         => 'App\Modules\Comments\Support\Facades\Comment',
     ];
 
     /**

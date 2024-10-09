@@ -1,15 +1,5 @@
 <?php
 
-/************************************************************************/
-/* SFORM Extender for Dune comments - Review                            */
-/* ===========================                                          */
-/*                                                                      */
-/* P. Brunier 2002 - 2024                                               */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
 
 // Champ Combo : hauteur = 5 
 $tmp = array(
@@ -33,8 +23,6 @@ $m->add_field('message', __d('comments', 'Commentaire'), '', 'textarea', true, 8
 
 // Champs nécessaires au fonctionnement du formulaire / Don't remove these fields
 $m->add_title(__d('comments', 'Note'));
-$m->add_field('ModStart', '', $ModStart, 'hidden', false);
-$m->add_field('ModPath', '', $ModPath, 'hidden', false);
 $m->add_field('topic', '', $topic, 'hidden', false);
 $m->add_field('file_name', '', $file_name, 'hidden', false);
 

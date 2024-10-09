@@ -1,7 +1,6 @@
 <?php
 
-use App\Modules\Download\Library\DownloadManager;
-
+use App\Modules\download\Support\Facades\Download;
 
 if (! function_exists('topdownload_data'))
 {
@@ -15,6 +14,6 @@ if (! function_exists('topdownload_data'))
      */
     function topdownload_data($form, $ordre)
     {
-        return DownloadManager::getInstance()->topdownload_data($form, $ordre);
+        return Download::topdownload_data($form, $ordre);
     }
 }
