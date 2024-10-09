@@ -1,7 +1,6 @@
 <?php
 
-use App\Modules\Forum\Library\ForumManager;
-
+use App\Modules\Forum\Support\Facades\Forum;
 
 if (! function_exists('RecentForumPosts_fab'))
 {
@@ -20,7 +19,7 @@ if (! function_exists('RecentForumPosts_fab'))
      */
     function RecentForumPosts_fab($title, $maxforums, $maxtopics, $displayposter, $topicmaxchars, $hr, $decoration)
     {
-        return ForumManager::getInstance()->RecentForumPosts_fab($title, $maxforums, $maxtopics, $displayposter, $topicmaxchars, $hr, $decoration);
+        return Forum::RecentForumPosts_fab($title, $maxforums, $maxtopics, $displayposter, $topicmaxchars, $hr, $decoration);
     }
 }
 
@@ -35,7 +34,7 @@ if (! function_exists('get_total_topics'))
      */
     function get_total_topics($forum_id)
     {
-        return ForumManager::getInstance()->get_total_topics($forum_id);
+        return Forum::get_total_topics($forum_id);
     }
 }
 
@@ -51,7 +50,7 @@ if (! function_exists('get_contributeurs'))
      */
     function get_contributeurs($fid, $tid)
     {
-        return ForumManager::getInstance()->get_contributeurs($fid, $tid);
+        return Forum::get_contributeurs($fid, $tid);
     }
 }
 
@@ -69,7 +68,7 @@ if (! function_exists('get_total_posts'))
      */
     function get_total_posts($fid, $tid, $type, $Mmod)
     {
-        return ForumManager::getInstance()->get_total_posts($fid, $tid, $type, $Mmod);
+        return Forum::get_total_posts($fid, $tid, $type, $Mmod);
     }
 }
 
@@ -87,7 +86,7 @@ if (! function_exists('get_last_post'))
      */
     function get_last_post($id, $type, $cmd, $Mmod)
     {
-        return ForumManager::getInstance()->get_last_post($id, $type, $cmd, $Mmod);
+        return Forum::get_last_post($id, $type, $cmd, $Mmod);
     }
 }
 
@@ -103,7 +102,7 @@ if (! function_exists('does_exists'))
      */
     function does_exists($id, $type)
     {
-        return ForumManager::getInstance()->does_exists($id, $type);
+        return Forum::does_exists($id, $type);
     }
 }
 
@@ -118,7 +117,7 @@ if (! function_exists('is_locked'))
      */
     function is_locked($topic)
     {
-        return ForumManager::getInstance()->is_locked($topic);
+        return Forum::is_locked($topic);
     }
 }
 
@@ -131,7 +130,7 @@ if (! function_exists('HTML_Add'))
      */
     function HTML_Add()
     {
-        return ForumManager::getInstance()->HTML_Add();
+        return Forum::HTML_Add();
     }
 }
 
@@ -146,7 +145,7 @@ if (! function_exists('emotion_add'))
      */
     function emotion_add($image_subject)
     {
-        return ForumManager::getInstance()->emotion_add($image_subject);
+        return Forum::emotion_add($image_subject);
     }
 }
 
@@ -159,7 +158,7 @@ if (! function_exists('searchblock'))
      */
     function searchblock()
     {
-        return ForumManager::getInstance()->searchblock();
+        return Forum::searchblock();
     }
 }
 
@@ -176,7 +175,7 @@ if (! function_exists('member_qualif'))
      */
     function member_qualif($poster, $posts, $rank)
     {
-        return ForumManager::getInstance()->member_qualif($poster, $posts, $rank);
+        return Forum::member_qualif($poster, $posts, $rank);
     }
 }
 
@@ -194,7 +193,7 @@ if (! function_exists('control_efface_post'))
      */
     function control_efface_post($apli, $post_id, $topic_id, $IdForum)
     {
-        return ForumManager::getInstance()->control_efface_post($apli, $post_id, $topic_id, $IdForum);
+        return Forum::control_efface_post($apli, $post_id, $topic_id, $IdForum);
     }
 }
 
@@ -207,7 +206,7 @@ if (! function_exists('autorize'))
      */
     function autorize()
     {
-        return ForumManager::getInstance()->autorize();
+        return Forum::autorize();
     }
 }
 
@@ -226,7 +225,7 @@ if (! function_exists('anti_flood'))
      */
     function anti_flood($modoX, $paramAFX, $poster_ipX, $userdataX, $gmtX)
     {
-        return ForumManager::getInstance()->anti_flood($modoX, $paramAFX, $poster_ipX, $userdataX, $gmtX);
+        return Forum::anti_flood($modoX, $paramAFX, $poster_ipX, $userdataX, $gmtX);
     }
 }
 
@@ -241,7 +240,7 @@ if (! function_exists('forum'))
      */
     function forum($rowQ1)
     {
-        return ForumManager::getInstance()->forum($rowQ1);
+        return Forum::forum($rowQ1);
     }
 }
 
@@ -256,6 +255,6 @@ if (! function_exists('sub_forum_folder'))
      */
     function sub_forum_folder($forum)
     {
-        return ForumManager::getInstance()->sub_forum_folder($forum);
+        return Forum::sub_forum_folder($forum);
     }
 }

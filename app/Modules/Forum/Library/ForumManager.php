@@ -51,18 +51,17 @@ class ForumManager implements ForumInterface
     
         $topics = 0;
     
-        settype($maxforums, "integer");
-        settype($maxtopics, "integer");
-    
         $lim = $maxforums == 0 ? '' : " LIMIT $maxforums";
     
-        $query = $user ?
-            "SELECT * FROM forums ORDER BY cat_id,forum_index,forum_id" . $lim :
-            "SELECT * FROM forums WHERE forum_type!='9' AND forum_type!='7' AND forum_type!='5' ORDER BY cat_id,forum_index,forum_id" . $lim;
+        $query = $user 
+            ? "SELECT * FROM forums ORDER BY cat_id,forum_index,forum_id" . $lim 
+            : "SELECT * FROM forums WHERE forum_type!='9' AND forum_type!='7' AND forum_type!='5' ORDER BY cat_id,forum_index,forum_id" . $lim;
+
         $result = sql_query($query);
     
-        if (!$result) 
+        if (!$result) {
             exit();
+        }
     
         $boxstuff = '<ul>';
     
@@ -71,16 +70,18 @@ class ForumManager implements ForumInterface
                 $ok_affich = false;
                 $tab_groupe = valid_group($user);
                 $ok_affich = groupe_forum($row[7], $tab_groupe);
-            } else
+            } else {
                 $ok_affich = true;
+            }
     
             if ($ok_affich) {
                 $forumid = $row[0];
                 $forumname = $row[1];
                 $forum_desc = $row[2];
     
-                if ($hr)
+                if ($hr) {
                     $boxstuff .= '<li><hr /></li>';
+                }
     
                 if (Config::get('npds.parse') == 0) {
                     $forumname = FixQuotes($forumname);
@@ -97,15 +98,17 @@ class ForumManager implements ForumInterface
     
                 $topics = 0;
                 while (($topics < $maxtopics) && ($topicrow = sql_fetch_row($res))) {
-                    $topicid = $topicrow[0];
-                    $tt = $topictitle = $topicrow[1];
-                    $date = $topicrow[3];
-                    $replies = 0;
+                    
+                    $topicid    = $topicrow[0];
+                    $tt         = $topictitle = $topicrow[1];
+                    $date       = $topicrow[3];
+                    $replies    = 0;
     
                     $postquery = "SELECT COUNT(*) AS total FROM posts WHERE topic_id = '$topicid'";
                     if ($pres = sql_query($postquery)) {
-                        if ($myrow = sql_fetch_assoc($pres))
+                        if ($myrow = sql_fetch_assoc($pres)) {
                             $replies = $myrow['total'];
+                        }
                     }
     
                     if (strlen($topictitle) > $topicmaxchars) {
@@ -130,8 +133,9 @@ class ForumManager implements ForumInterface
     
                     $boxstuff .= '<li class="list-group-item p-1 border-right-0 border-left-0 list-group-item-action"><div class="n-ellipses"><span class="badge bg-secondary mx-2" title="' . __d('forum', 'Réponses') . '" data-bs-toggle="tooltip" data-bs-placement="top">' . $replies . '</span><a href="viewtopic.php?topic=' . $topicid . '&amp;forum=' . $forumid . '" >' . $topictitle . '</a></div>';
                     
-                    if ($displayposter) 
+                    if ($displayposter) {
                         $boxstuff .= $decoration . '<span class="ms-1">' . $postername . '</span>';
+                    }
     
                     $boxstuff .= '</li>';
                     $topics++;
@@ -145,8 +149,6 @@ class ForumManager implements ForumInterface
         return ($boxstuff);
     }
 
-
-
     /**
      * [get_total_topics description]
      *
@@ -156,19 +158,19 @@ class ForumManager implements ForumInterface
      */
     public function get_total_topics($forum_id)
     {
-        
-    
         $sql = "SELECT COUNT(*) AS total FROM forumtopics WHERE forum_id='$forum_id'";
     
-        if (!$result = sql_query($sql))
-            return ("ERROR");
+        if (!$result = sql_query($sql)) {
+            return 'ERROR';
+        }
     
-        if (!$myrow = sql_fetch_assoc($result))
-            return ("ERROR");
+        if (!$myrow = sql_fetch_assoc($result)) {
+            return 'ERROR';
+        }
     
         sql_free_result($result);
     
-        return ($myrow['total']);
+        return $myrow['total'];
     }
     
     /**
@@ -181,18 +183,17 @@ class ForumManager implements ForumInterface
      */
     public function get_contributeurs($fid, $tid)
     {
-        
-    
         $rowQ1 = Q_Select("SELECT DISTINCT poster_id FROM posts WHERE topic_id='$tid' AND forum_id='$fid'", 2);
     
         $posterids = '';
+
         foreach ($rowQ1 as $contribs) {
             foreach ($contribs as $contrib) {
                 $posterids .= $contrib . ' ';
             }
         }
     
-        return (chop($posterids));
+        return chop($posterids);
     }
     
     /**
@@ -207,8 +208,6 @@ class ForumManager implements ForumInterface
      */
     public function get_total_posts($fid, $tid, $type, $Mmod)
     {
-        
-    
         $post_aff = $Mmod ? '' : " AND post_aff='1'";
     
         switch ($type) {
@@ -224,15 +223,17 @@ class ForumManager implements ForumInterface
                 forumerror('0031');
         }
     
-        if (!$result = sql_query($sql))
-            return ("ERROR");
+        if (!$result = sql_query($sql)) {
+            return 'ERROR';
+        }
     
-        if (!$myrow = sql_fetch_assoc($result))
-            return ("0");
+        if (!$myrow = sql_fetch_assoc($result)) {
+            return 0;
+        }
     
         sql_free_result($result);
     
-        return ($myrow['total']);
+        return $myrow['total'];
     }
     
     /**
@@ -247,8 +248,6 @@ class ForumManager implements ForumInterface
      */
     public function get_last_post($id, $type, $cmd, $Mmod)
     {
-        
-    
         // $Mmod ne sert plus - maintenu pour compatibilité
         switch ($type) {
             case 'forum':
@@ -262,14 +261,16 @@ class ForumManager implements ForumInterface
                 break;
         }
     
-        if (!$result = sql_query($sql1))
-            return ("ERROR");
+        if (!$result = sql_query($sql1)) {
+            return 'ERROR';
+        }
     
         if ($cmd == 'infos') {
-            if (!$myrow = sql_fetch_row($result))
+            if (!$myrow = sql_fetch_row($result)) {
                 $val = __d('forum', 'Rien');
-            else {
+            } else {
                 $rowQ1 = Q_Select($sql2 . "'" . $myrow[1] . "'", 3600);
+
                 $val = convertdate($myrow[0]);
                 $val .= $rowQ1 ? ' ' . User::userpopover($rowQ1[0]['uname'], 40, 2) : '';
             }
@@ -277,7 +278,7 @@ class ForumManager implements ForumInterface
     
         sql_free_result($result);
     
-        return ($val);
+        return $val;
     }
     
     /**
@@ -290,24 +291,25 @@ class ForumManager implements ForumInterface
      */
     public function does_exists($id, $type)
     {
-        
-    
         switch ($type) {
             case 'forum':
                 $sql = "SELECT forum_id FROM forums WHERE forum_id = '$id'";
                 break;
+
             case 'topic':
                 $sql = "SELECT topic_id FROM forumtopics WHERE topic_id = '$id'";
                 break;
         }
     
-        if (!$result = sql_query($sql))
-            return (0);
+        if (!$result = sql_query($sql)) {
+            return 0;
+        }
     
-        if (!$myrow = sql_fetch_row($result))
-            return (0);
+        if (!$myrow = sql_fetch_row($result)) {
+            return 0;
+        }
     
-        return (1);
+        return 1;
     }
     
     /**
@@ -319,20 +321,21 @@ class ForumManager implements ForumInterface
      */
     public  function is_locked($topic)
     {
-        
-    
         $sql = "SELECT topic_status FROM forumtopics WHERE topic_id = '$topic'";
     
-        if (!$r = sql_query($sql))
-            return (FALSE);
+        if (!$r = sql_query($sql)) {
+            return false;
+        }
     
-        if (!$m = sql_fetch_assoc($r))
-            return (FALSE);
+        if (!$m = sql_fetch_assoc($r)) {
+            return false;
+        }
     
-        if (($m['topic_status'] == 1) or ($m['topic_status'] == 2))
-            return (TRUE);
-        else
-            return (FALSE);
+        if (($m['topic_status'] == 1) or ($m['topic_status'] == 2)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -388,7 +391,7 @@ class ForumManager implements ForumInterface
                 </div>
             </div>';
     
-        return ($affich);
+        return $affich;
     }
     
     /**
@@ -418,16 +421,18 @@ class ForumManager implements ForumInterface
         $temp = '';
         $j = 0;
         foreach ($filelist as $key => $file) {
-            if (!preg_match('#\.gif|\.jpg|\.png$#i', $file)) 
+            if (!preg_match('#\.gif|\.jpg|\.png$#i', $file)) {
                 continue;
+            }
     
             $temp .= '<div class="form-check form-check-inline mb-3">';
     
             if ($image_subject != '') {
-                if ($file == $image_subject)
+                if ($file == $image_subject) {
                     $temp .= '<input type="radio" value="' . $file . '" id="image_subject' . $j . '" name="image_subject" class="form-check-input" checked="checked" />';
-                else
+                } else {
                     $temp .= '<input type="radio" value="' . $file . '" id="image_subject' . $j . '" name="image_subject" class="form-check-input" />';
+                }
             } else {
                 $temp .= '<input type="radio" value="' . $file . '" id="image_subject' . $j . '" name="image_subject" class="form-check-input" checked="checked" />';
                 $image_subject = 'no image';
@@ -460,7 +465,7 @@ class ForumManager implements ForumInterface
                     </div>
                 </form>';
     
-        return ($ibid);
+        return $ibid;
     }
     
     /**
@@ -476,41 +481,48 @@ class ForumManager implements ForumInterface
     {
         $tmp = '';
     
-        if ($ibid = theme_image('forum/rank/post.gif')) 
+        if ($ibid = theme_image('forum/rank/post.gif')) {
             $imgtmpP = $ibid;
-        else 
+        } else {
             $imgtmpP = 'assets/images/forum/rank/post.gif';
+        }
     
         $tmp = '<img class="n-smil" src="' . $imgtmpP . '" alt="" loading="lazy" />' . $posts . '&nbsp;';
     
         if ($poster != Config::get('npds.anonymous')) {
             $nux = 0;
     
-            if ($posts >= 10 and $posts < 30) 
+            if ($posts >= 10 and $posts < 30) {
                 $nux = 1;
+            }
     
-            if ($posts >= 30 and $posts < 100) 
+            if ($posts >= 30 and $posts < 100) {
                 $nux = 2;
+            }
     
-            if ($posts >= 100 and $posts < 300) 
+            if ($posts >= 100 and $posts < 300) {
                 $nux = 3;
+            }
     
-            if ($posts >= 300 and $posts < 1000) 
+            if ($posts >= 300 and $posts < 1000) {
                 $nux = 4;
+            }
     
-            if ($posts >= 1000) 
+            if ($posts >= 1000) {
                 $nux = 5;
+            }
     
             for ($i = 0; $i < $nux; $i++) {
                 $tmp .= '<i class="fa fa-star-o text-success me-1"></i>';
             }
     
             if ($rank) {
-                if ($ibid = theme_image("forum/rank/" . $rank . ".gif") or $ibid = theme_image("forum/rank/" . $rank . ".png")) 
+                if ($ibid = theme_image("forum/rank/" . $rank . ".gif") or $ibid = theme_image("forum/rank/" . $rank . ".png")) {
                     $imgtmpA = $ibid;
-                else 
+                } else {
                     $imgtmpA = "assets/images/forum/rank/" . $rank . ".png";
-    
+                }
+
                 $rank = 'rank' . $rank;
     
                 global $$rank;
@@ -518,7 +530,7 @@ class ForumManager implements ForumInterface
             }
         }
     
-        return ($tmp);
+        return $tmp;
     }
     
     /**
@@ -535,7 +547,6 @@ class ForumManager implements ForumInterface
     {
         global $upload_table;
         
-    
         include("modules/upload/include_forum/config/upload.conf.forum.php");
     
         $sql1 = "SELECT att_id, att_name, att_path FROM $upload_table WHERE apli='$apli' AND";
@@ -544,9 +555,11 @@ class ForumManager implements ForumInterface
         if ($IdForum != '') {
             $sql1 .= " forum_id = '$IdForum'";
             $sql2 .= " forum_id = '$IdForum'";
+
         } elseif ($post_id != '') {
             $sql1 .= " post_id = '$post_id'";
             $sql2 .= " post_id = '$post_id'";
+
         } elseif ($topic_id != '') {
             $sql1 .= " topic_id = '$topic_id'";
             $sql2 .= " topic_id = '$topic_id'";
@@ -592,13 +605,14 @@ class ForumManager implements ForumInterface
                         }
                     }
     
-                    if ($userdata[0] == $poster_id)
+                    if ($userdata[0] == $poster_id) {
                         $Mmod = true;
+                    }
                 }
             }
         }
     
-        return ($Mmod);
+        return $Mmod;
     }
     
     /**
@@ -621,22 +635,27 @@ class ForumManager implements ForumInterface
     
         if ((!$modoX) and ($paramAFX > 0)) {
             $sql = "SELECT COUNT(poster_ip) AS total FROM posts WHERE post_time>'";
+            
             $sql2 = $userdataX['uid'] != 1 
                 ? "' AND (poster_ip='$poster_ipX' OR poster_id='" . $userdataX['uid'] . "')" 
                 : "' AND poster_ip='$poster_ipX'";
     
             $timebase = date("Y-m-d H:i", time() + ($gmtX * 3600) - 5400);
+            
             list($time90) = sql_fetch_row(sql_query($sql . $timebase . $sql2));
     
             if ($time90 > ($paramAFX * 2)) {
                 Ecr_Log("security", "Forum Anti-Flood : " . $compte, '');
+
                 forumerror(__d('forum', 'Vous n\'êtes pas autorisé à participer à ce forum'));
             } else {
                 $timebase = date("Y-m-d H:i", time() + ($gmtX * 3600) - 1800);
+
                 list($time30) = sql_fetch_row(sql_query($sql . $timebase . $sql2));
     
                 if ($time30 > $paramAFX) {
                     Ecr_Log("security", "Forum Anti-Flood : " . $compte, '');
+
                     forumerror(__d('forum', 'Vous n\'êtes pas autorisé à participer à ce forum'));
                 }
             }
@@ -656,6 +675,7 @@ class ForumManager implements ForumInterface
     
         //==> droits des admin sur les forums (superadmin et admin avec droit gestion forum)
         $adminforum = false;
+        
         if ($admin) {
             $adminX = base64_decode($admin);
             $adminR = explode(':', $adminX);
@@ -666,7 +686,10 @@ class ForumManager implements ForumInterface
                 $adminforum = 1;
             } else {
                 $R = sql_query("SELECT fnom, fid, radminsuper FROM authors a LEFT JOIN droits d ON a.aid = d.d_aut_aid LEFT JOIN fonctions f ON d.d_fon_fid = f.fid WHERE a.aid='$adminR[0]' AND f.fid BETWEEN 13 AND 15");
-                if (sql_num_rows($R) >= 1) $adminforum = 1;
+                
+                if (sql_num_rows($R) >= 1) {
+                    $adminforum = 1;
+                }
             }
         }
         //<== droits des admin sur les forums (superadmin et admin avec droit gestion forum)
@@ -691,23 +714,27 @@ class ForumManager implements ForumInterface
     
         // preparation de la gestion des folders
         $result = sql_query("SELECT forum_id, COUNT(topic_id) AS total FROM forumtopics GROUP BY (forum_id)");
+        
         while (list($forumid, $total) = sql_fetch_row($result)) {
             $tab_folder[$forumid][0] = $total; // Topic
         }
     
         $result = sql_query("SELECT forum_id, COUNT(DISTINCT topicid) AS total FROM forum_read WHERE uid='$userR[0]' AND topicid>'0' AND status!='0' GROUP BY (forum_id)");
+        
         while (list($forumid, $total) = sql_fetch_row($result)) {
             $tab_folder[$forumid][1] = $total; // Folder
         }
     
         // préparation de la gestion des abonnements
         $result = sql_query("SELECT forumid FROM subscribe WHERE uid='$userR[0]'");
+        
         while (list($forumid) = sql_fetch_row($result)) {
             $tab_subscribe[$forumid] = true;
         }
     
         // preparation du compteur total_post
         $rowQ0 = Q_Select("SELECT forum_id, COUNT(post_aff) AS total FROM posts GROUP BY forum_id", 600);
+        
         foreach ($rowQ0 as $row0) {
             $tab_total_post[$row0['forum_id']] = $row0['total'];
         }
@@ -730,24 +757,29 @@ class ForumManager implements ForumInterface
                             if (($myrow['forum_type'] == "7") or ($myrow['forum_type'] == "5")) {
                                 $ok_affich = groupe_forum($myrow['forum_pass'], $tab_groupe);
     
-                                if ((isset($admin)) and ($adminforum == 1)) 
-                                    $ok_affich = true; // to see when admin mais pas assez precis
-                            } else
+                                if ((isset($admin)) and ($adminforum == 1)) {
+                                    // to see when admin mais pas assez precis
+                                    $ok_affich = true; 
+                                }
+                            } else {
                                 $ok_affich = true;
+                            }
     
                             if ($ok_affich) {
                                 if ($title_aff) {
                                     $title = stripslashes($row['cat_title']);
     
-                                    if ((file_exists("themes/$theme/views/forum-cat" . $row['cat_id'] . ".html")) or (file_exists("themes/default/views/forum-cat" . $row['cat_id'] . ".html")))
+                                    if ((file_exists("themes/$theme/views/forum-cat" . $row['cat_id'] . ".html")) 
+                                    or (file_exists("themes/default/views/forum-cat" . $row['cat_id'] . ".html"))) {
                                         $ibid .= '
                                         <div class=" mt-3" id="catfo_' . $row['cat_id'] . '" >
                                             <a class="list-group-item list-group-item-action active" href="forum.php?catid=' . $row['cat_id'] . '"><h5>' . $title . '</h5></a>';
-                                    else
+                                    } else {
                                         $ibid .= '
                                         <div class=" mt-3" id="catfo_' . $row['cat_id'] . '">
                                         <div class="list-group-item list-group-item-action active"><h5>' . $title . '</h5></div>';
-    
+                                    }
+
                                     $title_aff = false;
                                 }
     
@@ -765,65 +797,78 @@ class ForumManager implements ForumInterface
                                   <p class="mb-0 list-group-item list-group-item-action flex-column align-items-start">
                                      <span class="d-flex w-100 mt-1">';
     
-                                if (($tab_folder[$myrow['forum_id']][0] - $tab_folder[$myrow['forum_id']][1]) > 0)
+                                if (($tab_folder[$myrow['forum_id']][0] - $tab_folder[$myrow['forum_id']][1]) > 0) {
                                     $ibid .= '<i class="fa fa-folder text-primary fa-lg me-2 mt-1" title="' . __d('forum', 'Les nouvelles contributions depuis votre dernière visite.') . '" data-bs-toggle="tooltip" data-bs-placement="right"></i>';
-                                else
+                                } else {
                                     $ibid .= '<i class="far fa-folder text-primary fa-lg me-2 mt-1" title="' . __d('forum', 'Aucune nouvelle contribution depuis votre dernière visite.') . '" data-bs-toggle="tooltip" data-bs-placement="right"></i>';
-                                
+                                }
+
                                 $name = stripslashes($myrow['forum_name']);
                                 $redirect = false;
     
-                                if (strstr(strtoupper($name), "<a HREF"))
+                                if (strstr(strtoupper($name), "<a HREF")) {
                                     $redirect = true;
-                                else
+                                } else {
+                                    $ibid .= '<a href="viewforum.php?forum=' . $myrow['forum_id'] . '" >' . $name . '</a>';
+                                }
+
+                                if (!$redirect) {
                                     $ibid .= '
-                                     <a href="viewforum.php?forum=' . $myrow['forum_id'] . '" >' . $name . '</a>';
-    
-                                if (!$redirect)
-                                    $ibid .= '
-                                     <span class="ms-auto"> 
-                                        <span class="badge bg-secondary ms-1" title="' . __d('forum', 'Contributions') . '" data-bs-toggle="tooltip">' . $tab_total_post[$myrow['forum_id']] . '</span>
-                                        <span class="badge bg-secondary ms-1" title="' . __d('forum', 'Sujets') . '" data-bs-toggle="tooltip">' . $tab_folder[$myrow['forum_id']][0] . '</span>
-                                     </span>
-                                  </span>';
-    
+                                        <span class="ms-auto"> 
+                                            <span class="badge bg-secondary ms-1" title="' . __d('forum', 'Contributions') . '" data-bs-toggle="tooltip">' . $tab_total_post[$myrow['forum_id']] . '</span>
+                                            <span class="badge bg-secondary ms-1" title="' . __d('forum', 'Sujets') . '" data-bs-toggle="tooltip">' . $tab_folder[$myrow['forum_id']][0] . '</span>
+                                        </span>
+                                    </span>';
+                                }
+
                                 $desc = stripslashes(meta_lang($myrow['forum_desc']));
     
-                                if ($desc != '')
+                                if ($desc != '') {
                                     $ibid .= '<span class="d-flex w-100 mt-1">' . $desc . '</span>';
+                                }
     
                                 if (!$redirect) {
                                     $ibid .= '<span class="d-flex w-100 mt-1"> [ ';
     
-                                    if ($myrow['forum_access'] == "0" && $myrow['forum_type'] == "0")
+                                    if ($myrow['forum_access'] == "0" && $myrow['forum_type'] == "0") {
                                         $ibid .= __d('forum', 'Accessible à tous');
+                                    }
     
-                                    if ($myrow['forum_type'] == "1")
+                                    if ($myrow['forum_type'] == "1") {
                                         $ibid .= __d('forum', 'Privé');
+                                    }
     
-                                    if ($myrow['forum_type'] == "5")
+                                    if ($myrow['forum_type'] == "5") {
                                         $ibid .= "PHP Script + " . __d('forum', 'Groupe');
+                                    }
     
-                                    if ($myrow['forum_type'] == "6")
+                                    if ($myrow['forum_type'] == "6") {
                                         $ibid .= "PHP Script";
+                                    }
     
-                                    if ($myrow['forum_type'] == "7")
+                                    if ($myrow['forum_type'] == "7") {
                                         $ibid .= __d('forum', 'Groupe');
+                                    }
     
-                                    if ($myrow['forum_type'] == "8")
+                                    if ($myrow['forum_type'] == "8") {
                                         $ibid .= __d('forum', 'Texte étendu');
+                                    }
     
-                                    if ($myrow['forum_type'] == "9")
+                                    if ($myrow['forum_type'] == "9") {
                                         $ibid .= __d('forum', 'Caché');
+                                    }
     
-                                    if ($myrow['forum_access'] == "1" && $myrow['forum_type'] == "0")
+                                    if ($myrow['forum_access'] == "1" && $myrow['forum_type'] == "0") {
                                         $ibid .= __d('forum', 'Utilisateur enregistré');
+                                    }
     
-                                    if ($myrow['forum_access'] == "2" && $myrow['forum_type'] == "0")
+                                    if ($myrow['forum_access'] == "2" && $myrow['forum_type'] == "0") {
                                         $ibid .= __d('forum', 'Modérateur');
+                                    }
     
-                                    if ($myrow['forum_access'] == "9")
+                                    if ($myrow['forum_access'] == "9") {
                                         $ibid .= '<span class="text-danger mx-2"><i class="fa fa-lock me-2"></i>' . __d('forum', 'Fermé') . '</span>';
+                                    }
     
                                     $ibid .= ' ] </span>';
     
@@ -835,11 +880,12 @@ class ForumManager implements ForumInterface
                                                 <span class="d-flex w-100 mt-1" >
                                                 <span class="form-check">';
     
-                                                if ($tab_subscribe[$myrow['forum_id']])
+                                                if ($tab_subscribe[$myrow['forum_id']]) {
                                                     $ibid .= '<input class="form-check-input n-ckbf" type="checkbox" id="subforumid' . $myrow['forum_id'] . '" name="Subforumid[' . $myrow['forum_id'] . ']" checked="checked" />';
-                                                else
+                                                } else {
                                                     $ibid .= '<input class="form-check-input n-ckbf" type="checkbox" id="subforumid' . $myrow['forum_id'] . '" name="Subforumid[' . $myrow['forum_id'] . ']" />';
-                                                
+                                                }
+
                                                 $ibid .= '
                                                     <label class="form-check-label" for="subforumid' . $myrow['forum_id'] . '" title="' . __d('forum', 'Cochez et cliquez sur le bouton OK pour recevoir un Email lors d\'une nouvelle soumission dans ce forum.') . '" data-bs-toggle="tooltip" data-bs-placement="right">&nbsp;&nbsp;</label>
                                                     </span>
@@ -848,16 +894,18 @@ class ForumManager implements ForumInterface
                                         }
                                     }
                                     $ibid .= '<span class="d-flex w-100 justify-content-end"><span class="small">' . __d('forum', 'Dernière contribution') . ' : ' . $last_post . '</span></span>';
-                                } else
+                                } else {
                                     $ibid .= '';
+                                }
                             }
                         }
                     }
     
-                    if (($ok_affich == false and $title_aff == false) or $ok_affich == true)
+                    if (($ok_affich == false and $title_aff == false) or $ok_affich == true) {
                         $ibid .= '
                                </p>
                             </div>';
+                    }
                 }
             }
         }
@@ -872,7 +920,7 @@ class ForumManager implements ForumInterface
             }
         }
     
-        return ($ibid);
+        return $ibid;
     }
     
     /**
@@ -909,12 +957,13 @@ class ForumManager implements ForumInterface
             $imgtmp = "assets/images/forum/icons/sub_folder.gif";
         }
     
-        if (($totalT - $totalF) > 0)
+        if (($totalT - $totalF) > 0) {
             $ibid = '<img src="' . $imgtmpR . '" alt="" loading="lazy" />';
-        else
+        } else {
             $ibid = '<img src="' . $imgtmp . '" alt="" loading="lazy" />';
-    
-        return ($ibid);
+        }
+        
+        return $ibid;
     }
 
 }

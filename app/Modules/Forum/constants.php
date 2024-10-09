@@ -9,8 +9,6 @@ if ($rowQ1) {
     $upload_table =  $upload_table;
 }
 
-settype($forum, 'integer');
-
 if ($allow_upload_forum) {
     $rowQ1 = Q_Select("SELECT attachement FROM forums WHERE forum_id='$forum'", 3600);
 
@@ -30,15 +28,17 @@ if ($rowQ1) {
             $forum_xpass = $value;
         }
 
-        if (md5($forum_xpass) == $Xpasswd)
+        if (md5($forum_xpass) == $Xpasswd) {
             $Forum_passwd = $forum_xpass;
-        else
+        } else {
             setcookie("Forum_Priv[$forum]", '', 0);
+        }
     } else {
         if (isset($Forum_passwd)) {
             foreach ($rowQ1[0] as $value) {
-                if ($value == $Forum_passwd)
+                if ($value == $Forum_passwd) {
                     setcookie("Forum_Priv[$forum]", base64_encode(md5($Forum_passwd)), time() + 900);
+                }
             }
         }
     }

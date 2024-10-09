@@ -16,7 +16,7 @@ class ForumKernel
      * @var array
      */
     protected static $aliases = [
-        // Modules Forum
+        // Module Forum
         'Forum'         => 'App\Modules\Forum\Support\Facades\Forum',
     ];
 

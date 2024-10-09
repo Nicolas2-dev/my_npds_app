@@ -1,11 +1,6 @@
 <?php
 
-use App\Modules\Npds\Library\Sform\SformManager;
-
-
-$sform_path = 'library/sform/';
-
-
+use Npds\Sform\SformManager;
 
 global $m;
 $m = new SformManager();

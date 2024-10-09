@@ -1,16 +1,5 @@
 <?php
 
-/************************************************************************/
-/* SFORM Extender for App FORUM                                        */
-/* ===========================                                          */
-/*                                                                      */
-/* App Copyright (c) 2002-2024 by Philippe Brunier                     */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
-
 // ---------------------------------------------------------------------
 // CE CHAMPS est indispensable --- Don't remove this field
 // Champ text : Longueur = 50 / obligatoire / Pas de vérification
