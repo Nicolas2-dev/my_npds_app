@@ -97,40 +97,6 @@ class BaseModel extends Model
     protected $protectedFields = array();
 
     /**
-     * The InputFilter instance.
-     */
-    protected $inputFilter = null;
-
-    /**
-     * Optionally skip the validation.
-     * Used in conjunction with skipValidation() to skip data validation for any future calls.
-     */
-    protected $skipValidation = false;
-
-    /**
-     * An array of validation rules.
-     * This needs to be the same format as validation rules passed to the Validator helper.
-     */
-    protected $validateRules = array();
-
-    /**
-     * An array of extra rules to add to validation rules during inserts only.
-     * Often used for adding 'required' rules to fields on insert, but not updates.
-     *
-     * array( 'username' => 'required' );
-     *
-     * @var array
-     */
-    protected $validateInsertRules = array();
-
-    /**
-     * The InputFilter's Error Messages will be stored there, while executing validation.
-     *
-     * @var array
-     */
-    protected $errors = array();
-
-    /**
      * This can be set to avoid a database call if using $this->prepareData().
      *
      * @var array Columns for the Model's database fields.
@@ -142,9 +108,8 @@ class BaseModel extends Model
     /**
      * Constructor
      * @param null|Connection $connection
-     * @param null|InputFilter $inputFilter
      */
-    public function __construct($connection = null, $inputFilter = null)
+    public function __construct($connection = null)
     {
         parent::__construct($connection);
 
@@ -161,13 +126,6 @@ class BaseModel extends Model
 
         if ($this->autoModified === true) {
             array_unshift($this->beforeUpdate, 'updatedAt');
-        }
-
-        // Do we have a Validator instance?
-        if ($inputFilter instanceof InputFilter) {
-            $this->inputFilter = $inputFilter;
-        } else {
-            $this->inputFilter = new InputFilter();
         }
 
         // Make sure our temp return type is correct.
@@ -412,19 +370,12 @@ class BaseModel extends Model
      * Inserts data into the database.
      *
      * @param array $data An array of key/value pairs to insert to database.
-     * @param null|bool $skipValidation
      *
      * @return mixed|false The primaryKey value of the inserted record, or false.
      * @throws \Exception
      */
-    public function insert($data, $skipValidation = null)
+    public function insert($data)
     {
-        $skipValidation = is_null($skipValidation) ? $this->skipValidation : $skipValidation;
-
-        if ($skipValidation === false) {
-            $data = $this->validate($data, 'insert', $skipValidation);
-        }
-
         //
         $result = false;
 
@@ -453,18 +404,11 @@ class BaseModel extends Model
      * determine which row to replace.
      *
      * @param $data
-     * @param null|bool $skipValidation
      *
      * @return bool
      */
-    public function replace($data, $skipValidation = null)
+    public function replace($data)
     {
-        $skipValidation = is_null($skipValidation) ? $this->skipValidation : $skipValidation;
-
-        if ($skipValidation === false) {
-            $data = $this->validate($data, 'insert', $skipValidation);
-        }
-
         $result = false;
 
         // Will be false if it didn't validate.
@@ -492,18 +436,11 @@ class BaseModel extends Model
      *
      * @param mixed $id   The primaryKey value of the record to update.
      * @param array $data An array of value pairs to update in the record.
-     * @param null|bool $skipValidation
      *
      * @return bool
      */
-    public function update($id, $data, $skipValidation = null)
+    public function update($id, $data)
     {
-        $skipValidation = is_null($skipValidation) ? $this->skipValidation : $skipValidation;
-
-        if ($skipValidation === false) {
-            $data = $this->validate($data, 'update', $skipValidation);
-        }
-
         //
         $result = false;
 
@@ -541,19 +478,13 @@ class BaseModel extends Model
      *
      * @param array $ids  An array of primaryKey values to update.
      * @param array $data An array of value pairs to modify in each row.
-     * @param null|bool $skipValidation
      *
      * @return bool
      */
-    public function updateMany($ids, $data, $skipValidation = null)
+    public function updateMany($ids, $data)
     {
         if (! is_array($ids) || (count($ids) == 0)) {
             return null;
-        }
-        $skipValidation = is_null($skipValidation) ? $this->skipValidation : $skipValidation;
-
-        if ($skipValidation === false) {
-            $data = $this->validate($data, 'update', $skipValidation);
         }
 
         //
@@ -611,7 +542,7 @@ class BaseModel extends Model
         $data = $this->trigger('beforeUpdate', array('method' => 'updateBy', 'fields' => $data));
 
         // Will be false if it didn't validate.
-        if (($data = $this->validate($data)) !== false) {
+        if ($data !== false) {
             // Prepare the Data.
             $data = $this->prepareData($data);
 
@@ -632,19 +563,12 @@ class BaseModel extends Model
      * Updates all records and sets the value pairs passed in the array.
      *
      * @param array $data An array of value pairs with the data to change.
-     * @param null|bool $skipValidation
      *
      * @return bool
      */
-    public function updateAll($data, $skipValidation = null)
+    public function updateAll($data)
     {
         $data = $this->trigger('beforeUpdate', array('method' => 'updateAll', 'fields' => $data));
-
-        $skipValidation = is_null($skipValidation) ? $this->skipValidation : $skipValidation;
-
-        if ($skipValidation === false) {
-            $data = $this->validate($data, 'update', $skipValidation);
-        }
 
         //
         $result = false;
@@ -1030,76 +954,6 @@ class BaseModel extends Model
         if(method_exists($query, $method)) {
             return call_user_func_array(array($query, $method), $parameters);
         }
-    }
-
-    //--------------------------------------------------------------------
-    // Validation
-    //--------------------------------------------------------------------
-
-    /**
-     * Validates the data passed into it based upon the Validator Rules setup in the $this->validateRules property.
-     *
-     * If $type == 'insert', any additional rules in the class var $insert_validate_rules
-     * for that field will be added to the rules.
-     *
-     * @param array $data An array of Validation Rules.
-     * @param string $type Either 'update' or 'insert'.
-     * @param null $skipValidation
-     *
-     * @return array|bool The original data or FALSE.
-     */
-    public function validate($data, $type = 'update', $skipValidation = null)
-    {
-        $skipValidation = is_null($skipValidation) ? $this->skipValidation : $skipValidation;
-
-        if ($skipValidation) {
-            return $data;
-        }
-
-        if (! empty($this->validateRules) && is_array($this->validateRules)) {
-            $inputFilter =& $this->inputFilter;
-
-            // Set the Input Filter Rules for Validation and Filtering.
-            $inputFilter->setRules($this->validateRules);
-
-            // Any insert additions?
-            if (($type == 'insert') && is_array($this->validateInsertRules)) {
-                $validator = $inputFilter->getValidator();
-
-                foreach ($this->validateRules as $field => $row) {
-                    if (isset($this->validateInsertRules[$field])) {
-                        $validator->add($field, $this->validateInsertRules[$field]);
-                    }
-                }
-            }
-
-            // Populate the InputFilter instance with given Data.
-            $inputFilter->populate($data);
-
-            // Execute the Data Validation.
-            if (! $inputFilter->isValid()) {
-                // Something was wrong; store the current Filter's Error Messages and return false.
-                $this->errors = $inputFilter->getErrors();
-
-                return false;
-            }
-
-            // Valid Data given; clear the Error Messages and return the Filtered Values.
-            $this->errors = array();
-
-            return $inputFilter->getValues();
-        }
-
-        return $data;
-    }
-
-    /**
-     * Validation
-     * @return mixed
-     */
-    public function validation()
-    {
-        return $this->validator;
     }
 
     //--------------------------------------------------------------------

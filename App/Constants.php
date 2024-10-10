@@ -32,7 +32,4 @@ define('SITE_TITLE', 'Npds framework');
  */
 define('SITE_EMAIL', 'email@domain.com');
 
-/**
- * Setup the Storage Path.
- */
-define('STORAGE_PATH', BASEPATH .'storage'. DS);
+

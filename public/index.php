@@ -40,6 +40,9 @@ define('SHAREDPATH', BASEPATH .'Shared' .DS);
 define('NPDSPATH', BASEPATH .'npds' .DS);
 
 //
+define('STORAGE_PATH', BASEPATH .'storage'. DS);
+
+//
 require BASEPATH.'vendor'.DS.'autoload.php';
 
 //
