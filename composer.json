@@ -15,9 +15,8 @@
         {
             "type": "git",
             "url": "https://github.com/nicolas2-dev/my_npds_framework"
-        },
+        }
     ],
-
     "require": {
         "php": "^8.2.1",
         "nicolas2-dev/my_npds_framework": "*"
