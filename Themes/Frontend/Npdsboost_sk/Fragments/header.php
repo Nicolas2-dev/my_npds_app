@@ -2,9 +2,8 @@
 
 use Npds\Config\Config;
 use Modules\Users\Support\Facades\User;
+use Modules\Npds\Support\Facades\Cookie;
 use Modules\Theme\Support\Facades\Theme;
-
-global $cookie;
 
 $ava = '';
 $cha = '';
@@ -12,6 +11,7 @@ $bal = '';
 $menuser = '';
 
 if ($user) {
+    $cookie     = Cookie::cookiedecode($user);
     $userdata   = User::get_userdata_from_id($cookie[0]);
     $username   = $cookie[1];
     $ibix       = explode('+', urldecode($cookie[9]));
