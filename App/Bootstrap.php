@@ -1,36 +1,17 @@
 <?php
 
 use Modules\Npds\Support\Secure;
-use Modules\Npds\Support\Sanitize;
 
 if (!defined('NPDS_GRAB_GLOBALS_INCLUDED')) {
 
     //
     define('NPDS_GRAB_GLOBALS_INCLUDED', 1);
 
-    // include current charset
-    if (file_exists(module_path('Npds/storage/meta/cur_charset.php'))) {
-        include(module_path('Npds/storage/meta/cur_charset.php'));
-    }
-
     // Get values, slash, filter and extract
-    if (!empty($_GET)) {
+    Secure::request_query();
 
-        array_walk_recursive($_GET, [Sanitize::class, 'addslashes_GPC']);
-        reset($_GET); 
-
-        array_walk_recursive($_GET, [Secure::class, 'url']);
-        extract($_GET, EXTR_OVERWRITE);
-    }
-
-    //
-    if (!empty($_POST)) {
-        array_walk_recursive($_POST, [Sanitize::class, 'addslashes_GPC']);
-        
-        array_walk_recursive($_POST, [Secure::class, 'post']);
-
-        extract($_POST, EXTR_OVERWRITE);
-    }
+    // Post values, slash, filter and extract
+    Secure::request_post();
 
     // Cookies - analyse et purge - shiney 07-11-2010
     if (!empty($_COOKIE)) {

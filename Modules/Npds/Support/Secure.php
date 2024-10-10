@@ -4,6 +4,7 @@ namespace Modules\Npds\Support;
 
 use Npds\Routing\Url;
 use Npds\Config\Config;
+use Modules\Npds\Support\Sanitize;
 use Modules\Npds\Support\Facades\Spam;
 use Modules\npds\Contracts\SecureInterface;
 
@@ -20,6 +21,40 @@ class Secure implements SecureInterface
      */
     protected static $bad_uri_name = array('GLOBALS', '_SERVER', '_REQUEST', '_GET', '_POST', '_FILES', '_ENV', '_COOKIE', '_SESSION');
     
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public static function request_post()
+    {
+        if (!empty($_POST)) {
+            array_walk_recursive($_POST, [Sanitize::class, 'addslashes_GPC']);
+            
+            array_walk_recursive($_POST, [static::class, 'post']);
+    
+            extract($_POST, EXTR_OVERWRITE);
+        }       
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public static function request_query()
+    {
+        if (!empty($_GET)) {
+
+            array_walk_recursive($_GET, [Sanitize::class, 'addslashes_GPC']);
+            reset($_GET); 
+    
+            array_walk_recursive($_GET, [static::class, 'url']);
+            extract($_GET, EXTR_OVERWRITE);
+        }        
+    }
+
     /**
      * Undocumented function
      *
