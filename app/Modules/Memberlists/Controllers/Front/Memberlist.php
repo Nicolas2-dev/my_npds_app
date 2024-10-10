@@ -1,12 +1,21 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace App\Modules\Memberlists\Controllers;
 
-use App\Controllers\Core\FrontController;
+use App\Modules\Npds\Core\FrontController;
 
-
-class FrontMemberlist extends FrontController
+/**
+ * Undocumented class
+ */
+class Forum extends FrontController
 {
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    protected $pdst = 0;
 
 
     /**
@@ -16,9 +25,40 @@ class FrontMemberlist extends FrontController
      */
     public function __construct()
     {
-
+        parent::__construct();
     }
 
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function index()
     {
         // Make Member_list Private or not
@@ -46,140 +86,6 @@ class FrontMemberlist extends FrontController
             $uid_from_ws = '';
             $gr_from_ws = 0;
         }
-
-        function alpha()
-        {
-            global $sortby, $list, $gr_from_ws, $uid_from_ws;
-
-            $alphabet = array(__d('memberlists', 'Tous'), 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', __d('memberlists', 'Autres'));
-            $num = count($alphabet) - 1;
-            $counter = 0;
-
-            foreach ($alphabet as $ltr) {
-                echo '<a href="memberslist.php?letter=' . $ltr . '&amp;sortby=' . $sortby . '&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . $ltr . '</a>';
-                
-                if ($counter != $num)
-                    echo ' | ';
-
-                $counter++;
-            }
-
-            echo '
-            <br />
-            <form action="memberslist.php" method="post">
-                <div class="mb-3 row">
-                    <label class="col-form-label col-sm-3" for="mblst_search">' . __d('memberlists', 'Recherche') . '</label>
-                    <div class="col-sm-9">
-                        <input class="form-control" type="input" id="mblst_search" name="letter" />
-                        <input type="hidden" name="list" value="' . urldecode($list ?:  '') . '" />
-                        <input type="hidden" name="gr_from_ws" value="' . $gr_from_ws . '" />
-                    </div>
-                </div>
-            </form>';
-        }
-
-        function unique($ibid)
-        {
-            foreach ($ibid as $to_user) {
-                settype($Xto_user, 'array');
-                if (!array_key_exists($to_user, $Xto_user))
-                    $Xto_user[$to_user] = $to_user;
-            }
-
-            return ($Xto_user);
-        }
-
-        function SortLinks($letter)
-        {
-            global $sortby, $list, $admin, $gr_from_ws;
-
-            if ($letter == 'front')
-                $letter = __d('memberlists', 'Tous');
-
-            $sort = false;
-            echo '<p class="">';
-
-            echo __d('memberlists', 'Classé par ordre de : ') . " ";
-            if ($sortby == "uname ASC" or !$sortby) {
-                echo __d('memberlists', 'identifiant') . ' | ';
-                $sort = true;
-            } else
-                echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=uname%20ASC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . __d('memberlists', 'identifiant') . '</a> | ';
-            
-            if ($sortby == 'name ASC') {
-                echo __d('memberlists', 'vrai nom') . ' | ';
-                $sort = true;
-            } else
-                echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=name%20ASC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . __d('memberlists', 'vrai nom') . '</a> | ';
-            
-            if ($sortby == 'user_avatar ASC') {
-                echo __d('memberlists', 'Avatar') . ' | ';
-                $sort = true;
-            } else
-                echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=user_avatar%20ASC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . __d('memberlists', 'Avatar') . '</a> | ';
-            
-            if (($sortby == 'femail ASC') or ($sortby == 'email ASC')) {
-                echo __d('memberlists', 'Email') . ' | ';
-                $sort = true;
-            } else {
-                if ($admin) {
-                    echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=email%20ASC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . __d('memberlists', 'Email') . '</a> | ';
-                } else {
-                    echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=femail%20ASC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . __d('memberlists', 'Email') . '</a> | ';
-                }
-            }
-
-            if ($sortby == 'user_from ASC') {
-                echo __d('memberlists', 'Localisation') . ' | ';
-                $sort = true;
-            } else
-                echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=user_from%20ASC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . __d('memberlists', 'Localisation') . '</a> | ';
-            
-            if ($sortby == 'url DESC') {
-                echo __d('memberlists', 'Url') . ' | ';
-                $sort = true;
-            } else
-                echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=url%20DESC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . __d('memberlists', 'Url') . '</a> | ';
-            
-            if ($sortby == 'mns DESC') {
-                echo __d('memberlists', 'MiniSite') . ' | ';
-                $sort = true;
-            } else
-                echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=mns%20DESC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">' . __d('memberlists', 'MiniSite') . '</a> | ';
-            
-            if ($sortby == 'uid DESC') {
-                echo "I.D";
-                $sort = true;
-            } else {
-                echo '<a href="memberslist.php?letter=' . $letter . '&amp;sortby=uid%20DESC&amp;list=' . $list . '&amp;gr_from_ws=' . $gr_from_ws . '">I.D</a>';
-            }
-            
-            if (!$sort) 
-                $sortby = 'uname ASC';
-
-            echo '</p>';
-        }
-
-        function avatar($user_avatar)
-        {
-            if (!$user_avatar)
-                $imgtmp = "assets/images/forum/avatar/blank.gif";
-            else if (stristr($user_avatar, "users_private"))
-                $imgtmp = $user_avatar;
-            else {
-                if ($ibid = theme_image("forum/avatar/$user_avatar")) 
-                    $imgtmp = $ibid;
-                else 
-                    $imgtmp = "assets/images/forum/avatar/$user_avatar";
-
-                if (!file_exists($imgtmp)) 
-                    $imgtmp = "assets/images/forum/avatar/blank.gif";
-            }
-
-            return ($imgtmp);
-        }
-
-        include("header.php");
 
         $pagesize = Config::get('npds.show_user');
 
@@ -515,10 +421,6 @@ class FrontMemberlist extends FrontController
             } else
                 echo '<div class="mt-3 lead align-middle"><span class="badge bg-secondary lead">' . $num_rows_per_order . '</span> ' . __d('memberlists', 'Utilisateurs trouvés') . '</div>';
         }
-
-        include("footer.php");
-
-        
     }
 
 }

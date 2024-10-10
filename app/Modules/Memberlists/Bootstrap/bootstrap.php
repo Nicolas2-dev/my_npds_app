@@ -1,5 +1,8 @@
 <?php
 
+use App\Modules\Memberlists\Bootstrap\MemberlistKernel;
+
+MemberlistKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

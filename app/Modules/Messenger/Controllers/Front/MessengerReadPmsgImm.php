@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace App\Modules\Messenger\Controllers\Front;
 
-use App\Controllers\Core\FrontController;
+use App\Modules\Npds\Core\FrontController;
 
-
-class FrontReadPmsgImm extends FrontController
+/**
+ * Undocumented class
+ */
+class MessengerReadPmsgImm extends FrontController
 {
 
 
@@ -47,7 +49,12 @@ class FrontReadPmsgImm extends FrontController
 
     }
 
-    function cache_ctrl()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function cache_ctrl()
     {
         if (Config::get('npds.cache_verif')) {
             header("Expires: Sun, 01 Jul 1990 00:00:00 GMT");
@@ -57,7 +64,13 @@ class FrontReadPmsgImm extends FrontController
         }
     }
     
-    function show_imm($op)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $op
+     * @return void
+     */
+    public function show_imm($op)
     {
         global $user, $allow_bbcode, $theme;
         
@@ -196,7 +209,13 @@ class FrontReadPmsgImm extends FrontController
         </html>';
     }
     
-    function sup_imm($msg_id)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $msg_id
+     * @return void
+     */
+    public function sup_imm($msg_id)
     {
         global $cookie;
     
@@ -210,7 +229,14 @@ class FrontReadPmsgImm extends FrontController
         }
     }
     
-    function read_imm($msg_id, $sub_op)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $msg_id
+     * @param [type] $sub_op
+     * @return void
+     */
+    public function read_imm($msg_id, $sub_op)
     {
         global $cookie;
     

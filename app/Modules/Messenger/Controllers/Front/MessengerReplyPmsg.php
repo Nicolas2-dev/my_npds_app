@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace App\Modules\Messenger\Controllers\Front;
 
-use App\Controllers\Core\FrontController;
+use App\Modules\Npds\Core\FrontController;
 
-
-class FrontReplyPmsg extends FrontController
+/**
+ * Undocumented class
+ */
+class MessengerReplyPmsg extends FrontController
 {
 
 
@@ -19,6 +21,11 @@ class FrontReplyPmsg extends FrontController
 
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function index()
     {
         if ($SuperCache)

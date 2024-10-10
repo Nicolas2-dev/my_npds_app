@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace App\Modules\Messenger\Controllers\Front;
 
-use App\Controllers\Core\FrontController;
+use App\Modules\Npds\Core\FrontController;
 
-
-class FrontViewPmsg extends FrontController
+/**
+ * Undocumented class
+ */
+class MessengerViewPmsg extends FrontController
 {
 
 
@@ -19,6 +21,11 @@ class FrontViewPmsg extends FrontController
 
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function index()
     {
         $cache_obj =  $SuperCache ? new SuperCacheManager() : new SuperCacheEmpty();

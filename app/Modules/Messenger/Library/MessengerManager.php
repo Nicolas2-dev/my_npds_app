@@ -2,10 +2,13 @@
 
 namespace App\Modules\Messenger\Library;
 
-use App\Support\Facades\Theme;
+use Npds\Config\Config;
+use App\Modules\Theme\Support\Facades\Theme;
 use App\Modules\Messenger\Contracts\MessengerInterface;
 
-
+/**
+ * Undocumented class
+ */
 class MessengerManager implements MessengerInterface 
 {
 
@@ -144,9 +147,7 @@ class MessengerManager implements MessengerInterface
      */
     public function Form_instant_message($to_userid)
     {
-        include("header.php");
         $this->write_short_private_message(removeHack($to_userid));
-        include("footer.php");
     }
     
     /**
@@ -163,8 +164,6 @@ class MessengerManager implements MessengerInterface
      */
     public function writeDB_private_message($to_userid, $image, $subject, $from_userid, $message, $copie)
     {
-        
-    
         $res = sql_query("SELECT uid, user_langue FROM users WHERE uname='$to_userid'");
         list($to_useridx, $user_languex) = sql_fetch_row($res);
     
