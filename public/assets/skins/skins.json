@@ -1,0 +1,302 @@
+{
+  "version": "5.1.3",
+  "skins": [
+    {
+      "name": "Default",
+      "description": "A calm blue sky",
+      "thumbnail": "assets/skins/default/thumbnail.png",
+      "preview": "assets/skins/default/",
+      "css": "assets/skins/default/bootstrap.css",
+      "cssMin": "assets/skins/default/bootstrap.min.css",
+      "cssxtra": "assets/skins/default/extra.css",
+      "scss": "assets/skins/default/_bootswatch.scss",
+      "scssVariables": "assets/skins/default/_variables.scss"
+    },
+    {
+      "name": "Cerulean",
+      "description": "A calm blue sky",
+      "thumbnail": "assets/skins/cerulean/thumbnail.png",
+      "preview": "assets/skins/cerulean/",
+      "css": "assets/skins/cerulean/bootstrap.css",
+      "cssMin": "assets/skins/cerulean/bootstrap.min.css",
+      "cssxtra": "assets/skins/cerulean/extra.css",
+      "scss": "assets/skins/cerulean/_bootswatch.scss",
+      "scssVariables": "assets/skins/cerulean/_variables.scss"
+    },
+    {
+      "name": "Cosmo",
+      "description": "An ode to Metro",
+      "thumbnail": "assets/skins/cosmo/thumbnail.png",
+      "preview": "assets/skins/cosmo/",
+      "css": "assets/skins/cosmo/bootstrap.css",
+      "cssMin": "assets/skins/cosmo/bootstrap.min.css",
+      "cssxtra": "assets/skins/cosmo/extra.css",
+      "scss": "assets/skins/cosmo/_bootswatch.scss",
+      "scssVariables": "assets/skins/cosmo/_variables.scss"
+    },
+    {
+      "name": "Cyborg",
+      "description": "Jet black and electric blue",
+      "thumbnail": "assets/skins/cyborg/thumbnail.png",
+      "preview": "assets/skins/cyborg/",
+      "css": "assets/skins/cyborg/bootstrap.css",
+      "cssMin": "assets/skins/cyborg/bootstrap.min.css",
+      "cssxtra": "assets/skins/cyborg/extra.css",
+      "scss": "assets/skins/cyborg/_bootswatch.scss",
+      "scssVariables": "assets/skins/cyborg/_variables.scss"
+    },
+    {
+      "name": "Darkly",
+      "description": "Flatly in night mode",
+      "thumbnail": "assets/skins/darkly/thumbnail.png",
+      "preview": "assets/skins/darkly/",
+      "css": "assets/skins/darkly/bootstrap.css",
+      "cssMin": "assets/skins/darkly/bootstrap.min.css",
+      "cssxtra": "assets/skins/darkly/extra.css",
+      "scss": "assets/skins/darkly/_bootswatch.scss",
+      "scssVariables": "assets/skins/darkly/_variables.scss"
+    },
+    {
+      "name": "Flatly",
+      "description": "Flat and modern",
+      "thumbnail": "assets/skins/flatly/thumbnail.png",
+      "preview": "assets/skins/flatly/",
+      "css": "assets/skins/flatly/bootstrap.css",
+      "cssMin": "assets/skins/flatly/bootstrap.min.css",
+      "cssxtra": "assets/skins/flatly/extra.css",
+      "scss": "assets/skins/flatly/_bootswatch.scss",
+      "scssVariables": "assets/skins/flatly/_variables.scss"
+    },
+    {
+      "name": "Journal",
+      "description": "Crisp like a new sheet of paper",
+      "thumbnail": "assets/skins/journal/thumbnail.png",
+      "preview": "assets/skins/journal/",
+      "css": "assets/skins/journal/bootstrap.css",
+      "cssMin": "assets/skins/journal/bootstrap.min.css",
+      "cssxtra": "assets/skins/journal/extra.css",
+      "scss": "assets/skins/journal/_bootswatch.scss",
+      "scssVariables": "assets/skins/journal/_variables.scss"
+    },
+    {
+      "name": "Litera",
+      "description": "The medium is the message",
+      "thumbnail": "assets/skins/litera/thumbnail.png",
+      "preview": "assets/skins/litera/",
+      "css": "assets/skins/litera/bootstrap.css",
+      "cssMin": "assets/skins/litera/bootstrap.min.css",
+      "cssxtra": "assets/skins/litera/extra.css",
+      "scss": "assets/skins/litera/_bootswatch.scss",
+      "scssVariables": "assets/skins/litera/_variables.scss"
+    },
+    {
+      "name": "Lumen",
+      "description": "Light and shadow",
+      "thumbnail": "assets/skins/lumen/thumbnail.png",
+      "preview": "assets/skins/lumen/",
+      "css": "assets/skins/lumen/bootstrap.css",
+      "cssMin": "assets/skins/lumen/bootstrap.min.css",
+      "cssxtra": "assets/skins/lumen/extra.css",
+      "scss": "assets/skins/lumen/_bootswatch.scss",
+      "scssVariables": "assets/skins/lumen/_variables.scss"
+    },
+    {
+      "name": "Lux",
+      "description": "A touch of class",
+      "thumbnail": "assets/skins/lux/thumbnail.png",
+      "preview": "assets/skins/lux/",
+      "css": "assets/skins/lux/bootstrap.css",
+      "cssMin": "assets/skins/lux/bootstrap.min.css",
+      "cssxtra": "assets/skins/lux/extra.css",
+      "scss": "assets/skins/lux/_bootswatch.scss",
+      "scssVariables": "assets/skins/lux/_variables.scss"
+    },
+    {
+      "name": "Materia",
+      "description": "Material is the metaphor",
+      "thumbnail": "assets/skins/materia/thumbnail.png",
+      "preview": "assets/skins/materia/",
+      "css": "assets/skins/materia/bootstrap.css",
+      "cssMin": "assets/skins/materia/bootstrap.min.css",
+      "cssxtra": "assets/skins/materia/extra.css",
+      "scss": "assets/skins/materia/_bootswatch.scss",
+      "scssVariables": "assets/skins/materia/_variables.scss"
+    },
+    {
+      "name": "Minty",
+      "description": "A fresh feel",
+      "thumbnail": "assets/skins/minty/thumbnail.png",
+      "preview": "assets/skins/minty/",
+      "css": "assets/skins/minty/bootstrap.css",
+      "cssMin": "assets/skins/minty/bootstrap.min.css",
+      "cssxtra": "assets/skins/minty/extra.css",
+      "scss": "assets/skins/minty/_bootswatch.scss",
+      "scssVariables": "assets/skins/minty/_variables.scss"
+    },
+    {
+      "name": "Morph",
+      "description": "A neumorphic layer",
+      "thumbnail": "assets/skins/morph/thumbnail.png",
+      "preview": "assets/skins/morph/",
+      "css": "assets/skins/morph/bootstrap.css",
+      "cssMin": "assets/skins/morph/bootstrap.min.css",
+      "cssxtra": "assets/skins/morph/extra.css",
+      "scss": "assets/skins/morph/_bootswatch.scss",
+      "scssVariables": "assets/skins/morph/_variables.scss"
+    },
+    {
+      "name": "Pulse",
+      "description": "A trace of purple",
+      "thumbnail": "assets/skins/pulse/thumbnail.png",
+      "preview": "assets/skins/pulse/",
+      "css": "assets/skins/pulse/bootstrap.css",
+      "cssMin": "assets/skins/pulse/bootstrap.min.css",
+      "cssxtra": "assets/skins/pulse/extra.css",
+      "scss": "assets/skins/pulse/_bootswatch.scss",
+      "scssVariables": "assets/skins/pulse/_variables.scss"
+    },
+    {
+      "name": "Quartz",
+      "description": "A glassmorphic layer",
+      "thumbnail": "assets/skins/quartz/thumbnail.png",
+      "preview": "assets/skins/quartz/",
+      "css": "assets/skins/quartz/bootstrap.css",
+      "cssMin": "assets/skins/quartz/bootstrap.min.css",
+      "cssxtra": "assets/skins/quartz/extra.css",
+      "scss": "assets/skins/quartz/_bootswatch.scss",
+      "scssVariables": "assets/skins/quartz/_variables.scss"
+    },
+    {
+      "name": "Regent",
+      "description": "Solid and staid",
+      "thumbnail": "assets/skins/regent/thumbnail.png",
+      "preview": "assets/skins//regent/",
+      "css": "assets/skins/regent/bootstrap.css",
+      "cssMin": "assets/skins/regent/bootstrap.min.css",
+      "cssxtra": "assets/skins/regent/extra.css",
+      "scss": "assets/skins//regent/_bootswatch.scss",
+      "scssVariables": "assets/skins/regent/_variables.scss"
+    },
+    {
+      "name": "Sandstone",
+      "description": "A touch of warmth",
+      "thumbnail": "assets/skins/sandstone/thumbnail.png",
+      "preview": "assets/skins/sandstone/",
+      "css": "assets/skins/sandstone/bootstrap.css",
+      "cssMin": "assets/skins/sandstone/bootstrap.min.css",
+      "cssxtra": "assets/skins/sandstone/extra.css",
+      "scss": "assets/skins/sandstone/_bootswatch.scss",
+      "scssVariables": "assets/skins/sandstone/_variables.scss"
+    },
+    {
+      "name": "Simplex",
+      "description": "Mini and minimalist",
+      "thumbnail": "assets/skins/simplex/thumbnail.png",
+      "preview": "assets/skins/simplex/",
+      "css": "assets/skins/simplex/bootstrap.css",
+      "cssMin": "assets/skins/simplex/bootstrap.min.css",
+      "cssxtra": "assets/skins/simplex/extra.css",
+      "scss": "assets/skins/simplex/_bootswatch.scss",
+      "scssVariables": "assets/skins/simplex/_variables.scss"
+    },
+    {
+      "name": "Sketchy",
+      "description": "A hand-drawn look for mockups and mirth",
+      "thumbnail": "assets/skins/sketchy/thumbnail.png",
+      "preview": "assets/skins/sketchy/",
+      "css": "assets/skins/sketchy/bootstrap.css",
+      "cssMin": "assets/skins/sketchy/bootstrap.min.css",
+      "cssxtra": "assets/skins/sketchy/extra.css",
+      "scss": "assets/skins/sketchy/_bootswatch.scss",
+      "scssVariables": "assets/skins/sketchy/_variables.scss"
+    },
+    {
+      "name": "Slate",
+      "description": "Shades of gunmetal gray",
+      "thumbnail": "assets/skins/slate/thumbnail.png",
+      "preview": "assets/skins/slate/",
+      "css": "assets/skins/slate/bootstrap.css",
+      "cssMin": "assets/skins/slate/bootstrap.min.css",
+      "cssxtra": "assets/skins/slate/extra.css",
+      "scss": "assets/skins/slate/_bootswatch.scss",
+      "scssVariables": "assets/skins/slate/_variables.scss"
+    },
+    {
+      "name": "Solar",
+      "description": "A spin on Solarized",
+      "thumbnail": "assets/skins/solar/thumbnail.png",
+      "preview": "assets/skins/solar/",
+      "css": "assets/skins/solar/bootstrap.css",
+      "cssMin": "assets/skins/solar/bootstrap.min.css",
+      "cssxtra": "assets/skins/solar/extra.css",
+      "scss": "assets/skins/solar/_bootswatch.scss",
+      "scssVariables": "assets/skins/solar/_variables.scss"
+    },
+    {
+      "name": "Spacelab",
+      "description": "Silvery and sleek",
+      "thumbnail": "assets/skins/spacelab/thumbnail.png",
+      "preview": "assets/skins/spacelab/",
+      "css": "assets/skins/spacelab/bootstrap.css",
+      "cssMin": "assets/skins/spacelab/bootstrap.min.css",
+      "cssxtra": "assets/skins/spacelab/extra.css",
+      "scss": "assets/skins/spacelab/_bootswatch.scss",
+      "scssVariables": "assets/skins/spacelab/_variables.scss"
+    },
+    {
+      "name": "Superhero",
+      "description": "The brave and the blue",
+      "thumbnail": "assets/skins/superhero/thumbnail.png",
+      "preview": "assets/skins/superhero/",
+      "css": "assets/skins/superhero/bootstrap.css",
+      "cssMin": "assets/skins/superhero/bootstrap.min.css",
+      "cssxtra": "assets/skins/superhero/extra.css",
+      "scss": "assets/skins/superhero/_bootswatch.scss",
+      "scssVariables": "assets/skins/superhero/_variables.scss"
+    },
+    {
+      "name": "United",
+      "description": "Ubuntu orange and unique font",
+      "thumbnail": "assets/skins/united/thumbnail.png",
+      "preview": "assets/skins/united/",
+      "css": "assets/skins/united/bootstrap.css",
+      "cssMin": "assets/skins/united/bootstrap.min.css",
+      "cssxtra": "assets/skins/united/extra.css",
+      "scss": "assets/skins/united/_bootswatch.scss",
+      "scssVariables": "assets/skins/united/_variables.scss"
+    },
+    {
+      "name": "Vapor",
+      "description": "A cyberpunk aesthetic",
+      "thumbnail": "assets/skins/vapor/thumbnail.png",
+      "preview": "assets/skins/vapor/",
+      "css": "assets/skins/vapor/bootstrap.css",
+      "cssMin": "assets/skins/vapor/bootstrap.min.css",
+      "cssxtra": "assets/skins/vapor/extra.css",
+      "scss": "assets/skins/vapor/_bootswatch.scss",
+      "scssVariables": "assets/skins/vapor/_variables.scss"
+    },
+    {
+      "name": "Yeti",
+      "description": "A friendly foundation",
+      "thumbnail": "assets/skins/yeti/thumbnail.png",
+      "preview": "assets/skins/yeti/",
+      "css": "assets/skins/yeti/bootstrap.css",
+      "cssMin": "assets/skins/yeti/bootstrap.min.css",
+      "cssxtra": "assets/skins/yeti/extra.css",
+      "scss": "assets/skins/yeti/_bootswatch.scss",
+      "scssVariables": "assets/skins/yeti/_variables.scss"
+    },
+    {
+      "name": "Zephyr",
+      "description": "Breezy and beautiful",
+      "thumbnail": "assets/skins/zephyr/thumbnail.png",
+      "preview": "assets/skins/zephyr/",
+      "css": "assets/skins/zephyr/bootstrap.css",
+      "cssMin": "assets/skins/zephyr/bootstrap.min.css",
+      "cssxtra": "assets/skins/zephyr/extra.css",
+      "scss": "assets/skins/zephyr/_bootswatch.scss",
+      "scssVariables": "assets/skins/zephyr/_variables.scss"
+    }
+  ]
+}

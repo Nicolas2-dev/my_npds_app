@@ -1,0 +1,1 @@
+09/28/2024 01:31:34 index.php=>send Smtp mail by nicolas.l.devoy@gmail.com       Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server SMTP code: 10061 Additional SMTP info: Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée
