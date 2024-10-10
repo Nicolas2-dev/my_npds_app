@@ -3,10 +3,11 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Modules\\": "app/modules/",
-            "Themes\\": "app/themes/",
-            "Shared\\": "app/shared/",
-            "Npds\\": "npds/"
+            "Modules\\": "Modules/",
+            "Packages\\": "Packages/",
+            "Themes\\": "Themes/",
+            "Shared\\": "Shared/",
+            "Npds\\": "Npds/"
         },
         "files": [
             "app/Support/Helpers.php",

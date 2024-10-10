@@ -514,18 +514,27 @@ class Router
 
         if (preg_match('#^assets/(.*)$#i', $uri, $matches)) {
             $filePath = BASEPATH.'assets'.DS.$matches[1];
-        } else if (preg_match('#^(themes|modules|shared)/(.+)/assets/(.*)$#i', $uri, $matches)) {
+
+        } else if (preg_match('#^(modules)/(.+)/assets/(.*)$#i', $uri, $matches)) {
             // We need to classify the path name (the Module/Theme path).
             //$basePath = ucfirst($matches[1]) .DS .Inflector::classify($matches[2]);
             $basePath = ucfirst($matches[1]) .DS .$matches[2];
 
-            $filePath = APPPATH.$basePath.DS.'Assets'.DS.$matches[3];
+            $filePath = BASEPATH.$basePath.DS.'Assets'.DS.$matches[3];
+
         } else if (preg_match('#^(modules)/(.+)/storage/(.*)$#i', $uri, $matches)) {
             // We need to classify the path name (the Module/Theme path).
             //$basePath = ucfirst($matches[1]) .DS .Inflector::classify($matches[2]);
             $basePath = ucfirst($matches[1]) .DS .$matches[2];
 
-            $filePath = APPPATH.$basePath.DS.'storage'.DS.$matches[3];
+            $filePath = BASEPATH.$basePath.DS.'storage'.DS.$matches[3];
+
+        } else if (preg_match('#^(themes|shared)/(.+)/assets/(.*)$#i', $uri, $matches)) {
+            // We need to classify the path name (the Module/Theme path).
+            //$basePath = ucfirst($matches[1]) .DS .Inflector::classify($matches[2]);
+            $basePath = ucfirst($matches[1]) .DS .$matches[2];
+
+            $filePath = BASEPATH.$basePath.DS.'Assets'.DS.$matches[3];
         }
 
         if (! empty($filePath)) {

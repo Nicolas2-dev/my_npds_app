@@ -26,7 +26,7 @@ class Manager
         foreach ($modules as $module) {
 
             //
-            $filePath = str_replace('/', DS, APPPATH.'Modules/'.$module.'/Bootstrap/bootstrap.php');
+            $filePath = str_replace('/', DS, BASEPATH.'Modules/'.$module.'/Bootstrap/bootstrap.php');
 
             if (!is_readable($filePath)) {
                 continue;

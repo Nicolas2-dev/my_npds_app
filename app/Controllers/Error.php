@@ -6,7 +6,7 @@ namespace App\Controllers;
 
 use Npds\View\View;
 use Npds\Http\Response;
-use App\Modules\Npds\Core\FrontController;
+use Modules\Npds\Core\FrontController;
 
 /**
  * Error class to generate 404 pages.

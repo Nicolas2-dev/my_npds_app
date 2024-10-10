@@ -144,19 +144,19 @@ abstract class Controller
 
         // First, check on the App path.
         if (preg_match('#^App/Controllers/(.*)$#i', $classPath, $matches)) {
-            $viewsPath = str_replace('/', DS, 'Views/'.$matches[1]);
+            $viewsPath = APPPATH . str_replace('/', DS, 'Views/'.$matches[1]);
 
         // Secondly, check on the Modules path.
-        } else if (preg_match('#^App/Modules/(.+)/Controllers/(.*)$#i', $classPath, $matches)) {
+        } else if (preg_match('#^Modules/(.+)/Controllers/(.*)$#i', $classPath, $matches)) {
             $this->module = $matches[1];
 
             // The View paths are in Module sub-directories.
-            $viewsPath = str_replace('/', DS, 'Modules/'.$matches[1].'/Views/'.$matches[2]);
+            $viewsPath = BASEPATH . str_replace('/', DS, 'Modules/'.$matches[1].'/Views/'.$matches[2]);
         } else {
             throw new \Exception(__d('system', 'Unknown Views Path for the Class: {0}', $this->className));
         }
 
-        $this->viewsPath = APPPATH .$viewsPath .DS;
+        $this->viewsPath = $viewsPath .DS;
     }
 
     /**

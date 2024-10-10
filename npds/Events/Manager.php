@@ -31,7 +31,7 @@ class Manager
      *
      * @var string
      */
-    private static $hookPath = 'Nova.Events.Manager.LegacyHook_';
+    private static $hookPath = 'Npds.Events.Manager.LegacyHook_';
 
     
     /**

@@ -1,12 +1,10 @@
 <?php
 
-use Npds\QB;
 use Npds\Config\Config;
-use Npds\Support\Facades\DB;
-use App\Modules\Npds\Library\CookieManager;
-use App\Modules\Npds\Library\SessionManager;
-use App\Modules\Npds\Library\LanguageManager;
-use App\Modules\Npds\Library\MetalangManager;
+use Modules\Npds\Library\CookieManager;
+use Modules\Npds\Library\SessionManager;
+use Modules\Npds\Library\LanguageManager;
+use Modules\Npds\Library\MetalangManager;
 
 // Multi-language
 // a integrer nouvel version language

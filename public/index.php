@@ -18,13 +18,13 @@ define('WEBPATH', dirname(__FILE__) .DS);
 define('APPPATH', BASEPATH .'app' .DS);
 
 //
-define('MODULEPATH', APPPATH .'Modules' .DS);
+define('MODULEPATH', BASEPATH .'Modules' .DS);
 
 //
-define('THEMEPATH', APPPATH .'Themes' .DS);
+define('THEMEPATH', BASEPATH .'Themes' .DS);
 
 //
-define('SHAREDPATH', APPPATH .'Shared' .DS);
+define('SHAREDPATH', BASEPATH .'Shared' .DS);
 
 //
 define('NPDSPATH', BASEPATH .'npds' .DS);
@@ -33,4 +33,4 @@ define('NPDSPATH', BASEPATH .'npds' .DS);
 require BASEPATH.'vendor'.DS.'autoload.php';
 
 //
-require APPPATH .'Bootstrap'.DS.'Bootstrap.php';
+require BASEPATH .'Bootstrap'.DS.'Bootstrap.php';

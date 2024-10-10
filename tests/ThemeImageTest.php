@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\Modules\Theme\Support\Facades\Theme;
+use Modules\Theme\Support\Facades\Theme;
 
 test('the image row', function () {
     

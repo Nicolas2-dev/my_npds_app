@@ -33,7 +33,7 @@ class Manager
      *
      * @return  [type]            [return description]
      */
-    protected function __construct($storage = '')
+    protected function __construct($storage = '', $config = [])
     {
         $config = Config::get('cache');
 

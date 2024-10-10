@@ -127,7 +127,7 @@ class View
      */
     public static function exists($view)
     {
-        $path = APPPATH .str_replace('/', DS, "$view.php");
+        $path = BASEPATH .str_replace('/', DS, "$view.php");
 
         return is_readable($path);
     }
@@ -146,7 +146,7 @@ class View
         // Get the Controller instance.
         $controller =& get_instance();           
 
-        $viewsPath = APPPATH;
+        $viewsPath = BASEPATH;
 
         if ($view == $controller->method()) {
             $viewsPath = $controller->viewsPath();
@@ -180,7 +180,7 @@ class View
         }
 
         // Prepare the file path.
-        $path = APPPATH .'Themes' .DS .$template_dir .DS .$template .DS .'Layouts' .DS .$layout .'.php';
+        $path = BASEPATH .'Themes' .DS .$template_dir .DS .$template .DS .'Layouts' .DS .$layout .'.php';
 
         //
         Response::addHeader('Content-Type: text/html; charset=UTF-8');
@@ -209,7 +209,7 @@ class View
         $module = $controller->module();
 
         // Prepare the file path.
-        $path = APPPATH . 'Modules' .DS . $module .DS . 'Views' .DS .'Layouts' .DS .$layout .'.php';
+        $path = BASEPATH . 'Modules' .DS . $module .DS . 'Views' .DS .'Layouts' .DS .$layout .'.php';
 
         //
         Response::addHeader('Content-Type: text/html; charset=UTF-8');
@@ -235,7 +235,7 @@ class View
         $template_dir = $controller->template_dir();
 
         // Prepare the file path.
-        $path = APPPATH .'Themes' .DS .$template_dir .DS .$template .DS .'Fragments' .DS .$fragment .'.php';
+        $path = BASEPATH .'Themes' .DS .$template_dir .DS .$template .DS .'Fragments' .DS .$fragment .'.php';
 
         return new View($path, $data);
     }

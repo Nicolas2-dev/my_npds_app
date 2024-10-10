@@ -7,9 +7,9 @@ namespace App\Controllers;
 use Npds\Session\Session;
 
 
-use App\Modules\Npds\Core\FrontController;
-use App\Modules\Users\Support\Facades\User;
-use App\Modules\Users\Support\Facades\UserPopover;
+use Modules\Npds\Core\FrontController;
+use Modules\Users\Support\Facades\User;
+use Modules\Users\Support\Facades\UserPopover;
 
 /**
  * Sample controller showing a construct and 2 methods and their typical usage.

@@ -24,7 +24,7 @@ class Manager
         }
 
         foreach ($packages as $package) {
-            $filePath = str_replace('/', DS, APPPATH.'Packages/'.$package.'/Config/bootstrap.php');
+            $filePath = str_replace('/', DS, BASEPATH.'Packages/'.$package.'/Config/bootstrap.php');
 
             if (!is_readable($filePath)) {
                 continue;

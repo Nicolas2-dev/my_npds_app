@@ -6,7 +6,7 @@ namespace App\Controllers\Core;
 use Npds\View\View;
 use Npds\Core\Controller;
 use Npds\Events\Manager as Events;
-use App\Modules\Blocks\Support\Facades\Block;
+use Modules\Blocks\Support\Facades\Block;
 
 
 /**
