@@ -20,7 +20,7 @@ class AdminLinks extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'weblinks';
 
     /**
      * [$short_menu_admin description]
@@ -41,7 +41,7 @@ class AdminLinks extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'links';
 
 
     /**
@@ -59,7 +59,7 @@ class AdminLinks extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('links', 'Links');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -80,115 +80,12 @@ class AdminLinks extends AdminController
         return parent::after($result);
     }
 
-
     /**
-     * [__construct description]
+     * Undocumented function
      *
-     * @return  [type]  [return description]
+     * @return void
      */
-    // public function __construct()
-    // {
-        // $f_meta_nom = 'links';
-        // $f_titre = 'Liens';
-        
-        // //==> controle droit
-        // admindroits($aid, $f_meta_nom);
-        // //<== controle droit
-        
-        // $hlpfile = "language/manuels/Config::get('npds.language')/weblinks.html";
-        
-        // // valeur du pas de pagination
-        // $rupture = 100; //100
-
-        // settype($op, 'string');
-        // settype($sid, 'integer');
-        // settype($ok, 'integer');
-        
-        // switch ($op) {
-        //     case 'links':
-        //     case 'suite_links':
-        //         links();
-        //         break;
-        
-        //     case 'LinksDelNew':
-        //         LinksDelNew($lid);
-        //         break;
-        
-        //     case 'LinksAddCat':
-        //         LinksAddCat($title, $cdescription);
-        //         break;
-        
-        //     case 'LinksAddSubCat':
-        //         LinksAddSubCat($cid, $title);
-        //         break;
-        
-        //     case 'LinksAddLink':
-        //         LinksAddLink($new, $lid, $title, $url, $cat, $xtext, $name, $email, $submitter);
-        //         break;
-        
-        //     case 'LinksAddEditorial':
-        //         LinksAddEditorial($linkid, $editorialtitle, $editorialtext);
-        //         break;
-        
-        //     case 'LinksModEditorial':
-        //         LinksModEditorial($linkid, $editorialtitle, $editorialtext);
-        //         break;
-        
-        //     case 'LinksDelEditorial':
-        //         LinksDelEditorial($linkid);
-        //         break;
-        
-        //     case 'LinksListBrokenLinks':
-        //         LinksListBrokenLinks();
-        //         break;
-        
-        //     case 'LinksDelBrokenLinks':
-        //         LinksDelBrokenLinks($lid);
-        //         break;
-        
-        //     case 'LinksIgnoreBrokenLinks':
-        //         LinksIgnoreBrokenLinks($lid);
-        //         break;
-        
-        //     case 'LinksListModRequests':
-        //         LinksListModRequests();
-        //         break;
-        
-        //     case 'LinksChangeModRequests':
-        //         LinksChangeModRequests($requestid);
-        //         break;
-        
-        //     case 'LinksChangeIgnoreRequests':
-        //         LinksChangeIgnoreRequests($requestid);
-        //         break;
-        
-        //     case 'LinksDelCat':
-        //         LinksDelCat($cid, $sid, $sub, $ok);
-        //         break;
-        
-        //     case 'LinksModCat':
-        //         LinksModCat($cat);
-        //         break;
-        
-        //     case 'LinksModCatS':
-        //         LinksModCatS($cid, $sid, $sub, $title, $cdescription);
-        //         break;
-        
-        //     case 'LinksModLink':
-        //         LinksModLink($lid);
-        //         break;
-        
-        //     case 'LinksModLinkS':
-        //         LinksModLinkS($lid, $title, $url, $xtext, $name, $email, $hits, $cat);
-        //         break;
-        
-        //     case 'LinksDelLink':
-        //         LinksDelLink($lid);
-        //         break;
-        // }
-    // }
-
-    function links()
+    public function links()
     {
         $results = sql_query("SELECT * FROM links_links");
         $numrows = sql_num_rows($results);
@@ -539,8 +436,11 @@ class AdminLinks extends AdminController
             </thead>
             <tbody>';
     
-        global $rupture, $deja_affiches;
+        global $deja_affiches;
     
+        // valeur du pas de pagination
+        $rupture = 100; //100
+
         settype($deja_affiches, "integer");
     
         if ($deja_affiches < 0) {
@@ -601,7 +501,13 @@ class AdminLinks extends AdminController
         adminfoot('fv', '', $arg1, '');
     }
     
-    function LinksModLink($lid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $lid
+     * @return void
+     */
+    public function LinksModLink($lid)
     {
         $result = sql_query("SELECT cid, sid, title, url, description, name, email, hits FROM links_links WHERE lid='$lid'");
 
@@ -816,7 +722,12 @@ class AdminLinks extends AdminController
         adminfoot('fv', $fv_parametres, $arg1, '');
     }
     
-    function LinksListBrokenLinks()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function LinksListBrokenLinks()
     {
         $resultBrok = sql_query("SELECT requestid, lid, modifysubmitter FROM links_modrequest WHERE brokenlink='1' ORDER BY requestid");
         $totalbrokenlinks = sql_num_rows($resultBrok);
@@ -894,7 +805,13 @@ class AdminLinks extends AdminController
         adminfoot('', '', '', '');
     }
     
-    function LinksDelBrokenLinks($lid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $lid
+     * @return void
+     */
+    public function LinksDelBrokenLinks($lid)
     {
         sql_query("DELETE FROM links_modrequest WHERE lid='$lid'");
         sql_query("DELETE FROM links_links WHERE lid='$lid'");
@@ -905,14 +822,25 @@ class AdminLinks extends AdminController
         Header("Location: admin.php?op=LinksListBrokenLinks");
     }
     
-    function LinksIgnoreBrokenLinks($lid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $lid
+     * @return void
+     */
+    public function LinksIgnoreBrokenLinks($lid)
     {
         sql_query("DELETE FROM links_modrequest WHERE lid='$lid' AND brokenlink='1'");
     
         Header("Location: admin.php?op=LinksListBrokenLinks");
     }
     
-    function LinksListModRequests()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function LinksListModRequests()
     {
         $resultLink = sql_query("SELECT requestid, lid, cid, sid, title, url, description, modifysubmitter FROM links_modrequest WHERE brokenlink='0' ORDER BY requestid");
         $totalmodrequests = sql_num_rows($resultLink);
@@ -1035,7 +963,13 @@ class AdminLinks extends AdminController
         }
     }
     
-    function LinksChangeModRequests($Xrequestid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $Xrequestid
+     * @return void
+     */
+    public function LinksChangeModRequests($Xrequestid)
     {
         $result = sql_query("SELECT requestid, lid, cid, sid, title, url, description FROM links_modrequest WHERE requestid='$Xrequestid'");
         
@@ -1054,14 +988,33 @@ class AdminLinks extends AdminController
         Header("Location: admin.php?op=LinksListModRequests");
     }
     
-    function LinksChangeIgnoreRequests($requestid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $requestid
+     * @return void
+     */
+    public function LinksChangeIgnoreRequests($requestid)
     {
         sql_query("DELETE FROM links_modrequest WHERE requestid='$requestid'");
     
         Header("Location: admin.php?op=LinksListModRequests");
     }
     
-    function LinksModLinkS($lid, $title, $url, $xtext, $name, $email, $hits, $cat)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $lid
+     * @param [type] $title
+     * @param [type] $url
+     * @param [type] $xtext
+     * @param [type] $name
+     * @param [type] $email
+     * @param [type] $hits
+     * @param [type] $cat
+     * @return void
+     */
+    public function LinksModLinkS($lid, $title, $url, $xtext, $name, $email, $hits, $cat)
     {
         $cat = explode('-', $cat);
     
@@ -1082,7 +1035,13 @@ class AdminLinks extends AdminController
         Header("Location: admin.php?op=links");
     }
     
-    function LinksDelLink($lid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $lid
+     * @return void
+     */
+    public function LinksDelLink($lid)
     {
         sql_query("DELETE FROM links_links WHERE lid='$lid'");
     
@@ -1092,7 +1051,13 @@ class AdminLinks extends AdminController
         Header("Location: admin.php?op=links");
     }
     
-    function LinksModCat($cat)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $cat
+     * @return void
+     */
+    public function LinksModCat($cat)
     {
         $cat = explode('-', $cat);
     
@@ -1175,7 +1140,17 @@ class AdminLinks extends AdminController
         adminfoot('fv', '', $arg1, '');
     }
     
-    function LinksModCatS($cid, $sid, $sub, $title, $cdescription)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $cid
+     * @param [type] $sid
+     * @param [type] $sub
+     * @param [type] $title
+     * @param [type] $cdescription
+     * @return void
+     */
+    public function LinksModCatS($cid, $sid, $sub, $title, $cdescription)
     {
         if ($sub == 0) {
             sql_query("UPDATE links_categories SET title='$title', cdescription='$cdescription' WHERE cid='$cid'");
@@ -1192,7 +1167,16 @@ class AdminLinks extends AdminController
         Header("Location: admin.php?op=links");
     }
     
-    function LinksDelCat($cid, $sid, $sub, $ok = 0)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $cid
+     * @param [type] $sid
+     * @param [type] $sub
+     * @param integer $ok
+     * @return void
+     */
+    public function LinksDelCat($cid, $sid, $sub, $ok = 0)
     {
         if ($ok == 1) {
             if ($sub > 0) {
@@ -1216,7 +1200,13 @@ class AdminLinks extends AdminController
             <a class="btn btn-danger me-2" href="admin.php?op=LinksDelCat&amp;cid=' . $cid . '&amp;sid=' . $sid . '&amp;sub=' . $sub . '&amp;ok=1" >' . __d('links', 'Oui') . '</a>');
     }
     
-    function LinksDelNew($lid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $lid
+     * @return void
+     */
+    public function LinksDelNew($lid)
     {
         sql_query("DELETE FROM links_newlink WHERE lid='$lid'");
     
@@ -1226,7 +1216,14 @@ class AdminLinks extends AdminController
         Header("Location: admin.php?op=links");
     }
     
-    function LinksAddCat($title, $cdescription)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $title
+     * @param [type] $cdescription
+     * @return void
+     */
+    public function LinksAddCat($title, $cdescription)
     {
         $result = sql_query("SELECT cid FROM links_categories WHERE title='$title'");
         $numrows = sql_num_rows($result);
@@ -1243,7 +1240,14 @@ class AdminLinks extends AdminController
         }
     }
     
-    function LinksAddSubCat($cid, $title)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $cid
+     * @param [type] $title
+     * @return void
+     */
+    public function LinksAddSubCat($cid, $title)
     {
         $result = sql_query("SELECT cid FROM links_subcategories WHERE title='$title' AND cid='$cid'");
         $numrows = sql_num_rows($result);
@@ -1260,7 +1264,15 @@ class AdminLinks extends AdminController
         }
     }
     
-    function LinksAddEditorial($linkid, $editorialtitle, $editorialtext)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $linkid
+     * @param [type] $editorialtitle
+     * @param [type] $editorialtext
+     * @return void
+     */
+    public function LinksAddEditorial($linkid, $editorialtitle, $editorialtext)
     {
         global $aid;
     
@@ -1273,7 +1285,15 @@ class AdminLinks extends AdminController
         message_error('<div class="alert alert-success"><strong>' . __d('links', 'Editorial ajouté à la base de données') . '</strong></div>');
     }
     
-    function LinksModEditorial($linkid, $editorialtitle, $editorialtext)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $linkid
+     * @param [type] $editorialtitle
+     * @param [type] $editorialtext
+     * @return void
+     */
+    public function LinksModEditorial($linkid, $editorialtitle, $editorialtext)
     {
         $editorialtext = stripslashes(FixQuotes($editorialtext));
     
@@ -1285,7 +1305,13 @@ class AdminLinks extends AdminController
         message_error('<div class="alert alert-success"><strong>' . __d('links', 'Editorial modifié') . '</strong></div>');
     }
     
-    function LinksDelEditorial($linkid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $linkid
+     * @return void
+     */
+    public function LinksDelEditorial($linkid)
     {
         sql_query("DELETE FROM links_editorials WHERE linkid='$linkid'");
     
@@ -1295,7 +1321,13 @@ class AdminLinks extends AdminController
         message_error('<div class="alert alert-success"><strong>' . __d('links', 'Editorial supprimé de la base de données') . '</strong></div>');
     }
     
-    function message_error($ibid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $ibid
+     * @return void
+     */
+    public function message_error($ibid)
     {
         echo '<hr />';
         echo $ibid;
@@ -1304,55 +1336,6 @@ class AdminLinks extends AdminController
         adminfoot('', '', '', '');
     }
     
-    function LinksAddLink($new, $lid, $title, $url, $cat, $xtext, $name, $email, $submitter)
-    {
-        $result = sql_query("SELECT url FROM links_links WHERE url='$url'");
-        $numrows = sql_num_rows($result);
-    
-        if ($numrows > 0)
-            message_error('<div class="alert alert-danger"><strong>' . __d('links', 'Erreur : cette URL est déjà présente dans la base de données !') . '</strong></div>');
-        else {
-            if ($title == '')
-                message_error('<div class="alert alert-danger"><strong>' . __d('links', 'Erreur : vous devez saisir un TITRE pour votre Lien !') . '</strong></div>');
-            
-            if ($url == '')
-                message_error('<div class="alert alert-danger"><strong>' . __d('links', 'Erreur : vous devez saisir une URL pour votre Lien !') . '</strong></div>');
-            
-            if ($xtext == '')
-                message_error('<div class="alert alert-danger"><strong>' . __d('links', 'Erreur : vous devez saisir une DESCRIPTION pour votre Lien !') . '</strong></div>');
-            
-            $cat = explode('-', $cat);
-            
-            if (!array_key_exists(1, $cat))
-                $cat[1] = 0;
-    
-            $title = stripslashes(FixQuotes($title));
-            $url = stripslashes(FixQuotes($url));
-            $xtext = stripslashes(FixQuotes($xtext));
-            $name = stripslashes(FixQuotes($name));
-            $email = stripslashes(FixQuotes($email));
-    
-            sql_query("INSERT INTO links_links VALUES (NULL, '$cat[0]', '$cat[1]', '$title', '$url', '$xtext', now(), '$name', '$email', '0','$submitter',0,0,0,0)");
-            
-            if ($new == 1) {
-                sql_query("DELETE FROM links_newlink WHERE lid='$lid'");
-                
-                if ($email != '') {
-    
-                    $subject = html_entity_decode(__d('links', 'Votre Lien'), ENT_COMPAT | ENT_HTML401, cur_charset) . " : ". Config::get('npds.sitename');
-                    $message = __d('links', 'Bonjour') . " $name :\n\n" . __d('links', 'Nous avons approuvé votre contribution à notre moteur de recherche.') . "\n\n" . __d('links', 'Titre de la page') . " : $title\n" . __d('links', 'URL de la Page : ') . "<a href=\"$url\">$url</a>\n" . __d('links', 'Description : ') . "$xtext\n" . __d('links', 'Vous pouvez utiliser notre moteur de recherche sur : ') . " <a href=\"" . Config::get('npds.nuke_url') . "/modules.php?ModPath=links&ModStart=links\">". Config::get('npds.nuke_url') ."/modules.php?ModPath=links&ModStart=links</a>\n\n" . __d('links', 'Merci pour votre Contribution !') . "\n";
-                    
-                    include("signat.php");
-    
-                    send_email($email, $subject, $message, '', false, 'html', '');
-                }
-            }
-    
-            global $aid;
-            Ecr_Log('security', "AddLinks($title) by AID : $aid", '');
-    
-            message_error('<div class="alert alert-success"><strong>' . __d('links', 'Nouveau Lien ajouté dans la base de données') . '</strong></div>');
-        }
-    }
+
 
 }

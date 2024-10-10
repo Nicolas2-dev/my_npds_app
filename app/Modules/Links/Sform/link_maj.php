@@ -2,7 +2,6 @@
 
 use App\Modules\Npds\Library\Sform\SformManager;
 
-
 global $ModPath, $ModStart;
 
 $pos = strpos($ModPath, '/admin');

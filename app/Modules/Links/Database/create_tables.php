@@ -1,33 +1,5 @@
 <?php
 
-/************************************************************************/
-/* DUNE by App                                                         */
-/* ===========================                                          */
-/*                                                                      */
-/* This version name App Copyright (c) 2001-2024 by Philippe Brunier   */
-/*                                                                      */
-/* New Links.php Module with SFROM extentions : Create Table            */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
-if (!function_exists('Access_Error')) die();
-if (!stristr($_SERVER['PHP_SELF'], 'modules.php')) Access_Error();
-
-global $ModPath, $ModStart;
-
-$pos = strpos($ModPath, '/admin');
-
-global $links_DB;
-
-include_once('modules/' . substr($ModPath, 0, $pos) . '/links.conf.php');
-
-if ($links_DB == '')
-    $links_DB = $Npds_Prefix;
-
-include("header.php");
-
 echo '
    <p class="text-center">Cr&eacute;ation des tables en cours pour / Tables Creation running for : <b>' . $links_DB . '</b><br /><br />.';
 
@@ -117,9 +89,9 @@ $sql_query = "CREATE TABLE IF NOT EXISTS " . $links_DB . "links_subcategories (
    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 $result = sql_query($sql_query);
 
+
 echo '.<br /><br />
    .: Cr&eacute;ation des tables termin&eacute; / Tables Creation Ended :.<br /><br />
    <a href="modules.php?ModStart=links&amp;ModPath=' . substr($ModPath, 0, $pos) . '" class="btn btn-secondary">' . __d('links', 'Retour en arrière') . '</a>
    </p>';
 
-include("footer.php");
