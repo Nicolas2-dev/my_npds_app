@@ -30,7 +30,7 @@
             "Shared\\": "Shared/"
         },
         "files": [
-            "App/Support/Helpers.php",
+            "App/Support/Helpers.php"
         ] 
     },
     "require-dev": {
