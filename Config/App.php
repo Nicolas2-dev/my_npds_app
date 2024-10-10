@@ -19,6 +19,11 @@ return array(
     'name' => 'Npds Mini Framework',
 
     /**
+     * 
+     */
+    'charset' => 'utf-8',
+
+    /**
      * The default Timezone for your website.
      * http://www.php.net/manual/en/timezones.php
      */
