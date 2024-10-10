@@ -1,10 +1,10 @@
 <?php return array(
     'root' => array(
-        'name' => 'nicolas2-dev/my_npds_fram',
+        'name' => 'nicolas2-dev/my_npds_app',
         'pretty_version' => '1.0.0+no-version-set',
         'version' => '1.0.0.0',
         'reference' => null,
-        'type' => 'library',
+        'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
@@ -19,13 +19,24 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'nicolas2-dev/my_npds_fram' => array(
+        'nicolas2-dev/my_npds_app' => array(
             'pretty_version' => '1.0.0+no-version-set',
             'version' => '1.0.0.0',
             'reference' => null,
-            'type' => 'library',
+            'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nicolas2-dev/my_npds_framework' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'b4666eb4dc8149d3dea5a8a5e45451731d27c0db',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../nicolas2-dev/my_npds_framework',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
             'dev_requirement' => false,
         ),
         'php81_bc/strftime' => array(
@@ -51,7 +62,7 @@
         'phpmailer/phpmailer' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '81599d155477aef45693acd65e6e46ad5d3d4996',
+            'reference' => 'a7b17b42fa4887c92146243f3d2f4ccb962af17c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpmailer/phpmailer',
             'aliases' => array(
@@ -75,7 +86,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
             'aliases' => array(),
-            'dev_requirement' => true,
+            'dev_requirement' => false,
         ),
         'symfony/var-dumper' => array(
             'pretty_version' => '7.2.x-dev',
@@ -84,7 +95,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
-            'dev_requirement' => true,
+            'dev_requirement' => false,
         ),
     ),
 );

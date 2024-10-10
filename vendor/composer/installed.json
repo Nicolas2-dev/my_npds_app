@@ -74,6 +74,50 @@
             "install-path": "../doctrine/inflector"
         },
         {
+            "name": "nicolas2-dev/my_npds_framework",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicolas2-dev/my_npds_framework",
+                "reference": "b4666eb4dc8149d3dea5a8a5e45451731d27c0db"
+            },
+            "require": {
+                "doctrine/inflector": "1.0.*",
+                "php": "^8.2.1",
+                "php81_bc/strftime": "dev-master",
+                "phpfastcache/phpfastcache": "3.0.*",
+                "phpmailer/phpmailer": "dev-master",
+                "psr/container": "^1.0",
+                "symfony/var-dumper": "7.2.x-dev"
+            },
+            "time": "2024-10-10T02:31:56+00:00",
+            "default-branch": true,
+            "type": "project",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "Npds\\": "src/"
+                },
+                "files": [
+                    "src/Support/helpers.php"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Devoy",
+                    "email": "nicolas@nicodev.fr",
+                    "homepage": "https://nicodev.fr",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Two Framework",
+            "install-path": "../nicolas2-dev/my_npds_framework"
+        },
+        {
             "name": "php81_bc/strftime",
             "version": "dev-master",
             "version_normalized": "dev-master",
@@ -191,12 +235,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "81599d155477aef45693acd65e6e46ad5d3d4996"
+                "reference": "a7b17b42fa4887c92146243f3d2f4ccb962af17c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/81599d155477aef45693acd65e6e46ad5d3d4996",
-                "reference": "81599d155477aef45693acd65e6e46ad5d3d4996",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/a7b17b42fa4887c92146243f3d2f4ccb962af17c",
+                "reference": "a7b17b42fa4887c92146243f3d2f4ccb962af17c",
                 "shasum": ""
             },
             "require": {
@@ -226,7 +270,7 @@
                 "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
                 "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
             },
-            "time": "2024-09-18T14:27:31+00:00",
+            "time": "2024-10-09T10:07:50+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "dist",
@@ -259,7 +303,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/master"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.9.2"
             },
             "funding": [
                 {
@@ -492,8 +536,5 @@
         }
     ],
     "dev": true,
-    "dev-package-names": [
-        "symfony/polyfill-mbstring",
-        "symfony/var-dumper"
-    ]
+    "dev-package-names": []
 }

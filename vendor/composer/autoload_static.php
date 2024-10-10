@@ -11,8 +11,8 @@ class ComposerStaticInit0c54a28caf1dc39ea08fe28f6409d516
         '9e71c1459ef1226520e4b26dac3a180d' => __DIR__ . '/..' . '/php81_bc/strftime/src/php-8.1-strftime.php',
         'ea450d5a56bc6bffbb070afb8893fd6e' => __DIR__ . '/..' . '/phpfastcache/phpfastcache/phpfastcache.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        '1c5103198c8ea385d25f832a311ddc53' => __DIR__ . '/../..' . '/app/Support/Helpers.php',
-        'f16ca1acaef5bb4b7515f678c82079b4' => __DIR__ . '/../..' . '/npds/Support/Helpers.php',
+        '55d1f5bea3e12a2194138bde5ac4201b' => __DIR__ . '/..' . '/nicolas2-dev/my_npds_framework/src/Support/helpers.php',
+        '0c513a5d1a7a33c47df3f7faeb477be5' => __DIR__ . '/../..' . '/App/Support/Helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -77,7 +77,7 @@ class ComposerStaticInit0c54a28caf1dc39ea08fe28f6409d516
         ),
         'Npds\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/Npds',
+            0 => __DIR__ . '/..' . '/nicolas2-dev/my_npds_framework/src',
         ),
         'Modules\\' => 
         array (
@@ -85,7 +85,7 @@ class ComposerStaticInit0c54a28caf1dc39ea08fe28f6409d516
         ),
         'App\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/app',
+            0 => __DIR__ . '/../..' . '/App',
         ),
     );
 

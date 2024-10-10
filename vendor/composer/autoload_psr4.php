@@ -13,7 +13,7 @@ return array(
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'Packages\\' => array($baseDir . '/Packages'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
-    'Npds\\' => array($baseDir . '/Npds'),
+    'Npds\\' => array($vendorDir . '/nicolas2-dev/my_npds_framework/src'),
     'Modules\\' => array($baseDir . '/Modules'),
-    'App\\' => array($baseDir . '/app'),
+    'App\\' => array($baseDir . '/App'),
 );
