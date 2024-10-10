@@ -124,13 +124,31 @@ class LanguageManager implements LanguageInterface
      */
     public function make_tab_langue()
     {
-        global $languageslist, $tab_langue;
+        global $tab_langue;
+
+        $languageslist = $this->cache_list();
 
         $languageslocal = Config::get('npds.language') . ' ' . str_replace(Config::get('npds.language'), '', $languageslist);
         $languageslocal = trim(str_replace('  ', ' ', $languageslocal));
         $tab_langue = explode(' ', $languageslocal);
 
         return $tab_langue;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function cache_list()
+    {
+        if (file_exists(module_path('Npds/storage/language/tmp_language.php'))) {
+            $languageslist = include(module_path('Npds/storage/language/tmp_language.php'));
+        } else {
+            $languageslist = $this->list();
+        } 
+        
+        return $languageslist;
     }
 
     /**

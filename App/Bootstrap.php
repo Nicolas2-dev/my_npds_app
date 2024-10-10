@@ -1,19 +1,12 @@
 <?php
 
-use Npds\Config\Config;
 use Modules\Npds\Support\Secure;
 use Modules\Npds\Support\Sanitize;
-use Modules\Npds\Support\Facades\Spam;
-use Modules\Npds\Support\Facades\Cookie;
 
-// a revoir par la suite
 if (!defined('NPDS_GRAB_GLOBALS_INCLUDED')) {
 
     //
     define('NPDS_GRAB_GLOBALS_INCLUDED', 1);
-
-    //  
-    Spam::spam_boot();
 
     // include current charset
     if (file_exists(module_path('Npds/storage/meta/cur_charset.php'))) {
@@ -81,20 +74,4 @@ if (!defined('NPDS_GRAB_GLOBALS_INCLUDED')) {
             $$key = $value['tmp_name'];
         }
     }
-
-}
-
-// a supprimer par la suite
-if (Config::get('npds.mysql_i') == 1) {
-    include(module_path('Npds/Library/Database/mysqli.php'));
-} else {
-    include(module_path('Npds/Library/Database/mysql.php'));
-}
-
-// a supprimer par la suite
-$dblink = Mysql_Connexion();
-
-// a supprimer par la suite
-if (isset($user)) {
-    $cookie = Cookie::cookiedecode($user);
 }

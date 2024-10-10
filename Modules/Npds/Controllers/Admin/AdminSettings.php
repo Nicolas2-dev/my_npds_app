@@ -4,6 +4,7 @@ namespace Modules\Npds\Controllers\Admin;
 
 use Npds\Config\Config;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Language;
 
 
 class AdminSettings extends AdminController
@@ -398,8 +399,7 @@ class AdminSettings extends AdminController
                     <div class="form-floating mb-3">
                     <select class="form-select" id="xlanguage" name="xlanguage">';
     
-        include("manuels/list.php");
-    
+        $languageslist = Language::cache_list();
         $languageslist = explode(' ', $themeslist);
     
         for ($i = 0; $i < sizeof($languageslist); $i++) {

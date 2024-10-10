@@ -2,6 +2,7 @@
 
 use Npds\Config\Config;
 use Modules\Npds\Bootstrap\NpdsKernel;
+use Modules\Npds\Support\Facades\Spam;
 use Modules\Npds\Support\Facades\Cookie;
 use Modules\Npds\Support\Facades\Session;
 use Modules\Npds\Support\Facades\Language;
@@ -28,29 +29,20 @@ include $configDir .'Routes/api/routes.php';
 
 include $configDir .'Routes/admin/routes.php';
 
+// a supprimer par la suite
+if (Config::get('npds.mysql_i') == 1) {
+    include(module_path('Npds/Library/Database/mysqli.php'));
+} else {
+    include(module_path('Npds/Library/Database/mysql.php'));
+}
 
 // a supprimer par la suite
-// Multi-language
-// a integrer nouvel version language
+$dblink = Mysql_Connexion();
+
+// Antie Spam
+Spam::spam_boot();
 
 // Multi-language
-// $local_path='';
-
-// settype($user_language,'string');
-
-// if (isset($module_mark))
-//    $local_path='../../';
-
-// if (file_exists($local_path.'cache/language.php'))
-//    include ($local_path.'cache/language.php');
-// else
-//    include ($local_path.'manuels/list.php');
-
-// a revoir par la suite
-global $languageslist;
-
-$languageslist = "chinese english french german spanish";
-
 if (isset($choice_user_language)) {
     if ($choice_user_language != '') {
 
@@ -62,8 +54,9 @@ if (isset($choice_user_language)) {
 
         $timeX = time() + (3600 * $user_cook_duration);
 
-        if ((stristr($languageslist, $choice_user_language)) and ($choice_user_language != ' ')) {
-            setcookie('user_language', $choice_user_language, $timeX);
+        if ((stristr(Language::cache_list(), $choice_user_language)) and ($choice_user_language != ' ')) {
+            Cookie::set('user_language', $choice_user_language, $timeX);
+            
             $user_language = $choice_user_language;
         }
     }
@@ -72,8 +65,7 @@ if (isset($choice_user_language)) {
 if (Config::get('npds.multi_langue')) {
     if (($user_language != '') and ($user_language != " ")) {
 
-        $tmpML = stristr($languageslist, $user_language);
-
+        $tmpML = stristr(Language::cache_list(), $user_language);
         $tmpML = explode(' ', $tmpML);
 
         if ($tmpML[0]) {
@@ -83,11 +75,11 @@ if (Config::get('npds.multi_langue')) {
 }
 // Multi-language
 
-// a supprimer par la suite
+// Init Sesion
 Session::session_manage();
 
-// a supprimer par la suite
+// Init Tab Language
 Language::make_tab_langue();
 
-// a supprimer par la suite
+// Init Metalang
 Metalang::charg_metalang();

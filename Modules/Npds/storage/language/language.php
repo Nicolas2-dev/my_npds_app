@@ -1,1 +1,0 @@
-<?php $languageslist="chinese english french german spanish"; ?>
