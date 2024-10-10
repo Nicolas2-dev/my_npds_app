@@ -54,7 +54,7 @@ return [
      * basedir_fma => fmanager.config.default.racine_fma.'/static'
      */
     'basedir_fma' => function ($cookie) {
-        return Config::get('fmanager.default.racine_fma') . 'Users/storage/users_private/' . $cookie[1] . '/mns';
+        return Config::get('fmanager.default.racine_fma') .'/storage/users_private/'. $cookie[1];
     },
 
     /**
@@ -76,14 +76,7 @@ return [
      * ] 
      */
     'dirlimit_fma' => [
-        'admin'            => 'admin',
-        'cache'            => 'admin',
-        'cluster-paradise' => 'admin',
-        'include'          => 'admin',
-        'f-manager'        => 'admin',
-        'sform'            => 'admin',
-        'upload'           => 'admin',
-        'users_private'    => 'admin'
+         'mns'            => 999,
     ],
  
     /**
@@ -162,9 +155,11 @@ return [
      * ]
      */
     'ficlimit_fma' => [
-        '.htaccess'           => 'admin',
-        'config.php'          => 'admin',
-        'upload.conf.php'     => 'admin'
+        '.htaccess'           => 999,
+        'config.php'          => 999,
+        'pic-manager.txt'     => 999,
+        'index.html'          => 999,
+        'upload.conf.php'     => 999,
     ],
 
     /**

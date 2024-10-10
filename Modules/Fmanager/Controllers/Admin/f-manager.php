@@ -1,259 +1,25 @@
 <?php
 
-/************************************************************************/
-/* DUNE by App                                                         */
-/* ===========================                                          */
-/*                                                                      */
-/* This version name App Copyright (c) 2001-2024 by Philippe Brunier   */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
-if (!stristr($_SERVER['PHP_SELF'], "modules.php")) die();
-
-global $ModPath, $ModStart;
-
-if (file_exists("modules/$ModPath/lang/f-manager-Config::get('npds.language').php"))
-    include("modules/$ModPath/lang/f-manager-Config::get('npds.language').php");
-else
-    include("modules/$ModPath/lang/f-manager-english.php");
-
-include("modules/$ModPath/class.navigator.php");
-
-// Gestion Ascii étendue
-function extend_ascii($ibid)
-{
-    $tmp = urlencode($ibid);
-    $tmp = str_replace("%82", "È", $tmp);
-    $tmp = str_replace("%85", "‡", $tmp);
-    $tmp = str_replace("%87", "Á", $tmp);
-    $tmp = str_replace("%88", "Í", $tmp);
-    $tmp = str_replace("%97", "˘", $tmp);
-    $tmp = str_replace("%8A", "Ë", $tmp);
-    $tmp = urldecode($tmp);
-
-    return ($tmp);
-}
-
-// Gestion des fichiers autorisés
-function fma_filter($type, $filename, $Extension)
-{
-    $autorise = false;
-    $error = '';
-
-    if ($type == "f") 
-        $filename = removeHack($filename);
-
-    $filename = preg_replace('#[/\\\:\*\?"<>|]#i', '', rawurldecode($filename));
-    $filename = str_replace('..', '', $filename);
-
-    // Liste des extensions autorisées
-    $suffix = strtoLower(substr(strrchr($filename, '.'), 1));
-
-    if (($suffix != '') or ($type == 'd')) {
-        if ((in_array($suffix, $Extension)) or ($Extension[0] == '*') or $type == 'd') {
-
-            // Fichiers interdits en fonction de qui est connecté
-            if (fma_autorise($type, $filename))
-                $autorise = true;
-            else
-                $error = __d('fmanager', 'Fichier interdit');
-        } else
-            $error = __d('fmanager', 'Type de fichier interdit');
-    } else
-        $error = __d('fmanager', 'Fichier interdit');
-
-    $tab[] = $autorise;
-    $tab[] = $error;
-    $tab[] = $filename;
-
-    return ($tab);
-}
-
-// Gestion des autorisations sur les répertoires et les fichiers
-function fma_autorise($type, $dir)
-{
-    global $user, $admin, $dirlimit_fma, $ficlimit_fma, $access_fma, $dir_minuscptr, $fic_minuscptr;
-
-    $autorise_arbo = false;
-
-    if ($type == 'a')
-        $autorise_arbo = $access_fma;
-
-    if ($type == 'd') {
-        if (is_array($dirlimit_fma)) {
-            if (array_key_exists($dir, $dirlimit_fma))
-                $autorise_arbo = $dirlimit_fma[$dir];
-        }
-    }
-
-    if ($type == 'f') {
-        if (is_array($ficlimit_fma)) {
-            if (array_key_exists($dir, $ficlimit_fma))
-                $autorise_arbo = $ficlimit_fma[$dir];
-        }
-    }
-
-    if ($autorise_arbo) {
-        $auto_dir = '';
-
-        if (($autorise_arbo == 'membre') and ($user)) {
-            $auto_dir = true;
-        } elseif (($autorise_arbo == 'anonyme') and (!$user)) {
-            $auto_dir = true;
-        } elseif (($autorise_arbo == 'admin') and ($admin)) {
-            $auto_dir = true;
-        } elseif (($autorise_arbo != 'membre') and ($autorise_arbo != 'anonyme') and ($autorise_arbo != 'admin') and ($user)) {
-
-            $tab_groupe = valid_group($user);
-
-            if ($tab_groupe) {
-                foreach ($tab_groupe as $groupevalue) {
-
-                    $tab_auto = explode(',', $autorise_arbo);
-
-                    foreach ($tab_auto as $gp) {
-                        if ($gp > 0) {
-                            if ($groupevalue == $gp) {
-                                $auto_dir = true;
-                                break;
-                            }
-                        } else {
-                            $auto_dir = true;
-
-                            if (-$groupevalue == $gp) {
-                                $auto_dir = false;
-                                break;
-                            }
-                        }
-                    }
-                    if ($auto_dir) break;
-                }
-            }
-        }
-    } else {
-        $auto_dir = true;
-    }
-
-    if ($auto_dir != true) {
-        if ($type == 'd')
-            $dir_minuscptr++;
-
-        if ($type == 'f')
-            $fic_minuscptr++;
-    }
-
-    return ($auto_dir);
-}
-
-function chmod_pres($ibid, $champ)
-{
-    $sel = '';
-
-    if ($ibid[0] == 400) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = '';
-
-    $chmod = "<option name=\"$champ\" value=\"400\" $sel> 400 (r--------)</option>";
-
-    if ($ibid[0] == 444) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"444\" $sel> 444 (r-x------)</option>";
-
-    if ($ibid[0] == 500) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"500\" $sel> 500 (r--------)</option>";
-
-    if ($ibid[0] == 544) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"544\" $sel> 544 (r-xr--r--)</option>";
-
-    if ($ibid[0] == 600) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"600\" $sel> 600 (rw-------)</option>";
-
-    if ($ibid[0] == 644) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"644\" $sel> 644 (rw-r--r--)</option>";
-
-    if ($ibid[0] == 655) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"655\" $sel> 655 (rw-r-xr-x)</option>";
-
-    if ($ibid[0] == 666) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"666\" $sel> 666 (rw-rw-rw-)</option>";
-
-    if ($ibid[0] == 700) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"700\" $sel> 700 (rwx------)</option>";
-
-    if ($ibid[0] == 744) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"744\" $sel> 744 (rwxr--r--)</option>";
-
-    if ($ibid[0] == 755) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"755\" $sel> 755 (rwxr-xr-x)</option>";
-
-    if ($ibid[0] == 766) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"766\" $sel> 766 (rwxrw-rw-)</option>";
-
-    if ($ibid[0] == 777) 
-        $sel = "selected=\"selected\"";
-    else 
-        $sel = "";
-
-    $chmod .= "<option name=\"$champ\" value=\"777\" $sel> 777 (rwxrwxrwx)</option>";
-    $chmod .= "</select>";
-
-    return ($chmod);
-}
+use Npds\Routing\Url;
+use Npds\Config\Config;
+use Modules\Fmanager\Library\Navigator;
+use Modules\Npds\Support\Facades\Crypt;
+use Modules\Npds\Support\Facades\Cookie;
+use Modules\Theme\Support\Facades\Theme;
+use Modules\Module\Support\Facades\Module;
+use Modules\Npds\Support\Facades\Language;
+use Modules\Groupes\Support\Facades\Groupe;
+use Shared\Editeur\Support\Facades\Editeur;
+use Modules\Fmanager\Support\Facades\Fmanager;
 
 // Lancement sur un Répertoire en fonction d'un fichier de conf particulier
 if ($FmaRep) {
-    if (filtre_module($FmaRep)) {
+    if (Module::filtre_module($FmaRep)) {
 
         // Si je ne trouve pas de fichier - est-ce que l'utilisateur fait partie d'un groupe ?
         if (!file_exists("modules/$ModPath/users/" . strtolower($FmaRep) . ".conf.php")) {
 
-            $tab_groupe = valid_group($user);
+            $tab_groupe = Groupe::valid_group($user);
 
             if ($tab_groupe) {
 
@@ -273,38 +39,45 @@ if ($FmaRep) {
 
             // Est ce que je doit récupérer le theme si un utilisateur est connecté ?
             if (isset($user)) {
-                include("themes/list.php");
 
-                $themelist = explode(' ', $themelist);
-                $pos = array_search($cookie[9], $themelist);
+                $themelist  = Theme::list();
+                $themelist  = explode(' ', $themelist);
 
-                if ($pos !== false)
+                $pos = array_search(Cookie::cookie_user(9), $themelist);
+
+                if ($pos !== false) {
                     Config::set('npds.Default_Theme', $themelist[$pos]);
+                }
                 
             }
 
             include("modules/$ModPath/users/" . strtolower($FmaRep) . ".conf.php");
 
-            if (fma_autorise('a', '')) {
+            if (Fmanager::fma_autorise('a', '')) {
                 $theme_fma = $themeG_fma;
                 $fic_minuscptr = 0;
                 $dir_minuscptr = 0;
-            } else
+            } else {
                 Access_Error();
-        } else
+            }
+        } else {
             Access_Error();
-    } else
+        }
+    } else {
         Access_Error();
-} else
+    }
+} else {
     Access_Error();
+}
 
 if (isset($browse)) {
-    $ibid = rawurldecode(decrypt($browse));
+    $ibid = rawurldecode(Crypt::decrypt($browse));
 
-    if (substr(@php_uname(), 0, 7) == 'Windows')
+    if (substr(@php_uname(), 0, 7) == 'Windows') {
         $ibid = preg_replace('#[\*\?"<>|]#i', '', $ibid);
-    else
+    } else {
         $ibid = preg_replace('#[\:\*\?"<>|]#i', '', $ibid);
+    }
 
     $ibid = str_replace('..', '', $ibid);
 
@@ -329,10 +102,11 @@ $rename_file = '';
 $chmod_file = '';
 $edit_file = '';
 
-if (substr(@php_uname(), 0, 7) == "Windows")
+if (substr(@php_uname(), 0, 7) == "Windows") {
     $log_dir = str_replace($basedir_fma, '', $base);
-else
+} else {
     $log_dir = str_replace("\\", "/", str_replace($basedir_fma, '', $base));
+}
 
 include_once("modules/upload/upload.conf.php");
 
@@ -1003,16 +777,16 @@ if ($obj->File_Navigator($base, $tri_fma['tri'], $tri_fma['sens'], $dirsize_fma)
     $cur_nav = $base . substr($cur_nav, strlen($base));
 
     $home = '/' . basename($basedir_fma);
-    $cur_nav_href_back = "<a href=\"modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;FmaRep=$FmaRep&amp;browse=" . rawurlencode(encrypt($cur_nav_back)) . "$urlext_fma\">" . str_replace(dirname($basedir_fma), "", $cur_nav_back) . "</a>/" . basename($cur_nav);
+    $cur_nav_href_back = "<a href=\"modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;FmaRep=$FmaRep&amp;browse=" . rawurlencode(Crypt::encrypt($cur_nav_back)) . "$urlext_fma\">" . str_replace(dirname($basedir_fma), "", $cur_nav_back) . "</a>/" . basename($cur_nav);
     
     if ($home_fma != '') {
         $cur_nav_href_back = str_replace($home, $home_fma, $cur_nav_href_back);
     }
 
-    $cur_nav_encrypt = rawurlencode(encrypt($cur_nav));
+    $cur_nav_encrypt = rawurlencode(Crypt::encrypt($cur_nav));
 } else {
     // le répertoire ou sous répertoire est protégé (ex : chmod)
-    redirect_url("modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;FmaRep=$FmaRep&amp;browse=" . rawurlencode(encrypt(dirname($base))));
+    Url::redirect("modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;FmaRep=$FmaRep&amp;browse=" . rawurlencode(Crypt::encrypt(dirname($base))));
 }
 
 // gestion des types d'extension de fichiers
@@ -1021,8 +795,8 @@ $handle = opendir("$racine_fma/assets/images/upload/file_types");
 while (false !== ($file = readdir($handle))) {
     if ($file != '.' && $file != '..') {
         $prefix = strtoLower(substr($file, 0, strpos($file, '.')));
-        $att_icons[$prefix] = '<img src="assets/images/upload/file_types/' . $file . '" alt="" />'; // no more used keep if we back
 
+        $att_icons[$prefix] = '<img src="assets/images/upload/file_types/' . $file . '" alt="" />'; // no more used keep if we back
         $att_icons[$prefix] = '
         <span class="fa-stack">
             <i class="bi bi-file-earmark fa-stack-2x text-muted"></i>
@@ -1056,20 +830,23 @@ $sizeofDir = 0;
 settype($tab_search, 'array');
 
 while ($obj->NextDir()) {
-    if (fma_autorise('d', $obj->FieldName)) {
+    if (Fmanager::fma_autorise('d', $obj->FieldName)) {
         $sizeofDir = 0;
         $subdirs .= '<tr>';
 
-        $clik_url = "<a href=\"modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;FmaRep=$FmaRep&amp;browse=" . rawurlencode(encrypt("$base/$obj->FieldName")) . "$urlext_fma\">";
+        $clik_url = "<a href=\"modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;FmaRep=$FmaRep&amp;browse=" . rawurlencode(Crypt::encrypt("$base/$obj->FieldName")) . "$urlext_fma\">";
         
-        if ($dirpres_fma[0])
+        if ($dirpres_fma[0]) {
             $subdirs .= '<td width="3%" align="center">' . $clik_url . $att_icon_dir . '</a></td>';
+        }
 
-        if ($dirpres_fma[1])
-            $subdirs .= '<td nowrap="nowrap">' . $clik_url . extend_ascii($obj->FieldName) . '</a></td>';
+        if ($dirpres_fma[1]) {
+            $subdirs .= '<td nowrap="nowrap">' . $clik_url . Fmanager::extend_ascii($obj->FieldName) . '</a></td>';
+        }
 
-        if ($dirpres_fma[2])
+        if ($dirpres_fma[2]) {
             $subdirs .= '<td><small>' . $obj->FieldDate . '</small></td>';
+        }
 
         if ($dirpres_fma[3]) {
             $sizeofD = $obj->FieldSize;
@@ -1079,26 +856,31 @@ while ($obj->NextDir()) {
             $subdirs .= '<td class="d-none d-sm-table-cell"><small>#NA#</small></td>';
         }
 
-        if ($dirpres_fma[4])
+        if ($dirpres_fma[4]) {
             $subdirs .= '<td class="d-none d-sm-table-cell"><small>' . $obj->FieldPerms . '</small></td>';
+        }
 
         // Traitements
         $obj->FieldName = rawurlencode($obj->FieldName);
 
         $subdirs .= '<td class="">';
 
-        if ($dircmd_fma[1])
+        if ($dircmd_fma[1]) {
             $subdirs .= '<a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=renamedir&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-pencil-fill ms-2 fs-4" title="' . $renaM . '" data-bs-toggle="tooltip"></i></a>';
-        
-        if ($dircmd_fma[3])
+        }
+
+        if ($dircmd_fma[3]) {
             $subdirs .= ' <a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=chmoddir&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-pencil ms-3 fs-4" title="' . $chmoM . '" data-bs-toggle="tooltip"></i><small>7..</small></a>';
-        
-        if ($dirpres_fma[5])
+        }
+
+        if ($dirpres_fma[5]) {
             $subdirs .= ' <a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=pict&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-image-fill ms-3 fs-4" title="' . $pictM . '" data-bs-toggle="tooltip"></i></a>';
-        
-        if ($dircmd_fma[2])
+        }
+
+        if ($dircmd_fma[2]) {
             $subdirs .= ' <a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=removedir&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-trash2-fill text-danger ms-3 fs-4" title="' . $suppM . '" data-bs-toggle="tooltip"></i></a>';
-        
+        }
+
         $subdirs .= '</td>
         </tr>';
 
@@ -1109,7 +891,7 @@ while ($obj->NextDir()) {
 
             foreach ($tab_search as $l => $fic_resp) {
                 if ($fic_resp[0] == $obj->FieldName) {
-                    $ibid = rawurlencode(encrypt(rawurldecode(encrypt($cur_nav . '/' . $fic_resp[0])) . '#fma#' . encrypt($fic_resp[1])));
+                    $ibid = rawurlencode(Crypt::encrypt(rawurldecode(encrypt($cur_nav . '/' . $fic_resp[0])) . '#fma#' . Crypt::encrypt($fic_resp[1])));
 
                     $subdirs .= '
                     <tr>
@@ -1120,16 +902,18 @@ while ($obj->NextDir()) {
                     $target = "target=\"_blank\"";
 
                     if (!$wopen_fma) {
-                        $subdirs .= "$att_icon_search <a href=$pop $target>" . extend_ascii($fic_resp[1]) . "</a></td></tr>\n";
+                        $subdirs .= "$att_icon_search <a href=$pop $target>" .Fmanager:: extend_ascii($fic_resp[1]) . "</a></td></tr>\n";
                     } else {
-                        if (!isset($wopenH_fma)) 
+                        if (!isset($wopenH_fma)) {
                             $wopenH_fma = 500;
+                        }
 
-                        if (!isset($wopenW_fma)) 
+                        if (!isset($wopenW_fma)) {
                             $wopenW_fma = 400;
+                        }
 
                         $PopUp = "$pop,'FManager','menubar=no,location=no,directories=no,status=no,copyhistory=no,height=$wopenH_fma,width=$wopenW_fma,toolbar=no,scrollbars=yes,resizable=yes'";
-                        $subdirs .= "$att_icon_search <a href=\"javascript:void(0);\" onclick=\"popup=window.open($PopUp); popup.focus();\">" . extend_ascii($fic_resp[1]) . "</a></td></tr>\n";
+                        $subdirs .= "$att_icon_search <a href=\"javascript:void(0);\" onclick=\"popup=window.open($PopUp); popup.focus();\">" . Fmanager::extend_ascii($fic_resp[1]) . "</a></td></tr>\n";
                     }
 
                     array_splice($tab_search, $l, 1);
@@ -1144,8 +928,8 @@ $files = '';
 $sizeofFic = 0;
 
 while ($obj->NextFile()) {
-    if (fma_autorise('f', $obj->FieldName)) {
-        $ibid = rawurlencode(encrypt($cur_nav_encrypt . "#fma#" . encrypt($obj->FieldName)));
+    if (Fmanager::fma_autorise('f', $obj->FieldName)) {
+        $ibid = rawurlencode(Crypt::encrypt($cur_nav_encrypt . "#fma#" . Crypt::encrypt($obj->FieldName)));
         $files .= '<tr>';
 
         if ($ficpres_fma[0]) {
@@ -1164,13 +948,14 @@ while ($obj->NextFile()) {
             }
 
             if (!$ico_search) {
-                if (($obj->FieldView == 'jpg') or ($obj->FieldView == 'jpeg') or ($obj->FieldView == 'gif') or ($obj->FieldView == 'png') or ($obj->FieldView == 'svg'))
+                if (($obj->FieldView == 'jpg') or ($obj->FieldView == 'jpeg') or ($obj->FieldView == 'gif') or ($obj->FieldView == 'png') or ($obj->FieldView == 'svg')) {
                     $files .= "<img src=\"getfile.php?att_id=$ibid&amp;apli=f-manager\" width=\"32\" height=\"32\" loading=\"lazy\" />";
-                else {
-                    if (isset($att_icons[$obj->FieldView]))
+                } else {
+                    if (isset($att_icons[$obj->FieldView])) {
                         $files .= $att_icons[$obj->FieldView];
-                    else
+                    } else {
                         $files .= $att_icon_default;
+                    }
                 }
             }
 
@@ -1189,77 +974,90 @@ while ($obj->NextFile()) {
             }
 
             if (!$wopen_fma) {
-                $files .= "<td nowrap=\"nowrap\" width=\"50%\"><a href=$pop $target>" . extend_ascii($obj->FieldName) . "</a></td>";
+                $files .= "<td nowrap=\"nowrap\" width=\"50%\"><a href=$pop $target>" . Fmanager::extend_ascii($obj->FieldName) . "</a></td>";
 
             } else {
-                if (!isset($wopenH_fma)) 
+                if (!isset($wopenH_fma)) {
                     $wopenH_fma = 500;
+                }
 
-                if (!isset($wopenW_fma)) 
+                if (!isset($wopenW_fma)) {
                     $wopenW_fma = 400;
+                }
 
                 $PopUp = "$pop,'FManager','menubar=no,location=no,directories=no,status=no,copyhistory=no,height=$wopenH_fma,width=$wopenW_fma,toolbar=no,scrollbars=yes,resizable=yes'";
                 
-                if (stristr($PopUp, "window.opener"))
-                    $files .= "<td><a href=\"javascript:void(0);\" $PopUp popup.focus();\">" . extend_ascii($obj->FieldName) . "</a></td>";
-                else
-                    $files .= "<td><a href=\"javascript:void(0);\" onclick=\"popup=window.open($PopUp); popup.focus();\">" . extend_ascii($obj->FieldName) . "</a></td>";
+                if (stristr($PopUp, "window.opener")) {
+                    $files .= "<td><a href=\"javascript:void(0);\" $PopUp popup.focus();\">" . Fmanager::extend_ascii($obj->FieldName) . "</a></td>";
+                } else {
+                    $files .= "<td><a href=\"javascript:void(0);\" onclick=\"popup=window.open($PopUp); popup.focus();\">" . Fmanager::extend_ascii($obj->FieldName) . "</a></td>";
+                }
             }
         }
 
-        if ($ficpres_fma[2])
+        if ($ficpres_fma[2]) {
             $files .= '<td><small>' . $obj->FieldDate . '</small></td>';
+        }
 
         if ($ficpres_fma[3]) {
             $sizeofF = $obj->FieldSize;
             $sizeofFic = $sizeofFic + $sizeofF;
             $files .= '<td><small>' . $obj->ConvertSize($sizeofF) . '</small></td>';
-        } else 
+        } else {
             $files .= '<td><small>#NA#</small></td>';
+        }
 
-        if ($ficpres_fma[4])
+        if ($ficpres_fma[4]) {
             $files .= '<td><small>' . $obj->FieldPerms . '</small></td>';
-        else 
+        } else {
             $files .= "<td><small>#NA#</small></td>";
+        }
 
         // Traitements
         $obj->FieldName = rawurlencode($obj->FieldName);
 
         $cmd_ibid = '';
 
-        if ($ficcmd_fma[1])
+        if ($ficcmd_fma[1]) {
             $cmd_ibid .= '<a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=renamefile&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-pencil-fill ms-3 fs-4" title="' . $renaM . '" data-bs-toggle="tooltip"></i></a>';
-        
+        }
+
         if ($ficcmd_fma[4]) {
             $tabW = explode(' ', $extension_Edit_fma);
             $suffix = strtoLower(substr(strrchr($obj->FieldName, '.'), 1));
 
-            if (in_array($suffix, $tabW))
+            if (in_array($suffix, $tabW)) {
                 $cmd_ibid .= '<a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=editfile&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-pencil-square ms-3 fs-4" title="' . $editM . '" data-bs-toggle="tooltip"></i></a>';
+            }
         }
 
-        if ($ficcmd_fma[5])
+        if ($ficcmd_fma[5]) {
             $cmd_ibid .= '<a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=movefile&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-box-arrow-up-right ms-3 fs-4" title="' . $moveM . '" data-bs-toggle="tooltip"></i></a>';
-        
-        if ($ficcmd_fma[3])
+        }
+
+        if ($ficcmd_fma[3]) {
             $cmd_ibid .= '<a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=chmodfile&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-pencil ms-3 fs-4" title="' . $chmoM . '" data-bs-toggle="tooltip"></i><small>7..</small></a>';
-        
-        if ($ficcmd_fma[2])
+        }
+
+        if ($ficcmd_fma[2]) {
             $cmd_ibid .= '<a href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . $cur_nav_encrypt . '&amp;op=removefile&amp;att_name=' . $obj->FieldName . '"><i class="bi bi-trash2-fill text-danger  ms-3 fs-4" title="' . $suppM . '" data-bs-toggle="tooltip"></i></a>';
-        
-        if ($cmd_ibid) 
+        }
+
+        if ($cmd_ibid) {
             $files .= '<td>' . $cmd_ibid . '</td>';
+        }
 
         $files .= '</tr>';
     }
 }
 
-if (file_exists($infos_fma))
-    $infos = aff_langue(join('', file($infos_fma)));
+if (file_exists($infos_fma)) {
+    $infos = Language::aff_langue(join('', file($infos_fma)));
+}
 
 // Form
 $upload_file = '
-    <form id="uploadfichier" enctype="multipart/form-data" method="post" action="modules.php" lang="' . language_iso(1, '', '') . '">
+    <form id="uploadfichier" enctype="multipart/form-data" method="post" action="modules.php" lang="' . Language::language_iso(1, '', '') . '">
         <input type="hidden" name="ModPath" value="' . $ModPath . '" />
         <input type="hidden" name="ModStart" value="' . $ModStart . '" />
         <input type="hidden" name="FmaRep" value="' . $FmaRep . '" />
@@ -1329,12 +1127,13 @@ chdir("$racine_fma/");
 // Génération de l'interface
 $inclusion = false;
 
-if (file_exists("themes/".Config::get('npds.Default_Theme')."/html/modules/f-manager/$theme_fma"))
+if (file_exists("themes/".Config::get('npds.Default_Theme')."/html/modules/f-manager/$theme_fma")) {
     $inclusion = "themes/".Config::get('npds.Default_Theme')."/html/modules/f-manager/$theme_fma";
-elseif (file_exists("themes/default/html/modules/f-manager/$theme_fma"))
+} elseif (file_exists("themes/default/html/modules/f-manager/$theme_fma")) {
     $inclusion = "themes/default/html/modules/f-manager/$theme_fma";
-else
+} else {
     echo "html/modules/f-manager/$theme_fma manquant / not find !";
+}
 
 if ($inclusion) {
     $Xcontent = join('', file($inclusion));
@@ -1344,10 +1143,11 @@ if ($inclusion) {
             $userdata = explode(':', base64_decode($user));
             $Xcontent = str_replace('_home', '<a class="nav-link" href="minisite.php?op=' . $userdata[1] . '" target="_blank"><i class="bi bi-display-fill fs-1"></i></a>', $Xcontent);
         }
-    } else
+    } else {
         $Xcontent = str_replace('_home', '<a class="nav-link" href="index.php" target="_blank"><span class="bi bi-house-fill fs-1 align-middle"></a>', $Xcontent);
+    }
 
-    $Xcontent = str_replace('_back', extend_ascii($cur_nav_href_back), $Xcontent);
+    $Xcontent = str_replace('_back', Fmanager::extend_ascii($cur_nav_href_back), $Xcontent);
 
     $Xcontent = str_replace('_refresh', '<a class="nav-link" href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=' . $ModStart . '&amp;FmaRep=' . $FmaRep . '&amp;browse=' . rawurlencode($browse) . $urlext_fma . '"><i class="bi bi-arrow-clockwise fs-1 d-sm-none" title="' . __d('fmanager', 'Rafraîchir') . '" data-bs-toggle="tooltip">
     </i><span class="d-none d-sm-block mt-2">' . __d('fmanager', 'Rafraîchir') . '</span></a>', $Xcontent);
@@ -1358,21 +1158,23 @@ if ($inclusion) {
     
     $Xcontent = str_replace('_nb_subdir', ($obj->Count("d") - $dir_minuscptr), $Xcontent);
     
-    if (($obj->Count("d") - $dir_minuscptr) == 0)
+    if (($obj->Count("d") - $dir_minuscptr) == 0) {
         $Xcontent = str_replace('_tabdirclassempty', 'collapse', $Xcontent);
+    }
 
     $Xcontent = str_replace('_subdirs', $subdirs, $Xcontent);
     $Xcontent = str_replace('_nb_file', ($obj->Count("f") - $fic_minuscptr), $Xcontent);
     $Xcontent = str_replace('_files', $files, $Xcontent);
 
-    if (isset($cmd))
+    if (isset($cmd)) {
         $Xcontent = str_replace('_cmd', $cmd, $Xcontent);
-    else
+    } else {
         $Xcontent = str_replace('_cmd', '', $Xcontent);
+    }
 
-    if ($dircmd_fma[0])
+    if ($dircmd_fma[0]) {
         $Xcontent = str_replace('_cre_dir', $create_dir, $Xcontent);
-    else {
+    } else {
         $Xcontent = str_replace('_classcredirno', 'collapse', $Xcontent);
         $Xcontent = str_replace('<div id="cre_dir">', '<div id="cre_dir" style="display: none;">', $Xcontent);
         $Xcontent = str_replace('_cre_dir', '', $Xcontent);
@@ -1382,10 +1184,11 @@ if ($inclusion) {
     $Xcontent = str_replace('_ren_dir', $rename_dir, $Xcontent);
     $Xcontent = str_replace('_chm_dir', $chmod_dir, $Xcontent);
 
-    if (isset($pict_dir))
+    if (isset($pict_dir)) {
         $Xcontent = str_replace('_pic_dir', $pict_dir, $Xcontent);
-    else
+    } else {
         $Xcontent = str_replace("_pic_dir", '', $Xcontent);
+    }
 
     if ($ficcmd_fma[0]) {
         $Xcontent = str_replace('_upl_file', $upload_file, $Xcontent);
@@ -1405,63 +1208,71 @@ if ($inclusion) {
     $Xcontent = str_replace('_ren_file', $rename_file, $Xcontent);
     $Xcontent = str_replace('_mov_file', $move_file, $Xcontent);
 
-    if (isset($Err))
+    if (isset($Err)) {
         $Xcontent = str_replace('_error', '<div class="alert alert-danger alert-dismissible fade show" role="alert">' . $Err . '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>', $Xcontent);
-    else
+    } else {
         $Xcontent = str_replace('_error', '', $Xcontent);
+    }
 
-    if (isset($infos))
+    if (isset($infos)) {
         $Xcontent = str_replace('_infos', $infos, $Xcontent);
-    else
+    } else {
         $Xcontent = str_replace('_infos', '', $Xcontent);
+    }
 
     if ($dirpres_fma[5]) {
-        if ($uniq_fma)
+        if ($uniq_fma) { 
             $Xcontent = str_replace('_picM', '<a class="nav-link" href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=pic-manager&amp;FmaRep=' . $FmaRep . '&amp;browse=' . rawurlencode($browse) . '"><span class="d-sm-none"><i class="bi bi-image fs-1" title="' . __d('fmanager', 'Images manager') . '" data-bs-toggle="tooltip" data-bs-placement="bottom"></i></span><span class="d-none d-sm-block mt-2">' . __d('fmanager', 'Images manager') . '</span></a>', $Xcontent);
-        else
+        } else {
             $Xcontent = str_replace('_picM', '<a class="nav-link" href="modules.php?ModPath=' . $ModPath . '&amp;ModStart=pic-manager&amp;FmaRep=' . $FmaRep . '&amp;browse=' . rawurlencode($browse) . '" target="_blank"><span class="d-sm-none"><i class="fa fa-image fa-lg"></i></span><span class="d-none d-sm-block mt-2">' . __d('fmanager', 'Images manager') . '</span></a>', $Xcontent);
-    } else
+        }
+    } else {
         $Xcontent = str_replace('_picM', '', $Xcontent);
+    }
 
     $Xcontent = str_replace('_quota', $obj->ConvertSize($sizeofDir + $sizeofFic) . ' || ' . __d('fmanager', 'Taille maximum d\'un fichier : ') . $obj->ConvertSize($max_size), $Xcontent);
 
     if (!$App_fma) {
 
         // utilisation de pages.php
-        settype($PAGES, 'array');
+        // settype($PAGES, 'array');
 
-        require_once("themes/pages.php");
+        // require_once("themes/pages.php");
 
         $Titlesitename = aff_langue($PAGES["modules.php?ModPath=$ModPath&ModStart=$ModStart*"]['title']);
 
-        global $user;
-        if (isset($user) and $user != '') {
+        // global $user;
+        // if (isset($user) and $user != '') {
 
-            global $cookie;
-            if ($cookie[9] != '') {
-                $ibix = explode('+', urldecode($cookie[9]));
+        //     global $cookie;
+        //     if ($cookie[9] != '') {
+        //         $ibix = explode('+', urldecode($cookie[9]));
 
-                if (array_key_exists(0, $ibix)) 
-                    $theme = $ibix[0];
-                else 
-                    $theme = Config::get('npds.Default_Theme');
+        //         if (array_key_exists(0, $ibix)) {
+        //             $theme = $ibix[0];
+        //         } else {
+        //             $theme = Config::get('npds.Default_Theme');
+        //         }
 
-                if (array_key_exists(1, $ibix)) 
-                    $skin = $ibix[1];
-                else 
-                    $skin = Config::get('npds.Default_Skin'); //$skin=''; 
+        //         if (array_key_exists(1, $ibix)) {
+        //             $skin = $ibix[1];
+        //         } else {
+        //             $skin = Config::get('npds.Default_Skin'); //$skin='';
+        //             } 
 
-                $tmp_theme = $theme;
+        //         $tmp_theme = $theme;
 
-                if (!$file = @opendir("themes/$theme")) 
-                    $tmp_theme = Config::get('npds.Default_Theme');
-            } else
-                $tmp_theme = Config::get('npds.Default_Theme');
-        } else {
-            $theme = Config::get('npds.Default_Theme');
-            $skin = Config::get('npds.Default_Skin');
-            $tmp_theme = $theme;
-        }
+        //         if (!$file = @opendir("themes/$theme")) {
+        //             $tmp_theme = Config::get('npds.Default_Theme');
+        //         }
+        //     } else {
+        //         $tmp_theme = Config::get('npds.Default_Theme');
+        //     }
+        // } else {
+        //     $theme = Config::get('npds.Default_Theme');
+        //     $skin = Config::get('npds.Default_Skin');
+        //     $tmp_theme = $theme;
+        // }
 
         include("storage/meta/meta.php");
 
@@ -1480,7 +1291,7 @@ if ($inclusion) {
 
             if ($tiny_mce_init) {
                 $tiny_mce_theme = $PAGES["modules.php?ModPath=$ModPath&ModStart=$ModStart*"]['TinyMce-theme'];
-                echo aff_editeur("tiny_mce", "begin");
+                echo Editeur::aff_editeur("tiny_mce", "begin");
             }
         }
 
@@ -1488,8 +1299,10 @@ if ($inclusion) {
         <script type="text/javascript" src="assets/shared/jquery/jquery.min.js"></script>
         </head>
         <body class="p-3">';
-    } else
-        include("header.php");
+    } 
+    // else {
+    //     include("header.php");
+    // }
 
     // Head banner de présentation F-Manager
     if (file_exists("themes/".Config::get('npds.Default_Theme')."/html/modules/f-manager/head.html")) {
@@ -1522,7 +1335,7 @@ if ($inclusion) {
 
     // l'insertion de la FORM d'édition doit intervenir à la fin du calcul de l'interface ... sinon on modifie le contenu
     // Meta_lang n'est pas chargé car trop lent pour une utilisation sur de gros répertoires
-    $Xcontent = aff_langue($Xcontent);
+    $Xcontent = Language::aff_langue($Xcontent);
     $Xcontent = str_replace('_edt_file', $edit_file, $Xcontent);
 
     echo $Xcontent;
@@ -1543,10 +1356,14 @@ if ($inclusion) {
     </body>
     </html>';
 
-        if (Config::get('npds.tiny_mce'))
-            if ($tiny_mce_init)
-                echo aff_editeur("tiny_mce", "end");
-    } else
-        include("footer.php");
+        if (Config::get('npds.tiny_mce')) {
+            if ($tiny_mce_init) {
+                echo Editeur::aff_editeur("tiny_mce", "end");
+            }
+        }
+    } 
+    // else {
+    //     include("footer.php");
+    // }
 }
 ?>

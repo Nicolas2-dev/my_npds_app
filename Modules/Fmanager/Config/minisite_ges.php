@@ -54,7 +54,7 @@ return [
      * basedir_fma => fmanager.config.default.racine_fma.'/static'
      */
     'basedir_fma' => function ($cookie) {
-        return Config::get('fmanager.default.racine_fma') . 'Users/storage/users_private/' . $cookie[1] . '/mns';
+        return Config::get('fmanager.default.racine_fma') .'/storage/users_private/'. $cookie[1] .'/mns';
     },
 
     /**
@@ -76,14 +76,6 @@ return [
      * ] 
      */
     'dirlimit_fma' => [
-        'admin'            => 'admin',
-        'cache'            => 'admin',
-        'cluster-paradise' => 'admin',
-        'include'          => 'admin',
-        'f-manager'        => 'admin',
-        'sform'            => 'admin',
-        'upload'           => 'admin',
-        'users_private'    => 'admin'
     ],
  
     /**
@@ -105,7 +97,7 @@ return [
      * 
      * dirpres_fma => 111011
      */
-    'dirpres_fma' => 111111,
+    'dirpres_fma' => 00000,
 
     /**
      * permet de contrôler les actions autorisées relatives aux répertoires (0 non-autorisé / 1 autorisé)
@@ -127,21 +119,21 @@ return [
      * 
      * extension_fma => '*'; : tous les types de fichiers sont autorisés
      */
-    'extension_fma' => 'doc xls pps ppt sxw xls sxi sxd sxg stw rtf txt pdf zip rar tar tgz gif jpg jpeg png swf mp3',
+    'extension_fma' => 'gif jpg jpeg png html txt css',
 
     /**
      * permet de définir la liste des extensions qui seront éditables
      * 
      * extension_Edit_fma => 'txt php js html htm'
      */
-    'extension_Edit_fma' => '',
+    'extension_Edit_fma' => 'txt html css',
 
     /**
      * permet de définir la liste des extensions Editables qui supporteront un editeur Wysiwyg (TinyMce par exemple)
      * 
      * extension_Wysiwyg_fma => 'html htm'
      */
-    'extension_Wysiwyg_fma' => '',
+    'extension_Wysiwyg_fma' => 'html',
 
     /**
      * permet de contrôler l'affichage de certains fichiers (.htaccess, config.php ...)
@@ -162,9 +154,10 @@ return [
      * ]
      */
     'ficlimit_fma' => [
-        '.htaccess'           => 'admin',
-        'config.php'          => 'admin',
-        'upload.conf.php'     => 'admin'
+        '.htaccess'           => 999,
+        'config.php'          => 999,
+        'pic-manager.txt'     => 999,
+        'upload.conf.php'     => 999
     ],
 
     /**
@@ -188,7 +181,7 @@ return [
      * 
      * ficpres_fma => 11101
      */
-    'ficpres_fma' => 11111,
+    'ficpres_fma' => 11110,
 
     /**
      * permet de contrôler les actions autorisées relatives aux fichiers (0 non-autorisé / 1 autorisé)
@@ -202,7 +195,7 @@ return [
      * 
      * ficcmd_fma => 100011
      */
-    'ficcmd_fma' => 101010,
+    'ficcmd_fma' => 111010,
  
     /**
      * permet d'adjoindre un fichier de type xxxxx.mod.php associé à celui-ci et contenant une variable ($url_modifier)
@@ -231,7 +224,7 @@ return [
      * home_fma => 'Home';      => Un texte
      * home_fma => '<img ...>'; => Une image
      */
-    'home_fma' => '',
+    'home_fma' => __d('fmanager', 'Minisite'),
 
     /**
      * permet d'inclure le files-manager dans le thème de npds
@@ -270,7 +263,7 @@ return [
      * 
      * wopenH_fma et $wopenW_fma ne servent que si $wopen_fma=true ...
      */
-    'wopen_fma' => true,
+    'wopen_fma' => false,
 
     /**
      * permet de passer de F-manager à Pic-manager (vis et versa) dans une seule fenêtre

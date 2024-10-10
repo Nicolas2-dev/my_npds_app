@@ -1,5 +1,8 @@
 <?php
 
+use Modules\Fmanager\Bootstrap\FmanagerKernel;
+
+FmanagerKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 

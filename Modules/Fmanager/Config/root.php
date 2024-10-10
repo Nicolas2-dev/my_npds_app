@@ -25,7 +25,7 @@ return [
      *                  => Attention - cela s'arrête au premier groupe qui rempli la condition
      *  admin           => access_fma => 'admin'
      */
-    'access_fma' => 'membre',
+    'access_fma' => 'admin',
 
     /**
      * permet de choisir le tri utilisé et son sens
@@ -53,8 +53,8 @@ return [
      * 
      * basedir_fma => fmanager.config.default.racine_fma.'/static'
      */
-    'basedir_fma' => function ($cookie) {
-        return Config::get('fmanager.default.racine_fma') . 'Users/storage/users_private/' . $cookie[1] . '/mns';
+    'basedir_fma' => function () {
+        return Config::get('fmanager.default.racine_fma');
     },
 
     /**
@@ -76,14 +76,6 @@ return [
      * ] 
      */
     'dirlimit_fma' => [
-        'admin'            => 'admin',
-        'cache'            => 'admin',
-        'cluster-paradise' => 'admin',
-        'include'          => 'admin',
-        'f-manager'        => 'admin',
-        'sform'            => 'admin',
-        'upload'           => 'admin',
-        'users_private'    => 'admin'
     ],
  
     /**
@@ -91,7 +83,7 @@ return [
      * 
      * ATTENTION cette fonction peut-être consommatrice de CPU si vos répertoires contiennent de nombreux fichiers
      */
-    'dirsize_fma' => true,
+    'dirsize_fma' => false,
 
     /**
      * permet de contrôler les informations affichées relatives aux répertoires (0 non affiché / 1 affiché)
@@ -105,7 +97,7 @@ return [
      * 
      * dirpres_fma => 111011
      */
-    'dirpres_fma' => 111111,
+    'dirpres_fma' => 111011,
 
     /**
      * permet de contrôler les actions autorisées relatives aux répertoires (0 non-autorisé / 1 autorisé)
@@ -118,7 +110,7 @@ return [
      * 
      * dircmd_fma => 10000
      */
-    'dircmd_fma' => 00000,
+    'dircmd_fma' => 11110,
 
     /**
      * permet de définir la liste des extensions valide
@@ -127,21 +119,21 @@ return [
      * 
      * extension_fma => '*'; : tous les types de fichiers sont autorisés
      */
-    'extension_fma' => 'doc xls pps ppt sxw xls sxi sxd sxg stw rtf txt pdf zip rar tar tgz gif jpg jpeg png swf mp3',
+    'extension_fma' => '*',
 
     /**
      * permet de définir la liste des extensions qui seront éditables
      * 
      * extension_Edit_fma => 'txt php js html htm'
      */
-    'extension_Edit_fma' => '',
+    'extension_Edit_fma' => 'txt php js html htm',
 
     /**
      * permet de définir la liste des extensions Editables qui supporteront un editeur Wysiwyg (TinyMce par exemple)
      * 
      * extension_Wysiwyg_fma => 'html htm'
      */
-    'extension_Wysiwyg_fma' => '',
+    'extension_Wysiwyg_fma' => 'html htm',
 
     /**
      * permet de contrôler l'affichage de certains fichiers (.htaccess, config.php ...)
@@ -162,9 +154,6 @@ return [
      * ]
      */
     'ficlimit_fma' => [
-        '.htaccess'           => 'admin',
-        'config.php'          => 'admin',
-        'upload.conf.php'     => 'admin'
     ],
 
     /**
@@ -175,7 +164,7 @@ return [
     /**
      * permet de ne pas afficher le fichier dans la liste des fichiers ... car il est affecté à un groupe qui n'existe pas !
      */
-    'ficlimit_fma[\'infos.txt\']' => 999, 
+    'ficlimit_fma[\'infos.txt\']' => [], 
 
     /**
      * permet de contrôler les informations affichées relatives aux fichiers (0 non affiché / 1 affiché)
@@ -202,7 +191,7 @@ return [
      * 
      * ficcmd_fma => 100011
      */
-    'ficcmd_fma' => 101010,
+    'ficcmd_fma' => 111111,
  
     /**
      * permet d'adjoindre un fichier de type xxxxx.mod.php associé à celui-ci et contenant une variable ($url_modifier)
@@ -210,7 +199,7 @@ return [
      * 
      * voir le comportement du fichier download.conf.php ET download.mod.php
      */
-    'url_fma_modifier' => false,
+    'url_fma_modifier' => true,
 
     // THEME 
  
@@ -231,7 +220,7 @@ return [
      * home_fma => 'Home';      => Un texte
      * home_fma => '<img ...>'; => Une image
      */
-    'home_fma' => '',
+    'home_fma' => __d('fmanager', 'Minisite'),
 
     /**
      * permet d'inclure le files-manager dans le thème de npds
@@ -275,7 +264,7 @@ return [
     /**
      * permet de passer de F-manager à Pic-manager (vis et versa) dans une seule fenêtre
      */
-    'uniq_fma' => false,
+    'uniq_fma' => true,
 
     /**
      * permet de passer une variable complémentaire définie localement dans le fichier de configuration

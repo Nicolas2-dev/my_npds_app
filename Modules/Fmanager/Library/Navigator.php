@@ -11,17 +11,17 @@ class Navigator
     /**
      * 
      */
-    private $GetDirSz;
+    public $GetDirSz;
 
     /**
      * 
      */
-    private $CurDir;
+    public $CurDir;
 
     /**
      * 
      */
-    private $DirsList  =  array(
+    public $DirsList  =  array(
         "Name" => array(),
         "DateM" => array(),
         "Size" => array(),
@@ -31,7 +31,7 @@ class Navigator
     /**
      * 
      */
-    private $FilesList =  array(
+    public $FilesList =  array(
         "Name" => array(),
         "DateM" => array(),
         "Size" => array(),
@@ -42,68 +42,76 @@ class Navigator
     /**
      * 
      */
-    private $Handle;
+    public $Handle;
 
     /**
      * 
      */
-    private $Errors;
+    public $Errors;
 
     /**
      * 
      */
-    private $Path; 
+    public $Path; 
 
     /**
      * 
      */
-    private $OrderArrD = array();
+    public $OrderArrD = array();
 
     /**
      * 
      */
-    private $OrderArrF = array();
+    public $OrderArrF = array();
 
     /**
      * 
      */
-    private $PointerPosD;
+    public $PointerPosD;
 
     /**
      * 
      */
-    private $PointerPosF;
+    public $PointerPosF;
 
     /**
      * 
      */
-    private $Extension = array();
+    public $Extension = array();
 
     /**
      * 
      */
-    private $FieldName; 
+    public $FieldName; 
 
     /**
      * 
      */
-    private $FieldDate; 
+    public $FieldDate; 
 
     /**
      * 
      */
-    private $FieldSize; 
+    public $FieldSize; 
 
     /**
      * 
      */
-    private $FieldPerms; 
+    public $FieldPerms; 
 
     /**
      * 
      */
-    private $FieldView; 
+    public $FieldView; 
 
+
+    /**
+     * Undocumented function
+     */
+    function __construct()
+    {
+        //
+    }
 
     /**
      * Undocumented function
@@ -114,7 +122,7 @@ class Navigator
      * @param boolean $DirSize
      * @return void
      */
-    public function __construct($parm, $sort_filed = "N", $dir = "ASC", $DirSize = false)
+    public function File_Navigator($parm, $sort_filed = "N", $dir = "ASC", $DirSize = false)
     {
         if (!isset($parm)) 
             $parm = ".";
@@ -466,7 +474,7 @@ class Navigator
      * return element's number  what: d total dirs, f: total files
      *
      * @param string $what
-     * @return void
+     * @return string
      */
     public function Count($what = "")
     {
@@ -488,11 +496,11 @@ class Navigator
     /**
      * current directory
      *
-     * @return void
+     * @return string
      */
     public function Pwd()
     {
-        return (getcwd());
+        return getcwd();
     }
 
     /**
