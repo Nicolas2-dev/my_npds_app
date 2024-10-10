@@ -104,6 +104,11 @@ class Navigator
      */
     public $FieldView; 
 
+    /**
+     * 
+     */
+    public const DateFormat = 'd-m-Y H:i';
+
 
     /**
      * Undocumented function
@@ -124,13 +129,15 @@ class Navigator
      */
     public function File_Navigator($parm, $sort_filed = "N", $dir = "ASC", $DirSize = false)
     {
-        if (!isset($parm)) 
+        if (!isset($parm)) {
             $parm = ".";
+        }
 
-        if (is_dir($parm)) 
+        if (is_dir($parm)) {
             $this->CurDir = $parm;
-        else 
+        } else {
             Access_Error();
+        }
 
         $this->GetDirSz = $DirSize;
 
@@ -144,9 +151,10 @@ class Navigator
 
             $this->PointerPosF = 0;
             $this->PointerPosD = 0;
-            return (true);
-        } else
-            return (false);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -235,10 +243,11 @@ class Navigator
         for ($i = 0; $i < 3; $i++) {
             $droits = $perms & $mask;
 
-            if ($i == 0)
+            if ($i == 0) {
                 $droits = $droits >> 6;
-            else if ($i == 1)
+            } else if ($i == 1) {
                 $droits = $droits >> 3;
+            }
 
             $Fdroits .= $droits;
             $mask = $mask >> 3;
@@ -247,7 +256,7 @@ class Navigator
         $tab[] = $Fdroits;
         $tab[] = $ret2;
 
-        return ($tab);
+        return $tab;
     }
 
     /**
@@ -261,7 +270,7 @@ class Navigator
         if ($ibid[0] == 766 or $ibid[0] == 777) 
             $ibid[0] = '<span class="text-success">' . $ibid[0] . '</span>';
 
-        return ("$ibid[0]&nbsp;($ibid[1])");
+        return ($ibid[0] .'&nbsp;'. ($ibid[1]));
     }
 
     /**
@@ -272,7 +281,7 @@ class Navigator
      */
     public function LastUpdate($file)
     {
-        return date(DateFormat, filemtime($file));
+        return date(static::DateFormat, filemtime($file));
     }
 
     /**
@@ -297,8 +306,12 @@ class Navigator
                 $this->PointerPosF++;
 
                 return true;
-            } else return false;
-        } else return false;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -320,9 +333,14 @@ class Navigator
                 $this->FieldPerms = $this->DirsList["Perms"][$this->OrderArrD[$keyz[$this->PointerPosD]]];
 
                 $this->PointerPosD++;
+
                 return true;
-            } else return false;
-        } else return false;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -354,12 +372,12 @@ class Navigator
                     $i++;
                 }
 
-                if ($direction == "ASC" and isset($this->OrderArrF)) 
+                if ($direction == "ASC" and isset($this->OrderArrF)) { 
                     ksort($this->OrderArrF);
-                elseif (isset($this->OrderArrF)) 
+                } elseif (isset($this->OrderArrF)) {
                     krsort($this->OrderArrF);
+                }
                 break;
-                //----------------------------------
 
             case "S"; //Size
                 $i = 0;
@@ -373,12 +391,12 @@ class Navigator
                     $i++;
                 }
 
-                if ($direction == "ASC"  and isset($this->OrderArrF)) 
+                if ($direction == "ASC"  and isset($this->OrderArrF)) {
                     ksort($this->OrderArrF);
-                elseif (isset($this->OrderArrF)) 
+                } elseif (isset($this->OrderArrF)) {
                     krsort($this->OrderArrF);
+                }
                 break;
-                //----------------------------------
 
             default:
                 $i = 0;
@@ -392,10 +410,11 @@ class Navigator
                     $i++;
                 }
 
-                if ($direction == "ASC"  and isset($this->OrderArrF)) 
+                if ($direction == "ASC"  and isset($this->OrderArrF)) {
                     ksort($this->OrderArrF);
-                elseif (isset($this->OrderArrF)) 
+                } elseif (isset($this->OrderArrF)) {
                     krsort($this->OrderArrF);
+                }
                 break;
         }
     }
@@ -427,12 +446,12 @@ class Navigator
                     $i++;
                 }
 
-                if ($direction == "ASC"  and isset($this->OrderArrD)) 
+                if ($direction == "ASC"  and isset($this->OrderArrD)) {
                     ksort($this->OrderArrD);
-                elseif (isset($this->OrderArrD)) 
+                } elseif (isset($this->OrderArrD)) {
                     krsort($this->OrderArrD);
+                }
                 break;
-                //----------------------------------
 
             case "S"; //Size
                 $i = 0;
@@ -444,12 +463,12 @@ class Navigator
                     $i++;
                 }
 
-                if ($direction == "ASC"  and isset($this->OrderArrD)) 
+                if ($direction == "ASC"  and isset($this->OrderArrD)) {
                     ksort($this->OrderArrD);
-                elseif (isset($this->OrderArrD)) 
+                } elseif (isset($this->OrderArrD)) {
                     krsort($this->OrderArrD);
+                }
                 break;
-                //----------------------------------
 
             default:
                 $i = 0;
@@ -461,12 +480,12 @@ class Navigator
                     $i++;
                 }
 
-                if ($direction == "ASC"  and isset($this->OrderArrD)) 
+                if ($direction == "ASC"  and isset($this->OrderArrD)) {
                     ksort($this->OrderArrD);
-                elseif (isset($this->OrderArrD)) 
+                } elseif (isset($this->OrderArrD)) {
                     krsort($this->OrderArrD);
+                }
                 break;
-                //----------------------------------
         }
     }
  
@@ -557,10 +576,12 @@ class Navigator
                         $pos = strpos(strtoupper($fichier), strtoupper($search));
 
                         if ($pos === FALSE) {
-                            if ($search == "*")
+                            if ($search == "*") {
                                 $list .= $dir . "/" . $fichier . "|";
-                        } else
+                            }
+                        } else {
                             $list .= $dir . "/" . $fichier . "|";
+                        }
                     }
                 }
             }
@@ -591,7 +612,7 @@ class Navigator
             }
         }
 
-        return ($ibid);
+        return $ibid;
     }
 
     /**
@@ -603,52 +624,67 @@ class Navigator
      */
     public function ChgPerms($file, $perms = '644')
     {
-        if ($perms == 400)
+        if ($perms == 400) {
             $ibid = @chmod($file, 0400);
+        }
 
-        if ($perms == 444)
+        if ($perms == 444) {
             $ibid = @chmod($file, 0444);
+        }
 
-        if ($perms == 500)
+        if ($perms == 500) {
             $ibid = @chmod($file, 0500);
+        }
 
-        if ($perms == 544)
+        if ($perms == 544) {
             $ibid = @chmod($file, 0544);
+        }
 
-        if ($perms == 600)
+        if ($perms == 600) {
             $ibid = @chmod($file, 0600);
+        }
 
-        if ($perms == 644)
+        if ($perms == 644) {
             $ibid = @chmod($file, 0644);
+        }
 
-        if ($perms == 655)
+        if ($perms == 655) {
             $ibid = @chmod($file, 0655);
+        }
 
-        if ($perms == 666)
+        if ($perms == 666) {
             $ibid = @chmod($file, 0666);
+        }
 
-        if ($perms == 700)
+        if ($perms == 700) { 
             $ibid = @chmod($file, 0700);
+        }
 
-        if ($perms == 744)
+        if ($perms == 744) {
             $ibid = @chmod($file, 0744);
+        }
 
-        if ($perms == 755)
+        if ($perms == 755) {
             $ibid = @chmod($file, 0755);
+        }
 
-        if ($perms == 766)
+        if ($perms == 766) {
             $ibid = @chmod($file, 0766);
+        }
 
-        if ($perms == 777)
+        if ($perms == 777) {
             $ibid = @chmod($file, 0777);
+        }
 
-        if (!$ibid)
+        if (!$ibid ) {
             $this->Errors = __d('fmanager', 'Impossible d\'appliquer le chmod');
+        }
 
-        if ($this->Errors != "") 
-            return (false);
-        else 
-            return (true);
+        if ($this->Errors != "") {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -661,18 +697,20 @@ class Navigator
     public function Rename($old, $new)
     {
         if (file_exists($old)) {
-            if (!file_exists($new)) 
+            if (!file_exists($new)) {
                 rename($old, $new);
-            else 
+            } else {
                 $this->Errors = basename($new) . " : " . __d('fmanager', 'Impossible de renommer');
+            }
         } else {
             $this->Errors = basename($old) . " : " . __d('fmanager', 'Le fichier n\'existe pas');
         }
 
-        if ($this->Errors != "") 
-            return (false);
-        else 
-            return (true);
+        if ($this->Errors != "") { 
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -685,18 +723,20 @@ class Navigator
     public function Move($old, $new)
     {
         if (file_exists($old)) {
-            if (!file_exists($new)) 
+            if (!file_exists($new)) {
                 rename($old, $new);
-            else 
+            } else {
                 $this->Errors = basename($new) . " : " . __d('fmanager', 'Impossible de déplacer');
+            }
         } else {
             $this->Errors = basename($old) . " : " . __d('fmanager', 'Le fichier n\'existe pas');
         }
 
-        if ($this->Errors != "") 
-            return (false);
-        else 
-            return (true);
+        if ($this->Errors != "") {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -709,23 +749,25 @@ class Navigator
     public function Copy($old, $new)
     {
         if (file_exists($old)) {
-            if (!file_exists($new)) 
+            if (!file_exists($new)) {
                 $noerr = copy($old, $new);
-            else {
+            } else {
                 $new = str_replace(basename($new), __d('fmanager', 'Copie de ') . basename($new), $new);
                 $noerr = copy($old, $new);
             }
 
-            if (!$noerr) 
+            if (!$noerr) {
                 $this->Errors = basename($new) . " : " . __d('fmanager', 'Impossible de copier');
+            }
         } else {
             $this->Errors = basename($old) . " : " . __d('fmanager', 'Le fichier n\'existe pas');
         }
 
-        if ($this->Errors != "") 
-            return (false);
-        else 
-            return (true);
+        if ($this->Errors != "") {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -742,27 +784,32 @@ class Navigator
         switch ($what) {
             case "f":
                 if (!file_exists($name)) {
-                    if (!$fp = fopen($name, "w")) 
+                    if (!$fp = fopen($name, "w")) {
                         $this->Errors = __d('fmanager', 'Impossible de créer') . " : " . basename($name);
-                    else 
+                    } else {
                         fclose($fp);
-                } else
+                    }
+                } else {
                     $this->Errors = basename($name) . " : " . __d('fmanager', 'existe déjà');
+                }
                 break;
 
             case "d":
                 if (!file_exists($name)) {
-                    if (!mkdir($name, 0777)) 
+                    if (!mkdir($name, 0777)) {
                         $this->Errors = __d('fmanager', 'Impossible de créer') . " : " . basename($name);
-                } else
+                    }
+                } else {
                     $this->Errors = basename($name) . " : " . __d('fmanager', 'existe déjà');
+                }
                 break;
         }
 
-        if ($this->Errors != "") 
-            return (false);
-        else 
-            return (true);
+        if ($this->Errors != "") {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -774,14 +821,16 @@ class Navigator
     public function Remove($file)
     {
         if (is_file($file)) {
-            if (!@unlink($file))
+            if (!@unlink($file)) {
                 $this->Errors = __d('fmanager', 'Impossible de supprimer') . " : " . basename($file);
+            }
         }
 
-        if ($this->Errors != "") 
-            return (false);
-        else 
-            return (true);
+        if ($this->Errors != "") {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -795,14 +844,16 @@ class Navigator
         if ($handle = @opendir($dir)) {
             closedir($handle);
 
-            if (!@rmdir($dir))
+            if (!@rmdir($dir)) {
                 $this->Errors = __d('fmanager', 'Impossible de supprimer') . " : " . basename($dir);
+            }
         }
 
-        if ($this->Errors != "") 
-            return (false);
-        else 
-            return (true);
+        if ($this->Errors != "") { 
+            return false;
+        } else {
+            return true;
+        }
     }
  
     /**
