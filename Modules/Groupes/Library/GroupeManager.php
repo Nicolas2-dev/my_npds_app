@@ -39,8 +39,6 @@ class GroupeManager implements GroupeInterface
      */
     public function valid_group($xuser)
     {
-        
-
         if ($xuser) {
             $userdata = explode(':', base64_decode($xuser));
             $user_temp = Q_select("SELECT groupe FROM users_status WHERE uid='$userdata[0]'", 3600);

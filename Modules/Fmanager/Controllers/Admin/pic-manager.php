@@ -17,7 +17,6 @@ use Modules\Fmanager\Support\Facades\Fmanager;
 $user = Auth::guard('user');
 
 if (isset($user)) {
-    
     $themelist  = Theme::list();
     $themelist  = explode(' ', $themelist);
 
@@ -36,8 +35,8 @@ if ($FmaRep) {
         if (Config::has('fmanager.'. $FmaRep)) {
 
             if (Fmanager::fma_autorise('a', '')) {
-                $theme_fma      = Config::get('fmanager.themeG_fma');
-                $fic_minuscptr  = 0;
+                // $theme_fma      = Config::get('fmanager.'. $FmaRep .'.themeG_fma'); // ?????
+                // $fic_minuscptr  = 0; // ????
                 $dir_minuscptr  = 0;
             } else {
                 Access_Error();
@@ -64,8 +63,7 @@ if ($browse != '') {
     $ibid = str_replace('..', '', $ibid);
 
     // contraint ‡ rester dans la zone de repertoire dÈfinie
-    $ibid = $basedir_fma . substr($ibid, strlen($basedir_fma));
-    $base = $ibid;
+    $base = $basedir_fma . substr($ibid, strlen($basedir_fma));
 } else {
     $base = $basedir_fma;
 }
@@ -74,8 +72,8 @@ if ($browse != '') {
 $obj = new Navigator();
 
 $obj->Extension = explode(' ', $extension_fma);
-
-// Construction de la Classe
+ 
+// Breadcrumb Construction de la Classe
 if ($obj->File_Navigator($base, $tri_fma['tri'], $tri_fma['sens'], $dirsize_fma)) {
 
     // Current PWD and Url_back / match by OS determination
@@ -100,45 +98,34 @@ if ($obj->File_Navigator($base, $tri_fma['tri'], $tri_fma['sens'], $dirsize_fma)
     Url::redirect("modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;FmaRep=$FmaRep&amp;browse=" . rawurlencode(Crypt::encrypt(dirname($base))));
 }
 
-// gestion des types d'extension de fichiers
-$handle = opendir($racine_fma .'/images/upload/file_types');
-
-while (false !== ($file = readdir($handle))) {
-    if ($file != '.' && $file != '..') {
-        $prefix = strtoLower(substr($file, 0, strpos($file, '.')));
-
-        $att_icons[$prefix] = '<img src="'. site_url('assets/images/upload/file_types/' . $file) . '" alt="" />';
-    }
-}
-closedir($handle);
-
-$att_icon_dir = '<i class="bi bi-folder fs-2"></i>';
-
 // Répertoires
 $subdirs = '';
 $sizeofDir = 0;
-
 while ($obj->NextDir()) {
     if (Fmanager::fma_autorise('d', $obj->FieldName)) {
         $subdirs .= '<tr>';
 
         $clik_url = '<a href="'. site_url('modules.php?ModPath=$ModPath&amp;ModStart=$ModStart&amp;FmaRep=$FmaRep&amp;browse=' . rawurlencode(Crypt::encrypt($base. '/'. $obj->FieldName))) . '">';
         
+        // icon
         if ($dirpres_fma[0]) {
-            $subdirs .= '<td width="3%">' . $clik_url . $att_icon_dir . '</a></td>';
+            $subdirs .= '<td width="3%">' . $clik_url . '<i class="bi bi-folder fs-2"></i></a></td>';
         }
 
+        // directory name
         if ($dirpres_fma[1]) {
             $subdirs .= '<td nowrap="nowrap" width="50%">'. $clik_url . Fmanager::extend_ascii($obj->FieldName) . '</a></td>';
         }
 
+        // date
         if ($dirpres_fma[2]) {
             $subdirs .= '<td><small>' . $obj->FieldDate . '</small></td>';
         }
 
+        // file or directory Poids 
         if ($dirpres_fma[3]) {
             $sizeofD    = $obj->FieldSize;
-            $sizeofDir  = $sizeofDir + $sizeofD;
+            $sizeofDir  = ($sizeofDir + $sizeofD);
             $subdirs    .= '<td><small>' . $obj->ConvertSize($sizeofDir) . '</small></td>';
 
         } else {
@@ -150,134 +137,131 @@ while ($obj->NextDir()) {
 }
 
 // Fichiers
-$fp = @file("pic-manager.txt");
+if ($fp = @file("pic-manager.txt")) {
 
-// La première ligne du tableau est un commentaire
-// settype($fp[1], 'integer');
+    // La première ligne du tableau est un commentaire
+    $Max_thumb  = $fp[1];
+    $refresh    = $fp[2];
 
-$Max_thumb = $fp[1];
+    if ($refresh == 0) {
+        $refresh = 3600;
+    }
 
-// settype($fp[2], 'integer');
+    $rep_cache          = $racine_fma . '/cache/';
+    $rep_cache_encrypt  = rawurlencode(Crypt::encrypt($rep_cache));
+    $cache_prefix       = $cookie[1] . md5(str_replace('/', '.', str_replace($racine_fma . '/', '', $cur_nav)));
 
-$refresh = $fp[2];
+    if ($Max_thumb > 0) {
+        $files = '<div id="photo">';
 
-if ($refresh == 0) {
-    $refresh = 3600;
-}
+        while ($obj->NextFile()) {
+            if (Fmanager::fma_autorise('f', $obj->FieldName)) {
 
-$rep_cache          = $racine_fma . '/cache/';
-$rep_cache_encrypt  = rawurlencode(Crypt::encrypt($rep_cache));
-$cache_prefix       = $cookie[1] . md5(str_replace('/', '.', str_replace($racine_fma . '/', '', $cur_nav)));
+                $suf = strtolower($obj->FieldView);
 
+                if (($suf == 'gif') or ($suf == 'jpg') or ($suf == 'png') or ($suf == 'swf') or ($suf == 'mp3')) {
+                    if ($ficpres_fma[1]) {
 
-if ($Max_thumb > 0) {
-    $files = '<div id="photo">';
+                        $ibid = rawurlencode(Crypt::encrypt(rawurldecode($cur_nav_encrypt) . '#fma#' . Crypt::encrypt($obj->FieldName)));
+                        $imagette = '';
 
-    while ($obj->NextFile()) {
-        if (Fmanager::fma_autorise('f', $obj->FieldName)) {
+                        if (($suf == 'gif') or ($suf == 'jpg')) {
+                            if ((function_exists('gd_info')) or extension_loaded('gd')) {
 
-            $suf = strtolower($obj->FieldView);
+                                // if (file_exists($rep_cache . $cache_prefix . '.' . $obj->FieldName)) {
+                                //     if (filemtime($rep_cache . $cache_prefix . '.' . $obj->FieldName) > time() - $refresh) {
 
-            if (($suf == 'gif') or ($suf == 'jpg') or ($suf == 'png') or ($suf == 'swf') or ($suf == 'mp3')) {
-                if ($ficpres_fma[1]) {
+                                //         if (filesize($rep_cache . $cache_prefix . '.' . $obj->FieldName) > 0) {
+                                //             $cache      = true;
+                                //             $image      = Fmanager::imagesize($obj->FieldName, $Max_thumb);
+                                //             $imagette   = rawurlencode(Crypt::encrypt(rawurldecode($rep_cache_encrypt) . '#fma#' . Crypt::encrypt($cache_prefix . '.' . $obj->FieldName)));
+                                //         } else {
+                                //             $cache = false;
+                                //         }
+                                //     } else {
+                                //         $cache = false;
+                                //     }
+                                // } else {
+                                //     $cache = false;
+                                // }
 
-                    $ibid = rawurlencode(Crypt::encrypt(rawurldecode($cur_nav_encrypt) . '#fma#' . Crypt::encrypt($obj->FieldName)));
-                    $imagette = '';
+                                // if (!$cache) {
+                                    $image = Fmanager::CreateThumb($obj->FieldName, $cur_nav, $rep_cache . $cache_prefix . '.', $Max_thumb, $suf);$image = Fmanager::CreateThumb($obj->FieldName, $cur_nav, '', $Max_thumb, $suf);
 
-                    if (($suf == 'gif') or ($suf == 'jpg')) {
-                        if ((function_exists('gd_info')) or extension_loaded('gd')) {
-
-                            //cached or not ?
-                            if (file_exists($rep_cache . $cache_prefix . '.' . $obj->FieldName)) {
-                                if (filemtime($rep_cache . $cache_prefix . '.' . $obj->FieldName) > time() - $refresh) {
-
-                                    if (filesize($rep_cache . $cache_prefix . '.' . $obj->FieldName) > 0) {
-                                        $cache      = true;
-                                        $image      = Fmanager::imagesize($obj->FieldName, $Max_thumb);
-                                        $imagette   = rawurlencode(Crypt::encrypt(rawurldecode($rep_cache_encrypt) . '#fma#' . Crypt::encrypt($cache_prefix . '.' . $obj->FieldName)));
-                                    } else {
-                                        $cache = false;
+                                    if (array_key_exists('gene-img', $image)) {
+                                        if ($image['gene-img'][0] == true) {
+                                            $imagette = rawurlencode(Crypt::encrypt(rawurldecode($rep_cache_encrypt) . '#fma#' . Crypt::encrypt($cache_prefix . '.' . $obj->FieldName)));
+                                        }
                                     }
-                                } else {
-                                    $cache = false;
-                                }
+                                // }
                             } else {
-                                $cache = false;
+                                $image = Fmanager::imagesize($curn_nav . $obj->FieldName, $Max_thumb);
                             }
-
-                            if (!$cache) {
-                                $image = Fmanager::CreateThumb($obj->FieldName, $cur_nav, $rep_cache . $cache_prefix . '.', $Max_thumb, $suf);
-
-                                if (array_key_exists('gene-img', $image)) {
-                                    if ($image['gene-img'][0] == true) {
-                                        $imagette = rawurlencode(Crypt::encrypt(rawurldecode($rep_cache_encrypt) . '#fma#' . Crypt::encrypt($cache_prefix . '.' . $obj->FieldName)));
-                                    }
-                                }
-                            }
-                        } else {
+                        } else if (($suf == 'png') or ($suf == 'swf')) {
                             $image = Fmanager::imagesize($curn_nav . $obj->FieldName, $Max_thumb);
                         }
-                    } else if (($suf == 'png') or ($suf == 'swf')) {
-                        $image = Fmanager::imagesize($curn_nav . $obj->FieldName, $Max_thumb);
-                    }
 
-                    $h_i = $image['hauteur'][0];
-                    $h_pi = $image['hauteur'][1];
-                    $w_i = $image['largeur'][0];
-                    $w_pi = $image['largeur'][1];;
+                        $h_i    = $image['hauteur'][0];
+                        $h_pi   = $image['hauteur'][1];
+                        $w_i    = $image['largeur'][0];
+                        $w_pi   = $image['largeur'][1];
 
-                    switch ($suf) {
-                        case 'gif':
-                        case 'jpg':
-                        case 'png':
-                            $PopUp = "'getfile.php?att_id=$ibid&amp;apli=f-manager','PicManager','menubar=no,location=no,directories=no,status=no,copyhistory=no,height=" . ($h_pi + 40) . ",width=" . ($w_pi + 40) . ",toolbar=no,scrollbars=yes,resizable=yes'";
-                            $files .= '
-                            <div class="imagethumb">
-                                <a href="javascript:void(0);" onclick="popup=window.open(' . $PopUp . '); popup.focus();"><img src="getfile.php?att_id=';
-                            
-                            if ($imagette) {
-                                $files .= $imagette;
-                            } else {
-                                $files .= $ibid;
-                            }
+                        switch ($suf) {
+                            case 'gif':
+                            case 'jpg':
+                            case 'png':
+                                $PopUp = "'getfile.php?att_id=$ibid&amp;apli=f-manager','PicManager','menubar=no,location=no,directories=no,status=no,copyhistory=no,height=" . ($h_pi + 40) . ",width=" . ($w_pi + 40) . ",toolbar=no,scrollbars=yes,resizable=yes'";
+                                
+                                $files .= '
+                                <div class="imagethumb">
+                                    <a href="javascript:void(0);" onclick="popup=window.open(' . $PopUp . '); popup.focus();"><img src="getfile.php?att_id=';
+                                
+                                if ($imagette) {
+                                    $files .= $imagette;
+                                } else {
+                                    $files .= $ibid;
+                                }
 
-                            $files .= "&amp;apli=f-manager\" border=\"0\" width=\"$w_i\" height=\"$h_i\" alt=\"$obj->FieldName\" loading=\"lazy\"/ ></a>\n";
-                            $files .= '
-                            </div>';
-                            break;
+                                $files .= "&amp;apli=f-manager\" border=\"0\" width=\"$w_i\" height=\"$h_i\" alt=\"$obj->FieldName\" loading=\"lazy\"/ ></a>\n";
+                                $files .= '
+                                </div>';
+                                break;
 
-                        case "swf":
-                            $img_size = "width=\"$w_i\" height=\"$h_i\"";
-                            $PopUp = "getfile.php?att_id=$ibid&amp;apli=f-manager";
-                            $files .= "<div class=\"imagethumb\">";
-                            $files .= "<a href=\"$PopUp\" target=\"_blank\">";
-                            $files .= "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=4\,0\,2\,0\" $img_size><param name=\"quality\" value=\"high\"><param name=\"src\" value=\"$PopUp\"><embed src=\"$PopUp\" quality=\"high\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\" type=\"application/x-shockwave-flash\" $img_size></embed></object>";
-                            $files .= "</a>\n</div>";
-                            break;
+                            case "swf":
+                                $img_size = "width=\"$w_i\" height=\"$h_i\"";
+                                $PopUp = "getfile.php?att_id=$ibid&amp;apli=f-manager";
 
-                        case "mp3":
-                            $PopUp = "getfile.php?att_id=$ibid&amp;apli=f-manager";
-                            $files .= "<div class=\"imagethumb\">";
-                            $uniqid = uniqid("mp3");
-                            $files .= "<a href=\"javascript:void(0);\" onclick=\"document.$uniqid.SetVariable('player:jsUrl', '$PopUp'); document.$uniqid.SetVariable('player:jsPlay', '');\">";
-                            $files .= "<div class=\"mp3\"><p align=\"center\">" . __d('fmanager', 'Cliquer ici pour charger le fichier dans le player') . "</p><br />" . Sanitize::split_string_without_space($obj->FieldName, 24) . "</div>";
-                            $files .= "<div style=\"margin-top: 10px;\">";
-                            $files .= "<object id=\"" . $uniqid . "\" type=\"application/x-shockwave-flash\" data=\"modules/$ModPath/plugins/player_mp3_maxi.swf\" width=\"$Max_thumb\" height=\"15\">
-                     <param name=\"movie\" value=\"modules/$ModPath/plugins/player_mp3_maxi.swf\" />
-                     <param name=\"FlashVars\" value=\"showstop=1&amp;showinfo=1&amp;showvolume=1\" />
-                     </object></div>";
-                            $files .= "</a>\n</div>";
-                            break;
+                                $files .= "<div class=\"imagethumb\">";
+                                $files .= "<a href=\"$PopUp\" target=\"_blank\">";
+                                $files .= "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=4\,0\,2\,0\" $img_size><param name=\"quality\" value=\"high\"><param name=\"src\" value=\"$PopUp\"><embed src=\"$PopUp\" quality=\"high\" pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\" type=\"application/x-shockwave-flash\" $img_size></embed></object>";
+                                $files .= "</a>\n</div>";
+                                break;
+
+                            case "mp3":
+                                $PopUp = "getfile.php?att_id=$ibid&amp;apli=f-manager";
+                                $uniqid = uniqid("mp3");
+
+                                $files .= "<div class=\"imagethumb\">";
+                                $files .= "<a href=\"javascript:void(0);\" onclick=\"document.$uniqid.SetVariable('player:jsUrl', '$PopUp'); document.$uniqid.SetVariable('player:jsPlay', '');\">";
+                                $files .= "<div class=\"mp3\"><p align=\"center\">" . __d('fmanager', 'Cliquer ici pour charger le fichier dans le player') . "</p><br />" . Sanitize::split_string_without_space($obj->FieldName, 24) . "</div>";
+                                $files .= "<div style=\"margin-top: 10px;\">";
+                                $files .= "<object id=\"" . $uniqid . "\" type=\"application/x-shockwave-flash\" data=\"modules/$ModPath/plugins/player_mp3_maxi.swf\" width=\"$Max_thumb\" height=\"15\">
+                        <param name=\"movie\" value=\"modules/$ModPath/plugins/player_mp3_maxi.swf\" />
+                        <param name=\"FlashVars\" value=\"showstop=1&amp;showinfo=1&amp;showvolume=1\" />
+                        </object></div>";
+                                $files .= "</a>\n</div>";
+                                break;
+                        }
                     }
                 }
             }
         }
-    }
 
-    $files .= '</div>';
+        $files .= '</div>';
+    }
 }
 
-chdir("$racine_fma/");
+chdir($racine_fma .'/');
 
 // Génération de l'interface
 $inclusion = false;
@@ -314,7 +298,7 @@ if ($inclusion) {
         $Xcontent = str_replace('_files', '', $Xcontent);
     }
 
-    if (!$App_fma) {
+    if (!$npds_fma) {
 
         // utilisation de pages.php
         // settype($PAGES, 'array');
@@ -398,7 +382,7 @@ if ($inclusion) {
         echo "\n";
     }
 
-    if (!$App_fma){
+    if (!$npds_fma) {
         echo '
             </body>
         </html>';

@@ -42,7 +42,7 @@ class Minisite_Lec_Mod
         or (static::$obj->FieldView     == "png") 
         or (static::$obj->FieldView     == "jpeg")) {
             $url_modifier = Config::get('npds.tiny_mce') 
-                ? '"#" onclick="javascript:parent.tinymce.activeEditor.selection.setContent(\'<img class="img-fluid" src="'. ste_url('getfile.php?att_id='. $data['ibid'] .'&amp;apli=f-manager') .'" />\');"' 
+                ? '"#" onclick="javascript:parent.tinymce.activeEditor.selection.setContent(\'<img class="img-fluid" src="'. site_url('getfile.php?att_id='. $data['ibid'] .'&amp;apli=f-manager') .'" />\');"' 
                 : '"#"';
         } else {
             $url_modifier = Config::get('npds.tiny_mce') 

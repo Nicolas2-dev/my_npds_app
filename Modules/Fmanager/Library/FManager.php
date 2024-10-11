@@ -4,8 +4,9 @@ namespace Modules\Fmanager\Library;
 
 use Modules\Fmanager\Contracts\FmanagerInterface;
 
-
-
+/**
+ * Undocumented class
+ */
 class FManager implements FmanagerInterface 
 {
 
@@ -356,19 +357,19 @@ class FManager implements FmanagerInterface
         switch ($ext) {
             case (preg_match('/jpeg|jpg/i', $ext) ? true : false):
                 if (function_exists('imagecreatefromjpeg')) {
-                    $src = @imagecreatefromjpeg($Source . $Image);
+                    $src = @imagecreatefromjpeg($Source . '/' . $Image);
                 }
                 break;
     
             case (preg_match('/gif/i', $ext) ? true : false):
                 if (function_exists('imagecreatefromgif')) {
-                    $src = @imagecreatefromgif($Source . $Image);
+                    $src = @imagecreatefromgif($Source . '/' . $Image);
                 }
                 break;
     
             case (preg_match('/png/i', $ext) ? true : false):
                 if (function_exists('imagecreatefrompng')) {
-                    $src = @imagecreatefrompng($Source . $Image);
+                    $src = @imagecreatefrompng($Source . '/' . $Image);
                 }
                 break;
         }

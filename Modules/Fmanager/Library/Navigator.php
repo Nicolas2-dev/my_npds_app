@@ -860,7 +860,7 @@ class Navigator
      * convert size to KB, MB, GB
      *
      * @param [type] $sz
-     * @return void
+     * @return string
      */
     public function ConvertSize($sz)
     {
