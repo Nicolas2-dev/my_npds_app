@@ -1,5 +1,8 @@
 <?php
 
+use Modules\Minisites\Bootstrap\MinisiteKernel;
+
+MinisiteKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 
