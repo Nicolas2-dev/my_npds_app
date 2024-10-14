@@ -4,8 +4,11 @@ namespace Modules\Npds\Library;
 
 use Npds\Config\Config;
 use Modules\Npds\Contracts\CssInterface;
+use Modules\Npds\Support\Facades\Language;
 
-
+/**
+ * Undocumented class
+ */
 class CssManager implements CssInterface 
 {
 
@@ -54,11 +57,7 @@ class CssManager implements CssInterface
 
         $tmp_theme = $template_dir .'/'. $theme;
 
-//vd($tmp_theme);
-
-
         $language = Config::get('npds.language');
-
 
         // CSS framework
         if (file_exists("assets/skins/$fw_css/bootstrap.min.css")) {
@@ -66,32 +65,32 @@ class CssManager implements CssInterface
         }
 
         // CSS standard 
-        if (file_exists(theme_path($tmp_theme .'/assets/css/$language-style.css'))) {
-            $tmp .= "<link href='".site_url('hemes/'.$tmp_theme.'/assets/css/$language-style.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
+        if (file_exists(theme_path($tmp_theme .'/assets/css/'. $language .'-style.css'))) {
+            $tmp .= "<link href='".site_url('hemes/'.strtolower($tmp_theme).'/assets/css/'. $language .'-style.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
             
-            if (file_exists(theme_path($tmp_theme .'/assets/css/$language-style-AA.css'))) {
-                $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/$language-style-AA.css')."' title='alternate stylesheet' rel='alternate stylesheet' type='text/css' media='all' />\n";
+            if (file_exists(theme_path($tmp_theme .'/assets/css/'. $language .'-style-AA.css'))) {
+                $tmp .= "<link href='".site_url('themes/'.strtolower($tmp_theme).'/assets/css/'. $language .'-style-AA.css')."' title='alternate stylesheet' rel='alternate stylesheet' type='text/css' media='all' />\n";
             }
 
-            if (file_exists(theme_path($tmp_theme .'/assets/css/$language-print.css'))) {
-                $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/$language-print.css')."' rel='stylesheet' type='text/css' media='print' />\n";
+            if (file_exists(theme_path($tmp_theme .'/assets/css/'. $language .'-print.css'))) {
+                $tmp .= "<link href='".site_url('themes/'.strtolower($tmp_theme).'/assets/css/'. $language .'-print.css')."' rel='stylesheet' type='text/css' media='print' />\n";
             }
         } else if (file_exists(theme_path($tmp_theme .'/assets/css/style.css'))) {
-            $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/style.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
+            $tmp .= "<link href='".site_url('themes/'.strtolower($tmp_theme).'/assets/css/style.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
             
             if (file_exists(theme_path($tmp_theme .'/assets/css/style-AA.css'))) {
-                $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/style-AA.css')."' title='alternate stylesheet' rel='alternate stylesheet' type='text/css' media='all' />\n";
+                $tmp .= "<link href='".site_url('themes/'.strtolower($tmp_theme).'/assets/css/style-AA.css')."' title='alternate stylesheet' rel='alternate stylesheet' type='text/css' media='all' />\n";
             }
 
             if (file_exists(theme_path($tmp_theme .'/assets/css/print.css'))) {
-                $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/print.css')."' rel='stylesheet' type='text/css' media='print' />\n";
+                $tmp .= "<link href='".site_url('themes/'.strtolower($tmp_theme).'/assets/css/print.css')."' rel='stylesheet' type='text/css' media='print' />\n";
             }
         } else {
-            $tmp .= "<link href='".site_url('themes/default/assets/css/style.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
+            $tmp .= "<link href='".site_url('modules/theme/assets/css/style.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
             
         }
 
-        $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/admin.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
+        $tmp .= "<link href='".site_url('themes/'.strtolower($tmp_theme).'/assets/css/admin.css')."' title='default' rel='stylesheet' type='text/css' media='all' />\n";
 
         // Chargeur CSS spécifique
         if ($css_pages_ref) {
@@ -109,12 +108,14 @@ class CssManager implements CssInterface
                     }
 
                     if (stristr($tab_css, 'http://') || stristr($tab_css, 'https://')) {
-                        $admtmp = "<link href='$tab_css' rel='stylesheet' type='text/css' media='all' />\n";
+                        $admtmp = '<link href="'. $tab_css .'" rel="stylesheet" type="text/css" media="all" />'. "\n";
+
                     } else {
-                        if (file_exists(theme_path($tmp_theme .'/assets/css/$tab_css')) and ($tab_css != '')) {
-                            $admtmp = "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/'.$tab_css)."' rel='stylesheet' type='text/css' media='all' />\n";
+                        if (file_exists(theme_path($tmp_theme .'/assets/css/'. $tab_css)) and ($tab_css != '')) {
+                            $admtmp = "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/'. $tab_css)."' rel='stylesheet' type='text/css' media='all' />\n";
+                        
                         } elseif (file_exists("$tab_css") and ($tab_css != '')) {
-                            $admtmp = "<link href='$tab_css' rel='stylesheet' type='text/css' media='all' />\n";
+                            $admtmp = "<link href='". $tab_css ."' rel='stylesheet' type='text/css' media='all' />\n";
                         }
                     }
 
@@ -134,9 +135,9 @@ class CssManager implements CssInterface
 
                 if (($css != '') and (file_exists(theme_path($tmp_theme .'/assets/css/'. $css)))) {
                     if ($op == '-') {
-                        $tmp = "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/'.$css)."' rel='stylesheet' type='text/css' media='all' />\n";
+                        $tmp = "<link href='".site_url('themes/'. strtolower($tmp_theme) .'/assets/css/'. $css)."' rel='stylesheet' type='text/css' media='all' />\n";
                     } else {
-                        $tmp .= "<link href='".site_url('themes/'.$tmp_theme.'/assets/css/'.$css)."' rel='stylesheet' type='text/css' media='all' />\n";
+                        $tmp .= "<link href='".site_url('themes/'. strtolower($tmp_theme) .'/assets/css/'. $css)."' rel='stylesheet' type='text/css' media='all' />\n";
                     }
                 }
             }
@@ -162,6 +163,7 @@ class CssManager implements CssInterface
     }
 
     /**
+     * Nore : Deprecated function par la suite
      * [adminfoot description]
      *
      * @param   [type]  $fv             [$fv description]
@@ -181,7 +183,7 @@ class CssManager implements CssInterface
             $css = '
             <script type="text/javascript" src="'. site_url('assets/shared/es6-shim/es6-shim.min.js') .'"></script>
             <script type="text/javascript" src="'. site_url('assets/shared/formvalidation/dist/js/FormValidation.full.min.js') .'"></script>
-            <script type="text/javascript" src="'. site_url('assets/shared/formvalidation/dist/js/locales/' . language_iso(1, "_", 1) . '.min.js') .'"></script>
+            <script type="text/javascript" src="'. site_url('assets/shared/formvalidation/dist/js/locales/' . Language::language_iso(1, "_", 1) . '.min.js') .'"></script>
             <script type="text/javascript" src="'. site_url('assets/shared/formvalidation/dist/js/plugins/Bootstrap5.min.js') .'"></script>
             <script type="text/javascript" src="'. site_url('assets/shared/formvalidation/dist/js/plugins/L10n.min.js') .'"></script>
             <script type="text/javascript" src="'. site_url('assets/js/checkfieldinp.js') .'"></script>
@@ -254,8 +256,8 @@ class CssManager implements CssInterface
                 formulid.forEach(function(item, index, array) {
                     const fvitem = FormValidation.formValidation(
                         document.getElementById(item),{
-                        locale: "' . language_iso(1, "_", 1) . '",
-                        localization: FormValidation.locales.' . language_iso(1, "_", 1) . ',
+                        locale: "' . Language::language_iso(1, "_", 1) . '",
+                        localization: FormValidation.locales.' . Language::language_iso(1, "_", 1) . ',
                         fields: {';
 
             if ($fv_parametres != '') {
