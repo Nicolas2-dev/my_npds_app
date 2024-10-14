@@ -1,1 +1,0 @@
-<?php return "chinese english french german spanish"; ?>
