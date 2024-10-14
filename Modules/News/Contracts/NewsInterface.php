@@ -6,20 +6,6 @@ namespace Modules\News\Contracts;
 interface NewsInterface {
 
     /**
-     * [ultramode description]
-     *
-     * @return  [type]  [return description]
-     */
-    public function ultramode();
-
-    /**
-     * [automatednews description]
-     *
-     * @return  [type]  [return description]
-     */
-    public function automatednews();
-
-    /**
      * [ctrl_aff description]
      *
      * @param   [type]  $ihome  [$ihome description]
@@ -61,15 +47,6 @@ interface NewsInterface {
      *
      * @return  [type]            [return description]
      */
-    public function prepa_aff_news($op, $catid, $marqeur);
-
-    /**
-     * [getTopics description]
-     *
-     * @param   [type]  $s_sid  [$s_sid description]
-     *
-     * @return  [type]          [return description]
-     */
-    public function getTopics($s_sid);   
+    public function prepa_aff_news($op, $catid, $marqeur);  
     
 }

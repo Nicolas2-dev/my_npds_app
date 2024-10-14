@@ -17,7 +17,11 @@ class NewsKernel
      */
     protected static $aliases = [
         // Modules News
-        'News'          => 'Modules\News\Support\Facades\News',
+        'NewsAutomated'     => 'Modules\News\Support\Facades\NewsAutomated',
+        'News'              => 'Modules\News\Support\Facades\News',
+        'NewsPublication'   => 'Modules\News\Support\Facades\NewsPublication',
+        'NewsTopic'         => 'Modules\News\Support\Facades\NewsTopic',
+        'NewsUltramode'     => 'Modules\News\Support\Facades\NewsUltramode',
     ];
 
     /**

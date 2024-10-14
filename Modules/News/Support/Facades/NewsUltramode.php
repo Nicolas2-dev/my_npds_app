@@ -2,16 +2,17 @@
 
 namespace Modules\News\Support\Facades;
 
-use Modules\News\Library\NewsManager;
+use Modules\News\Library\NewsUltramodeManager;
 
 
-class News
+class NewsUltramode
 {
 
     public static function __callStatic($method, $parameters)
     {
-        $instance = NewsdManager::getInstance();
+        $instance = NewsUltramodeManager::getInstance();
 
         return call_user_func_array(array($instance, $method), $parameters);
     }
+
 }

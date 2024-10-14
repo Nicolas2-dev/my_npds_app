@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\News\Library;
+namespace Modules\News\Support;
 
 
 use Modules\News\Contracts\ArchiveInterface;

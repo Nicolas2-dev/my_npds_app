@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\News\Library\Compress;
+namespace Modules\News\Support\Compress;
 
 
-use Modules\News\Library\Archive;
+use Modules\News\Support\Archive;
 use Modules\News\Contracts\GzFileInterface;
 
 

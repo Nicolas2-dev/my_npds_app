@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\News\Library\Traits;
+namespace Modules\News\Support\Traits;
 
 use Npds\Config\Config;
 use Modules\Npds\Support\Facades\Date;

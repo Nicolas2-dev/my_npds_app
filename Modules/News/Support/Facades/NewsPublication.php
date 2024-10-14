@@ -2,16 +2,17 @@
 
 namespace Modules\News\Support\Facades;
 
-use Modules\News\Library\NewsManager;
+use Modules\News\Library\NewsPublicationManager;
 
 
-class News
+class NewsPublication
 {
 
     public static function __callStatic($method, $parameters)
     {
-        $instance = NewsdManager::getInstance();
+        $instance = NewsPublicationManager::getInstance();
 
         return call_user_func_array(array($instance, $method), $parameters);
     }
+
 }

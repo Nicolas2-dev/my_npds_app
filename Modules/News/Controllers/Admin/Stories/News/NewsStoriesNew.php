@@ -5,7 +5,7 @@ namespace Modules\News\Controllers\Admin;
 use Modules\Npds\Core\AdminController;
 
 
-class NewsStories extends AdminController
+class NewsStoriesNew extends AdminController
 {
 
     /**
