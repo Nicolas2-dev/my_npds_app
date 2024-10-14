@@ -556,7 +556,7 @@ class Navigator
      *
      * @param [type] $dir
      * @param [type] $search
-     * @return void
+     * @return string
      */
     public function SearchFile($dir, $search)
     {
@@ -594,7 +594,7 @@ class Navigator
      * get all directory in a string separated by |
      *
      * @param [type] $dir
-     * @return void
+     * @return string
      */    
     public function GetDirArbo($dir)
     {

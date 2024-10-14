@@ -32,11 +32,9 @@ $FmaRep = Request::query('FmaRep') ?: Request::post('FmaRep');
 
 if ($FmaRep) {
     if (Module::filtre_module($FmaRep)) {
-        if (Config::has('fmanager.'. $FmaRep)) {
+        if (Config::has('fmanager.'. strtolower($FmaRep))) {
 
             if (Fmanager::fma_autorise('a', '')) {
-                // $theme_fma      = Config::get('fmanager.'. $FmaRep .'.themeG_fma'); // ?????
-                // $fic_minuscptr  = 0; // ????
                 $dir_minuscptr  = 0;
             } else {
                 Access_Error();
@@ -186,7 +184,8 @@ if ($fp = @file("pic-manager.txt")) {
                                 // }
 
                                 // if (!$cache) {
-                                    $image = Fmanager::CreateThumb($obj->FieldName, $cur_nav, $rep_cache . $cache_prefix . '.', $Max_thumb, $suf);$image = Fmanager::CreateThumb($obj->FieldName, $cur_nav, '', $Max_thumb, $suf);
+                                    $image = Fmanager::CreateThumb($obj->FieldName, $cur_nav, $rep_cache . $cache_prefix . '.', $Max_thumb, $suf);
+                                    // $image = Fmanager::CreateThumb($obj->FieldName, $cur_nav, '', $Max_thumb, $suf);
 
                                     if (array_key_exists('gene-img', $image)) {
                                         if ($image['gene-img'][0] == true) {
