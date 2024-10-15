@@ -2,10 +2,11 @@
 
 namespace Modules\News\Support;
 
-
 use Modules\News\Contracts\ArchiveInterface;
 
-
+/**
+ * Undocumented class
+ */
 class Archive implements ArchiveInterface
 {
 

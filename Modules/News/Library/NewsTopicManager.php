@@ -4,7 +4,9 @@ namespace Modules\News\Library;
 
 use Modules\News\Contracts\NewsTopicInterface;
 
-
+/**
+ * Undocumented class
+ */
 class NewsTopicManager implements NewsTopicInterface 
 {
 

@@ -1,84 +1,17 @@
 <?php
 
-namespace Modules\News\Controllers\Admin;
+namespace Modules\News\Library\Traits;
 
-use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Language;
+use Modules\Groupes\Support\Facades\Groupe;
 
 
-class NewsStories extends AdminController
+/**
+ * Undocumented trait
+ */
+trait NewsStoryTrait
 {
 
-    /**
-     * [$pdst description]
-     *
-     * @var [type]
-     */
-    protected $pdst = 0;
-
-    /**
-     * [$hlpfile description]
-     *
-     * @var [type]
-     */
-    protected $hlpfile = "";
-
-    /**
-     * [$short_menu_admin description]
-     *
-     * @var bool
-     */
-    protected $short_menu_admin = true;
-
-    /**
-     * [$adminhead description]
-     *
-     * @var [type]
-     */
-    protected $adminhead = true;
-
-    /**
-     * [$f_meta_nom description]
-     *
-     * @var [type]
-     */
-    protected $f_meta_nom = 'adminStory';
-
-
-    /**
-     * Call the parent construct
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * [before description]
-     *
-     * @return  [type]  [return description]
-     */
-    protected function before()
-    {
-        $this->f_titre = __d('', '');
-
-        // Leave to parent's method the Flight decisions.
-        return parent::before();
-    }
-
-    /**
-     * [after description]
-     *
-     * @param   [type]  $result  [$result description]
-     *
-     * @return  [type]           [return description]
-     */
-    protected function after($result)
-    {
-        // Do some processing there, even deciding to stop the Flight, if case.
-
-        // Leave to parent's method the Flight decisions.
-        return parent::after($result);
-    }
 
     /**
      * Undocumented function
@@ -146,14 +79,13 @@ class NewsStories extends AdminController
                 </div>
             </div>';
     
-        // ---- Groupes
-        $mX = liste_group();
-    
+        // Groupes
+
         $tmp_groupe = '';
     
         settype($Mmembers, 'integer');
     
-        foreach ($mX as $groupe_id => $groupe_name) {
+        foreach (Groupe::liste_group() as $groupe_id => $groupe_name) {
             if ($groupe_id == '0') 
                 $groupe_id = '';
     
@@ -204,12 +136,22 @@ class NewsStories extends AdminController
             else 
                 $sel = '';
     
-            echo '<option name="catid" value="' . $catidX . '" ' . $sel . '>' . aff_langue($title) . '</option>';
+            echo '<option name="catid" value="' . $catidX . '" ' . $sel . '>' . Language::aff_langue($title) . '</option>';
         }
     
         echo '
                     </select>
-                    <p class="help-block text-end"><a href="admin.php?op=AddCategory" class="btn btn-outline-primary btn-sm" title="' . __d('news', 'Ajouter') . '" data-bs-toggle="tooltip" ><i class="fa fa-plus-square fa-lg"></i></a>&nbsp;<a class="btn btn-outline-primary btn-sm" href="admin.php?op=EditCategory" title="' . __d('news', 'Editer') . '" data-bs-toggle="tooltip" ><i class="fa fa-edit fa-lg"></i></a>&nbsp;<a class="btn btn-outline-danger btn-sm" href="admin.php?op=DelCategory" title="' . __d('news', 'Effacer') . '" data-bs-toggle="tooltip"><i class="fas fa-trash fa-lg"></i></a></p>
+                    <p class="help-block text-end">
+                        <a href="admin.php?op=AddCategory" class="btn btn-outline-primary btn-sm" title="' . __d('news', 'Ajouter') . '" data-bs-toggle="tooltip" >
+                            <i class="fa fa-plus-square fa-lg"></i>
+                        </a>&nbsp;
+                        <a class="btn btn-outline-primary btn-sm" href="admin.php?op=EditCategory" title="' . __d('news', 'Editer') . '" data-bs-toggle="tooltip" >
+                            <i class="fa fa-edit fa-lg"></i>
+                        </a>&nbsp;
+                        <a class="btn btn-outline-danger btn-sm" href="admin.php?op=DelCategory" title="' . __d('news', 'Effacer') . '" data-bs-toggle="tooltip">
+                            <i class="fas fa-trash fa-lg"></i>
+                        </a>
+                    </p>
                 </div>
             </div>';
     }

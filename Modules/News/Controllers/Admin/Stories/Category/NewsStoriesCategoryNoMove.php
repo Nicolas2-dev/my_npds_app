@@ -20,7 +20,7 @@ class NewsStoriesCategoryNoMove extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'newarticle';
 
     /**
      * [$short_menu_admin description]
@@ -59,7 +59,7 @@ class NewsStoriesCategoryNoMove extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('news', 'Articles');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -89,9 +89,6 @@ class NewsStoriesCategoryNoMove extends AdminController
      */
     public function NoMoveCategory($catid, $newcat)
     {
-        $f_meta_nom = 'adminStory';
-        $f_titre = __d('news', 'Articles');
-
         $result = sql_query("SELECT title FROM stories_cat WHERE catid='$catid'");
         list($title) = sql_fetch_row($result);
     

@@ -1,12 +1,25 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace Modules\News\Controllers\Front;
 
-use App\Controllers\Core\FrontController;
+use Npds\Config\Config;
+use Modules\Npds\Core\FrontController;
+use Modules\Npds\Support\Facades\Code;
+use Modules\Npds\Support\Facades\Language;
+use Modules\Npds\Support\Facades\Metalang;
 
-
+/**
+ * Undocumented class
+ */
 class NewsPrint extends FrontController
 {
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    protected $pdst = 0;
 
 
     /**
@@ -16,40 +29,66 @@ class NewsPrint extends FrontController
      */
     public function __construct()
     {
-
+        parent::__construct();
     }
 
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function index()
     {
         if (!empty($sid)) {
-            $tab = explode(':', $sid);
-        
-            if ($tab[0] == "static") {
-                settype($metalang, 'integer');
-                settype($nl, 'integer');
-        
-                PrintPage("static", $metalang, $nl, $tab[1]);
+
+            if (!isset($archive)) {
+                $this->PrintPage("news", '', '', $sid);
             } else {
-                settype($sid, 'integer');
-                //settype ($archive, 'string');
-        
-                if (!isset($archive))
-                    PrintPage("news", '', '', $sid);
-                else
-                    PrintPage("archive", '', '', $sid);
-            }
-        } elseif (!empty($lid)) {
-            settype($lid, "integer");
-            
-            PrintPage("links", $DB, '', $lid);
-        } else
+                $this->PrintPage("archive", '', '', $sid);
+                }
+        } else {
             header("location: index.php");
-        
+        }
     }
 
-    function PrintPage($oper, $DB, $nl, $sid)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $oper
+     * @param [type] $DB
+     * @param [type] $nl
+     * @param [type] $sid
+     * @return void
+     */
+    private function PrintPage($oper, $DB, $nl, $sid)
     {
-        global $user, $cookie, $theme, $datetime;
+        global $datetime;
     
         $aff = true;
     
@@ -75,40 +114,6 @@ class NewsPrint extends FrontController
                 $aff = false;
         }
     
-        if ($oper == 'links') {
-            $DB = removeHack(stripslashes(htmlentities(urldecode($DB), ENT_NOQUOTES, cur_charset)));
-    
-            $result = sql_query("SELECT url, title, description, date FROM " . $DB . "links_links WHERE lid='$sid'");
-            list($url, $title, $description, $time) = sql_fetch_row($result);
-    
-            $title = stripslashes($title);
-            $description = stripslashes($description);
-        }
-    
-        if ($oper == 'static') {
-            if (preg_match('#^[a-z0-9_\.-]#i', $sid) and !stristr($sid, ".*://") and !stristr($sid, "..") and !stristr($sid, "../") and !stristr($sid, 'script') and !stristr($sid, "cookie") and !stristr($sid, 'iframe') and  !stristr($sid, 'applet') and !stristr($sid, 'object') and !stristr($sid, 'meta')) {
-                if (file_exists("storage/static/$sid")) {
-    
-                    ob_start();
-                        include("storage/static/$sid");
-                        $remp = ob_get_contents();
-                    ob_end_clean();
-    
-                    if ($DB)
-                        $remp = meta_lang(aff_code(aff_langue($remp)));
-    
-                    if ($nl)
-                        $remp = nl2br(str_replace(' ', '&nbsp;', htmlentities($remp, ENT_QUOTES, cur_charset)));
-    
-                    $title = $sid;
-                } else
-                    $aff = false;
-            } else {
-                $remp = '<div class="alert alert-danger">' . __d('news', 'Merci d\'entrer l\'information en fonction des spécifications') . '</div>';
-                $aff = false;
-            }
-        }
-    
         if ($aff == true) {
             $Titlesitename = 'Npds - ' . __d('news', 'Page spéciale pour impression') . ' / ' . $title;
     
@@ -117,23 +122,23 @@ class NewsPrint extends FrontController
     
             include("storage/meta/meta.php");
     
-            if (isset($user)) {
-                if ($cookie[9] == '') 
-                    $cookie[9] = Config::get('npds.Default_Theme');
+            // if (isset($user)) {
+            //     if ($cookie[9] == '') 
+            //         $cookie[9] = Config::get('npds.Default_Theme');
     
-                if (isset($theme)) 
-                    $cookie[9] = $theme;
+            //     if (isset($theme)) 
+            //         $cookie[9] = $theme;
     
-                $tmp_theme = $cookie[9];
+            //     $tmp_theme = $cookie[9];
     
-                if (!$file = @opendir("themes/$cookie[9]")) {
-                    $tmp_theme = Config::get('npds.Default_Theme');
-                }
-            } else {
-                $tmp_theme = Config::get('npds.Default_Theme');
-            }
+            //     if (!$file = @opendir("themes/$cookie[9]")) {
+            //         $tmp_theme = Config::get('npds.Default_Theme');
+            //     }
+            // } else {
+            //     $tmp_theme = Config::get('npds.Default_Theme');
+            // }
     
-            echo '<link rel="stylesheet" href="assets/shared/bootstrap/dist/css/bootstrap.min.css" />';
+            echo '<link rel="stylesheet" href="'. site_url('assets/shared/bootstrap/dist/css/bootstrap.min.css') .'" />';
     
             echo '
             </head>
@@ -146,18 +151,18 @@ class NewsPrint extends FrontController
             if ($pos)
                 echo '<img class="img-fluid d-block mx-auto" src="' . Config::get('npds.site_logo') . '" alt="website logo" />';
             else
-                echo '<img class="img-fluid d-block mx-auto" src="assets/images/App/' . Config::get('npds.site_logo') . '" alt="website logo" />';
+                echo '<img class="img-fluid d-block mx-auto" src="'. site_url('assets/images/npds/' . Config::get('npds.site_logo')) . '" alt="website logo" />';
     
-            echo '<h1 class="d-block text-center my-4">' . aff_langue($title) . '</h1>';
+            echo '<h1 class="d-block text-center my-4">' . Language::aff_langue($title) . '</h1>';
     
             if (($oper == 'news') or ($oper == 'archive')) {
-                $hometext = meta_lang(aff_code(aff_langue($hometext)));
-                $bodytext = meta_lang(aff_code(aff_langue($bodytext)));
+                $hometext = Metalang::meta_lang(Code::aff_code(Language::aff_langue($hometext)));
+                $bodytext = Metalang::meta_lang(Code::aff_code(Language::aff_langue($bodytext)));
     
                 echo '
                     <span class="float-end text-capitalize" style="font-size: .8rem;"> ' . $datetime . '</span><br />
                     <hr />
-                    <h2 class="mb-3">' . __d('news', 'Sujet : ') . ' ' . aff_langue($topictext) . '</h2>
+                    <h2 class="mb-3">' . __d('news', 'Sujet : ') . ' ' . Language::aff_langue($topictext) . '</h2>
                 </div>
                 <div>' . $hometext . '<br /><br />';
     
@@ -165,49 +170,33 @@ class NewsPrint extends FrontController
                     echo $bodytext . '<br /><br />';
                 }
     
-                echo meta_lang(aff_code(aff_langue($notes)));
+                echo Metalang::meta_lang(Code::aff_code(Language::aff_langue($notes)));
     
                 echo '</div>';
     
                 if ($oper == 'news') {
                     echo '
                     <hr />
-                    <p class="text-center">' . __d('news', 'Cet article provient de') . ' ' . Config::get('npds.sitename') . '<br />
-                    ' . __d('news', 'L\'url pour cet article est : ') . '
-                    <a href="' . Config::get('npds.nuke_url') . '/article.php?sid=' . $sid . '">' . Config::get('npds.nuke_url') . '/article.php?sid=' . $sid . '</a>
+                    <p class="text-center">
+                        ' . __d('news', 'Cet article provient de') . ' ' . Config::get('npds.sitename') . '
+                        <br />
+                        ' . __d('news', 'L\'url pour cet article est : ') . '
+                        <a href="' . site_url('article.php?sid=' . $sid) . '">
+                            ' . site_url('article.php?sid=' . $sid) . '
+                        </a>
                     </p>';
                 } else {
                     echo '
                     <hr />
-                    <p class="text-center">' . __d('news', 'Cet article provient de') . ' ' . Config::get('npds.sitename') . '<br />
-                    ' . __d('news', 'L\'url pour cet article est : ') . '
-                    <a href="' . Config::get('npds.nuke_url') . '/article.php?sid=' . $sid . '&amp;archive=1">' . Config::get('npds.nuke_url') . '/article.php?sid=' . $sid . '&amp;archive=1</a>
+                    <p class="text-center">
+                        ' . __d('news', 'Cet article provient de') . ' ' . Config::get('npds.sitename') . '
+                        <br />
+                        ' . __d('news', 'L\'url pour cet article est : ') . '
+                        <a href="' . site_url('article.php?sid=' . $sid . '&amp;archive=1').'">
+                            ' . site_url('article?sid=' . $sid . '&amp;archive=1') .'
+                        </a>
                     </p>';
                 }
-            }
-    
-            if ($oper == 'links') {
-                echo '<span class="float-end text-capitalize" style="font-size: .8rem;">' . $datetime . '</span><br /><hr />';
-    
-                if ($url != '') {
-                    echo '<h2 class="mb-3">' . __d('news', 'Liens') . ' : ' . $url . '</h2>';
-                }
-    
-                echo '
-                <div>' . aff_langue($description) . '</div>
-                <hr />
-                <p class="text-center">' . __d('news', 'Cet article provient de') . ' ' . Config::get('npds.sitename') . '<br />
-                <a href="' . Config::get('npds.nuke_url') . '">' . Config::get('npds.nuke_url') . '</a></p>';
-            }
-    
-            if ($oper == 'static') {
-                echo '
-                <div>
-                    ' . $remp . '
-                </div>
-                <hr />
-                <p class="text-center">' . __d('news', 'Cet article provient de') . ' ' . Config::get('npds.sitename') . '<br />
-                <a href="' . Config::get('npds.nuke_url') . '/static.php?op=' . $sid . '&App=1">' . Config::get('npds.nuke_url') . '/static.php?op=' . $sid . '&App=1</a></p>';
             }
     
             echo '

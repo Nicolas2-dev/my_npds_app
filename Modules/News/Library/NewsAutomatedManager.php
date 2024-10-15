@@ -2,9 +2,14 @@
 
 namespace Modules\News\Library;
 
+use Npds\Config\Config;
+use Modules\Npds\Support\Sanitize;
+use Modules\Npds\Support\Facades\Mailer;
 use Modules\News\Contracts\NewsAutomatedInterface;
 
-
+/**
+ * Undocumented class
+ */
 class NewsAutomatedManager implements NewsAutomatedInterface 
 {
 
@@ -65,16 +70,16 @@ class NewsAutomatedManager implements NewsAutomatedInterface
                     $result2 = sql_query("SELECT catid, aid, title, hometext, bodytext, topic, informant, notes, ihome, date_finval, auto_epur FROM autonews WHERE anid='$anid'");
                     while (list($catid, $aid, $title, $hometext, $bodytext, $topic, $author, $notes, $ihome, $date_finval, $epur) = sql_fetch_row($result2)) {
     
-                        $subject = stripslashes(FixQuotes($title));
-                        $hometext = stripslashes(FixQuotes($hometext));
-                        $bodytext = stripslashes(FixQuotes($bodytext));
-                        $notes = stripslashes(FixQuotes($notes));
+                        $subject    = stripslashes(Sanitize::FixQuotes($title));
+                        $hometext   = stripslashes(Sanitize::FixQuotes($hometext));
+                        $bodytext   = stripslashes(Sanitize::FixQuotes($bodytext));
+                        $notes      = stripslashes(Sanitize::FixQuotes($notes));
     
                         sql_query("INSERT INTO stories VALUES (NULL, '$catid', '$aid', '$subject', now(), '$hometext', '$bodytext', '0', '0', '$topic', '$author', '$notes', '$ihome', '0', '$date_finval', '$epur')");
                         sql_query("DELETE FROM autonews WHERE anid='$anid'");
                         
                         if (Config::get('npds.subscribe')) {
-                            subscribe_mail('topic', $topic, '', $subject, '');
+                            Mailer::subscribe_mail('topic', $topic, '', $subject, '');
                         }
     
                         // Réseaux sociaux

@@ -20,7 +20,7 @@ class NewsStoriesCategoryEdit extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'newarticle';
 
     /**
      * [$short_menu_admin description]
@@ -59,7 +59,7 @@ class NewsStoriesCategoryEdit extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('news', 'Articles');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -164,7 +164,6 @@ class NewsStoriesCategoryEdit extends AdminController
      */
     public function SaveEditCategory($catid, $title)
     {
-        $f_titre = __d('news', 'Articles');
         $title = preg_replace('#"#', '', $title);
     
         $check = sql_num_rows(sql_query("SELECT catid FROM stories_cat WHERE title='$title'"));

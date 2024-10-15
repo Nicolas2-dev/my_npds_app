@@ -9,7 +9,9 @@ use Modules\Npds\Support\Facades\Metalang;
 
 use function PHP81_BC\strftime;
 
-
+/**
+ * Undocumented trait
+ */
 trait ThemeStorieTrait
 {
 
@@ -36,8 +38,8 @@ trait ThemeStorieTrait
     {
         $inclusion = false;
     
-        $theme = with(get_instance())->template();
-        $theme_dir = with(get_instance())->template_dir();
+        $theme      = with(get_instance())->template();
+        $theme_dir  = with(get_instance())->template_dir();
 
         if (file_exists(theme_path($theme_dir .'/'. $theme . "/views/index-news.html"))) {
             $inclusion = theme_path($theme_dir .'/'. $theme . "/views/index-news.html");
@@ -101,27 +103,27 @@ trait ThemeStorieTrait
         }
 
         $App_METALANG_words = array(
-            "'!N_publicateur!'i" => $aid,
-            "'!N_emetteur!'i" => $this->userpopover($informant, 40, 2) . '<a href="user.php?op=userinfo&amp;uname=' . $informant . '">' . $informant . '</a>',
-            "'!N_date!'i" => Date::formatTimestamp($time),
-            "'!N_date_y!'i" => substr($time, 0, 4),
-            "'!N_date_m!'i" => strftime("%B", mktime(0, 0, 0, substr($time, 5, 2), 1, 2000), Config::get('npds.locale')),
-            "'!N_date_d!'i" => substr($time, 8, 2),
-            "'!N_date_h!'i" => substr($time, 11),
-            "'!N_print!'i" => $morelink[4],
-            "'!N_friend!'i" => $morelink[5],
-            "'!N_nb_carac!'i" => $morelink[0],
-            "'!N_read_more!'i" => $morelink[1],
-            "'!N_nb_comment!'i" => $morelink[2],
-            "'!N_link_comment!'i" => $morelink[3],
-            "'!N_categorie!'i" => $morelink[6],
-            "'!N_titre!'i" => $title,
-            "'!N_texte!'i" => $thetext,
-            "'!N_id!'i" => $id,
-            "'!N_sujet!'i" => $Xsujet,
-            "'!N_note!'i" => $notes,
-            "'!N_nb_lecture!'i" => $counter,
-            "'!N_suite!'i" => $morel
+            "'!N_publicateur!'i"    => $aid,
+            "'!N_emetteur!'i"       => $this->userpopover($informant, 40, 2) . '<a href="user.php?op=userinfo&amp;uname=' . $informant . '">' . $informant . '</a>',
+            "'!N_date!'i"           => Date::formatTimestamp($time),
+            "'!N_date_y!'i"         => substr($time, 0, 4),
+            "'!N_date_m!'i"         => strftime("%B", mktime(0, 0, 0, substr($time, 5, 2), 1, 2000), Config::get('npds.locale')),
+            "'!N_date_d!'i"         => substr($time, 8, 2),
+            "'!N_date_h!'i"         => substr($time, 11),
+            "'!N_print!'i"          => $morelink[4],
+            "'!N_friend!'i"         => $morelink[5],
+            "'!N_nb_carac!'i"       => $morelink[0],
+            "'!N_read_more!'i"      => $morelink[1],
+            "'!N_nb_comment!'i"     => $morelink[2],
+            "'!N_link_comment!'i"   => $morelink[3],
+            "'!N_categorie!'i"      => $morelink[6],
+            "'!N_titre!'i"          => $title,
+            "'!N_texte!'i"          => $thetext,
+            "'!N_id!'i"             => $id,
+            "'!N_sujet!'i"          => $Xsujet,
+            "'!N_note!'i"           => $notes,
+            "'!N_nb_lecture!'i"     => $counter,
+            "'!N_suite!'i"          => $morel
         );
     
         echo Metalang::meta_lang(Language::aff_langue(preg_replace(array_keys($App_METALANG_words), array_values($App_METALANG_words), $Xcontent)));
@@ -152,8 +154,8 @@ trait ThemeStorieTrait
     
         $inclusion = false;
     
-        $theme = with(get_instance())->template();
-        $theme_dir = with(get_instance())->template_dir();
+        $theme      = with(get_instance())->template();
+        $theme_dir  = with(get_instance())->template_dir();
 
         if (file_exists(theme_path($theme_dir .'/'. $theme . "/views/detail-news.html"))) {
             $inclusion = theme_path($theme_dir .'/'. $theme . "/views/detail-news.html");
@@ -200,24 +202,24 @@ trait ThemeStorieTrait
         $timage = $imgtmp;
     
         $App_METALANG_words = array(
-            "'!N_publicateur!'i" => $aid,
-            "'!N_emetteur!'i" => $this->userpopover($informant, 40, 2) . '<a href="user.php?op=userinfo&amp;uname=' . $informant . '"><span class="">' . $informant . '</span></a>',
-            "'!N_date!'i" => Date::formatTimestamp($time),
-            "'!N_date_y!'i" => substr($time, 0, 4),
-            "'!N_date_m!'i" => strftime("%B", mktime(0, 0, 0, substr($time, 5, 2), 1, 2000), Config::get('npds.locale')),
-            "'!N_date_d!'i" => substr($time, 8, 2),
-            "'!N_date_h!'i" => substr($time, 11),
-            "'!N_print!'i" => $printP,
-            "'!N_friend!'i" => $sendF,
-            "'!N_boxrel_title!'i" => $boxtitle,
-            "'!N_boxrel_stuff!'i" => $boxstuff,
-            "'!N_titre!'i" => $title,
-            "'!N_id!'i" => $id,
-            "'!N_previous_article!'i" => $prevArt,
-            "'!N_next_article!'i" => $nextArt,
-            "'!N_sujet!'i" => '<a href="search.php?query=&amp;topic=' . $topic . '"><img class="img-fluid" src="' . $timage . '" alt="' . __d('news', 'Rechercher dans') . '&nbsp;' . $topictext . '" /></a>',
-            "'!N_texte!'i" => $thetext,
-            "'!N_nb_lecture!'i" => $counter
+            "'!N_publicateur!'i"        => $aid,
+            "'!N_emetteur!'i"           => $this->userpopover($informant, 40, 2) . '<a href="user.php?op=userinfo&amp;uname=' . $informant . '"><span class="">' . $informant . '</span></a>',
+            "'!N_date!'i"               => Date::formatTimestamp($time),
+            "'!N_date_y!'i"             => substr($time, 0, 4),
+            "'!N_date_m!'i"             => strftime("%B", mktime(0, 0, 0, substr($time, 5, 2), 1, 2000), Config::get('npds.locale')),
+            "'!N_date_d!'i"             => substr($time, 8, 2),
+            "'!N_date_h!'i"             => substr($time, 11),
+            "'!N_print!'i"              => $printP,
+            "'!N_friend!'i"             => $sendF,
+            "'!N_boxrel_title!'i"       => $boxtitle,
+            "'!N_boxrel_stuff!'i"       => $boxstuff,
+            "'!N_titre!'i"              => $title,
+            "'!N_id!'i"                 => $id,
+            "'!N_previous_article!'i"   => $prevArt,
+            "'!N_next_article!'i"       => $nextArt,
+            "'!N_sujet!'i"              => '<a href="search.php?query=&amp;topic=' . $topic . '"><img class="img-fluid" src="' . $timage . '" alt="' . __d('news', 'Rechercher dans') . '&nbsp;' . $topictext . '" /></a>',
+            "'!N_texte!'i"              => $thetext,
+            "'!N_nb_lecture!'i"         => $counter
         );
     
         echo Metalang::meta_lang(Language::aff_langue(preg_replace(array_keys($App_METALANG_words), array_values($App_METALANG_words), $Xcontent)));

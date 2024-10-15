@@ -2,10 +2,13 @@
 
 namespace Modules\News\Library;
 
+use Npds\Config\Config;
 use Modules\Npds\Support\Facades\Language;
 use Modules\News\Contracts\NewsPublicationInterface;
 
-
+/**
+ * Undocumented class
+ */
 class NewsPublicationManager implements NewsPublicationInterface 
 {
 
@@ -157,7 +160,7 @@ class NewsPublicationManager implements NewsPublicationInterface
                 altInput: true,
                 altFormat: "l j F Y",
                 dateFormat:"Y-m-d",
-                "locale": "' . language_iso(1, '', '') . '",
+                "locale": "' . Language::language_iso(1, '', '') . '",
             });
         //]]>
         </script>

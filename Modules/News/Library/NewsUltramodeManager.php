@@ -2,9 +2,14 @@
 
 namespace Modules\News\Library;
 
+use Npds\Config\Config;
+use Modules\News\Support\Facades\News;
+use Modules\Npds\Support\Facades\Metalang;
 use Modules\News\Contracts\NewsUltramodeInterface;
 
-
+/**
+ * Undocumented class
+ */
 class NewsUltramodeManager implements NewsUltramodeInterface 
 {
 
@@ -37,17 +42,17 @@ class NewsUltramodeManager implements NewsUltramodeInterface
      */
     public function ultramode()
     {
-        $ultra = "storage/cache/ultramode.txt";
-        $netTOzone = "storage/cache/net2zone.txt";
+        $ultra      = "storage/cache/ultramode.txt";
+        $netTOzone  = "storage/cache/net2zone.txt";
 
-        $file = fopen("$ultra", "w");
-        $file2 = fopen("$netTOzone", "w");
+        $file       = fopen("$ultra", "w");
+        $file2      = fopen("$netTOzone", "w");
 
         fwrite($file, "General purpose self-explanatory file with news headlines\n");
 
         $storynum = Config::get('npds.storyhome');
 
-        $xtab = $this->news_aff('index', "WHERE ihome='0' AND archive='0'", Config::get('npds.storyhome'), '');
+        $xtab = News::news_aff('index', "WHERE ihome='0' AND archive='0'", Config::get('npds.storyhome'), '');
 
         $story_limit = 0;
         while (($story_limit < $storynum) and ($story_limit < sizeof($xtab))) {
@@ -61,7 +66,7 @@ class NewsUltramodeManager implements NewsUltramodeInterface
 
             list($topictext, $topicimage) = sql_fetch_row($rfile2);
 
-            $hometext = meta_lang(strip_tags($hometext));
+            $hometext = Metalang::meta_lang(strip_tags($hometext));
 
             fwrite($file, "%%\n$title\nConfig::get('npds.nuke_url')/article.php?sid=$sid\n$time\n$aid\n$topictext\n$hometext\n$topicimage\n");
             fwrite($file2, "<NEWS>\n<NBX>$topictext</NBX>\n<TITLE>" . stripslashes($title) . "</TITLE>\n<SUMMARY>$hometext</SUMMARY>\n<URL>Config::get('npds.nuke_url')/article.php?sid=$sid</URL>\n<AUTHOR>" . $aid . "</AUTHOR>\n</NEWS>\n\n");

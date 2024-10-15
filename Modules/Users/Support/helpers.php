@@ -1,7 +1,10 @@
 <?php
 
+use Modules\News\Support\Facades\News;
+use Modules\Npds\Support\Facades\Auth;
 use Modules\Users\Library\UserManager;
 use Modules\Users\Library\OnlineManager;
+use Modules\Groupes\Support\Facades\Groupe;
 
 
 
@@ -74,6 +77,124 @@ use Modules\Users\Library\OnlineManager;
 //     }
 // }
 
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $uname
+     * @return void
+     */
+    function user_articles($uname)
+    {
+        $xtab = News::news_aff("libre", "WHERE informant='$uname' ORDER BY sid DESC LIMIT 10", '', 10);
+
+        if (!empty($xtab)) {
+            $userinfo = '
+            <h4 class="my-3">' . __d('users', 'Les derniers articles de') . ' ' . $uname . '.</h4>
+            <div id="last_article_by" class="card card-body mb-3">';
+
+            $story_limit = 0;
+        
+            while (($story_limit < 10) and ($story_limit < sizeof($xtab))) {
+                list($sid, $catid, $aid, $title, $time) = $xtab[$story_limit];
+        
+                $story_limit++;
+        
+                $userinfo .= '
+                <div class="d-flex">
+                    <div class="p-2"><a href="article.php?sid=' . $sid . '">' . aff_langue($title) . '</a></div>
+                    <div class="ms-auto p-2">' . $time . '</div>
+                </div>';
+            }
+        
+            return $userinfo .= '
+            </div>';
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $uname
+     * @param [type] $uid
+     * @return void
+     */
+    function user_contributions($uname, $uid)
+    {
+        $result = sql_query("SELECT * FROM posts WHERE forum_id > 0 AND poster_id=$uid ORDER BY post_time DESC LIMIT 0,50");            
+          
+        if (!empty($result)) {
+
+            $userinfo = '
+            <h4 class="my-3">' . __d('users', 'Les dernières contributions de') . ' ' . $uname . '</h4>';
+            
+            $nbp = 10;
+            $content = '';
+
+            $j = 1;
+     
+            while (list($post_id, $post_text) = sql_fetch_row($result) and $j <= $nbp) {
+                // Requete detail dernier post
+                $res = sql_query("SELECT 
+                    us.topic_id, us.forum_id, us.poster_id, us.post_time, 
+                    uv.topic_title, 
+                    ug.forum_name, ug.forum_type, ug.forum_pass, 
+                    ut.uname 
+                FROM 
+                    posts us, 
+                    forumtopics uv, 
+                    forums ug, 
+                    users ut 
+                WHERE 
+                    us.post_id = $post_id 
+                    AND uv.topic_id = us.topic_id 
+                    AND uv.forum_id = ug.forum_id 
+                    AND ut.uid = us.poster_id LIMIT 1");
+        
+                list($topic_id, $forum_id, $poster_id, $post_time, $topic_title, $forum_name, $forum_type, $forum_pass, $uname) = sql_fetch_row($res);
+        
+                if (($forum_type == '5') or ($forum_type == '7')) {
+                    $ok_affich = false;
+                    $tab_groupe = Groupe::valid_group(Auth::check('user'));
+                    $ok_affich = Groupe::groupe_forum($forum_pass, $tab_groupe);
+                } else {
+                    $ok_affich = true;
+                }
+
+                if ($ok_affich) {
+                    // Nbre de postes par sujet
+                    $TableRep = sql_query("SELECT * FROM posts WHERE forum_id > 0 AND topic_id = '$topic_id'");
+        
+                    $replys = sql_num_rows($TableRep) - 1;
+                    $id_lecteur = isset($cookie[0]) ? $cookie[0] : '0';
+        
+                    $sqlR = "SELECT rid FROM forum_read WHERE topicid = '$topic_id' AND uid = '$id_lecteur' AND status != '0'";
+        
+                    if (sql_num_rows(sql_query($sqlR)) == 0) {
+                        $image = '<a href="" title="' . __d('users', 'Non lu') . '" data-bs-toggle="tooltip"><i class="far fa-file-alt fa-lg faa-shake animated text-primary "></i></a>';
+                    } else {
+                        $image = '<a title="' . __d('users', 'Lu') . '" data-bs-toggle="tooltip"><i class="far fa-file-alt fa-lg text-primary"></i></a>';
+                    }
+
+                    $content .= '
+                    <p class="mb-0 list-group-item list-group-item-action flex-column align-items-start" >
+                        <span class="d-flex w-100 mt-1">
+                        <span>' . $post_time . '</span>
+                        <span class="ms-auto">
+                        <span class="badge bg-secondary ms-1" title="' . __d('users', 'Réponses') . '" data-bs-toggle="tooltip" data-bs-placement="left">' . $replys . '</span>
+                        </span>
+                    </span>
+                    <span class="d-flex w-100"><br /><a href="viewtopic.php?topic=' . $topic_id . '&forum=' . $forum_id . '" data-bs-toggle="tooltip" title="' . $forum_name . '">' . $topic_title . '</a><span class="ms-auto mt-1">' . $image . '</span></span>
+                    </p>';
+        
+                    $j++;
+                }
+            }
+        
+            $userinfo .= $content;
+            return $userinfo .= '<hr />';
+        }
+    }
 
 
 // 

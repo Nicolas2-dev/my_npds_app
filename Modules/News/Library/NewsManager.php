@@ -3,10 +3,21 @@
 namespace Modules\News\Library;
 
 
-use App\Support\Facades\Theme;
+use Npds\Config\Config;
+use Modules\Npds\Support\Sanitize;
+use Modules\Npds\Support\Facades\Code;
+use Modules\Edito\Support\Facades\Edito;
+use Modules\Npds\Support\Facades\Mailer;
+use Modules\Theme\Support\Facades\Theme;
 use Modules\News\Contracts\NewsInterface;
+use Modules\Npds\Support\Facades\Language;
+use Modules\Npds\Support\Facades\Metalang;
+use Modules\Groupes\Support\Facades\Groupe;
+use Modules\News\Support\Facades\NewsTopic;
 
-
+/**
+ * Undocumented class
+ */
 class NewsManager implements NewsInterface 
 {
 
@@ -32,16 +43,25 @@ class NewsManager implements NewsInterface
         return static::$instance = new static();
     }
 
-    function code_aff($subject, $story, $bodytext, $notes)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $subject
+     * @param [type] $story
+     * @param [type] $bodytext
+     * @param [type] $notes
+     * @return void
+     */
+    public function code_aff($subject, $story, $bodytext, $notes)
     {
         global $local_user_language;
     
-        $subjectX = aff_code(preview_local_langue($local_user_language, $subject));
-        $storyX = aff_code(preview_local_langue($local_user_language, $story));
-        $bodytextX = aff_code(preview_local_langue($local_user_language, $bodytext));
-        $notesX = aff_code(preview_local_langue($local_user_language, $notes));
+        $subjectX   = Code::aff_code(Language::preview_local_langue($local_user_language, $subject));
+        $storyX     = Code::aff_code(Language::preview_local_langue($local_user_language, $story));
+        $bodytextX  = Code::aff_code(Language::preview_local_langue($local_user_language, $bodytext));
+        $notesX     = Code::aff_code(Language::preview_local_langue($local_user_language, $notes));
     
-        themepreview($subjectX, $storyX, $bodytextX, $notesX);
+        Theme::themepreview($subjectX, $storyX, $bodytextX, $notesX);
     }
 
     /**
@@ -79,16 +99,16 @@ class NewsManager implements NewsInterface
                     $result2 = sql_query("SELECT catid, aid, title, hometext, bodytext, topic, informant, notes, ihome, date_finval, auto_epur FROM autonews WHERE anid='$anid'");
                     while (list($catid, $aid, $title, $hometext, $bodytext, $topic, $author, $notes, $ihome, $date_finval, $epur) = sql_fetch_row($result2)) {
     
-                        $subject = stripslashes(FixQuotes($title));
-                        $hometext = stripslashes(FixQuotes($hometext));
-                        $bodytext = stripslashes(FixQuotes($bodytext));
-                        $notes = stripslashes(FixQuotes($notes));
+                        $subject    = stripslashes(Sanitize::FixQuotes($title));
+                        $hometext   = stripslashes(Sanitize::FixQuotes($hometext));
+                        $bodytext   = stripslashes(Sanitize::FixQuotes($bodytext));
+                        $notes      = stripslashes(Sanitize::FixQuotes($notes));
     
                         sql_query("INSERT INTO stories VALUES (NULL, '$catid', '$aid', '$subject', now(), '$hometext', '$bodytext', '0', '0', '$topic', '$author', '$notes', '$ihome', '0', '$date_finval', '$epur')");
                         sql_query("DELETE FROM autonews WHERE anid='$anid'");
                         
                         if (Config::get('npds.subscribe')) {
-                            subscribe_mail('topic', $topic, '', $subject, '');
+                            Mailer::subscribe_mail('topic', $topic, '', $subject, '');
                         }
     
                         // Réseaux sociaux
@@ -154,7 +174,7 @@ class NewsManager implements NewsInterface
         } elseif ($ihome == 1) {
             $affich = $catid > 0 ? false : true;
         } elseif (($ihome > 1) and ($ihome <= 127)) {
-            $tab_groupe = valid_group($user);
+            $tab_groupe = Groupe::valid_group($user);
             
             if ($tab_groupe) {
                 foreach ($tab_groupe as $groupevalue) {
@@ -187,7 +207,7 @@ class NewsManager implements NewsInterface
         $url = $op;
     
         if ($op == 'edito-newindex') {
-            if ($marqeur == 0) aff_edito();
+            if ($marqeur == 0) Edito::aff_edito();
             $op = 'news';
         }
     
@@ -203,7 +223,7 @@ class NewsManager implements NewsInterface
             $op = 'categories';
         }
     
-        $news_tab = prepa_aff_news($op, $catid, $marqeur);
+        $news_tab = $this->prepa_aff_news($op, $catid, $marqeur);
         $story_limit = 0;
     
         // si le tableau $news_tab est vide alors return 
@@ -215,19 +235,19 @@ class NewsManager implements NewsInterface
     
         while ($story_limit < $newscount) {
             $story_limit++;
-            $aid = unserialize($news_tab[$story_limit]['aid']);
-            $informant = unserialize($news_tab[$story_limit]['informant']);
-            $datetime = unserialize($news_tab[$story_limit]['datetime']);
-            $title = unserialize($news_tab[$story_limit]['title']);
-            $counter = unserialize($news_tab[$story_limit]['counter']);
-            $topic = unserialize($news_tab[$story_limit]['topic']);
-            $hometext = unserialize($news_tab[$story_limit]['hometext']);
-            $notes = unserialize($news_tab[$story_limit]['notes']);
-            $morelink = unserialize($news_tab[$story_limit]['morelink']);
-            $topicname = unserialize($news_tab[$story_limit]['topicname']);
+            $aid        = unserialize($news_tab[$story_limit]['aid']);
+            $informant  = unserialize($news_tab[$story_limit]['informant']);
+            $datetime   = unserialize($news_tab[$story_limit]['datetime']);
+            $title      = unserialize($news_tab[$story_limit]['title']);
+            $counter    = unserialize($news_tab[$story_limit]['counter']);
+            $topic      = unserialize($news_tab[$story_limit]['topic']);
+            $hometext   = unserialize($news_tab[$story_limit]['hometext']);
+            $notes      = unserialize($news_tab[$story_limit]['notes']);
+            $morelink   = unserialize($news_tab[$story_limit]['morelink']);
+            $topicname  = unserialize($news_tab[$story_limit]['topicname']);
             $topicimage = unserialize($news_tab[$story_limit]['topicimage']);
-            $topictext = unserialize($news_tab[$story_limit]['topictext']);
-            $s_id = unserialize($news_tab[$story_limit]['id']);
+            $topictext  = unserialize($news_tab[$story_limit]['topictext']);
+            $s_id       = unserialize($news_tab[$story_limit]['id']);
     
             Theme::themeindex($aid, $informant, $datetime, $title, $counter, $topic, $hometext, $notes, $morelink, $topicname, $topicimage, $topictext, $s_id);
         }
@@ -243,10 +263,19 @@ class NewsManager implements NewsInterface
             if (sizeof($news_tab) == $storynum) {
                 $marqeur = $marqeur + sizeof($news_tab);
     
-                echo '<div class="text-end"><a href="index.php?op=' . $url . '&amp;catid=' . $catid . '&amp;marqeur=' . $marqeur . '" class="page_suivante" >' . $transl1 . '<i class="fa fa-chevron-right fa-lg ms-2" title="' . $transl1 . '" data-bs-toggle="tooltip"></i></a></div>';
+                echo '<div class="text-end">
+                    <a href="index.php?op=' . $url . '&amp;catid=' . $catid . '&amp;marqeur=' . $marqeur . '" class="page_suivante" >
+                        ' . $transl1 . '
+                        <i class="fa fa-chevron-right fa-lg ms-2" title="' . $transl1 . '" data-bs-toggle="tooltip"></i>
+                    </a>
+                </div>';
             } else {
                 if ($marqeur >= $storynum) {
-                    echo '<div class="text-end"><a href="index.php?op=' . $url . '&amp;catid=' . $catid . '&amp;marqeur=0" class="page_suivante" title="' . $transl2 . '">' . $transl2 . '</a></div>';
+                    echo '<div class="text-end">
+                        <a href="index.php?op=' . $url . '&amp;catid=' . $catid . '&amp;marqeur=0" class="page_suivante" title="' . $transl2 . '">
+                            ' . $transl2 . '
+                        </a>
+                    </div>';
                 }
             }
         }
@@ -255,10 +284,19 @@ class NewsManager implements NewsInterface
             if (sizeof($news_tab) == $storynum) {
                 $marqeur = $marqeur + sizeof($news_tab);
     
-                echo '<div class="text-end"><a href="index.php?op=' . $url . '&amp;catid=' . $catid . '&amp;marqeur=' . $marqeur . '" class="page_suivante" >' . $transl1 . '<i class="fa fa-chevron-right fa-lg ms-2" title="' . $transl1 . '" data-bs-toggle="tooltip"></i></a></div>';
+                echo '<div class="text-end">
+                    <a href="index.php?op=' . $url . '&amp;catid=' . $catid . '&amp;marqeur=' . $marqeur . '" class="page_suivante" >
+                        ' . $transl1 . '
+                        <i class="fa fa-chevron-right fa-lg ms-2" title="' . $transl1 . '" data-bs-toggle="tooltip"></i>
+                    </a>
+                </div>';
             } else {
                 if ($marqeur >= $storynum) {
-                    echo '<div class="text-end"><a href="index.php?op=' . $url . '&amp;catid=' . $catid . '&amp;marqeur=0" class="page_suivante" title="' . $transl2 . '">' . $transl2 . '</a></div>';
+                    echo '<div class="text-end">
+                        <a href="index.php?op=' . $url . '&amp;catid=' . $catid . '&amp;marqeur=0" class="page_suivante" title="' . $transl2 . '">
+                            ' . $transl2 . '
+                        </a>
+                    </div>';
                 }
             }
         }
@@ -267,10 +305,19 @@ class NewsManager implements NewsInterface
             if (sizeof($news_tab) == $storynum) {
                 $marqeur = $marqeur + sizeof($news_tab);
     
-                echo '<div align="right"><a href="index.php?op=newtopic&amp;topic=' . $topic . '&amp;marqeur=' . $marqeur . '" class="page_suivante" >' . $transl1 . '<i class="fa fa-chevron-right fa-lg ms-2" title="' . $transl1 . '" data-bs-toggle="tooltip"></i></a></div>';
+                echo '<div align="right">
+                    <a href="index.php?op=newtopic&amp;topic=' . $topic . '&amp;marqeur=' . $marqeur . '" class="page_suivante" >
+                        ' . $transl1 . '
+                        <i class="fa fa-chevron-right fa-lg ms-2" title="' . $transl1 . '" data-bs-toggle="tooltip"></i>
+                    </a>
+                </div>';
             } else {
                 if ($marqeur >= $storynum) {
-                    echo '<div class="text-end"><a href="index.php?op=newtopic&amp;topic=' . $topic . '&amp;marqeur=0" class="page_suivante" title="' . $transl2 . '">' . $transl2 . '</a></div>';
+                    echo '<div class="text-end">
+                        <a href="index.php?op=newtopic&amp;topic=' . $topic . '&amp;marqeur=0" class="page_suivante" title="' . $transl2 . '">
+                            ' . $transl2 . '
+                        </a>
+                    </div>';
                 }
             }
         }
@@ -289,7 +336,6 @@ class NewsManager implements NewsInterface
     public function news_aff($type_req, $sel, $storynum, $oldnum)
     { 
         // pas stabilisé ...!
-        
 
         // Astuce pour afficher le nb de News correct même si certaines News ne sont pas visibles (membres, groupe de membres)
         // En fait on * le Nb de News par le Nb de groupes
@@ -403,18 +449,16 @@ class NewsManager implements NewsInterface
      */
     public function prepa_aff_news($op, $catid, $marqeur)
     {
-        global $topicname, $topicimage, $topictext, $datetime, $cookie;
+        global $topicname, $topicimage, $topictext, $cookie;
 
         if (isset($cookie[3])) {
             $storynum = $cookie[3];
         } else {
-            $storynum = $storyhome;
+            $storynum = Config::get('npds.storyhome');
         }
 
         if ($op == "categories") {
             sql_query("UPDATE stories_cat SET counter=counter+1 WHERE catid='$catid'");
-
-            settype($marqeur, "integer");
 
             if (!isset($marqeur)) {
                 $marqeur = 0;
@@ -425,8 +469,6 @@ class NewsManager implements NewsInterface
             $storynum = sizeof($xtab);
         } elseif ($op == "topics") {
 
-            settype($marqeur, "integer");
-
             if (!isset($marqeur)) {
                 $marqeur = 0;
             }
@@ -435,8 +477,6 @@ class NewsManager implements NewsInterface
 
             $storynum = sizeof($xtab);
         } elseif ($op == "news") {
-
-            settype($marqeur, "integer");
 
             if (!isset($marqeur)) {
                 $marqeur = 0;
@@ -460,15 +500,15 @@ class NewsManager implements NewsInterface
             $printP = '<a href="print.php?sid=' . $s_sid . '" class="me-3" title="' . __d('news', 'Page spéciale pour impression') . '" data-bs-toggle="tooltip" ><i class="fa fa-lg fa-print"></i></a>&nbsp;';
             $sendF = '<a href="friend.php?op=FriendSend&amp;sid=' . $s_sid . '" class="me-3" title="' . __d('news', 'Envoyer cet article à un ami') . '" data-bs-toggle="tooltip" ><i class="fa fa-lg fa-at"></i></a>';
             
-            $this->getTopics($s_sid);
+            NewsTopic::getTopics($s_sid);
             
-            $title = aff_langue(stripslashes($title));
-            $hometext = aff_langue(stripslashes($hometext));
-            $notes = aff_langue(stripslashes($notes));
-            $bodycount = strlen(strip_tags(aff_langue($bodytext), '<img>'));
+            $title      = Language::aff_langue(stripslashes($title));
+            $hometext   = Language::aff_langue(stripslashes($hometext));
+            $notes      = Language::aff_langue(stripslashes($notes));
+            $bodycount  = strlen(strip_tags(Language::aff_langue($bodytext), '<img>'));
 
             if ($bodycount > 0) {
-                $bodycount = strlen(strip_tags(aff_langue($bodytext)));
+                $bodycount = strlen(strip_tags(Language::aff_langue($bodytext)));
 
                 if ($bodycount > 0) {
                     $morelink[0] = wrh($bodycount) . ' ' . __d('news', 'caractères de plus');
@@ -484,13 +524,21 @@ class NewsManager implements NewsInterface
 
             if ($comments == 0) {
                 $morelink[2] = 0;
-                $morelink[3] = '<a href="article.php?sid=' . $s_sid . '" class="me-3"><i class="far fa-comment fa-lg" title="' . __d('news', 'Commentaires ?') . '" data-bs-toggle="tooltip"></i></a>';
+                $morelink[3] = '<a href="article.php?sid=' . $s_sid . '" class="me-3">
+                        <i class="far fa-comment fa-lg" title="' . __d('news', 'Commentaires ?') . '" data-bs-toggle="tooltip"></i>
+                    </a>';
+
             } elseif ($comments == 1) {
                 $morelink[2] = $comments;
-                $morelink[3] = '<a href="article.php?sid=' . $s_sid . '" class="me-3"><i class="far fa-comment fa-lg" title="' . __d('news', 'Commentaire') . '" data-bs-toggle="tooltip"></i></a>';
+                $morelink[3] = '<a href="article.php?sid=' . $s_sid . '" class="me-3">
+                        <i class="far fa-comment fa-lg" title="' . __d('news', 'Commentaire') . '" data-bs-toggle="tooltip"></i>
+                    </a>';
+
             } else {
                 $morelink[2] = $comments;
-                $morelink[3] = '<a href="article.php?sid=' . $s_sid . '" class="me-3" ><i class="far fa-comment fa-lg" title="' . __d('news', 'Commentaires') . '" data-bs-toggle="tooltip"></i></a>';
+                $morelink[3] = '<a href="article.php?sid=' . $s_sid . '" class="me-3" >
+                        <i class="far fa-comment fa-lg" title="' . __d('news', 'Commentaires') . '" data-bs-toggle="tooltip"></i>
+                    </a>';
             }
 
             $morelink[4] = $printP;
@@ -503,24 +551,24 @@ class NewsManager implements NewsInterface
 
                 $title = $title;
                 // Attention à cela aussi
-                $morelink[6] = ' <a href="index.php?op=newcategory&amp;catid=' . $catid . '">&#x200b;' . aff_langue($title1) . '</a>';
+                $morelink[6] = ' <a href="index.php?op=newcategory&amp;catid=' . $catid . '">&#x200b;' . Language::aff_langue($title1) . '</a>';
             } else {
                 $morelink[6] = '';
             }
 
-            $news_tab[$story_limit]['aid'] = serialize($aid);
-            $news_tab[$story_limit]['informant'] = serialize($informant);
-            $news_tab[$story_limit]['datetime'] = serialize($time);
-            $news_tab[$story_limit]['title'] = serialize($title);
-            $news_tab[$story_limit]['counter'] = serialize($counter);
-            $news_tab[$story_limit]['topic'] = serialize($topic);
-            $news_tab[$story_limit]['hometext'] = serialize(meta_lang(aff_code($hometext)));
-            $news_tab[$story_limit]['notes'] = serialize(meta_lang(aff_code($notes)));
-            $news_tab[$story_limit]['morelink'] = serialize($morelink);
-            $news_tab[$story_limit]['topicname'] = serialize($topicname);
-            $news_tab[$story_limit]['topicimage'] = serialize($topicimage);
-            $news_tab[$story_limit]['topictext'] = serialize($topictext);
-            $news_tab[$story_limit]['id'] = serialize($s_sid);
+            $news_tab[$story_limit]['aid']          = serialize($aid);
+            $news_tab[$story_limit]['informant']    = serialize($informant);
+            $news_tab[$story_limit]['datetime']     = serialize($time);
+            $news_tab[$story_limit]['title']        = serialize($title);
+            $news_tab[$story_limit]['counter']      = serialize($counter);
+            $news_tab[$story_limit]['topic']        = serialize($topic);
+            $news_tab[$story_limit]['hometext']     = serialize(Metalang::meta_lang(Code::aff_code($hometext)));
+            $news_tab[$story_limit]['notes']        = serialize(Metalang::meta_lang(Code::aff_code($notes)));
+            $news_tab[$story_limit]['morelink']     = serialize($morelink);
+            $news_tab[$story_limit]['topicname']    = serialize($topicname);
+            $news_tab[$story_limit]['topicimage']   = serialize($topicimage);
+            $news_tab[$story_limit]['topictext']    = serialize($topictext);
+            $news_tab[$story_limit]['id']           = serialize($s_sid);
         }
 
         if (isset($news_tab)) {

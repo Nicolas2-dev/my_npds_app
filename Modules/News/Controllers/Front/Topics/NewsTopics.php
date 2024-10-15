@@ -1,12 +1,22 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace Modules\News\Controllers\Front;
 
-use App\Controllers\Core\FrontController;
+use Npds\Config\Config;
+use Modules\Npds\Core\FrontController;
 
-
+/**
+ * Undocumented class
+ */
 class NewsTopic extends FrontController
 {
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    protected $pdst = 0;
 
 
     /**
@@ -16,15 +26,46 @@ class NewsTopic extends FrontController
      */
     public function __construct()
     {
-
+        parent::__construct();
     }
 
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function index()
     {
         settype($op, 'string');
 
         if ($op != "maj_subscribe") {
-            include("header.php");
+            // include("header.php");
         
             $inclusion = false;
         
@@ -44,7 +85,7 @@ class NewsTopic extends FrontController
                 echo meta_lang(aff_langue($Xcontent));
             }
         
-            include("footer.php");
+            // include("footer.php");
         } else {
             if (Config::get('npds.subscribe')) {
                 if ($user) {
