@@ -1,5 +1,8 @@
 <?php
 
+use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Language;
+
 /**
  * [MM_img description]
  *
@@ -73,9 +76,10 @@ function MM_anti_spam($arg)
 }
 
 function MM_msg_foot()
-{
+{	$MT_foot = '';
+
 	if ($foot1 = config('npds.foot1'))
-		$MT_foot = stripslashes($foot1) . "<br />";
+		$MT_foot .= stripslashes($foot1) . "<br />";
 
 	if ($foot2 = config('npds.foot2'))
 		$MT_foot .= stripslashes($foot2) . "<br />";
@@ -86,7 +90,7 @@ function MM_msg_foot()
 	if ($foot4 = config('npds.foot4'))
 		$MT_foot .= stripslashes($foot4);
 
-	return aff_langue($MT_foot);
+	return Language::aff_langue($MT_foot);
 }
 
 function MM_date()

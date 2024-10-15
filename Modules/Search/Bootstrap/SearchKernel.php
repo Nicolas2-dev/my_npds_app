@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Module\Bootstrap;
+namespace Modules\Search\Bootstrap;
 
 /**
  * Undocumented class
  */
-class ModuleKernel
+class SearchKernel
 {
 
     /**
@@ -19,7 +19,7 @@ class ModuleKernel
      * @var array
      */
     public static $aliases = [
-        'Module'        => 'Modules\Module\Support\Facades\Module',
+        // 
     ];
 
     /**

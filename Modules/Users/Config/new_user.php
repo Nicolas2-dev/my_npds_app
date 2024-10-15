@@ -24,7 +24,7 @@ return [
     'sujet'         => __d('user', 'Bonjour'),
 
     /*
-     * contenu du message (html, meta-mot, ...) SANS les <br />, App fera le nécessaire
+     * contenu du message (html, meta-mot, ...) SANS les <br />, Npds fera le nécessaire
      */
     'message'       => __d('user', 'Vous êtes maintenant un membre à part entière.
 Ce site vous offre de nombreuses ressources alors ne vous privez pas : participez !

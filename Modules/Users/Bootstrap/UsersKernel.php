@@ -2,8 +2,6 @@
 
 namespace Modules\Users\Bootstrap;
 
-use Npds\Foundation\AliasLoader;
-
 /**
  * Undocumented class
  */
@@ -11,12 +9,16 @@ class UsersKernel
 {
 
     /**
+     * 
+     */
+    protected static $module_path;
+
+    /**
      * Undocumented variable
      *
      * @var array
      */
-    protected static $aliases = [
-        // Modules Users
+    public static $aliases = [
         'Online'        => 'Modules\Users\Support\Facades\Online',
         'User'          => 'Modules\Users\Support\Facades\User',
         'Avatar'        => 'Modules\Users\Support\Facades\Avatar',
@@ -25,13 +27,33 @@ class UsersKernel
     ];
 
     /**
-     * Undocumented function
+     * [$instance description]
      *
-     * @return void
+     * @var [type]
      */
-    public static function aliases_loader()
+    protected static $instance;
+
+
+    /**
+     * Undocumented function
+     */
+    public function __construct($directory)
     {
-        AliasLoader::getInstance(static::$aliases)->register();
+        static::$module_path = $directory;
     }
 
+    /**
+     * [getInstance description]
+     *
+     * @return  [type]  [return description]
+     */
+    public static function getInstance($directory)
+    {
+        if (isset(static::$instance)) {
+            return static::$instance;
+        }
+
+        return static::$instance = new static($directory);
+    }
+    
 }

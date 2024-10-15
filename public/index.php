@@ -98,7 +98,7 @@ require APPPATH .'Routes/admin/routes.php';
 require APPPATH .'Bootstrap.php';
 
 /** Bootstrap the active Modules. */
-Modules::bootstrap();
+Modules::module_path(MODULEPATH)->Register();
 
 /** Bootstrap the active Packages. */
 Packages::bootstrap();

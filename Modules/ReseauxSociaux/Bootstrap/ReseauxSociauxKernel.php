@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Module\Bootstrap;
+namespace Modules\ReseauxSociaux\Bootstrap;
 
 /**
  * Undocumented class
  */
-class ModuleKernel
+class ReseauxSociauxKernel
 {
 
     /**
@@ -19,7 +19,7 @@ class ModuleKernel
      * @var array
      */
     public static $aliases = [
-        'Module'        => 'Modules\Module\Support\Facades\Module',
+        'Reseaux'        => 'Modules\ReseauxSociaux\Support\Facades\Reseaux',
     ];
 
     /**

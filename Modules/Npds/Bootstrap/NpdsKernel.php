@@ -2,8 +2,6 @@
 
 namespace Modules\Npds\Bootstrap;
 
-use Npds\Foundation\AliasLoader;
-
 /**
  * Undocumented class
  */
@@ -11,12 +9,16 @@ class NpdsKernel
 {
 
     /**
+     * 
+     */
+    protected static $module_path;
+
+    /**
      * Undocumented variable
      *
      * @var array
      */
-    protected static $aliases = [
-        // Modules Npds
+    public static $aliases = [
         'Auth'          => 'Modules\Npds\Support\Facades\Auth',    
         'Code'          => 'Modules\Npds\Support\Facades\Code',    
         'Cookie'        => 'Modules\Npds\Support\Facades\Cookie',    
@@ -42,13 +44,41 @@ class NpdsKernel
     ];
 
     /**
-     * Undocumented function
+     * [$instance description]
      *
-     * @return void
+     * @var [type]
      */
-    public static function aliases_loader()
+    protected static $instance;
+
+
+    /**
+     * Undocumented function
+     */
+    public function __construct($directory)
     {
-        AliasLoader::getInstance(static::$aliases)->register();
+        static::$module_path = $directory;
+    }
+
+    /**
+     * [getInstance description]
+     *
+     * @return  [type]  [return description]
+     */
+    public static function getInstance($directory)
+    {
+        if (isset(static::$instance)) {
+            return static::$instance;
+        }
+
+        return static::$instance = new static($directory);
+    }
+    
+    /**
+     * Load helpers metalang
+     */
+    public static function load_helper_metalang()
+    {
+        require static::$module_path . 'Support/Metalang.php';
     }
 
 }

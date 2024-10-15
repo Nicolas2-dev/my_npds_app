@@ -16,8 +16,6 @@ use Modules\Npds\Support\Facades\Auth;
 use Modules\Npds\Support\Facades\Cookie;
 use Modules\Theme\Support\Facades\Theme;
 
-//use function time;
-
 /**
  * Bloc Login
  * 
