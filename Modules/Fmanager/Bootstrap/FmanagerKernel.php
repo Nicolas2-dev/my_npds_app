@@ -2,8 +2,6 @@
 
 namespace Modules\Fmanager\Bootstrap;
 
-use Npds\Foundation\AliasLoader;
-
 /**
  * Undocumented class
  */
@@ -11,23 +9,47 @@ class FmanagerKernel
 {
 
     /**
+     * 
+     */
+    protected static $module_path;
+
+    /**
      * Undocumented variable
      *
      * @var array
      */
-    protected static $aliases = [
-        // Module fmanager
-        'fmanager'         => 'Modules\fmanager\Support\Facades\fmanager',
+    public static $aliases = [
+        'fmanager'         => 'Modules\Fmanager\Support\Facades\fmanager',
     ];
 
     /**
-     * Undocumented function
+     * [$instance description]
      *
-     * @return void
+     * @var [type]
      */
-    public static function aliases_loader()
+    protected static $instance;
+
+
+    /**
+     * Undocumented function
+     */
+    public function __construct($directory)
     {
-        AliasLoader::getInstance(static::$aliases)->register();
+        static::$module_path = $directory;
     }
 
+    /**
+     * [getInstance description]
+     *
+     * @return  [type]  [return description]
+     */
+    public static function getInstance($directory)
+    {
+        if (isset(static::$instance)) {
+            return static::$instance;
+        }
+
+        return static::$instance = new static($directory);
+    }
+    
 }

@@ -1,23 +1,5 @@
 <?php
 
-use Modules\Forum\Bootstrap\ForumKernel;
-
-ForumKernel::aliases_loader();
-
-$configDir = dirname(dirname(__FILE__)) .DS;
-
-//
-include $configDir .'constants.php';
-
-include $configDir .'Support/helpers.php';
-
-include $configDir .'Boxe/Boxe.php';
-
-include $configDir .'Routes/web/routes.php';
-
-include $configDir .'Routes/admin/routes.php';
-
-
 // $rowQ1 = Q_Select("SELECT * FROM config", 3600);
 // if ($rowQ1) {
 //     foreach ($rowQ1[0] as $key => $value) {

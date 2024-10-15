@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Groupes\Bootstrap;
+namespace Modules\Contact\Bootstrap;
 
 /**
  * Undocumented class
  */
-class GroupesKernel
+class ContactKernel
 {
 
     /**
@@ -19,7 +19,7 @@ class GroupesKernel
      * @var array
      */
     public static $aliases = [
-        'Groupe'        => 'Modules\Groupes\Support\Facades\Groupe',
+        //
     ];
 
     /**
