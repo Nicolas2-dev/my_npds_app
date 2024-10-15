@@ -1,12 +1,6 @@
 <?php
 
-use Npds\Config\Config;
 use Modules\Npds\Bootstrap\NpdsKernel;
-use Modules\Npds\Support\Facades\Spam;
-use Modules\Npds\Support\Facades\Cookie;
-use Modules\Npds\Support\Facades\Session;
-use Npds\Events\Manager as Events;
-use Modules\Npds\Support\Facades\Language;
 
 NpdsKernel::aliases_loader();
 
