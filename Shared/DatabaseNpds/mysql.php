@@ -19,17 +19,19 @@ function SQL_escape_string($arr)
 // Connexion
 function sql_connect()
 {
+    $database = Config::get('database.default.config');
+    
     $mysql_p = Config::get('npds.mysql_p');
 
     if ($mysql_p or (!isset($mysql_p)))
-        $dblink = @mysql_pconnect(Config::get('npds.dbhost'), Config::get('npds.dbuname'), Config::get('npds.dbpass'));
+        $dblink = @mysql_pconnect($database['host'], $database['user'], $database['password']);
     else
-        $dblink = @mysql_connect(Config::get('npds.dbhost'), Config::get('npds.dbuname'), Config::get('npds.dbpass'));
+        $dblink = @mysql_connect($database['host'], $database['user'], $database['password']);
 
     if (!$dblink)
         return (false);
     else {
-        if (!@mysql_select_db(Config::get('npds.dbname'), $dblink))
+        if (!@mysql_select_db($database['dbname'], $dblink))
             return (false);
         else
             return ($dblink);

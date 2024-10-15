@@ -102,8 +102,17 @@ class BaseController extends Controller
             }
         });
 
+        // Init database deprecated
+        Events::sendEvent('db_mysqli_deprecated');
+
+        // Spam boot
+        Events::sendEvent('spamboot');
+
+        // Language update
+        Events::sendEvent('language');
+
         // Session manage
-		Events::sendEvent('session');
+        Events::sendEvent('session');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();

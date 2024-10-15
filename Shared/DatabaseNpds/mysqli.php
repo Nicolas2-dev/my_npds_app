@@ -74,18 +74,20 @@ function sql_connect()
 {
     global $dblink;
 
+    $database = Config::get('database.default.config');
+
     $mysql_p = Config::get('npds.mysql_p');
 
     if (($mysql_p) or (!isset($mysql_p))) {
-        $dblink = @mysqli_connect('p:' . Config::get('npds.dbhost'), Config::get('npds.dbuname'), Config::get('npds.dbpass'));
+        $dblink = @mysqli_connect('p:' . $database['host'], $database['user'], $database['password']);
     } else {
-        $dblink = @mysqli_connect(Config::get('npds.dbhost'), Config::get('npds.dbuname'), Config::get('npds.dbpass'));
+        $dblink = @mysqli_connect($database['host'], $database['user'], $database['password']);
     }
 
     if (!$dblink) {
         return false;
     } else {
-        if (!@mysqli_select_db($dblink, Config::get('npds.dbname'))) {
+        if (!@mysqli_select_db($dblink, $database['dbname'])) {
             return false;
         } else {
             return $dblink;
