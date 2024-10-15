@@ -1,5 +1,8 @@
 <?php
 
+use Modules\Newsletter\Bootstrap\NewsletterKernel;
+
+NewsletterKernel::aliases_loader();
 
 $configDir = dirname(dirname(__FILE__)) .DS;
 
