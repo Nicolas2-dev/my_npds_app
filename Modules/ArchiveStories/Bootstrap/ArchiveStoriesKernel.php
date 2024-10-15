@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Banners\Bootstrap;
+namespace Modules\ArchiveStories\Bootstrap;
 
 /**
  * Undocumented class
  */
-class BannersKernel
+class ArchiveStoriesKernel
 {
 
     /**
@@ -19,7 +19,7 @@ class BannersKernel
      * @var array
      */
     public static $aliases = [
-        'Banner'         => 'Modules\Banners\Support\Facades\Banner',
+        // 
     ];
 
     /**
