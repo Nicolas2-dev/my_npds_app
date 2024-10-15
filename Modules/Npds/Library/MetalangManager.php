@@ -2,8 +2,8 @@
 
 namespace Modules\Npds\Library;
 
-use function PHP81_BC\strftime;
 use Npds\Supercache\SuperCacheEmpty;
+use Modules\Npds\Support\Facades\Hack;
 use Npds\Supercache\SuperCacheManager;
 use Modules\Npds\Contracts\MetalangInterface;
 
@@ -20,6 +20,20 @@ class MetalangManager implements MetalangInterface
      */
     protected static $instance;
 
+    /**
+     * 
+     */
+    protected $glossaire = [];
+
+
+    /**
+     * Undocumented function
+     */
+    public function __construct()
+    {
+        // init tab langues
+        $this->charg_metalang();
+    }
 
     /**
      * [getInstance description]
@@ -44,9 +58,7 @@ class MetalangManager implements MetalangInterface
      */
     public function arg_filter($arg)
     {
-        $arg = removeHack(stripslashes(htmlspecialchars(urldecode($arg), ENT_QUOTES, cur_charset)));
-
-        return $arg;
+        return Hack::remove(stripslashes(htmlspecialchars(urldecode($arg), ENT_QUOTES, cur_charset)));
     }
 
     /**
@@ -159,7 +171,7 @@ class MetalangManager implements MetalangInterface
      */
     public function charg_metalang()
     {
-        global $SuperCache, $CACHE_TIMINGS, $REQUEST_URI, $glossaire;
+        global $SuperCache, $CACHE_TIMINGS, $REQUEST_URI;
 
         if ($SuperCache) {
             $racine = parse_url(basename($REQUEST_URI));
@@ -167,14 +179,13 @@ class MetalangManager implements MetalangInterface
             $CACHE_TIMINGS[$cache_clef] = 86400;
 
             $cache_obj = new SuperCacheManager();
-            $glossaire = $cache_obj->startCachingObjet($cache_clef);
+
+            $this->glossaire = $cache_obj->startCachingObjet($cache_clef);
         } else {
             $cache_obj = new SuperCacheEmpty();
         }
 
         if (($cache_obj->get_Genereting_Output() == 1) or ($cache_obj->get_Genereting_Output() == -1) or (!$SuperCache)) {
-
-            settype($glossaire, 'array');
 
             $result = sql_query("SELECT def, content, type_meta, type_uri, uri FROM metalang WHERE type_meta='mot' OR type_meta='meta' OR type_meta='smil'");
             
@@ -203,7 +214,7 @@ class MetalangManager implements MetalangInterface
             $cache_obj->endCachingObjet($cache_clef, $glossaire);
         }
 
-        return $glossaire;
+        $this->glossaire = $glossaire;
     }
 
     /**
@@ -233,7 +244,7 @@ class MetalangManager implements MetalangInterface
      */
     public function meta_lang($Xcontent)
     {
-        global $glossaire, $admin, $App_debug, $App_debug_str, $App_debug_cycle;
+        global $admin, $App_debug, $App_debug_str, $App_debug_cycle;
 
         // Reduction
         $Xcontent = str_replace("<!--meta", "", $Xcontent);
@@ -325,6 +336,8 @@ class MetalangManager implements MetalangInterface
 
                 // --- REMPLACEMENTS
                 $type_meta = "";
+
+                $glossaire = $this->glossaire;
 
                 if (array_key_exists($Rword, $glossaire)) {
                     $Cword = $glossaire[$Rword]['content'];

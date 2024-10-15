@@ -1,9 +1,5 @@
 <?php
 
-use Modules\Npds\Support\Facades\Cookie;
-
-
-
 if (!defined("cur_charset")) {
     define('cur_charset', "utf-8");
 }

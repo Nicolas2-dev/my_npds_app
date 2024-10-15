@@ -4,8 +4,6 @@ namespace Modules\Theme\Library\Traits;
 
 use Npds\Config\Config;
 use Npds\Events\Manager as Events;
-use Modules\Npds\Support\Counter;
-use Modules\Npds\Support\Facades\Css;
 use Modules\Blocks\Support\Facades\Block;
 use Modules\Npds\Support\Facades\Language;
 use Modules\Npds\Support\Facades\Metalang;

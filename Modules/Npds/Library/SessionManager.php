@@ -4,6 +4,8 @@ namespace Modules\Npds\Library;
 
 use Npds\Http\Request;
 use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Auth;
+use Modules\Npds\Support\Facades\Cookie;
 use Modules\Npds\Contracts\SessionInterface;
 
 
@@ -39,10 +41,11 @@ class SessionManager implements SessionInterface
      */
     public function session_manage()
     {
-        global $cookie, $REQUEST_URI;
+        global $REQUEST_URI;
 
-        $guest = 0;
-        $ip = Request::getip();
+        $guest  = 0;
+        $ip     = Request::getip();
+        $cookie = Cookie::cookiedecode(Auth::check('user'));
 
         $username = isset($cookie[1]) ? $cookie[1] : $ip;
 

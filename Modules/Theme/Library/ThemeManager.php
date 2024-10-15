@@ -6,7 +6,7 @@ use Npds\Config\Config;
 use Modules\Npds\Support\Facades\Metalang;
 use Modules\Theme\Contracts\ThemeInterface;
 use Modules\Theme\Library\Traits\ThemeHeadTrait;
-use Modules\News\Library\Traits\ThemeStorieTrait;
+use Modules\News\Support\Traits\ThemeStorieTrait;
 use Modules\Theme\Library\Traits\ThemeFooterTrait;
 use Modules\Theme\Library\Traits\ThemeHeaderTrait;
 use Modules\Blocks\Library\Traits\ThemeSideboxTrait;

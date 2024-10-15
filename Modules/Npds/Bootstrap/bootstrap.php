@@ -5,8 +5,8 @@ use Modules\Npds\Bootstrap\NpdsKernel;
 use Modules\Npds\Support\Facades\Spam;
 use Modules\Npds\Support\Facades\Cookie;
 use Modules\Npds\Support\Facades\Session;
+use Npds\Events\Manager as Events;
 use Modules\Npds\Support\Facades\Language;
-use Modules\Npds\Support\Facades\Metalang;
 
 NpdsKernel::aliases_loader();
 
@@ -75,11 +75,3 @@ if (Config::get('npds.multi_langue')) {
 }
 // Multi-language
 
-// Init Sesion
-Session::session_manage();
-
-// Init Tab Language
-Language::make_tab_langue();
-
-// Init Metalang
-Metalang::charg_metalang();

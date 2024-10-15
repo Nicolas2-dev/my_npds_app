@@ -13,3 +13,7 @@ Events::addListener('counter', 'Modules\Npds\Controllers\Api\ApiCounter@update')
  */
 Events::addListener('referer', 'Modules\Npds\Controllers\Api\ApiReferer@update');
 
+/**
+ * Enregistrement des referers
+ */
+Events::addListener('session', 'Modules\Npds\Controllers\Api\ApiSession@Manage');

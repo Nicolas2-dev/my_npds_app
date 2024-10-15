@@ -102,6 +102,9 @@ class BaseController extends Controller
             }
         });
 
+        // Session manage
+		Events::sendEvent('session');
+
         // Leave to parent's method the Flight decisions.
         return parent::before();
     }

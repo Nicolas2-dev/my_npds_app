@@ -16,6 +16,21 @@ class LanguageManager implements LanguageInterface
      */
     protected static $instance;
 
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    protected $tab_langue;
+
+    /**
+     * Undocumented function
+     */
+    public function __construct()
+    {
+        // init tab langues
+        $this->make_tab_langue();
+    }
 
     /**
      * [getInstance description]
@@ -40,10 +55,8 @@ class LanguageManager implements LanguageInterface
      */
     public function aff_langue($ibid)
     {
-        global $tab_langue;
-
         // copie du tableau + rajout de transl pour gestion de l'appel à __(...); - Theme Dynamic
-        $tab_llangue        = $tab_langue;
+        $tab_llangue        = $this->tab_langue;
         $tab_llangue[]      = 'transl';
 
         reset($tab_llangue);
@@ -124,15 +137,12 @@ class LanguageManager implements LanguageInterface
      */
     public function make_tab_langue()
     {
-        global $tab_langue;
-
         $languageslist = $this->cache_list();
 
         $languageslocal = Config::get('npds.language') . ' ' . str_replace(Config::get('npds.language'), '', $languageslist);
         $languageslocal = trim(str_replace('  ', ' ', $languageslocal));
-        $tab_langue = explode(' ', $languageslocal);
 
-        return $tab_langue;
+        $this->tab_langue = explode(' ', $languageslocal);
     }
 
     /**
@@ -225,7 +235,7 @@ class LanguageManager implements LanguageInterface
             
             Config::set('npds.language', $local_user_language);
 
-            $tab_langue = $this->make_tab_langue();
+            $tab_langue = $this->tab_langue;
             $ibid = $this->aff_langue($ibid);
 
             Config::set('npds.language', $old_langue);
