@@ -2,8 +2,6 @@
 
 namespace Modules\News\Bootstrap;
 
-use Npds\Foundation\AliasLoader;
-
 /**
  * Undocumented class
  */
@@ -20,8 +18,7 @@ class NewsKernel
      *
      * @var array
      */
-    protected static $aliases = [
-        // Modules News
+    public static $aliases = [
         'NewsAutomated'     => 'Modules\News\Support\Facades\NewsAutomated',
         'News'              => 'Modules\News\Support\Facades\News',
         'NewsPublication'   => 'Modules\News\Support\Facades\NewsPublication',
@@ -42,7 +39,7 @@ class NewsKernel
      */
     public function __construct($directory)
     {
-        static::$module_path = dirname(dirname($directory)) . DS;
+        static::$module_path = $directory;
     }
 
     /**
@@ -64,83 +61,9 @@ class NewsKernel
      *
      * @return void
      */
-    public static function aliases_loader()
+    public function load_my_conf()
     {
-        AliasLoader::getInstance(static::$aliases)->register();
-
-        return static::$instance;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function load_constant()
-    {
-        include static::$module_path .'constants.php';
-
-        return static::$instance;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function load_helper()
-    {
-        include static::$module_path .'Support'. DS .'helpers.php';
-
-        return static::$instance;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function load_boxe()
-    {
-        include static::$module_path .'Boxe'. DS .'Boxe.php';
-
-        return static::$instance;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function load_route_web()
-    {
-        include static::$module_path .'Routes'. DS .'web'. DS .'routes.php';
-
-        return static::$instance;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function load_route_admin()
-    {
-        include static::$module_path .'Routes'. DS .'admin'. DS .'routes.php';
-
-        return static::$instance;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function load_route_api()
-    {
-        // include static::$module_path .'Routes'. DS .'api'. DS .'routes.php';
-
-        // return static::$instance;
+        // dump('test news load my conf module '. static::$module_path); 
     }
 
 }
