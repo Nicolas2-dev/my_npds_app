@@ -1,11 +1,88 @@
 <?php
 
+namespace Modules\ReseauxSociaux\Controllers\Admin;
 
-    // For More security
-    $f_meta_nom = 'reseaux-sociaux';
+use Modules\Npds\Support\Facades\Css;
+use Modules\Npds\Core\AdminController;
 
-    $f_titre = __d('reseauxsociaux', 'Module') . ' : ' . 'ReseauxSociaux';
-    $hlpfile = 'manuels/' . Config::get('npds.language') . '/social.html';
+
+/**
+ * Undocumented class
+ */
+class ReseauxSociaux extends AdminController
+{
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    protected $pdst = 0;
+
+    /**
+     * [$hlpfile description]
+     *
+     * @var [type]
+     */
+    protected $hlpfile = 'social';
+
+    /**
+     * [$short_menu_admin description]
+     *
+     * @var bool
+     */
+    protected $short_menu_admin = true;
+
+    /**
+     * [$adminhead description]
+     *
+     * @var [type]
+     */
+    protected $adminhead = true;
+
+    /**
+     * [$f_meta_nom description]
+     *
+     * @var [type]
+     */
+    protected $f_meta_nom = 'reseaux-sociaux';
+
+
+    /**
+     * Call the parent construct
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        $this->f_titre = __d('reseauxsociaux', 'Module') . ' : ' . $this->module;
+
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
 
     /**
      * Undocumented function
@@ -181,7 +258,7 @@
         $content .= "/*                                                                      */\n";
         $content .= "/* Reseaux-sociaux Add-On ... ver. 1.0                                  */\n";
         $content .= "/*                                                                      */\n";
-        $content .= "/* App Copyright (c) 2002-" . date('Y') . " by Philippe Brunier                     */\n";
+        $content .= "/* App Copyright (c) 2002-" . date('Y') . " by Philippe Brunier         */\n";
         $content .= "/*                                                                      */\n";
         $content .= "/* This program is free software. You can redistribute it and/or modify */\n";
         $content .= "/* it under the terms of the GNU General Public License as published by */\n";
@@ -213,3 +290,4 @@
         @chmod("modules/ReseauxSociaux/reseaux-sociaux.conf.php", 0666);
     }
 
+}

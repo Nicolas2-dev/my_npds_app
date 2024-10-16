@@ -1,15 +1,61 @@
 <?php
 
+namespace Modules\ReseauxSociaux\Controllers\Front;
 
-    if (!$user) {
-        header('location:index.php');
+use Modules\Npds\Support\Sanitize;
+use Modules\Npds\Support\Facades\Css;
+use Modules\Npds\Core\FrontController;
+use Modules\Npds\Support\Facades\Hack;
+use Modules\Users\Support\Facades\User;
+use Modules\Users\Support\Facades\UserMenu;
+
+
+class ReseauxSociaux extends FrontController
+{
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    protected $pdst = 0;
+
+
+    /**
+     * [__construct description]
+     *
+     * @return  [type]  [return description]
+     */
+    public function __construct()
+    {
+        parent::__construct();
     }
 
-    global $cookie;
-    $userdata = User::get_userdata_from_id($cookie[0]);
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
 
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
 
-    include("modules/ReseauxSociaux/lang/rs-Config::get('npds.language').php");
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
 
     /**
      * Undocumented function
@@ -18,7 +64,13 @@
      */
     public function ListReseaux()
     {
-        global $userdata;
+        global $userdata, $cookie;
+
+        if (!$user) {
+            header('location:index.php');
+        }
+    
+        $userdata = User::get_userdata_from_id($cookie[0]);
 
         if (file_exists("modules/ReseauxSociaux/config/reseaux-sociaux.conf.php")) {
             include("modules/ReseauxSociaux/config/reseaux-sociaux.conf.php");
@@ -55,15 +107,19 @@
      */
     public function EditReseaux()
     {
+        global $cookie; 
+
         $res_id = array();
 
-        global $userdata;
+        if (!$user) {
+            header('location:index.php');
+        }
+    
+        $userdata = User::get_userdata_from_id($cookie[0]);
 
         if (file_exists("modules/ReseauxSociaux/config/reseaux-sociaux.conf.php")) {
             include("modules/ReseauxSociaux/config/reseaux-sociaux.conf.php");
         }
-
-        global $cookie;
 
         $posterdata_extend = User::get_userdata_extend_from_id($cookie[0]);
 
@@ -173,3 +229,4 @@
         Header("Location: modules.php?&ModPath=ReseauxSociaux&ModStart=$ModStart");
     }
 
+}
