@@ -19,7 +19,7 @@ class SectionsKernel
      * @var array
      */
     public static $aliases = [
-        // 
+        'Section'        => 'Modules\Sections\Support\Facades\Section',
     ];
 
     /**
