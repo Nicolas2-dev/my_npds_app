@@ -20,9 +20,9 @@ echo '
 ';
 
 if (defined('CITRON')) {
-    if (function_exists('language_iso'))
+    if (method_exists(\Modules\Npds\Library\LanguageManager::class, 'language_iso'))
         echo '
-        <script type="text/javascript"> var tarteaucitronForceLanguage = "' . language_iso(1, '', '') . '"; </script>
+        <script type="text/javascript"> var tarteaucitronForceLanguage = "' . Language::language_iso(1, '', '') . '"; </script>
         <script type="text/javascript" src="' . site_url('assets/shared/tarteaucitron/tarteaucitron.js') . '"></script>
         <script type="text/javascript">
             //<![CDATA[

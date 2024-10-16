@@ -30,40 +30,70 @@ namespace Modules\Upload\Library;
  * @version 1.0 - Initial class
  * @access public
  */
-
 class Upload
 {
-    var $maxupload_size;
 
-    var $errors;
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public $maxupload_size;
 
-    var $isPosted;
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public $errors;
 
-    var $HTTP_POST_FILES;
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public $isPosted;
+
+    /**
+     * Undocumented variable
+     *
+     * @var [type]
+     */
+    public $HTTP_POST_FILES;
 
 
+    /**
+     * Undocumented function
+     */
     public function __construct()
     {
         global $HTTP_POST_FILES, $_FILES;
 
-        if (!empty($HTTP_POST_FILES))
+        if (!empty($HTTP_POST_FILES)) {
             $fic = $HTTP_POST_FILES;
-        else
+        } else {
             $fic = $_FILES;
+        }
 
         $this->HTTP_POST_FILES = $fic;
 
-        if (empty($fic))
+        if (empty($fic)) {
             $this->isPosted = false;
-        else
+        } else {
             $this->isPosted = true;
+        }
     }
 
-    public function Upload()
-    {
-        self::__construct();
-    }
-
+    /**
+     * Undocumented function
+     *
+     * @param [type] $filename
+     * @param [type] $directory
+     * @param [type] $field
+     * @param [type] $overwrite
+     * @param integer $mode
+     * @return void
+     */
     function saveAs($filename, $directory, $field, $overwrite, $mode = 0766)
     {
         if ($this->isPosted) {
@@ -101,18 +131,37 @@ class Upload
         }
     }
 
-    function getFilename($field)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $field
+     * @return void
+     */
+    public function getFilename($field)
     {
         return $this->HTTP_POST_FILES[$field]['name'];
     }
 
-    function getFileMimeType($field)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $field
+     * @return void
+     */
+    public function getFileMimeType($field)
     {
         return $this->HTTP_POST_FILES[$field]['type'];
     }
 
-    function getFileSize($field)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $field
+     * @return void
+     */
+    public function getFileSize($field)
     {
         return $this->HTTP_POST_FILES[$field]['size'];
     }
+
 }

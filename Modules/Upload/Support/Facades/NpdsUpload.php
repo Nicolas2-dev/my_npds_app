@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Theme\Support\Facades;
+namespace Modules\Upload\Support\Facades;
 
-use Modules\Theme\Library\ThemeManager;
+use Modules\Upload\Library\NpdsUploadManager;
 
 /**
  * Undocumented class
  */
-class Theme
+class NpdsUpload
 {
     /**
      * Undocumented function
@@ -18,7 +18,7 @@ class Theme
      */
     public static function __callStatic($method, $parameters)
     {
-        $instance = ThemeManager::getInstance();
+        $instance = NpdsUploadManager::getInstance();
 
         return call_user_func_array(array($instance, $method), $parameters);
     }

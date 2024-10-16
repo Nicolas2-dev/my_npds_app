@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Upload\Bootstrap;
+namespace Modules\Twitter\Bootstrap;
 
 /**
  * Undocumented class
  */
-class UploadKernel
+class TwitterKernel
 {
 
     /**
@@ -19,7 +19,7 @@ class UploadKernel
      * @var array
      */
     public static $aliases = [
-        'NpdsUpload'     => 'Modules\Upload\Support\Facades\NpdsUpload',
+        // 
     ];
 
     /**

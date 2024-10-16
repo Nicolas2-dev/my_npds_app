@@ -5,12 +5,12 @@ namespace Modules\Theme\Library;
 use Npds\Config\Config;
 use Modules\Npds\Support\Facades\Metalang;
 use Modules\Theme\Contracts\ThemeInterface;
-use Modules\Theme\Library\Traits\ThemeHeadTrait;
+use Modules\Theme\Support\Traits\ThemeHeadTrait;
 use Modules\News\Support\Traits\ThemeStorieTrait;
-use Modules\Theme\Library\Traits\ThemeFooterTrait;
-use Modules\Theme\Library\Traits\ThemeHeaderTrait;
+use Modules\Theme\Support\Traits\ThemeFooterTrait;
+use Modules\Theme\Support\Traits\ThemeHeaderTrait;
 use Modules\Blocks\Support\Traits\ThemeSideboxTrait;
-use Modules\Theme\Library\Traits\ThemeOnloadBodyTrait;
+use Modules\Theme\Support\Traits\ThemeOnloadBodyTrait;
 
 /**
  * Undocumented class

@@ -1,17 +1,5 @@
 <?php
 
-/************************************************************************/
-/* DUNE by App                                                         */
-/* ===========================                                          */
-/*                                                                      */
-/*                                                                      */
-/* App Copyright (c) 2002-2022 by Philippe Brunier                     */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
-
 $lepath = dirname($_SERVER['PHP_SELF']);
 
 $rech = '#(.*\/)(themes\/_skins)\/(.*)#';
@@ -66,7 +54,7 @@ switch ($skinametitre) {
 
 <head>
     <meta charset="utf-8" />
-    <title>App <?php echo $skinametitre; ?> skin by Bootswatch</title>
+    <title>Npds <?php echo $skinametitre; ?> skin by Bootswatch</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="<?php echo implode($result[1]); ?>assets/shared/font-awesome/css/all.min.css">
     <link rel="stylesheet" href="bootstrap.min.css" />
