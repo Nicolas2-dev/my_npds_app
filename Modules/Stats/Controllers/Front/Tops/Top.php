@@ -1,12 +1,23 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace Modules\Stats\Controllers\Front\Tops;
 
-use App\Controllers\Core\FrontController;
+use Npds\Supercache\SuperCacheEmpty;
+use Modules\Npds\Core\FrontController;
+use Npds\Supercache\SuperCacheManager;
+use Modules\Npds\Support\Facades\Language;
+use Modules\Npds\Support\Facades\Metalang;
 
 
-class FrontTop extends FrontController
+class Top extends FrontController
 {
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    protected $pdst = 0;
 
 
     /**
@@ -16,9 +27,40 @@ class FrontTop extends FrontController
      */
     public function __construct()
     {
-
+        parent::__construct();
     }
 
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function index()
     {
         if ($SuperCache) {
@@ -26,8 +68,6 @@ class FrontTop extends FrontController
         } else {
             $cache_obj = new SuperCacheEmpty();
         }
-        
-        include("header.php");
         
         if (($SuperCache) and (!$user)) {
             $cache_obj->startCachingPage();
@@ -50,7 +90,7 @@ class FrontTop extends FrontController
                     $Xcontent = ob_get_contents();
                 ob_end_clean();
         
-                echo meta_lang(aff_langue($Xcontent));
+                echo Metalang::meta_lang(Language::aff_langue($Xcontent));
             }
         }
         
@@ -58,9 +98,6 @@ class FrontTop extends FrontController
         if (($SuperCache) and (!$user)) {
             $cache_obj->endCachingPage();
         }
-        
-        include("footer.php");
-        
     }
 
 }

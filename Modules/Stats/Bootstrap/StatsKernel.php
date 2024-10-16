@@ -20,6 +20,7 @@ class StatsKernel
      */
     public static $aliases = [
         'Stat'          => 'Modules\Stats\Support\Facades\Stat',
+        'Map'           => 'Modules\Stats\Support\Facades\Map',
     ];
 
     /**

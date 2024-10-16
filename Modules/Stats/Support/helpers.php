@@ -1,9 +1,10 @@
 <?php
 
-use Modules\Stats\Library\StatManager;
+use Modules\Stats\Support\Facades\Stat;
 
-// Statistique
-
+/**
+ * 
+ */
 if (! function_exists('req_stat'))
 {
     /**
@@ -13,6 +14,7 @@ if (! function_exists('req_stat'))
      */
     function req_stat()
     {
-        return StatManager::getInstance()->req_stat();
+        return Stat::req_stat();
     }
+    
 }

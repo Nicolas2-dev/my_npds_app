@@ -1,84 +1,64 @@
 <?php
 
-namespace App\Controllers\Front;
-
-use App\Controllers\Core\FrontController;
+namespace Modules\Stats\Library;
 
 
-class FrontMap extends FrontController
+use Modules\Npds\Support\Facades\Auth;
+use Modules\Forum\Support\Facades\Forum;
+use Modules\Stats\Contracts\MapInterface;
+use Modules\Npds\Support\Facades\Language;
+
+
+class MapManager implements MapInterface 
 {
+
+    /**
+     * [$instance description]
+     *
+     * @var [type]
+     */
+    protected static $instance;
 
 
     /**
-     * [__construct description]
+     * [getInstance description]
      *
      * @return  [type]  [return description]
      */
-    public function __construct()
+    public static function getInstance()
     {
-
-    }
-
-    public function index()
-    {
-        include('header.php');
-
-        // Include cache manager classe
-        global $SuperCache;
-        if ($SuperCache) {
-            $cache_obj = new SuperCacheManager();
-            $CACHE_TIMINGS['map.php'] = 3600;
-            $CACHE_QUERYS['map.php'] = '^';
-            $cache_obj->startCachingPage();
-        } else
-            $cache_obj = new SuperCacheEmpty();
-        
-        if (($cache_obj->get_Genereting_Output() == 1) or ($cache_obj->get_Genereting_Output() == -1) or (!$SuperCache)) {
-            echo '
-            <h2>' . __d('stats', 'Plan du site') . '</h2>
-            <hr />';
-        
-            mapsections();
-            mapforum();
-            maptopics();
-            mapcategories();
-            mapfaq();
-        
-            echo '<br />';
-        
-            if (file_exists("themes/default/include/user.inc"))
-                include("themes/default/include/user.inc");
+        if (isset(static::$instance)) {
+            return static::$instance;
         }
-        
-        if ($SuperCache)
-            $cache_obj->endCachingPage();
-        
-        include "footer.php";
-        
+
+        return static::$instance = new static();
     }
 
-    function mapsections()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function mapsections()
     {
-        
-    
         $tmp = '';
         $result = sql_query("SELECT rubid, rubname FROM rubriques WHERE enligne='1' AND rubname<>'Divers' AND rubname<>'Presse-papiers' ORDER BY ordre");
         
         if (sql_num_rows($result) > 0) {
             while (list($rubid, $rubname) = sql_fetch_row($result)) {
                 if ($rubname != '')
-                    $tmp .= '<li>' . aff_langue($rubname);
+                    $tmp .= '<li>' . Language::aff_langue($rubname);
     
                 $result2 = sql_query("SELECT secid, secname, image, userlevel, intro FROM sections WHERE rubid='$rubid' AND (userlevel='0' OR userlevel='') ORDER BY ordre");
                 
                 if (sql_num_rows($result2) > 0) {
                     while (list($secid, $secname, $userlevel) = sql_fetch_row($result2)) {
-                        if (autorisation($userlevel)) {
-                            $tmp .= '<ul><li>' . aff_langue($secname);
+                        if (Auth::autorisation($userlevel)) {
+                            $tmp .= '<ul><li>' . Language::aff_langue($secname);
     
                             $result3 = sql_query("SELECT artid, title FROM seccont WHERE secid='$secid'");
                             while (list($artid, $title) = sql_fetch_row($result3)) {
-                                $tmp .= "<ul><li><a href=\"sections.php?op=viewarticle&amp;artid=$artid\">" . aff_langue($title) . '</a></li></ul>';
+                                $tmp .= "<ul><li><a href=\"sections.php?op=viewarticle&amp;artid=$artid\">" . Language::aff_langue($title) . '</a></li></ul>';
                             }
     
                             $tmp .= '</li>
@@ -106,19 +86,26 @@ class FrontMap extends FrontController
     
         sql_free_result($result);
     
-        if (isset($result2))
+        if (isset($result2)) {
             sql_free_result($result2);
+        }
     
-        if (isset($result3))
+        if (isset($result3)) {
             sql_free_result($result3);
+        }
     }
     
-    function mapforum()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function mapforum()
     {
         $tmp = '';
-        $tmp .= RecentForumPosts_fab('', 10, 0, false, 50, false, '<li>', false);
+        $tmp .= Forum::RecentForumPosts_fab('', 10, 0, false, 50, false, '<li>', false);
     
-        if ($tmp != '')
+        if ($tmp != '') {
             echo '
             <h3>
                 <a data-bs-toggle="collapse" href="#collapseForums" aria-expanded="false" aria-controls="collapseForums"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'Forums') . '
@@ -129,24 +116,28 @@ class FrontMap extends FrontController
                 </div>
             </div>
             <hr />';
+        }
     }
     
-    function maptopics()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function maptopics()
     {
-        
-    
         $lis_top = '';
     
         $result = sql_query("SELECT topicid, topictext FROM topics ORDER BY topicname");
     
         while (list($topicid, $topictext) = sql_fetch_row($result)) {
-            $result2 = sql_query("SELECT sid FROM stories WHERE topic='$topicid'");
+            $result2    = sql_query("SELECT sid FROM stories WHERE topic='$topicid'");
             $nb_article = sql_num_rows($result2);
     
-            $lis_top .= '<li><a href="search.php?query=&amp;topic=' . $topicid . '">' . aff_langue($topictext) . '</a>&nbsp;<span class="">(' . $nb_article . ')</span></li>';
+            $lis_top .= '<li><a href="search.php?query=&amp;topic=' . $topicid . '">' . Language::aff_langue($topictext) . '</a>&nbsp;<span class="">(' . $nb_article . ')</span></li>';
         }
     
-        if ($lis_top != '')
+        if ($lis_top != '') {
             echo '
             <h3>
                 <a class="" data-bs-toggle="collapse" href="#collapseTopics" aria-expanded="false" aria-controls="collapseTopics"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'Sujets') . '
@@ -158,26 +149,30 @@ class FrontMap extends FrontController
                 </div>
             </div>
             <hr />';
+        }
     
         sql_free_result($result);
         sql_free_result($result2);
     }
     
-    function mapcategories()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function mapcategories()
     {
-        
-    
         $lis_cat = '';
         $result = sql_query("SELECT catid, title FROM stories_cat ORDER BY title");
     
         while (list($catid, $title) = sql_fetch_row($result)) {
-            $result2 = sql_query("SELECT sid FROM stories WHERE catid='$catid'");
+            $result2    = sql_query("SELECT sid FROM stories WHERE catid='$catid'");
             $nb_article = sql_num_rows($result2);
     
-            $lis_cat .= '<li><a href="index.php?op=newindex&amp;catid=' . $catid . '">' . aff_langue($title) . '</a> <span class="float-end badge bg-secondary"> ' . $nb_article . ' </span></li>' . "\n";
+            $lis_cat .= '<li><a href="index.php?op=newindex&amp;catid=' . $catid . '">' . Language::aff_langue($title) . '</a> <span class="float-end badge bg-secondary"> ' . $nb_article . ' </span></li>' . "\n";
         }
     
-        if ($lis_cat != '')
+        if ($lis_cat != '') {
             echo '
             <h3>
                 <a class="" data-bs-toggle="collapse" href="#collapseCategories" aria-expanded="false" aria-controls="collapseCategories"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'Catégories') . '
@@ -189,27 +184,32 @@ class FrontMap extends FrontController
                 </div>
             </div>
             <hr />';
+        }
     
         sql_free_result($result);
     
-        if (isset($result2))
+        if (isset($result2)) {
             sql_free_result($result2);
+        }
     }
     
-    function mapfaq()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function mapfaq()
     {
-        
-    
         $lis_faq = '';
     
         $result = sql_query("SELECT id_cat, categories FROM faqcategories ORDER BY id_cat ASC");
     
         while (list($id_cat, $categories) = sql_fetch_row($result)) {
-            $catname = aff_langue($categories);
+            $catname = Language::aff_langue($categories);
             $lis_faq .= "<li><a href=\"faq.php?id_cat=$id_cat&amp;myfaq=yes&amp;categories=" . urlencode($catname) . "\">" . $catname . "</a></li>\n";
         }
     
-        if ($lis_faq != '')
+        if ($lis_faq != '') {
             echo '
             <h3>
                 <a class="" data-bs-toggle="collapse" href="#collapseFaq" aria-expanded="false" aria-controls="collapseFaq"><i class="toggle-icon fa fa-caret-down"></i></a>&nbsp;' . __d('stats', 'FAQ - Questions fréquentes') . '
@@ -221,9 +221,9 @@ class FrontMap extends FrontController
                 </div>
             </div>
             <hr />';
+        }
     
         sql_free_result($result);
     }
-
 
 }

@@ -2,12 +2,12 @@
 
 namespace Modules\Stats\Support\Facades;
 
-use Modules\Stats\Library\StatManager;
+use Modules\Stats\Library\SitemapManager;
 
 /**
  * Undocumented class
  */
-class Stat
+class Sitemap
 {
     /**
      * Undocumented function
@@ -18,7 +18,7 @@ class Stat
      */
     public static function __callStatic($method, $parameters)
     {
-        $instance = StatManager::getInstance();
+        $instance = SitemapManager::getInstance();
 
         return call_user_func_array(array($instance, $method), $parameters);
     }

@@ -5,6 +5,7 @@ namespace Modules\Stats\Library;
 use Npds\Config\Config;
 use Modules\Users\Models\User;
 use Modules\Npds\Models\Counter;
+use Modules\Npds\Support\Sanitize;
 use Modules\Stats\Contracts\StatInterface;
 
 
@@ -79,7 +80,7 @@ class StatManager implements StatInterface
      */
     public function generatePourcentageAndTotal($count, $total)
     {
-        $tab[] = wrh($count);
+        $tab[] = Sanitize::wrh($count);
         $tab[] = substr(sprintf('%f', 100 * $count / $total), 0, 5);
 
         return $tab;
@@ -132,6 +133,11 @@ class StatManager implements StatInterface
         }        
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function stats()
     {
         $result = sql_query("SELECT uid FROM users");
@@ -171,6 +177,5 @@ class StatManager implements StatInterface
         $cat2 = $result ? sql_num_rows($result) : 0;
         $cat = $cat1 + $cat2;        
     }
-
 
 }

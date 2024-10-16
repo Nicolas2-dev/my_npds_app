@@ -1,46 +1,44 @@
 <?php
 
-namespace App\Controllers\Front;
-
-use App\Controllers\Core\FrontController;
+namespace Modules\Stats\Library;
 
 
-class FrontSitemap extends FrontController
+use Modules\Stats\Contracts\SitemapInterface;
+
+
+class SitemapManager implements SitemapInterface 
 {
+
+    /**
+     * [$instance description]
+     *
+     * @var [type]
+     */
+    protected static $instance;
 
 
     /**
-     * [__construct description]
+     * [getInstance description]
      *
      * @return  [type]  [return description]
      */
-    public function __construct()
+    public static function getInstance()
     {
+        if (isset(static::$instance)) {
+            return static::$instance;
+        }
 
+        return static::$instance = new static();
     }
 
-    public function index()
+    /**
+     * Undocumented function
+     *
+     * @param [type] $prio
+     * @return void
+     */
+    public function sitemapforum($prio)
     {
-        /* -----------------------------------------*/
-        // http://www.example.com/cache/sitemap.xml 
-        $filename = "storage/sitemap/sitemap.xml";
-
-        // delais = 6 heures (21600 secondes)
-        $refresh = 21600;
-
-        global $PAGES;
-        if (file_exists($filename)) {
-            if (time() - filemtime($filename) - $refresh > 0) {
-                sitemap_create($PAGES, $filename);
-            }
-        } else
-            sitemap_create($PAGES, $filename);
-    }
-
-    function sitemapforum($prio)
-    {
-        
-    
         $tmp = '';
     
         $result = sql_query("SELECT forum_id FROM forums WHERE forum_access='0' ORDER BY forum_id");
@@ -67,13 +65,17 @@ class FrontSitemap extends FrontController
             }
         }
     
-        return ($tmp);
+        return $tmp;
     }
     
-    function sitemaparticle($prio)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $prio
+     * @return void
+     */
+    public function sitemaparticle($prio)
     {
-        
-        
         $tmp = '';
     
         $result = sql_query("SELECT sid,time FROM stories WHERE ihome='0' AND archive='0' ORDER BY sid");
@@ -88,13 +90,17 @@ class FrontSitemap extends FrontController
             $tmp .= "</url>\n\n";
         }
     
-        return ($tmp);
+        return $tmp;
     }
     
-    function sitemaprub($prio)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $prio
+     * @return void
+     */
+    public function sitemaprub($prio)
     {
-        
-        
         $tmp = '';
     
         // Sommaire des rubriques
@@ -117,13 +123,17 @@ class FrontSitemap extends FrontController
             $tmp .= "</url>\n\n";
         }
     
-        return ($tmp);
+        return $tmp;
     }
     
-    function sitemapdown($prio)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $prio
+     * @return void
+     */
+    public function sitemapdown($prio)
     {
-        
-        
         $tmp = '';
     
         // Sommaire des downloads
@@ -145,10 +155,16 @@ class FrontSitemap extends FrontController
             $tmp .= "</url>\n\n";
         }
     
-        return ($tmp);
+        return $tmp;
     }
     
-    function sitemapothers($PAGES)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $PAGES
+     * @return void
+     */
+    public function sitemapothers($PAGES)
     { 
         $tmp = '';
         
@@ -165,37 +181,7 @@ class FrontSitemap extends FrontController
             }
         }
     
-        return ($tmp);
-    }
-    
-    function sitemap_create($PAGES, $filename)
-    {
-        $ibid  = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        $ibid .= "<urlset\n";
-        $ibid .= "xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"\n";
-        $ibid .= "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n";
-        $ibid .= "xsi:schemaLocation=\"http://www.sitemaps.org/schemas/sitemap/0.9\n http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\">\n\n";
-    
-        if (isset($PAGES['article.php']['sitemap']))
-            $ibid .= sitemaparticle($PAGES['article.php']['sitemap']);
-    
-        if (isset($PAGES['forum.php']['sitemap']))
-            $ibid .= sitemapforum($PAGES['forum.php']['sitemap']);
-    
-        if (isset($PAGES['sections.php']['sitemap']))
-            $ibid .= sitemaprub($PAGES['sections.php']['sitemap']);
-    
-        if (isset($PAGES['download.php']['sitemap']))
-            $ibid .= sitemapdown($PAGES['download.php']['sitemap']);
-    
-        $ibid .= sitemapothers($PAGES);
-        $ibid .= "</urlset>";
-    
-        $file = fopen($filename, "w");
-        fwrite($file, $ibid);
-        fclose($file);
-    
-        Ecr_Log("sitemap", "sitemap generated : " . date("H:i:s", time()), "");
+        return $tmp;
     }
 
 }
