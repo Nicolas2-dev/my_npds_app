@@ -1,13 +1,20 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace Modules\Reviews\Controllers\Front;
 
 use Npds\Config\Config;
-use App\Controllers\Core\FrontController;
+use Modules\Npds\Core\FrontController;
 
 
-class FrontReviews extends FrontController
+class Reviews extends FrontController
 {
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    protected $pdst = 0;
 
 
     /**
@@ -17,78 +24,77 @@ class FrontReviews extends FrontController
      */
     public function __construct()
     {
-        // settype($op, 'string');
-        // settype($hits, 'integer');
-        // //settype($id,'integer');
-        // settype($cover, 'string');
-        // settype($asb_question, 'string');
-        // settype($asb_reponse, 'string');
-        
-        // switch ($op) {
-        //     case 'showcontent':
-        //         showcontent($id);
-        //         break;
-        
-        //     case 'write_review':
-        //         write_review();
-        //         break;
-        
-        //     case 'preview_review':
-        //         preview_review($title, $text, $reviewer, $email, $score, $cover, $url, $url_title, $hits, $id);
-        //         break;
-        
-        //     case 'add_reviews':
-        //         send_review($date, $title, $text, $reviewer, $email, $score, $cover, $url, $url_title, $hits, $id, $asb_question, $asb_reponse);
-        //         break;
-        
-        //     case 'del_review':
-        //         del_review($id_del);
-        //         break;
-        
-        //     case 'mod_review':
-        //         mod_review($id);
-        //         break;
-        
-        //     case 'sort':
-        //         reviews($field, $order);
-        //         break;
-                
-        //     default:
-        //         reviews('date', 'DESC');
-        //         break;
-        // }
+        parent::__construct();
     }
 
-    function display_score($score)
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
     {
-        $image = '<i class="fa fa-star"></i>';
-        $halfimage = '<i class="fas fa-star-half-alt"></i>';
-        $full = '<i class="fa fa-star"></i>';
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $score
+     * @return void
+     */
+    public function display_score($score)
+    {
+        $image      = '<i class="fa fa-star"></i>';
+        $halfimage  = '<i class="fas fa-star-half-alt"></i>';
+        $full       = '<i class="fa fa-star"></i>';
     
         if ($score == 10) {
-            for ($i = 0; $i < 5; $i++)
+            for ($i = 0; $i < 5; $i++) {
                 echo $full;
+            }
         } else if ($score % 2) {
             $score -= 1;
             $score /= 2;
     
-            for ($i = 0; $i < $score; $i++)
+            for ($i = 0; $i < $score; $i++) {
                 echo $image;
+            }
     
             echo $halfimage;
         } else {
             $score /= 2;
     
-            for ($i = 0; $i < $score; $i++)
+            for ($i = 0; $i < $score; $i++) {
                 echo $image;
+            }
         }
     }
     
-    function write_review()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function write_review()
     {
         global $admin, $user, $cookie;
-    
-        include('header.php');
     
         echo '
         <h2>' . __d('reviews', 'Ecrire une critique') . '</h2>
@@ -120,7 +126,7 @@ class FrontReviews extends FrontController
                 <span class="help-block text-end" id="countcar_email_rev"></span>
             </div>';
     
-        } else
+        } else {
             echo '
             <div class="form-floating mb-3">
                 <input class="form-control" type="text" id="reviewer_rev" name="reviewer" required="required" />
@@ -131,7 +137,8 @@ class FrontReviews extends FrontController
                 <label for="email_rev">' . __d('reviews', 'Votre adresse Email') . '</label>
                 <span class="help-block text-end" id="countcar_email_rev"></span>
             </div>';
-    
+        }
+
         echo '
             <div class="form-floating mb-3">
                 <select class="form-select" id="score_rev" name="score">
@@ -191,17 +198,30 @@ class FrontReviews extends FrontController
         adminfoot('fv', '', $arg1, 'foo');
     }
     
-    function preview_review($title, $text, $reviewer, $email, $score, $cover, $url, $url_title, $hits, $id)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $title
+     * @param [type] $text
+     * @param [type] $reviewer
+     * @param [type] $email
+     * @param [type] $score
+     * @param [type] $cover
+     * @param [type] $url
+     * @param [type] $url_title
+     * @param [type] $hits
+     * @param [type] $id
+     * @return void
+     */
+    public function preview_review($title, $text, $reviewer, $email, $score, $cover, $url, $url_title, $hits, $id)
     {
         global $admin;
     
-        $title = stripslashes(strip_tags($title));
-        $text = stripslashes(removeHack(conv2br($text)));
-        $reviewer = stripslashes(strip_tags($reviewer));
-        $url_title = stripslashes(strip_tags($url_title));
-        $error = '';
-    
-        include('header.php');
+        $title      = stripslashes(strip_tags($title));
+        $text       = stripslashes(removeHack(conv2br($text)));
+        $reviewer   = stripslashes(strip_tags($reviewer));
+        $url_title  = stripslashes(strip_tags($url_title));
+        $error      = '';
     
         echo '<h2 class="mb-4">';
         echo $id != 0 ? __d('reviews', 'Modification d\'une critique') : __d('reviews', 'Ecrire une critique');
@@ -238,8 +258,6 @@ class FrontReviews extends FrontController
                 echo '<div class="alert alert-danger">' . __d('reviews', 'Email non valide (ex.: prenom.nom@hotmail.com)') . '</div>';
             }
     
-            include_once('functions.php');
-    
             if (checkdnsmail($email) === false) {
                 $error = 1;
                 echo '<div class="alert alert-danger">' . __d('reviews', 'Erreur : DNS ou serveur de mail incorrect') . '</div>';
@@ -249,14 +267,14 @@ class FrontReviews extends FrontController
         if ((($url_title != '' && $url == '') || ($url_title == "" && $url != "")) and (!Config::get('npds.short_review'))) {
             $error = 1;
             echo '<div class="alert alert-danger">' . __d('reviews', 'Vous devez entrer un titre de lien et une adresse relative, ou laisser les deux zones vides') . '</div>';
-        } else if (($url != "") && (!preg_match('#^http(s)?://#i', $url))) {
+        } elseif (($url != "") && (!preg_match('#^http(s)?://#i', $url))) {
             $error = 1;
             echo '<div class="alert alert-danger">' . __d('reviews', 'Site web officiel. Veillez à ce que votre url commence bien par') . ' http(s)://</div>';
         }
     
-        if ($error == 1)
+        if ($error == 1) {
             echo '<button class="btn btn-secondary" type="button" onclick="history.go(-1)"><i class="fa fa-lg fa-undo"></i></button>';
-        else {
+        } else {
             $fdate = date(str_replace('%', '', __d('reviews', 'linksdatestring')), time() + ((int) Config::get('npds.gmt') * 3600));
     
             echo __d('reviews', 'Critique');
@@ -266,9 +284,10 @@ class FrontReviews extends FrontController
             <hr />
             <h3>' . stripslashes($title) . '</h3>';
     
-            if ($cover != '')
+            if ($cover != '') {
                 echo '<img class="img-fluid" src="assets/images/reviews/' . $cover . '" alt="img_" />';
-    
+            }
+
             echo $text;
     
             echo '
@@ -281,9 +300,10 @@ class FrontReviews extends FrontController
     
             echo '</span>';
     
-            if ($url != '')
+            if ($url != '') {
                 echo '<br /><strong>' . __d('reviews', 'Lien relatif') . ' :</strong> <a href="' . $url . '" target="_blank">' . $url_title . '</a>';
-    
+            }
+
             if ($id != 0) {
                 echo '<br /><strong>' . __d('reviews', 'ID de la critique') . ' :</strong> ' . $id . '<br />
                 <strong>' . __d('reviews', 'Hits') . ' :</strong> ' . $hits . '<br />';
@@ -306,8 +326,9 @@ class FrontReviews extends FrontController
                 <input type="hidden" name="op" value="add_reviews" />
                 <p class="my-3">' . __d('reviews', 'Cela semble-t-il correct ?') . '</p>';
     
-            if (!$admin)
+            if (!$admin) {
                 echo Q_spambot();
+            }
     
             $consent = '[french]Pour conna&icirc;tre et exercer vos droits notamment de retrait de votre consentement &agrave; l\'utilisation des donn&eacute;es collect&eacute;es veuillez consulter notre <a href="static.php?op=politiqueconf.html&amp;App=1&amp;metalang=1">politique de confidentialit&eacute;</a>.[/french][english]To know and exercise your rights, in particular to withdraw your consent to the use of the data collected, please consult our <a href="static.php?op=politiqueconf.html&amp;App=1&amp;metalang=1">privacy policy</a>.[/english][spanish]Para conocer y ejercer sus derechos, en particular para retirar su consentimiento para el uso de los datos recopilados, consulte nuestra <a href="static.php?op=politiqueconf.html&amp;App=1&amp;metalang=1">pol&iacute;tica de privacidad</a>.[/spanish][german]Um Ihre Rechte zu kennen und auszu&uuml;ben, insbesondere um Ihre Einwilligung zur Nutzung der erhobenen Daten zu widerrufen, konsultieren Sie bitte unsere <a href="static.php?op=politiqueconf.html&amp;App=1&amp;metalang=1">Datenschutzerkl&auml;rung</a>.[/german][chinese]&#x8981;&#x4E86;&#x89E3;&#x5E76;&#x884C;&#x4F7F;&#x60A8;&#x7684;&#x6743;&#x5229;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x8981;&#x64A4;&#x56DE;&#x60A8;&#x5BF9;&#x6240;&#x6536;&#x96C6;&#x6570;&#x636E;&#x7684;&#x4F7F;&#x7528;&#x7684;&#x540C;&#x610F;&#xFF0C;&#x8BF7;&#x67E5;&#x9605;&#x6211;&#x4EEC;<a href="static.php?op=politiqueconf.html&#x26;App=1&#x26;metalang=1">&#x7684;&#x9690;&#x79C1;&#x653F;&#x7B56;</a>&#x3002;[/chinese]';
             $accept = "[french]En soumettant ce formulaire j'accepte que les informations saisies soient exploit&#xE9;es dans le cadre de l'utilisation et du fonctionnement de ce site.[/french][english]By submitting this form, I accept that the information entered will be used in the context of the use and operation of this website.[/english][spanish]Al enviar este formulario, acepto que la informaci&oacute;n ingresada se utilizar&aacute; en el contexto del uso y funcionamiento de este sitio web.[/spanish][german]Mit dem Absenden dieses Formulars erkl&auml;re ich mich damit einverstanden, dass die eingegebenen Informationen im Rahmen der Nutzung und des Betriebs dieser Website verwendet werden.[/german][chinese]&#x63D0;&#x4EA4;&#x6B64;&#x8868;&#x683C;&#x5373;&#x8868;&#x793A;&#x6211;&#x63A5;&#x53D7;&#x6240;&#x8F93;&#x5165;&#x7684;&#x4FE1;&#x606F;&#x5C06;&#x5728;&#x672C;&#x7F51;&#x7AD9;&#x7684;&#x4F7F;&#x7528;&#x548C;&#x64CD;&#x4F5C;&#x8303;&#x56F4;&#x5185;&#x4F7F;&#x7528;&#x3002;[/chinese]";
@@ -335,13 +356,15 @@ class FrontReviews extends FrontController
                 </div>
             </div>';
     
-            if ($id != 0) 
+            if ($id != 0) {
                 $word = __d('reviews', 'modifié');
-            else 
+            } else {
                 $word = __d('reviews', 'ajouté');
+            }
     
-            if ($admin)
+            if ($admin) {
                 echo '<div class="alert alert-success"><strong>' . __d('reviews', 'Note :') . '</strong> ' . __d('reviews', 'Actuellement connecté en administrateur... Cette critique sera') . ' ' . $word . ' ' . __d('reviews', 'immédiatement') . '.</div>';
+            }
         }
     
         echo '</form>';
@@ -352,30 +375,54 @@ class FrontReviews extends FrontController
         adminfoot('fv', '', $arg1, 'foo');
     }
     
-    function reversedate($myrow)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $myrow
+     * @return void
+     */
+    public function reversedate($myrow)
     {
         if (substr($myrow, 2, 1) == '-') {
-            $day = substr($myrow, 0, 2);
-            $month = substr($myrow, 3, 2);
-            $year = substr($myrow, 6, 4);
+            $day    = substr($myrow, 0, 2);
+            $month  = substr($myrow, 3, 2);
+            $year   = substr($myrow, 6, 4);
         } else {
-            $day = substr($myrow, 8, 2);
-            $month = substr($myrow, 5, 2);
-            $year = substr($myrow, 0, 4);
+            $day    = substr($myrow, 8, 2);
+            $month  = substr($myrow, 5, 2);
+            $year   = substr($myrow, 0, 4);
         }
     
         return ($year . '-' . $month . '-' . $day);
     }
     
-    function send_review($date, $title, $text, $reviewer, $email, $score, $cover, $url, $url_title, $hits, $id, $asb_question, $asb_reponse)
+    /**
+     * case 'add_reviews': => send_review($date, $title, $text, $reviewer, $email, $score, $cover, $url, $url_title, $hits, $id, $asb_question, $asb_reponse);
+     * 
+     * Undocumented function
+     *
+     * @param [type] $date
+     * @param [type] $title
+     * @param [type] $text
+     * @param [type] $reviewer
+     * @param [type] $email
+     * @param [type] $score
+     * @param [type] $cover
+     * @param [type] $url
+     * @param [type] $url_title
+     * @param [type] $hits
+     * @param [type] $id
+     * @param [type] $asb_question
+     * @param [type] $asb_reponse
+     * @return void
+     */
+    public function send_review($date, $title, $text, $reviewer, $email, $score, $cover, $url, $url_title, $hits, $id, $asb_question, $asb_reponse)
     {
         global $admin, $user;
     
-        include('header.php');
-    
-        $date = reversedate($date);
-        $title = stripslashes(FixQuotes(strip_tags($title)));
-        $text = stripslashes(Fixquotes(urldecode(removeHack($text))));
+        $date   = reversedate($date);
+        $title  = stripslashes(FixQuotes(strip_tags($title)));
+        $text   = stripslashes(Fixquotes(urldecode(removeHack($text))));
     
         if (!$user and !$admin) {
             //anti_spambot
@@ -386,27 +433,29 @@ class FrontReviews extends FrontController
             }
         }
     
-        if ($id != 0)
+        if ($id != 0) {
             echo '<h2>' . __d('reviews', 'Modification d\'une critique') . '</h2>';
-        else
+        } else {
             echo '<h2>' . __d('reviews', 'Ecrire une critique') . '</h2>';
-    
+        }
+
         echo '
         <hr />
         <div class="alert alert-success">';
     
-        if ($id != 0)
+        if ($id != 0) {
             echo __d('reviews', 'Merci d\'avoir modifié cette critique') . '.';
-        else
+        } else {
             echo __d('reviews', 'Merci d\'avoir posté cette critique') . ', ' . $reviewer;
-    
+        }
+
         echo '<br />';
     
         if (($admin) && ($id == 0)) {
             sql_query("INSERT INTO reviews VALUES (NULL, '$date', '$title', '$text', '$reviewer', '$email', '$score', '$cover', '$url', '$url_title', '1')");
             
             echo __d('reviews', 'Dès maintenant disponible dans la base de données des critiques.');
-        } else if (($admin) && ($id != 0)) {
+        } elseif (($admin) && ($id != 0)) {
             sql_query("UPDATE reviews SET date='$date', title='$title', text='$text', reviewer='$reviewer', email='$email', score='$score', cover='$cover', url='$url', url_title='$url_title', hits='$hits' WHERE id='$id'");
             
             echo __d('reviews', 'Dès maintenant disponible dans la base de données des critiques.');
@@ -419,21 +468,26 @@ class FrontReviews extends FrontController
         echo '
         </div>
         <a class="btn btn-secondary" href="reviews.php" title="' . __d('reviews', 'Retour à l\'index des critiques') . '"><i class="fa fa-lg fa-undo"></i>  ' . __d('reviews', 'Retour à l\'index des critiques') . '</a>';
-        
-       include("footer.php");
     }
     
-    function reviews($field, $order)
+    /**
+     * default:     => reviews('date', 'DESC');
+     * case 'sort': => reviews($field, $order);
+     * 
+     * Undocumented function
+     *
+     * @param [type] $field
+     * @param [type] $order
+     * @return void
+     */
+    public function reviews($field, $order)
     {
-        
-    
-        include('header.php');
-    
         $r_result = sql_query("SELECT title, description FROM reviews_main");
         list($r_title, $r_description) = sql_fetch_row($r_result);
         
-        if ($order != "ASC" and $order != "DESC") 
+        if ($order != "ASC" and $order != "DESC") {
             $order = "ASC";
+        }
         
         switch ($field) {
             case 'reviewer':
@@ -511,12 +565,12 @@ class FrontReviews extends FrontController
             <tbody>';
     
             while ($myrow = sql_fetch_assoc($result)) {
-                $title = $myrow['title'];
-                $id = $myrow['id'];
-                $reviewer = $myrow['reviewer'];
-                $score = $myrow['score'];
-                $hits = $myrow['hits'];
-                $date = $myrow['date'];
+                $title      = $myrow['title'];
+                $id         = $myrow['id'];
+                $reviewer   = $myrow['reviewer'];
+                $score      = $myrow['score'];
+                $hits       = $myrow['hits'];
+                $date       = $myrow['date'];
     
                 echo '
                 <tr>
@@ -524,8 +578,9 @@ class FrontReviews extends FrontController
                    <td><a href="reviews.php?op=showcontent&amp;id=' . $id . '">' . ucfirst($title) . '</a></td>
                    <td>';
     
-                if ($reviewer != '') 
+                if ($reviewer != '') {
                     echo $reviewer;
+                }
     
                 echo '</td>
                    <td><span class="text-success">';
@@ -543,44 +598,49 @@ class FrontReviews extends FrontController
         }
     
         sql_free_result($result);
-    
-        include("footer.php");
     }
     
-    function f_date($xdate)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $xdate
+     * @return void
+     */
+    public function f_date($xdate)
     {
-        $year = substr($xdate, 0, 4);
-        $month = substr($xdate, 5, 2);
-        $day = substr($xdate, 8, 2);
-        $fdate = date(str_replace("%", '', __d('reviews', 'linksdatestring')), mktime(0, 0, 0, (int)$month, (int)$day, (int)$year));
-    
-        return $fdate;
+        $year   = substr($xdate, 0, 4);
+        $month  = substr($xdate, 5, 2);
+        $day    = substr($xdate, 8, 2);
+
+        return date(str_replace("%", '', __d('reviews', 'linksdatestring')), mktime(0, 0, 0, (int)$month, (int)$day, (int)$year));
     }
     
-    function showcontent($id)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function showcontent($id)
     {
         global $admin;
-    
-        include('header.php');
-    
-        //settype($id,'integer');
     
         sql_query("UPDATE reviews SET hits=hits+1 WHERE id='$id'");
     
         $result = sql_query("SELECT * FROM reviews WHERE id='$id'");
-        $myrow = sql_fetch_assoc($result);
+        $myrow  = sql_fetch_assoc($result);
     
-        $id =  $myrow['id'];
-        $fdate = f_date($myrow['date']);
-        $title = $myrow['title'];
-        $text = $myrow['text'];
-        $cover = $myrow['cover'];
-        $reviewer = $myrow['reviewer'];
-        $email = $myrow['email'];
-        $hits = $myrow['hits'];
-        $url = $myrow['url'];
-        $url_title = $myrow['url_title'];
-        $score = $myrow['score'];
+        $id         =  $myrow['id'];
+        $fdate      = f_date($myrow['date']);
+        $title      = $myrow['title'];
+        $text       = $myrow['text'];
+        $cover      = $myrow['cover'];
+        $reviewer   = $myrow['reviewer'];
+        $email      = $myrow['email'];
+        $hits       = $myrow['hits'];
+        $url        = $myrow['url'];
+        $url_title  = $myrow['url_title'];
+        $score      = $myrow['score'];
     
         echo '
         <h2>' . __d('reviews', 'Critiques') . '</h2>
@@ -593,8 +653,9 @@ class FrontReviews extends FrontController
         <hr />
         <h3 class="mb-3">' . $title . '</h3><br />';
     
-        if ($cover != '')
+        if ($cover != '') {
             echo '<img class="img-fluid" src="assets/images/reviews/' . $cover . '" />';
+        }
     
         echo $text;
     
@@ -602,12 +663,14 @@ class FrontReviews extends FrontController
             <br /><br />
             <div class="card card-body mb-3">';
     
-        if ($reviewer != '')
+        if ($reviewer != '') {
             echo '<div class="mb-2"><strong>' . __d('reviews', 'Le critique') . ' :</strong> <a href="mailto:' . anti_spam($email, 1) . '" >' . $reviewer . '</a></div>';
-        
-        if ($score != '')
+        }
+
+        if ($score != '') {
             echo '<div class="mb-2"><strong>' . __d('reviews', 'Note') . ' : </strong>';
-    
+        }
+
         echo '<span class="text-success">';
     
         display_score($score);
@@ -615,13 +678,14 @@ class FrontReviews extends FrontController
         echo '</span>
         </div>';
     
-        if ($url != '')
+        if ($url != '') {
             echo '<div class="mb-2"><strong>' . __d('reviews', 'Lien relatif') . ' : </strong> <a href="' . $url . '" target="_blank">' . $url_title . '</a></div>';
-        
+        }
+
         echo '<div><strong>' . __d('reviews', 'Hits : ') . '</strong><span class="badge bg-secondary">' . $hits . '</span></div>
         </div>';
     
-        if ($admin)
+        if ($admin) {
             echo '
             <nav class="d-flex justify-content-center">
                 <ul class="pagination pagination-sm">
@@ -636,6 +700,7 @@ class FrontReviews extends FrontController
                     </li>
                 </ul>
             </nav>';
+        }
     
         echo '</div>';
     
@@ -647,33 +712,33 @@ class FrontReviews extends FrontController
             include("modules/comments/reviews.conf.php");
             include("modules/comments/comments.php");
         }
-    
-        include("footer.php");
     }
     
-    function mod_review($id)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function mod_review($id)
     {
         global $admin;
     
-        include('header.php');
-    
-        settype($id, 'integer');
-    
         if (($id != 0) && ($admin)) {
             $result = sql_query("SELECT * FROM reviews WHERE id = '$id'");
-            $myrow =  sql_fetch_assoc($result);
+            $myrow  =  sql_fetch_assoc($result);
     
-            $id =  $myrow['id'];
-            $date = $myrow['date'];
-            $title = $myrow['title'];
-            $text = str_replace('<br />', '\r\n', $myrow['text']);
-            $cover = $myrow['cover'];
-            $reviewer = $myrow['reviewer'];
-            $email = $myrow['email'];
-            $hits = $myrow['hits'];
-            $url = $myrow['url'];
-            $url_title = $myrow['url_title'];
-            $score = $myrow['score'];
+            $id         =  $myrow['id'];
+            $date       = $myrow['date'];
+            $title      = $myrow['title'];
+            $text       = str_replace('<br />', '\r\n', $myrow['text']);
+            $cover      = $myrow['cover'];
+            $reviewer   = $myrow['reviewer'];
+            $email      = $myrow['email'];
+            $hits       = $myrow['hits'];
+            $url        = $myrow['url'];
+            $url_title  = $myrow['url_title'];
+            $score      = $myrow['score'];
     
             echo '
         <h2 class="mb-4">' . __d('reviews', 'Modification d\'une critique') . '</h2>
@@ -709,10 +774,11 @@ class FrontReviews extends FrontController
             $i = 1;
             $sel = '';
             do {
-                if ($i == $score) 
+                if ($i == $score) {
                     $sel = 'selected="selected" ';
-                else 
+                } else {
                     $sel = '';
+                }
     
                 echo '<option value="' . $i . '" ' . $sel . '>' . $i . '</option>';
     
@@ -800,11 +866,15 @@ class FrontReviews extends FrontController
         adminfoot('fv', $fv_parametres, $arg1, 'foo');
     }
     
-    function del_review($id_del)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id_del
+     * @return void
+     */
+    public function del_review($id_del)
     {
         global $admin;
-    
-        settype($id_del, "integer");
     
         if ($admin) {
             sql_query("DELETE FROM reviews WHERE id='$id_del'");
@@ -816,6 +886,7 @@ class FrontReviews extends FrontController
                 sql_query("DELETE FROM posts WHERE forum_id='$forum' AND topic_id='$id_del'");
             }
         }
+
         redirect_url("reviews.php");
     }
 

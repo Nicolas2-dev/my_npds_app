@@ -52,27 +52,4 @@ class ModuleManager implements ModuleInterface
         }
     }
 
-    /**
-     * [load_module description]
-     *
-     * @param   [type]  $ModPath   [$ModPath description]
-     * @param   [type]  $ModStart  [$ModStart description]
-     *
-     * @return  [type]             [return description]
-     */
-    // public function load_module($ModPath, $ModStart)
-    // {
-    //     if (filtre_module($ModPath) and filtre_module($ModStart)) {
-    //         if (file_exists("modules/$ModPath/$ModStart.php")) {
-    //             include("modules/$ModPath/$ModStart.php");
-                
-    //             die();
-    //         } else {
-    //             Access_Error();
-    //         }
-    //     } else {
-    //         Access_Error();
-    //     }        
-    // }
-
 }

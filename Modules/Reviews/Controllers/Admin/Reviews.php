@@ -5,7 +5,7 @@ namespace Modules\Reviews\Controllers\Admin;
 use Modules\Npds\Core\AdminController;
 
 
-class AdminReviews extends AdminController
+class Reviews extends AdminController
 {
 /**
      * [$pdst description]
@@ -19,7 +19,7 @@ class AdminReviews extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'reviews';
 
     /**
      * [$short_menu_admin description]
@@ -40,7 +40,7 @@ class AdminReviews extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'reviews';
 
 
     /**
@@ -58,7 +58,7 @@ class AdminReviews extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('reviews', 'Critiques');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -80,48 +80,28 @@ class AdminReviews extends AdminController
     }
 
     /**
-     * [__construct description]
+     * Undocumented function
      *
-     * @return  [type]  [return description]
+     * @param [type] $title
+     * @param [type] $description
+     * @return void
      */
-    // public function __construct()
-    // {
-        // $f_meta_nom = 'reviews';
-        // $f_titre = __d('reviews', 'Critiques');
-        
-        // //==> controle droit
-        // admindroits($aid, $f_meta_nom);
-        // //<== controle droit
-        
-
-        // $hlpfile = "language/manuels/Config::get('npds.language')/reviews.html";
-
-        // switch ($op) {
-        //     case 'reviews':
-        //         reviews();
-        //         break;
-        
-        //     case 'add_review':
-        //         add_review($id, $date, $title, $text, $reviewer, $email, $score, $cover, $url, $url_title);
-        //         break;
-        
-        //     case 'mod_main':
-        //         mod_main($title, $description);
-        //         break;
-        // }        
-    // }
-
-    function mod_main($title, $description)
+    public function mod_main($title, $description)
     {
-        $title = stripslashes(FixQuotes($title));
-        $description = stripslashes(FixQuotes($description));
+        $title          = stripslashes(FixQuotes($title));
+        $description    = stripslashes(FixQuotes($description));
     
         sql_query("UPDATE reviews_main SET title='$title', description='$description'");
     
         Header("Location: admin.php?op=reviews");
     }
     
-    function reviews()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function reviews()
     {
         $resultrm = sql_query("SELECT title, description FROM reviews_main");
         list($title, $description) = sql_fetch_row($resultrm);
@@ -154,8 +134,8 @@ class AdminReviews extends AdminController
         </form>
         <hr />';
     
-        $result = sql_query("SELECT * FROM reviews_add ORDER BY id");
-        $numrows = sql_num_rows($result);
+        $result     = sql_query("SELECT * FROM reviews_add ORDER BY id");
+        $numrows    = sql_num_rows($result);
     
         echo '<h3>' . __d('reviews', 'Critiques en attente de validation') . '<span class="badge bg-danger float-end">' . $numrows . '</span></h3>';
     
@@ -164,8 +144,8 @@ class AdminReviews extends AdminController
     
         if ($numrows > 0) {
             while (list($id, $date, $title, $text, $reviewer, $email, $score, $url, $url_title) = sql_fetch_row($result)) {
-                $title = stripslashes($title);
-                $text = stripslashes($text);
+                $title  = stripslashes($title);
+                $text   = stripslashes($text);
     
                 echo '
                 <h4 class="my-3">' . __d('reviews', 'Ajouter la critique N° : ') . ' ' . $id . '</h4>
@@ -303,12 +283,27 @@ class AdminReviews extends AdminController
         adminfoot('fv', '', $arg1, '');
     }
     
-    function add_review($id, $date, $title, $text, $reviewer, $email, $score, $cover, $url, $url_title)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @param [type] $date
+     * @param [type] $title
+     * @param [type] $text
+     * @param [type] $reviewer
+     * @param [type] $email
+     * @param [type] $score
+     * @param [type] $cover
+     * @param [type] $url
+     * @param [type] $url_title
+     * @return void
+     */
+    public function add_review($id, $date, $title, $text, $reviewer, $email, $score, $cover, $url, $url_title)
     {
-        $title = stripslashes(FixQuotes($title));
-        $text = stripslashes(FixQuotes($text));
-        $reviewer = stripslashes(FixQuotes($reviewer));
-        $email = stripslashes(FixQuotes($email));
+        $title      = stripslashes(FixQuotes($title));
+        $text       = stripslashes(FixQuotes($text));
+        $reviewer   = stripslashes(FixQuotes($reviewer));
+        $email      = stripslashes(FixQuotes($email));
     
         sql_query("INSERT INTO reviews VALUES (NULL, '$date', '$title', '$text', '$reviewer', '$email', '$score', '$cover', '$url', '$url_title', '1')");
         sql_query("DELETE FROM reviews_add WHERE id = '$id'");
