@@ -2,10 +2,12 @@
 
 namespace Modules\Sections\Controllers\Admin\Author;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Language;
 
 
-class Author extends AdminController
+class AuthorPublish extends AdminController
 {
 /**
      * [$pdst description]
@@ -79,10 +81,17 @@ class Author extends AdminController
         return parent::after($result);
     }
 
-    function publishrights($author)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $author
+     * @return void
+     */
+    public function publishrights($author)
     {
-        if ($radminsuper != 1)
+        if ($radminsuper != 1) {
             Header("Location: admin.php?op=sections");
+        }
 
         echo '
         <hr />
@@ -100,7 +109,7 @@ class Author extends AdminController
             echo '
                 <table class="table table-bordered table-sm" data-toggle="" data-classes=""  data-striped="true" data-icons-prefix="fa" data-icons="icons">
                     <thead class="thead-light">
-                    <tr class="table-secondary"><th colspan="5"><span class="form-check"><input class="form-check-input" id="ckbrall_' . $rubid . '" type="checkbox" /><label class="form-check-label lead" for="ckbrall_' . $rubid . '">' . aff_langue($rubname) . '</label></span></th></tr>
+                    <tr class="table-secondary"><th colspan="5"><span class="form-check"><input class="form-check-input" id="ckbrall_' . $rubid . '" type="checkbox" /><label class="form-check-label lead" for="ckbrall_' . $rubid . '">' . Language::aff_langue($rubname) . '</label></span></th></tr>
                     <tr class="">
                         <th class="colspan="2" n-t-col-xs-3" data-sortable="true">' . __d('sections', 'Sous-rubriques') . '</th>
                         <th class="n-t-col-xs-2 text-center" data-halign="center" data-align="center">' . __d('sections', 'Créer') . '</th>
@@ -144,7 +153,7 @@ class Author extends AdminController
     
                 echo '
                     <tr>
-                        <td><div class="form-check"><input class="form-check-input" id="ckbsrall_' . $secid . '" type="checkbox" /><label class="form-check-label" for="ckbsrall_' . $secid . '">' . aff_langue($secname) . '</label></div></td>
+                        <td><div class="form-check"><input class="form-check-input" id="ckbsrall_' . $secid . '" type="checkbox" /><label class="form-check-label" for="ckbsrall_' . $secid . '">' . Language::aff_langue($secname) . '</label></div></td>
                         <td class="text-center"><div class="form-check"><input class="form-check-input ckbsr_' . $secid . ' ckbr_' . $rubid . '" type="checkbox" id="creation' . $i . '" name="creation[' . $i . ']" value="' . $secid . '" ' . $crea . ' /><label class="form-check-label" for="creation' . $i . '"></label></div></td>
                         <td class="text-center"><div class="form-check"><input class="form-check-input ckbsr_' . $secid . ' ckbr_' . $rubid . '" type="checkbox" id="publication' . $i . '" name="publication[' . $i . ']" value="' . $secid . '" ' . $publi . ' /><label class="form-check-label" for="publication' . $i . '"></label></div></td>
                         <td class="text-center"><div class="form-check"><input class="form-check-input ckbsr_' . $secid . ' ckbr_' . $rubid . '" type="checkbox" id="modification' . $i . '" name="modification[' . $i . ']" value="' . $secid . '" ' . $modif . ' /><label class="form-check-label" for="modification' . $i . '"></label></div></td>
@@ -179,42 +188,7 @@ class Author extends AdminController
         //]]>
         </script>';
     
-        adminfoot('', '', '', '');
-    }
-    
-    function updaterights($chng_aid, $maxindex, $creation, $publication, $modification, $suppression)
-    {
-        if ($radminsuper != 1)
-            Header("Location: admin.php?op=sections");
-    
-        $result = sql_query("DELETE FROM publisujet WHERE aid='$chng_aid'");
-    
-        for ($j = 1; $j < ($maxindex + 1); $j++) {
-            if (array_key_exists($j, $creation))
-                if ($creation[$j] != '') {
-                    $result = sql_query("INSERT INTO publisujet VALUES ('$chng_aid','$creation[$j]','1')");
-                }
-    
-            if (array_key_exists($j, $publication))
-                if ($publication[$j] != '') {
-                    $result = sql_query("INSERT INTO publisujet VALUES ('$chng_aid','$publication[$j]','2')");
-                }
-    
-            if (array_key_exists($j, $modification))
-                if ($modification[$j] != '') {
-                    $result = sql_query("INSERT INTO publisujet VALUES ('$chng_aid','$modification[$j]','3')");
-                }
-    
-            if (array_key_exists($j, $suppression))
-                if ($suppression[$j] != '') {
-                    $result = sql_query("INSERT INTO publisujet VALUES ('$chng_aid','$suppression[$j]','4')");
-                }
-        }
-    
-        global $aid;
-        Ecr_Log('security', "UpdateRightsPubliSujet($chng_aid) by AID : $aid", '');
-    
-        Header("Location: admin.php?op=sections");
+        Css::adminfoot('', '', '', '');
     }
 
 }

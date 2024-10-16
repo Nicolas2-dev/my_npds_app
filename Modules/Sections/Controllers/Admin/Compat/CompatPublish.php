@@ -2,10 +2,12 @@
 
 namespace Modules\Sections\Controllers\Admin\Compat;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Language;
 
 
-class Compat extends AdminController
+class CompatPublish extends AdminController
 {
 /**
      * [$pdst description]
@@ -79,7 +81,13 @@ class Compat extends AdminController
         return parent::after($result);
     }
 
-    function publishcompat($article)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $article
+     * @return void
+     */
+    public function publishcompat($article)
     {
         $result2 = sql_query("SELECT title FROM seccont WHERE artid='$article'");
         list($titre) = sql_fetch_row($result2);
@@ -88,7 +96,7 @@ class Compat extends AdminController
     
         echo '
         <hr />
-        <h3 class="mb-3">' . __d('sections', 'Publications connexes') . ' : <span class="text-muted">' . aff_langue($titre) . '</span></h3>
+        <h3 class="mb-3">' . __d('sections', 'Publications connexes') . ' : <span class="text-muted">' . Language::aff_langue($titre) . '</span></h3>
         <form action="admin.php" method="post">';
     
         $i = 0;
@@ -97,26 +105,27 @@ class Compat extends AdminController
             if ($enligne == 0) {
                 $online = __d('sections', 'Hors Ligne');
                 $cla = "danger";
-            } else if ($enligne == 1) {
+            } elseif ($enligne == 1) {
                 $online = __d('sections', 'En Ligne');
                 $cla = "success";
             }
     
             echo '
             <div class="list-group-item bg-light">
-                <a class="arrow-toggle text-primary" data-bs-toggle="collapse" data-bs-target="#lst_' . $rubid . '" ><i class="toggle-icon fa fa-caret-down fa-lg"></i></a>&nbsp;' . aff_langue($rubname) . '<span class="badge bg-' . $cla . ' float-end">' . $online . '</span>
+                <a class="arrow-toggle text-primary" data-bs-toggle="collapse" data-bs-target="#lst_' . $rubid . '" ><i class="toggle-icon fa fa-caret-down fa-lg"></i></a>&nbsp;' . Language::aff_langue($rubname) . '<span class="badge bg-' . $cla . ' float-end">' . $online . '</span>
             </div>';
     
-            if ($radminsuper == 1)
+            if ($radminsuper == 1) {
                 $result2 = sql_query("SELECT secid, secname FROM sections WHERE rubid='$rubid' ORDER BY ordre");
-            else
+            } else {
                 $result2 = sql_query("SELECT DISTINCT sections.secid, sections.secname, sections.ordre FROM sections, publisujet WHERE sections.rubid='$rubid' AND sections.secid=publisujet.secid2 AND publisujet.aid='$aid' AND publisujet.type='1' ORDER BY ordre");
-            
+            }
+
             if (sql_num_rows($result2) > 0) {
                 echo '<ul id="lst_' . $rubid . '" class="list-group mb-1 collapse">';
     
                 while (list($secid, $secname) = sql_fetch_row($result2)) {
-                    echo '<li class="list-group-item"><strong class="ms-3" title="' . __d('sections', 'sous-rubrique') . '" data-bs-toggle="tooltip">' . aff_langue($secname) . '</strong></li>';
+                    echo '<li class="list-group-item"><strong class="ms-3" title="' . __d('sections', 'sous-rubrique') . '" data-bs-toggle="tooltip">' . Language::aff_langue($secname) . '</strong></li>';
                     
                     $result3 = sql_query("SELECT artid, title FROM seccont WHERE secid='$secid' ORDER BY ordre");
                     
@@ -128,12 +137,13 @@ class Compat extends AdminController
                             $result4 = sql_query("SELECT id2 FROM compatsujet WHERE id2='$artid' AND id1='$article'");
                             echo '<li class="list-group-item list-group-item-action"><div class="form-check ms-3">';
     
-                            if (sql_num_rows($result4) > 0)
+                            if (sql_num_rows($result4) > 0)  {
                                 echo '<input class="form-check-input" type="checkbox"  id="admin_rub' . $i . '" name="admin_rub[' . $i . ']" value="' . $artid . '" checked="checked" />';
-                            else
+                            } else {
                                 echo '<input class="form-check-input" type="checkbox" id="admin_rub' . $i . '" name="admin_rub[' . $i . ']" value="' . $artid . '" />';
+                            }
                             
-                            echo '<label class="form-check-label" for="admin_rub' . $i . '">' . aff_langue($title) . '</label></div></li>';
+                            echo '<label class="form-check-label" for="admin_rub' . $i . '">' . Language::aff_langue($title) . '</label></div></li>';
                         }
                     }
                 }
@@ -150,23 +160,7 @@ class Compat extends AdminController
             </div>
         </form>';
     
-        adminfoot('', '', '', '');
+        Css::adminfoot('', '', '', '');
     }
     
-    function updatecompat($article, $admin_rub, $idx)
-    {
-        $result = sql_query("DELETE FROM compatsujet WHERE id1='$article'");
-    
-        for ($j = 1; $j < ($idx + 1); $j++) {
-            if ($admin_rub[$j] != '') {
-                $result = sql_query("INSERT INTO compatsujet VALUES ('$article','$admin_rub[$j]')");
-            }
-        }
-    
-        global $aid;
-        Ecr_Log('security', "UpdateCompatSujets($article) by AID : $aid", '');
-    
-        Header("Location: admin.php?op=secartedit&artid=$article");
-    }
-
 }

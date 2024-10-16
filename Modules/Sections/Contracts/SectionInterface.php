@@ -55,4 +55,20 @@ interface SectionInterface {
      */
     public function droitsalacreation($chng_aid, $secid);
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $artid
+     * @return void
+     */
+    public function verif_aff($artid);
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $userlevel
+     * @return void
+     */
+    public function autorisation_section($userlevel);
+
 }

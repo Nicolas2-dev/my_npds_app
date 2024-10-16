@@ -2,10 +2,11 @@
 
 namespace Modules\Sections\Library;
 
-
+use Modules\Npds\Support\Facades\Auth;
 use Modules\Npds\Support\Facades\Language;
 use Modules\Groupes\Support\Facades\Groupe;
 use Modules\Sections\Contracts\SectionInterface;
+
 
 /**
  * Undocumented class
@@ -256,6 +257,48 @@ class SectionManager implements SectionInterface
         // else {
         //     sql_query("INSERT INTO publisujet VALUES ('$chng_aid','$secid','1')");
         // }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $artid
+     * @return void
+     */
+    public function verif_aff($artid)
+    {
+        $result = sql_query("SELECT secid FROM seccont WHERE artid='$artid'");
+        list($secid) = sql_fetch_row($result);
+    
+        $result = sql_query("SELECT userlevel FROM sections WHERE secid='$secid'");
+        list($userlevel) = sql_fetch_row($result);
+    
+        $okprint = false;
+        $okprint = $this->autorisation_section($userlevel);
+    
+        return $okprint;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $userlevel
+     * @return void
+     */
+    public function autorisation_section($userlevel)
+    {
+        $okprint = false;
+        $tmp_auto = explode(',', $userlevel);
+    
+        foreach ($tmp_auto as $userlevel) {
+            $okprint = Auth::autorisation($userlevel);
+    
+            if ($okprint) {
+                break;
+            }
+        }
+    
+        return $okprint;
     }
 
 }
