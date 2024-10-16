@@ -2,13 +2,14 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
 
 
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterList extends AdminController
 {
 
     /**
@@ -139,7 +140,7 @@ class Newsletter extends AdminController
             </tbody>
         </table>';
     
-        adminfoot('', '', '', '');
+        Css::adminfoot('', '', '', '');
     }
 
 }

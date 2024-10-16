@@ -3,6 +3,7 @@
 namespace Modules\Newsletter\Library;
 
 
+use Modules\Npds\Support\Facades\Mailer;
 use Modules\Newsletter\Contracts\NewsletterInterface;
 
 /**
@@ -47,23 +48,28 @@ class NewsletterManager implements NewsletterInterface
     
         $stop = '';
     
-        if ((!$email) || ($email == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email)))
+        if ((!$email) || ($email == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $email))) {
             $stop = __d('newsletter', 'Erreur : Email invalide');
+        }
     
-        if (strrpos($email, ' ') > 0)
+        if (strrpos($email, ' ') > 0) {
             $stop = __d('newsletter', 'Erreur : une adresse Email ne peut pas contenir d\'espaces');
+        }
     
-        if (checkdnsmail($email) === false)
+        if (Mailer::checkdnsmail($email) === false) {
             $stop = __d('newsletter', 'Erreur : DNS ou serveur de mail incorrect');
+        }
     
-        if (sql_num_rows(sql_query("SELECT email FROM users WHERE email='$email'")) > 0)
+        if (sql_num_rows(sql_query("SELECT email FROM users WHERE email='$email'")) > 0) {
             $stop = __d('newsletter', 'Erreur : adresse Email déjà utilisée');
+        }
     
         if (sql_num_rows(sql_query("SELECT email FROM lnl_outside_users WHERE email='$email'")) > 0) {
-            if (sql_num_rows(sql_query("SELECT email FROM lnl_outside_users WHERE email='$email' AND status='NOK'")) > 0)
+            if (sql_num_rows(sql_query("SELECT email FROM lnl_outside_users WHERE email='$email' AND status='NOK'")) > 0) {
                 sql_query("DELETE FROM lnl_outside_users WHERE email='$email'");
-            else
+            } else {
                 $stop = __d('newsletter', 'Erreur : adresse Email déjà utilisée');
+            }
         }
     
         return $stop;
@@ -137,7 +143,14 @@ class NewsletterManager implements NewsletterInterface
                     <td>' . $ref . '</td>
                     <td>' . $text . '</td>
                     <td><code>' . $html . '</code></td>
-                    <td><a href="admin.php?op=lnl_Shw_Header&amp;Headerid=' . $ref . '" ><i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Header&amp;Headerid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
+                    <td>
+                        <a href="admin.php?op=lnl_Shw_Header&amp;Headerid=' . $ref . '" >
+                            <i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i>
+                        </a>
+                        <a href="admin.php?op=lnl_Sup_Header&amp;Headerid=' . $ref . '" class="text-danger">
+                            <i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i>
+                        </a>
+                    </td>
                 </tr>';
         }
     
@@ -183,7 +196,14 @@ class NewsletterManager implements NewsletterInterface
                 <td>' . $ref . '</td>
                 <td>' . $text . '</td>
                 <td><code>' . $html . '</code></td>
-                <td><a href="admin.php?op=lnl_Shw_Body&amp;Bodyid=' . $ref . '"><i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Body&amp;Bodyid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
+                <td>
+                    <a href="admin.php?op=lnl_Shw_Body&amp;Bodyid=' . $ref . '">
+                        <i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i>
+                    </a>
+                    <a href="admin.php?op=lnl_Sup_Body&amp;Bodyid=' . $ref . '" class="text-danger">
+                        <i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i>
+                    </a>
+                </td>
             </tr>';
         }
     
@@ -229,7 +249,14 @@ class NewsletterManager implements NewsletterInterface
                     <td>' . $ref . '</td>
                     <td>' . $text . '</td>
                     <td><code>' . $html . '</code></td>
-                    <td><a href="admin.php?op=lnl_Shw_Footer&amp;Footerid=' . $ref . '" ><i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a><a href="admin.php?op=lnl_Sup_Footer&amp;Footerid=' . $ref . '" class="text-danger"><i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i></a></td>
+                    <td>
+                        <a href="admin.php?op=lnl_Shw_Footer&amp;Footerid=' . $ref . '" >
+                            <i class="fa fa-edit fa-lg me-2" title="' . __d('newsletter', 'Editer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i>
+                        </a>
+                        <a href="admin.php?op=lnl_Sup_Footer&amp;Footerid=' . $ref . '" class="text-danger">
+                            <i class="fas fa-trash fa-lg" title="' . __d('newsletter', 'Effacer') . '" data-bs-toggle="tooltip" data-bs-placement="left"></i>
+                        </a>
+                    </td>
                 </tr>';
         }
     

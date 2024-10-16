@@ -83,16 +83,16 @@ trait NewsStoryTrait
 
         $tmp_groupe = '';
     
-        settype($Mmembers, 'integer');
-    
         foreach (Groupe::liste_group() as $groupe_id => $groupe_name) {
-            if ($groupe_id == '0') 
-                $groupe_id = '';
+            if ($groupe_id == '0') {
+                
+            }
     
-            if ($Mmembers == $groupe_id) 
+            if ($Mmembers == $groupe_id) {
                 $sel3 = 'selected="selected"';
-            else 
+            } else {
                 $sel3 = '';
+            }
     
             $tmp_groupe .= '<option value="' . $groupe_id . '" ' . $sel3 . '>' . $groupe_name . '</option>';
         }
@@ -106,7 +106,6 @@ trait NewsStoryTrait
             </div>';
     }
     
-
     /**
      * Undocumented function
      *
@@ -123,18 +122,20 @@ trait NewsStoryTrait
                 <div class="col-sm-8">
                     <select class="form-select" id="catid" name="catid">';
     
-        if ($cat == 0) 
+        if ($cat == 0) {
             $sel = 'selected="selected"';
-        else 
+        } else {
             $sel = '';
+        }
     
         echo '<option name="catid" value="0" ' . $sel . '>' . __d('news', 'Articles') . '</option>';
     
         while (list($catidX, $title) = sql_fetch_row($selcat)) {
-            if ($catidX == $cat) 
+            if ($catidX == $cat) {
                 $sel = 'selected="selected"';
-            else 
+            } else {
                 $sel = '';
+            }
     
             echo '<option name="catid" value="' . $catidX . '" ' . $sel . '>' . Language::aff_langue($title) . '</option>';
         }

@@ -2,6 +2,10 @@
 
 namespace Modules\Minisites\Library;
 
+use Npds\Routing\Url;
+use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Language;
+use Shared\Editeur\Support\Facades\Editeur;
 use Modules\Minisites\Contracts\MinisiteInterface;
 
 
@@ -45,8 +49,9 @@ class MinisiteManager implements MinisiteInterface
                 window.open('modules.php?ModPath=f-manager&ModStart=f-manager&FmaRep=minisite-ges','wtmpMinisite', 'menubar=no,location=no,directories=no,status=no,copyhistory=no,toolbar=no,scrollbars=yes,resizable=yes, width=780, height=500');
             //]]>
             </script>";
-        } else
+        } else {
             return ("'modules.php?ModPath=f-manager&ModStart=f-manager&FmaRep=minisite-ges','wtmpMinisite', 'menubar=no,location=no,directories=no,status=no,copyhistory=no,toolbar=no,scrollbars=yes,resizable=yes, width=780, height=500'");
+        }
     }
     
     /**
@@ -63,9 +68,8 @@ class MinisiteManager implements MinisiteInterface
     {
         $content = '';
     
-        settype($contentT, 'string');
-    
         $blog_file = $blog_dir . 'news.txt';
+
         if (!file_exists($blog_file)) {
             $fp = fopen($blog_file, 'w');
             fclose($fp);
@@ -76,9 +80,12 @@ class MinisiteManager implements MinisiteInterface
         $startpage -= 1;
         $ubound = count($xnews);
     
-        if ($startpage < 0 || $startpage >= $ubound / Config::get('npds.perpage'))
+        if ($startpage < 0 || $startpage >= $ubound / Config::get('npds.perpage')) {
             $startpage = 0;
+        }
     
+        $contentT = '';
+
         if ($ubound > Config::get('npds.perpage')) {
             $contentT .= '
                 <nav>
@@ -110,7 +117,7 @@ class MinisiteManager implements MinisiteInterface
                 }
     
                 fclose($fp);
-                redirect_url("minisite.php?op=$op");
+                Url::redirect("minisite.php?op=$op");
             }
     
             // Ajouter - Ecriture
@@ -134,7 +141,7 @@ class MinisiteManager implements MinisiteInterface
     
                 fwrite($fp, StripSlashes($newsto) . "\n");
                 fclose($fp);
-                redirect_url("minisite.php?op=$op");
+                Url::redirect("minisite.php?op=$op");
             }
     
             // Ajouter
@@ -191,7 +198,7 @@ class MinisiteManager implements MinisiteInterface
                 }
     
                 fclose($fp);
-                redirect_url("minisite.php?op=$op");
+                Url::redirect("minisite.php?op=$op");
             }
     
             // Modifier
@@ -236,10 +243,10 @@ class MinisiteManager implements MinisiteInterface
             $content .= '
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h2 class="card-title">' . aff_langue($crtsplit[1]) . '</h2>
+                        <h2 class="card-title">' . Language::aff_langue($crtsplit[1]) . '</h2>
                         <h6 class="card-subtitle text-muted">' . __d('Minisites', '"Posté le ') . ' ' . $crtsplit[0] . '</h6>
                     </div>
-                    <div class=" card-body">' . convert_ressources($crtsplit[2]) . '</div>';
+                    <div class=" card-body">' . $this->convert_ressources($crtsplit[2]) . '</div>';
     
             if ($adminblog) {
                 $content .= '
@@ -252,15 +259,13 @@ class MinisiteManager implements MinisiteInterface
                 </div>';
         }
     
-        settype($contentT, 'string');
-    
         if (substr($contentT, 13) != '') {
             $content .= substr($contentT, 13);
         }
     
         $content .= "\n";
     
-        return ($content);
+        return $content;
     }    
 
     /**
@@ -274,10 +279,11 @@ class MinisiteManager implements MinisiteInterface
         global $op, $userdata, $tiny_mce_theme, $tiny_mce_relurl;
     
         static $blog_editor;
+        
         if (Config::get('npds.tiny_mce')) {
             if (!$blog_editor) {
                 $tiny_mce_theme = 'full';
-                $blog_editor = aff_editeur('tiny_mce', 'begin') . aff_editeur('story', 'false') . aff_editeur('tiny_mce', 'end');
+                $blog_editor = Editeur::aff_editeur('tiny_mce', 'begin') . Editeur::aff_editeur('story', 'false') . Editeur::aff_editeur('tiny_mce', 'end');
             }
         }
     
@@ -499,7 +505,7 @@ class MinisiteManager implements MinisiteInterface
     
         $Xstring = preg_replace(array_keys($App_forbidden_words), array_values($App_forbidden_words), $Xstring);
     
-        return ($Xstring);
+        return $Xstring;
     }
     
     /**
@@ -521,7 +527,7 @@ class MinisiteManager implements MinisiteInterface
             }
         }
     
-        return (aff_langue($Xcontent));
+        return Language::aff_langue($Xcontent);
     }
 
 }

@@ -2,8 +2,11 @@
 
 namespace Modules\News\Controllers\Front;
 
+use Npds\Routing\Url;
 use Npds\Config\Config;
 use Modules\Npds\Core\FrontController;
+use Modules\Npds\Support\Facades\Language;
+use Modules\Npds\Support\Facades\Metalang;
 
 /**
  * Undocumented class
@@ -62,19 +65,18 @@ class NewsTopic extends FrontController
      */
     public function index()
     {
-        settype($op, 'string');
-
         if ($op != "maj_subscribe") {
             // include("header.php");
         
             $inclusion = false;
         
-            if (file_exists("themes/$theme/views/topics.html"))
+            if (file_exists("themes/$theme/views/topics.html")) {
                 $inclusion = "themes/$theme/views/topics.html";
-            elseif (file_exists("themes/default/views/topics.html"))
+            } elseif (file_exists("themes/default/views/topics.html")) {
                 $inclusion = "themes/default/views/topics.html";
-            else
+            } else {
                 echo 'views/topics.html / not find !<br />';
+            }
         
             if ($inclusion) {
                 ob_start();
@@ -82,7 +84,7 @@ class NewsTopic extends FrontController
                     $Xcontent = ob_get_contents();
                 ob_end_clean();
         
-                echo meta_lang(aff_langue($Xcontent));
+                echo Metalang::meta_lang(Language::aff_langue($Xcontent));
             }
         
             // include("footer.php");
@@ -103,11 +105,10 @@ class NewsTopic extends FrontController
                         }
                     }
                     
-                    redirect_url("topics.php");
+                    Url::redirect("topics.php");
                 }
             }
         }
-        
     }
 
 }

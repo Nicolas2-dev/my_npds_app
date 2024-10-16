@@ -4,7 +4,10 @@ namespace Modules\News\Controllers\Admin;
 
 
 use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Js;
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Language;
 
 
 class NewsTopicsEdit extends AdminController
@@ -96,7 +99,7 @@ class NewsTopicsEdit extends AdminController
 
         echo '
         <hr />
-        <h3 class="mb-3">' . __d('news', 'Editer le Sujet :') . ' <span class="text-muted">' . aff_langue($topicname) . '</span></h3>';
+        <h3 class="mb-3">' . __d('news', 'Editer le Sujet :') . ' <span class="text-muted">' . Language::aff_langue($topicname) . '</span></h3>';
     
         if ($topicimage != '') {
             echo '<div class="card card-body my-4 py-3"><img class="img-fluid mx-auto d-block" src="' . Config::get('npds.tipath') . $topicimage . '" alt="image-sujet" /></div>';
@@ -174,7 +177,7 @@ class NewsTopicsEdit extends AdminController
     
         echo '
         <hr />
-        <h3 class="my-2">' . __d('news', 'Gérer les Liens Relatifs : ') . ' <span class="text-muted">' . aff_langue($topicname) . '</span></h3>';
+        <h3 class="my-2">' . __d('news', 'Gérer les Liens Relatifs : ') . ' <span class="text-muted">' . Language::aff_langue($topicname) . '</span></h3>';
     
         $res = sql_query("SELECT rid, name, url FROM related WHERE tid='$topicid'");
     
@@ -250,69 +253,9 @@ class NewsTopicsEdit extends AdminController
         inpandfieldlen("url",320);
         ';
     
-        echo auto_complete_multi('admin', 'aid', 'authors', 'topicadmin', '');
+        echo Js::auto_complete_multi('admin', 'aid', 'authors', 'topicadmin', '');
     
-        adminfoot('fv', $fv_parametres, $arg1, '');
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param [type] $topicid
-     * @param integer $ok
-     * @return void
-     */
-    public function topicchange($topicid, $topicname, $topicimage, $topictext, $topicadmin, $name, $url)
-    {
-        $topicadminX = explode(',', $topicadmin);
-        array_pop($topicadminX);
-    
-        $res = sql_query("SELECT * FROM droits WHERE d_droits=11112 AND d_fon_fid=2");
-    
-        $d = array();
-        $topad = array();
-    
-        while ($d = sql_fetch_row($res)) {
-            $topad[] = $d[0];
-        }
-    
-        foreach ($topicadminX as $value) {
-            if (!in_array($value, $topad)) 
-                sql_query("INSERT INTO droits VALUES ('$value', '2', '11112')");
-        }
-    
-        foreach ($topad as $value) { //pour chaque droit adminsujet on regarde le nom de l'adminsujet
-            if (!in_array($value, $topicadminX)) { //si le nom de l'adminsujet n'est pas dans les nouveaux adminsujet
-    
-                //on cherche si il administre un autre sujet
-                $resu =  mysqli_get_client_info() <= '8.0' ?
-                    sql_query("SELECT * FROM topics WHERE topicadmin REGEXP '[[:<:]]" . $value . "[[:>:]]'") :
-                    sql_query("SELECT * FROM topics WHERE topicadmin REGEXP '\\b" . $value . "\\b'");
-    
-                $nbrow = sql_num_rows($resu);
-                list($tid) = sql_fetch_row($resu);
-    
-                if (($nbrow == 1) and ($topicid == $tid)) {
-                    sql_query("DELETE FROM droits WHERE d_aut_aid='$value' AND d_droits=11112 AND d_fon_fid=2");
-                }
-            }
-        }
-    
-        $topicname = stripslashes(FixQuotes($topicname));
-        $topicimage = stripslashes(FixQuotes($topicimage));
-        $topictext = stripslashes(FixQuotes($topictext));
-        $name = stripslashes(FixQuotes($name));
-        $url = stripslashes(FixQuotes($url));
-    
-        sql_query("UPDATE topics SET topicname='$topicname', topicimage='$topicimage', topictext='$topictext', topicadmin='$topicadmin' WHERE topicid='$topicid'");
-        
-        global $aid;
-        Ecr_Log("security", "topicChange ($topicname, $topicid) by AID : $aid", "");
-    
-        if ($name)
-            sql_query("INSERT INTO related VALUES (NULL, '$topicid','$name','$url')");
-    
-        Header("Location: admin.php?op=topicedit&topicid=$topicid");
+        Css::adminfoot('fv', $fv_parametres, $arg1, '');
     }
 
 }

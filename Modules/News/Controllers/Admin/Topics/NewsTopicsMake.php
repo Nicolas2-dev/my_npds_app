@@ -2,6 +2,7 @@
 
 namespace Modules\News\Controllers\Admin;
 
+use Modules\Npds\Support\Sanitize;
 use Modules\Npds\Core\AdminController;
 
 
@@ -89,7 +90,7 @@ class NewsTopicsMake extends AdminController
      */
     public function topicmake($topicname, $topicimage, $topictext, $topicadmin)
     {
-        $topicname = stripslashes(FixQuotes($topicname));
+        $topicname = stripslashes(Sanitize::FixQuotes($topicname));
     
         $istopicname = sql_num_rows(sql_query("SELECT * FROM topics WHERE topicname='$topicname'"));
     
@@ -98,8 +99,8 @@ class NewsTopicsMake extends AdminController
             die();
         }
     
-        $topicimage = stripslashes(FixQuotes($topicimage));
-        $topictext = stripslashes(FixQuotes($topictext));
+        $topicimage = stripslashes(Sanitize::FixQuotes($topicimage));
+        $topictext  = stripslashes(Sanitize::FixQuotes($topictext));
     
         sql_query("INSERT INTO topics VALUES (NULL,'$topicname','$topicimage','$topictext','0', '$topicadmin')");
     
@@ -114,8 +115,9 @@ class NewsTopicsMake extends AdminController
     
             $nres = sql_num_rows(sql_query("SELECT * FROM droits WHERE d_aut_aid='$topicadminX[$i]' and d_droits=11112"));
     
-            if ($nres == 0)
+            if ($nres == 0) {
                 sql_query("INSERT INTO droits VALUES ('$topicadminX[$i]', '2', '11112')");
+            }
         }
     
         Header("Location: admin.php?op=topicsmanager#addtopic");

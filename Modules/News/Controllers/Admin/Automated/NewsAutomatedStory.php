@@ -2,7 +2,10 @@
 
 namespace Modules\News\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Date;
+use Modules\Npds\Support\Facades\Language;
 
 
 class NewsAutomatedStory extends AdminController
@@ -115,7 +118,9 @@ class NewsAutomatedStory extends AdminController
                     $topicadminX = explode(",", $topicadmin);
     
                     for ($i = 0; $i < count($topicadminX); $i++) {
-                        if (trim($topicadminX[$i]) == $aid) $affiche = true;
+                        if (trim($topicadminX[$i]) == $aid) {
+                            $affiche = true;
+                        }
                     }
                 }
     
@@ -126,15 +131,15 @@ class NewsAutomatedStory extends AdminController
                 if ($affiche) {
                     echo '
                     <tr>
-                        <td><a href="admin.php?op=autoEdit&amp;anid=' . $anid . '">' . aff_langue($title) . '</a></td>
-                        <td>' . formatTimestamp("nogmt" . $time) . '</td>
+                        <td><a href="admin.php?op=autoEdit&amp;anid=' . $anid . '">' . Language::aff_langue($title) . '</a></td>
+                        <td>' . Date::formatTimestamp("nogmt" . $time) . '</td>
                         <td><a href="admin.php?op=autoEdit&amp;anid=' . $anid . '"><i class="fa fa-edit fa-lg me-2" title="' . __d('news', 'Afficher l\'article') . '" data-bs-toggle="tooltip"></i></a><a href="admin.php?op=autoDelete&amp;anid=' . $anid . '">&nbsp;<i class="fas fa-trash fa-lg text-danger" title="' . __d('news', 'Effacer l\'Article') . '" data-bs-toggle="tooltip" ></i></a></td>
                     </tr>';
                 } else {
                     echo '
                     <tr>
-                        <td><i>' . aff_langue($title) . '</i></td>
-                        <td>' . formatTimestamp("nogmt" . $time) . '</td>
+                        <td><i>' . Language::aff_langue($title) . '</i></td>
+                        <td>' . Date::formatTimestamp("nogmt" . $time) . '</td>
                         <td>&nbsp;</td>
                     </tr>';
                 }
@@ -145,7 +150,7 @@ class NewsAutomatedStory extends AdminController
             </tbody>
         </table>';
     
-        adminfoot('', '', '', '');
+        Css::adminfoot('', '', '', '');
     }
 
 }

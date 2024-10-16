@@ -8,7 +8,7 @@ use Modules\Npds\Core\AdminController;
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterAddHeaderFooterSubmit extends AdminController
 {
 
     /**
@@ -96,10 +96,11 @@ class Newsletter extends AdminController
      */
     public function Add_Header_Footer_Submit($ibid, $xtext, $xhtml)
     {
-        if ($ibid == "HED")
+        if ($ibid == "HED") {
             sql_query("INSERT INTO lnl_head_foot VALUES ('0', 'HED','$xhtml', '$xtext', 'OK')");
-        else
+        } else {
             sql_query("INSERT INTO lnl_head_foot VALUES ('0', 'FOT', '$xhtml', '$xtext', 'OK')");
+        }
 
         header("location: admin.php?op=lnl");
     }

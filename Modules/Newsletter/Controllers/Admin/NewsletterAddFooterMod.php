@@ -8,7 +8,7 @@ use Modules\Npds\Core\AdminController;
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterAddFooterMod extends AdminController
 {
 
     /**

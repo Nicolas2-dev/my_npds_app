@@ -2,13 +2,16 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Npds\Config\Config;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Mailer;
+use Modules\Npds\Support\Facades\Metalang;
 
 
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterSend extends AdminController
 {
 
     /**
@@ -92,11 +95,13 @@ class Newsletter extends AdminController
     {
         $deb = 0;
         $limit = 50; // nombre de messages envoyé par boucle.
-        if (!isset($debut)) 
+        if (!isset($debut)) {
             $debut = 0;
+        }
 
-        if (!isset($number_send)) 
+        if (!isset($number_send)) {
             $number_send = 0;
+        }
 
         $result = sql_query("SELECT text, html FROM lnl_head_foot WHERE type='HED' AND ref='$Xheader'");
         $Yheader = sql_fetch_row($result);
@@ -138,7 +143,7 @@ class Newsletter extends AdminController
                                 $Xmessage .= __d('newsletter', 'Pour supprimer votre abonnement à notre Lettre, suivez ce lien') . " : Config::get('npds.nuke_url')/lnl.php?op=unsubscribe&email=$email";
                             }
 
-                            send_email($email, $subject, meta_lang($Xmessage), "", true, $Xmime, '');
+                            Mailer::send_email($email, $subject, Metalang::meta_lang($Xmessage), "", true, $Xmime, '');
 
                             $number_send++;
                         }
@@ -169,15 +174,18 @@ class Newsletter extends AdminController
 
                 $fonction = "each"; ///???gloups
 
-                if (is_array($result)) 
+                if (is_array($result)) { 
                     $boucle = true;
-                else 
+                } else {
                     $boucle = false;
+                }
             } else {
                 $mysql_result = sql_query("SELECT u.uid FROM users u, users_status s WHERE s.open='1' AND u.uid=s.uid AND u.email!='' AND u.user_lnl='1'");
                 $nrows = sql_num_rows($mysql_result);
+
                 $result = sql_query("SELECT u.uid, u.email FROM users u, users_status s WHERE s.open='1' AND u.uid=s.uid AND u.user_lnl='1' ORDER BY email LIMIT $debut,$limit");
                 $fonction = "sql_fetch_row";
+
                 $boucle = true;
             }
 
@@ -186,7 +194,7 @@ class Newsletter extends AdminController
                     if (($email != "Anonyme") or ($email != "Anonymous")) {
                         if ($email != '') {
                             if (($message != '') and ($subject != '')) {
-                                send_email($email, $subject, meta_lang($message), "", true, $Xmime, '');
+                                Mailer::send_email($email, $subject, Metalang::meta_lang($message), "", true, $Xmime, '');
                                 $number_send++;
                             }
                         }
@@ -197,8 +205,6 @@ class Newsletter extends AdminController
 
         $deb = $debut + $limit;
         $chartmp = '';
-
-        settype($OXtype, 'string');
 
         if ($deb >= $nrows) {
             if ((($OXtype == "All") and ($Xtype == "Mbr")) or ($OXtype == "")) {
@@ -222,6 +228,7 @@ class Newsletter extends AdminController
                     $chartmp = "$Xtype : $nrows / $nrows";
                     $deb = 0;
                     $Xtype = "Mbr";
+                    
                     $mysql_result = sql_query("SELECT u.uid FROM users u, users_status s WHERE s.open='1' and u.uid=s.uid and u.email!='' and u.user_lnl='1'");
                     $nrows = sql_num_rows($mysql_result);
                 }

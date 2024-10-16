@@ -2,7 +2,12 @@
 
 namespace Modules\News\Controllers\Front;
 
+use Npds\Routing\Url;
+use Npds\Config\Config;
 use Modules\Npds\Core\FrontController;
+use Modules\Npds\Support\Facades\Hack;
+use Modules\Npds\Support\Facades\Spam;
+use Modules\Npds\Support\Facades\Mailer;
 
 
 /**
@@ -72,37 +77,41 @@ class NewsFriendSendSite extends FrontController
     
         if (!$user) {
             //anti_spambot
-            if (!R_spambot($asb_question, $asb_reponse, '')) {
+            if (!Spam::R_spambot($asb_question, $asb_reponse, '')) {
                 Ecr_Log('security', "Friend Anti-Spam : name=" . $yname . " / mail=" . $ymail, '');
-                redirect_url("index.php");
+                Url::redirect("index.php");
                 die();
             }
         }
     
         $subject = html_entity_decode(__d('news', 'Site à découvrir : '), ENT_COMPAT | ENT_HTML401, cur_charset) . Config::get('npds.sitename');
     
-        $fname = removeHack($fname);
+        $fname = Hack::remove($fname);
         $message = __d('news', 'Bonjour') . " $fname :\n\n" . __d('news', 'Votre ami') . " $yname " . __d('news', 'a trouvé notre site') . Config::get('npds.sitename') . __d('news', 'intéressant et a voulu vous le faire connaître.') . "\n\n".Config::get('npds.sitename')." : <a href=\"Config::get('npds.nuke_url')\">Config::get('npds.nuke_url')</a>\n\n";
         
         include("signat.php");
     
-        $fmail = removeHack($fmail);
-        $subject = removeHack($subject);
-        $message = removeHack($message);
-        $yname = removeHack($yname);
-        $ymail = removeHack($ymail);
-        $stop = false;
+        $fmail      = Hack::remove($fmail);
+        $subject    = Hack::remove($subject);
+        $message    = Hack::remove($message);
+        $yname      = Hack::remove($yname);
+        $ymail      = Hack::remove($ymail);
+        
+        $stop   = false;
     
-        if ((!$fmail) || ($fmail == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $fmail)))   
+        if ((!$fmail) || ($fmail == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $fmail))) {   
             $stop = true;
+            }
     
-        if ((!$ymail) || ($ymail == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $ymail))) 
+        if ((!$ymail) || ($ymail == '') || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $ymail))) {
             $stop = true;
+            }
     
-        if (!$stop)
-            send_email($fmail, $subject, $message, $ymail, false, 'html', '');
-        else
+        if (!$stop) {
+            Mailer::send_email($fmail, $subject, $message, $ymail, false, 'html', '');
+        } else {
             $fname = '';
+        }
     
         Header("Location: friend.php?op=SiteSent&fname=$fname");
     }
@@ -115,19 +124,20 @@ class NewsFriendSendSite extends FrontController
      */
     public function SiteSent($fname)
     {
-        if ($fname == '')
+        if ($fname == '') {
             echo '
                 <div class="alert alert-danger lead" role="alert">
                     <i class="fa fa-exclamation-triangle fa-lg"></i>&nbsp;
                     ' . __d('news', 'Erreur : Email invalide') . '
                 </div>';
-        else
+        } else  {
             echo '
             <div class="alert alert-success lead" role="alert">
                 <i class="fa fa-exclamation-triangle fa-lg"></i>&nbsp;
                 ' . __d('news', 'Nos références ont été envoyées à ') . ' ' . $fname . ', <br />
                 <strong>' . __d('news', 'Merci de nous avoir recommandé') . '</strong>
             </div>';
+        }
     }
 
 }

@@ -4,7 +4,9 @@ namespace Modules\News\Controllers\Admin;
 
 
 use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Language;
 
 
 class NewsTopicsDelete extends AdminController
@@ -118,7 +120,7 @@ class NewsTopicsDelete extends AdminController
             $result2 = sql_query("SELECT topicimage, topicname, topictext FROM topics WHERE topicid='$topicid'");
             list($topicimage, $topicname, $topictext) = sql_fetch_row($result2);
 
-            echo '<h3 class=""><span class="text-danger">' . __d('news', 'Effacer le Sujet') . ' : </span>' . aff_langue($topicname) . '</h3>';
+            echo '<h3 class=""><span class="text-danger">' . __d('news', 'Effacer le Sujet') . ' : </span>' . Language::aff_langue($topicname) . '</h3>';
             echo '<div class="alert alert-danger lead" role="alert">';
     
             if ($topicimage != "")
@@ -133,7 +135,7 @@ class NewsTopicsDelete extends AdminController
                 <p><a class="btn btn-danger" href="admin.php?op=topicdelete&amp;topicid=' . $topicid . '&amp;ok=1">' . __d('news', 'Oui') . '</a>&nbsp;<a class="btn btn-primary"href="admin.php?op=topicsmanager">' . __d('news', 'Non') . '</a></p>
             </div>';
     
-            adminfoot('', '', '', '');
+            Css::adminfoot('', '', '', '');
         }
     }
 

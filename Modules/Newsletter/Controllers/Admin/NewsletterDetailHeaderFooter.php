@@ -2,13 +2,15 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Shared\Editeur\Support\Facades\Editeur;
 
 
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterDetailHeaderFooter extends AdminController
 {
 
     /**
@@ -130,7 +132,7 @@ class Newsletter extends AdminController
         if ($tmp[1] == 1) {
             global $tiny_mce_relurl;
             $tiny_mce_relurl = 'false';
-            echo aff_editeur('xtext', '');
+            echo Editeur::aff_editeur('xtext', '');
         }
     
         if ($type == 'HED')
@@ -150,7 +152,7 @@ class Newsletter extends AdminController
             </div>
         </form>';
     
-        adminfoot('', '', '', '');
+        Css::adminfoot('', '', '', '');
     }
 
 }

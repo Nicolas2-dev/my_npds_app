@@ -2,13 +2,14 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
 
 
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterDelQuestion extends AdminController
 {
 
     /**
@@ -102,7 +103,7 @@ class Newsletter extends AdminController
         <a href="admin.php?op=' . $retour . '&amp;' . $param . '" class="btn btn-danger btn-sm">' . __d('newsletter', 'Oui') . '</a>
         <a href="javascript:history.go(-1)" class="btn btn-secondary btn-sm">' . __d('newsletter', 'Non') . '</a>';
     
-        adminfoot('', '', '', '');
+        Css::adminfoot('', '', '', '');
     }
     
 }

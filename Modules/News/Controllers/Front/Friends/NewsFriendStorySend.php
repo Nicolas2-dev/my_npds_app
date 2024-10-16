@@ -2,7 +2,13 @@
 
 namespace Modules\News\Controllers\Front;
 
+use Npds\Routing\Url;
+use Npds\Config\Config;
 use Modules\Npds\Core\FrontController;
+use Modules\Npds\Support\Facades\Hack;
+use Modules\Npds\Support\Facades\Spam;
+use Modules\Npds\Support\Facades\Mailer;
+use Modules\Npds\Support\Facades\Language;
 
 
 /**
@@ -74,9 +80,9 @@ class NewsFriendStorySend extends FrontController
     
         if (!$user) {
             //anti_spambot
-            if (!R_spambot($asb_question, $asb_reponse, '')) {
+            if (!Spam::R_spambot($asb_question, $asb_reponse, '')) {
                 Ecr_Log('security', "Send-Story Anti-Spam : name=" . $yname . " / mail=" . $ymail, '');
-                redirect_url("index.php");
+                Url::redirect("index.php");
                 die();
             }
         }
@@ -88,33 +94,36 @@ class NewsFriendStorySend extends FrontController
         list($topictext) = sql_fetch_row($result3);
     
         $subject = html_entity_decode(__d('news', 'Article intéressant sur'), ENT_COMPAT | ENT_HTML401, cur_charset) . Config::get('npds.sitename');
-        $fname = removeHack($fname);
+        $fname = Hack::remove($fname);
+        
         $message = __d('news', 'Bonjour') . " $fname :\n\n" . __d('news', 'Votre ami') . " $yname " . __d('news', 'a trouvé cet article intéressant et a souhaité vous l\'envoyer.') . "\n\n" . aff_langue($title) . "\n" . __d('news', 'Date :') . " $time\n" . __d('news', 'Sujet : ') . " " . aff_langue($topictext) . "\n\n" . __d('news', 'L\'article') . " : <a href=\"Config::get('npds.nuke_url')/article.php?sid=$sid&amp;archive=$archive\">Config::get('npds.nuke_url')/article.php?sid=$sid&amp;archive=$archive</a>\n\n";
         
         // include("signat.php");
     
-        $fmail = removeHack($fmail);
-        $subject = removeHack($subject);
-        $message = removeHack($message);
-        $yname = removeHack($yname);
-        $ymail = removeHack($ymail);
+        $fmail      = Hack::remove($fmail);
+        $subject    = Hack::remove($subject);
+        $message    = Hack::remove($message);
+        $yname      = Hack::remove($yname);
+        $ymail      = Hack::remove($ymail);
     
         $stop = false;
     
-        if ((!$fmail) || ($fmail == "") || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $fmail))) 
+        if ((!$fmail) || ($fmail == "") || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $fmail))) {
             $stop = true;
+        }
     
-        if ((!$ymail) || ($ymail == "") || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $ymail))) 
+        if ((!$ymail) || ($ymail == "") || (!preg_match('#^[_\.0-9a-z-]+@[0-9a-z-\.]+\.+[a-z]{2,4}$#i', $ymail))) {
             $stop = true;
+        }
     
-        if (!$stop)
-            send_email($fmail, $subject, $message, $ymail, false, 'html', '');
-        else {
+        if (!$stop) {
+            Mailer::send_email($fmail, $subject, $message, $ymail, false, 'html', '');
+        } else {
             $title = '';
             $fname = '';
         }
     
-        $title = urlencode(aff_langue($title));
+        $title = urlencode(Language::aff_langue($title));
         $fname = urlencode($fname);
     
         Header("Location: friend.php?op=StorySent&title=$title&fname=$fname");

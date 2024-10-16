@@ -2,7 +2,10 @@
 
 namespace Modules\News\Controllers\Front;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\FrontController;
+use Modules\Npds\Support\Facades\Spam;
+use Modules\Npds\Support\Facades\Language;
 
 
 /**
@@ -67,8 +70,9 @@ class NewsFriend extends FrontController
         $result = sql_query("SELECT title, aid FROM stories WHERE sid='$sid'");
         list($title, $aid) = sql_fetch_row($result);
     
-        if (!$aid)
+        if (!$aid) {
             header("Location: index.php");
+        }
     
         // include("header.php");
     
@@ -76,7 +80,7 @@ class NewsFriend extends FrontController
         <div class="card card-body">
         <h2><i class="fa fa-at fa-lg text-muted"></i>&nbsp;' . __d('news', 'Envoi de l\'article à un ami') . '</h2>
         <hr />
-        <p class="lead">' . __d('news', 'Vous allez envoyer cet article') . ' : <strong>' . aff_langue($title) . '</strong></p>
+        <p class="lead">' . __d('news', 'Vous allez envoyer cet article') . ' : <strong>' . Language::aff_langue($title) . '</strong></p>
         <form id="friendsendstory" action="friend.php" method="post">
             <input type="hidden" name="sid" value="' . $sid . '" />';
     
@@ -114,7 +118,7 @@ class NewsFriend extends FrontController
                 <span class="help-block text-end"><span class="muted" id="countcar_ymail"></span></span>
             </div>';
     
-        echo '' . Q_spambot();
+        echo '' . Spam::Q_spambot();
     
         echo '
             <input type="hidden" name="archive" value="' . $archive . '" />
@@ -129,7 +133,7 @@ class NewsFriend extends FrontController
         inpandfieldlen("fname",100);
         inpandfieldlen("fmail",254);';
     
-        adminfoot('fv', '', $arg1, '');
+        Css::adminfoot('fv', '', $arg1, '');
     }
 
 }

@@ -2,7 +2,10 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Groupes\Support\Facades\Groupe;
+use Modules\Newsletter\Support\Facades\Newsletter as LNewsletter;
 
 
 /**
@@ -103,17 +106,17 @@ class Newsletter extends AdminController
         </ul>
         <h4 class="my-3"><a href="admin.php?op=lnl_Add_Header" ><i class="fa fa-plus-square me-2"></i></a>' . __d('newsletter', 'Message d\'entête') . '</h4>';
         
-        ShowHeader();
+        LNewsletter::ShowHeader();
     
         echo '
         <h4 class="my-3"><a href="admin.php?op=lnl_Add_Body" ><i class="fa fa-plus-square me-2"></i></a>' . __d('newsletter', 'Corps de message') . '</h4>';
         
-        ShowBody();
+        LNewsletter::ShowBody();
     
         echo '
         <h4 class="my-3"><a href="admin.php?op=lnl_Add_Footer"><i class="fa fa-plus-square me-2"></i></a>' . __d('newsletter', 'Message de pied de page') . '</h4>';
         
-        ShowFooter();
+        LNewsletter::ShowFooter();
     
         echo '
         <hr />
@@ -189,7 +192,7 @@ class Newsletter extends AdminController
                     </div>
                 </div>';
     
-        $mX = liste_group();
+        $mX = Groupe::liste_group();
         $tmp_groupe = '';
     
         foreach ($mX as $groupe_id => $groupe_name) {
@@ -226,7 +229,7 @@ class Newsletter extends AdminController
             inpandfieldlen("Xsubject",255);
             ';
     
-        adminfoot('fv', $fv_parametres, $arg1, '');
+        Css::adminfoot('fv', $fv_parametres, $arg1, '');
     }
 
 }

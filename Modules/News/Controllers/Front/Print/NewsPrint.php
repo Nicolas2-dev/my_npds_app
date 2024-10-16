@@ -3,8 +3,10 @@
 namespace Modules\News\Controllers\Front;
 
 use Npds\Config\Config;
+use Modules\News\Support\Facades\News;
 use Modules\Npds\Core\FrontController;
 use Modules\Npds\Support\Facades\Code;
+use Modules\Npds\Support\Facades\Date;
 use Modules\Npds\Support\Facades\Language;
 use Modules\Npds\Support\Facades\Metalang;
 
@@ -93,7 +95,7 @@ class NewsPrint extends FrontController
         $aff = true;
     
         if ($oper == 'news') {
-            $xtab = news_aff('libre', "WHERE sid='$sid'", 1, 1);
+            $xtab = News::news_aff('libre', "WHERE sid='$sid'", 1, 1);
             list($sid, $catid, $aid, $title, $time, $hometext, $bodytext, $comments, $counter, $topic, $informant, $notes) = $xtab[0];
     
             if ($topic != '') {
@@ -104,7 +106,7 @@ class NewsPrint extends FrontController
         }
     
         if ($oper == 'archive') {
-            $xtab = news_aff('archive', "WHERE sid='$sid'", 1, 1);
+            $xtab = News::news_aff('archive', "WHERE sid='$sid'", 1, 1);
             list($sid, $catid, $aid, $title, $time, $hometext, $bodytext, $comments, $counter, $topic, $informant, $notes) = $xtab[0];
     
             if ($topic != '') {
@@ -117,17 +119,20 @@ class NewsPrint extends FrontController
         if ($aff == true) {
             $Titlesitename = 'Npds - ' . __d('news', 'Page spéciale pour impression') . ' / ' . $title;
     
-            if (isset($time))
-                formatTimestamp($time);
+            if (isset($time)) {
+                Date::formatTimestamp($time);
+            }
     
             include("storage/meta/meta.php");
     
             // if (isset($user)) {
-            //     if ($cookie[9] == '') 
+            //     if ($cookie[9] == '') {
             //         $cookie[9] = Config::get('npds.Default_Theme');
+            //     }
     
-            //     if (isset($theme)) 
+            //     if (isset($theme)) {
             //         $cookie[9] = $theme;
+            //     }
     
             //     $tmp_theme = $cookie[9];
     
@@ -148,11 +153,12 @@ class NewsPrint extends FrontController
     
             $pos = strpos(Config::get('npds.site_logo'), '/');
     
-            if ($pos)
+            if ($pos) {
                 echo '<img class="img-fluid d-block mx-auto" src="' . Config::get('npds.site_logo') . '" alt="website logo" />';
-            else
+            } else {
                 echo '<img class="img-fluid d-block mx-auto" src="'. site_url('assets/images/npds/' . Config::get('npds.site_logo')) . '" alt="website logo" />';
-    
+            }
+
             echo '<h1 class="d-block text-center my-4">' . Language::aff_langue($title) . '</h1>';
     
             if (($oper == 'news') or ($oper == 'archive')) {
@@ -203,8 +209,9 @@ class NewsPrint extends FrontController
                 </div>
             </body>
             </html>';
-        } else
+        } else {
             header("location: index.php");
+        }
     }
 
 }

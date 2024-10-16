@@ -101,8 +101,10 @@ class NewsSubmit extends FrontController
         // include('header.php');
 
         global $user;
-        if ($user)
+
+        if ($user) {
             $userinfo = User::getuserinfo($user);
+        }
 
         echo '
             <h2>' . __d('news', 'Proposer un article') . '</h2>
@@ -137,15 +139,17 @@ class NewsSubmit extends FrontController
         echo '<option value="">' . __d('news', 'Sélectionner un sujet') . '</option>';
 
         while (list($topicid, $topiname, $topics) = sql_fetch_row($toplist)) {
-            if ($topicid == $topic)
+            if ($topicid == $topic) {
                 $sel = 'selected="selected" ';
+            }
 
             echo '<option ' . $sel . ' value="' . $topicid . '">';
 
-            if ($topics != '')
+            if ($topics != '') {
                 echo Language::aff_langue($topics);
-            else
+            } else {
                 echo $topiname;
+            }
 
             echo '</option>';
 
@@ -246,8 +250,9 @@ class NewsSubmit extends FrontController
 
                 $timage = $imgtmp;
 
-                if (file_exists($imgtmp))
+                if (file_exists($imgtmp)) {
                     $topiclogo = '<img class="img-fluid n-sujetsize" src="' . $timage . '" align="right" alt="" />';
+                }
             }
 
             $storyX     = Code::aff_code($story);
@@ -255,9 +260,9 @@ class NewsSubmit extends FrontController
 
             Theme::themepreview('<h3>' . $subject . $topiclogo . '</h3>', '<div class="text-muted">' . $storyX . '</div>', $bodytextX);
 
-            //    if ($no_img) {
-            //       echo '<strong>'.Language::aff_langue($topictext).'</strong>';
-            //    }
+            // if ($no_img) {
+            //    echo '<strong>'.Language::aff_langue($topictext).'</strong>';
+            // }
 
             echo '
                 </div>
@@ -334,18 +339,17 @@ class NewsSubmit extends FrontController
      */
     public function Ok()
     {
-        settype($date_debval, 'string');
-
-        if (!$date_debval)
+        if (!$date_debval) {
             $date_debval = $dd_pub . ' ' . $dh_pub . ':01';
+        }
 
-        settype($date_finval, 'string');
-
-        if (!$date_finval)
+        if (!$date_finval) {
             $date_finval = $fd_pub . ' ' . $fh_pub . ':01';
+        }
 
-        if ($date_finval < $date_debval)
-            $date_finval = $date_debval; 
+        if ($date_finval < $date_debval) {
+            $date_finval = $date_debval;
+        } 
         
         $this->SubmitStory($subject, $story, $bodytext, $topic, $date_debval, $date_finval, $epur, $asb_question, $asb_reponse);   
     }
@@ -378,9 +382,9 @@ class NewsSubmit extends FrontController
             $name = Config::get('npds.anonymous');
 
             //anti_spambot
-            if (!R_spambot($asb_question, $asb_reponse, '')) {
+            if (!Spam::R_spambot($asb_question, $asb_reponse, '')) {
                 Ecr_Log('security', "Submit Anti-Spam : uid=" . $uid . " / name=" . $name, '');
-                redirect_url("index.php");
+                Url::redirect("index.php");
                 die();
             }
         }

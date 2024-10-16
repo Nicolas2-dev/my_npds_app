@@ -2,13 +2,17 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Mailer;
+use Modules\Npds\Support\Facades\Metalang;
 
 
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterTest extends AdminController
 {
 
     /**
@@ -103,8 +107,8 @@ class Newsletter extends AdminController
         $Xfooter = sql_fetch_row($result);
     
         // For Meta-Lang
-        //   global $cookie; // a quoi ca sert
-        //   $uid=$cookie[0]; // a quoi ca sert
+        // global $cookie;    // a quoi ca sert
+        // $uid = $cookie[0]; // a quoi ca sert
     
         if ($Xheader[1] == 1) {
             echo '
@@ -112,14 +116,14 @@ class Newsletter extends AdminController
             <h3 class="mb-3">' . __d('newsletter', 'Prévisualiser') . ' HTML</h3>';
     
             $Xmime = 'html-nobr';
-            $message = meta_lang($Xheader[0] . $Xbody[0] . $Xfooter[0]);
+            $message = Metalang::meta_lang($Xheader[0] . $Xbody[0] . $Xfooter[0]);
         } else {
             echo '
             <hr />
             <h3 class="mb-3">' . __d('newsletter', 'Prévisualiser') . ' ' . __d('newsletter', 'TEXTE') . '</h3>';
     
             $Xmime = 'text';
-            $message = meta_lang(nl2br($Xheader[0]) . nl2br($Xbody[0]) . nl2br($Xfooter[0]));
+            $message = Metalang::meta_lang(nl2br($Xheader[0]) . nl2br($Xbody[0]) . nl2br($Xfooter[0]));
         }
     
         echo '
@@ -128,9 +132,9 @@ class Newsletter extends AdminController
         </div>
         <a class="btn btn-secondary my-3" href="javascript:history.go(-1)" >' . __d('newsletter', 'Retour en arrière') . '</a>';
     
-        send_email(Config::get('npds.adminmail'), 'LNL TEST', $message, Config::get('npds.adminmail'), true, $Xmime, '');
+        Mailer::send_email(Config::get('npds.adminmail'), 'LNL TEST', $message, Config::get('npds.adminmail'), true, $Xmime, '');
     
-        adminfoot('', '', '', '');
+        Css::adminfoot('', '', '', '');
     }
 
 }

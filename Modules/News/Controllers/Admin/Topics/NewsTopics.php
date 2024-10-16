@@ -4,7 +4,10 @@ namespace Modules\News\Controllers\Admin;
 
 
 use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Js;
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Language;
 
 
 class NewsTopics extends AdminController
@@ -116,8 +119,8 @@ class NewsTopics extends AdminController
                 echo '
                         </div>
                         <div class="">
-                            <h4 class="my-3"><a href="admin.php?op=topicedit&amp;topicid=' . $topicid . '" ><i class="fa fa-edit me-1 align-middle"></i>' . aff_langue($topicname) . '</a></h4>
-                            <p>' . aff_langue($topictext) . '</p>
+                            <h4 class="my-3"><a href="admin.php?op=topicedit&amp;topicid=' . $topicid . '" ><i class="fa fa-edit me-1 align-middle"></i>' . Language::aff_langue($topicname) . '</a></h4>
+                            <p>' . Language::aff_langue($topictext) . '</p>
                             <div id="shortcut-tools_' . $topicid . '" class="n-shortcut-tools" style="display:none;"><a class="text-danger btn" href="admin.php?op=topicdelete&amp;topicid=' . $topicid . '&amp;ok=0" ><i class="fas fa-trash fa-2x"></i></a></div>
                         </div>
                     </div>
@@ -129,9 +132,10 @@ class NewsTopics extends AdminController
         <hr />
         <a name="addtopic"></a>';
     
-        if (isset($nook))
+        if (isset($nook)) {
             echo '<div class="alert alert-danger alert-dismissible fade show">' . __d('news', 'Le nom de ce sujet existe déjà !') . '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-        
+        }
+
         echo '
         <h3 class="my-4">' . __d('news', 'Ajouter un nouveau Sujet') . '</h3>
         <form action="admin.php" method="post" id="topicmake">
@@ -239,11 +243,11 @@ class NewsTopics extends AdminController
         inpandfieldlen("topicadmin",255);
         ';
     
-        echo auto_complete_multi('admin', 'aid', 'authors', 'topicadmin', '');
+        echo Js::auto_complete_multi('admin', 'aid', 'authors', 'topicadmin', '');
     
         sql_free_result($result);
     
-        adminfoot('fv', $fv_parametres, $arg1, '');
+        Css::adminfoot('fv', $fv_parametres, $arg1, '');
     }
 
 }

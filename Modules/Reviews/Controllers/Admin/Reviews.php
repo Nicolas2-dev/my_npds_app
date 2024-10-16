@@ -2,7 +2,9 @@
 
 namespace Modules\Reviews\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Language;
 
 
 class Reviews extends AdminController
@@ -77,23 +79,6 @@ class Reviews extends AdminController
 
         // Leave to parent's method the Flight decisions.
         return parent::after($result);
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param [type] $title
-     * @param [type] $description
-     * @return void
-     */
-    public function mod_main($title, $description)
-    {
-        $title          = stripslashes(FixQuotes($title));
-        $description    = stripslashes(FixQuotes($description));
-    
-        sql_query("UPDATE reviews_main SET title='$title', description='$description'");
-    
-        Header("Location: admin.php?op=reviews");
     }
     
     /**
@@ -246,7 +231,7 @@ class Reviews extends AdminController
     
             echo '
             <script type="text/javascript" src="assets/shared/flatpickr/dist/flatpickr.min.js"></script>
-            <script type="text/javascript" src="assets/shared/flatpickr/dist/l10n/' . language_iso(1, '', '') . '.js"></script>
+            <script type="text/javascript" src="assets/shared/flatpickr/dist/l10n/' . Language::language_iso(1, '', '') . '.js"></script>
             <script type="text/javascript">
             //<![CDATA[
                 $(document).ready(function() {
@@ -256,7 +241,7 @@ class Reviews extends AdminController
                     altInput: true,
                     altFormat: "l j F Y",
                     dateFormat:"Y-m-d",
-                    "locale": "' . language_iso(1, '', '') . '",
+                    "locale": "' . Language::language_iso(1, '', '') . '",
                 });
             //]]>
             </script>';
@@ -280,35 +265,7 @@ class Reviews extends AdminController
     
         sql_free_result($result);
     
-        adminfoot('fv', '', $arg1, '');
-    }
-    
-    /**
-     * Undocumented function
-     *
-     * @param [type] $id
-     * @param [type] $date
-     * @param [type] $title
-     * @param [type] $text
-     * @param [type] $reviewer
-     * @param [type] $email
-     * @param [type] $score
-     * @param [type] $cover
-     * @param [type] $url
-     * @param [type] $url_title
-     * @return void
-     */
-    public function add_review($id, $date, $title, $text, $reviewer, $email, $score, $cover, $url, $url_title)
-    {
-        $title      = stripslashes(FixQuotes($title));
-        $text       = stripslashes(FixQuotes($text));
-        $reviewer   = stripslashes(FixQuotes($reviewer));
-        $email      = stripslashes(FixQuotes($email));
-    
-        sql_query("INSERT INTO reviews VALUES (NULL, '$date', '$title', '$text', '$reviewer', '$email', '$score', '$cover', '$url', '$url_title', '1')");
-        sql_query("DELETE FROM reviews_add WHERE id = '$id'");
-    
-        Header("Location: admin.php?op=reviews");
+        Css::adminfoot('fv', '', $arg1, '');
     }
 
 }

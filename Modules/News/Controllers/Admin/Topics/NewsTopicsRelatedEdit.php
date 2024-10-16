@@ -4,6 +4,7 @@ namespace Modules\News\Controllers\Admin;
 
 
 use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
 
 
@@ -102,12 +103,13 @@ class NewsTopicsRelatedEdit extends AdminController
         <h3>' . __d('news', 'Sujet : ') . ' ' . $topictext . '</h3>
         <h4>' . __d('news', 'Editer les Liens Relatifs') . '</h4>';
     
-        if ($topicimage != "")
+        if ($topicimage != "") {
             echo '
             <div class="thumbnail">
                 <img class="img-fluid " src="' . Config::get('npds.tipath') . $topicimage . '" alt="' . $topictext . '" />
             </div>';
-    
+        }
+
         echo '
         <form class="form-horizontal" action="admin.php" method="post" id="editrelatedlink">
             <fieldset>
@@ -146,7 +148,7 @@ class NewsTopicsRelatedEdit extends AdminController
             inpandfieldlen("url",320);
         ';
     
-        adminfoot('fv', '', $arg1, '');
+        Css::adminfoot('fv', '', $arg1, '');
     }
 
     /**

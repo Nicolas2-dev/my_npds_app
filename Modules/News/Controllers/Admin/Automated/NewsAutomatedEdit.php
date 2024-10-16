@@ -2,11 +2,21 @@
 
 namespace Modules\News\Controllers\Admin;
 
+use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Code;
+use Modules\Theme\Support\Facades\Theme;
+use Modules\Npds\Support\Facades\Language;
+use Shared\Editeur\Support\Facades\Editeur;
+use Modules\News\Library\Traits\NewsStoryTrait;
+use Modules\News\Support\Facades\NewsPublication;
 
 
 class NewsAutomatedEdit extends AdminController
 {
+
+    use NewsStoryTrait;
 
     /**
      * [$pdst description]
@@ -93,10 +103,10 @@ class NewsAutomatedEdit extends AdminController
         list($catid, $title, $time, $hometext, $bodytext, $topic, $informant, $notes, $ihome, $date_debval, $date_finval, $epur) = sql_fetch_row($result);
         sql_free_result($result);
         
-        $titre = stripslashes($title);
-        $hometext = stripslashes($hometext);
-        $bodytext = stripslashes($bodytext);
-        $notes = stripslashes($notes);
+        $titre      = stripslashes($title);
+        $hometext   = stripslashes($hometext);
+        $bodytext   = stripslashes($bodytext);
+        $notes      = stripslashes($notes);
     
         if ($topic < 1) {
             $topic = 1;
@@ -107,38 +117,43 @@ class NewsAutomatedEdit extends AdminController
         $result2 = sql_query("SELECT topicname, topictext, topicimage, topicadmin FROM topics WHERE topicid='$topic'");
         list($topicname, $topictext, $topicimage, $topicadmin) = sql_fetch_row($result2);
     
-        if ($radminsuper)
+        if ($radminsuper) {
             $affiche = true;
-        else {
+        } else {
             $topicadminX = explode(',', $topicadmin);
     
             for ($i = 0; $i < count($topicadminX); $i++) {
-                if (trim($topicadminX[$i]) == $aid) $affiche = true;
+                if (trim($topicadminX[$i]) == $aid) {
+                    $affiche = true;
+                }
             }
         }
     
-        if (!$affiche)
+        if (!$affiche) {
             header("location: admin.php?op=autoStory");
-    
-        $topiclogo = '<span class="badge bg-secondary" title="' . $topictext . '" data-bs-toggle="tooltip" data-bs-placement="left"><strong>' . aff_langue($topicname) . '</strong></span>';
+        }
+
+        $topiclogo = '<span class="badge bg-secondary" title="' . $topictext . '" data-bs-toggle="tooltip" data-bs-placement="left"><strong>' . Language::aff_langue($topicname) . '</strong></span>';
 
         echo '
         <hr />
         <h3>' . __d('news', 'Editer l\'Article Automatique') . '</h3>
-        ' . aff_local_langue('', 'local_user_language', __d('news', 'Langue de Prévisualisation')) . '
+        ' . Language::aff_local_langue('', 'local_user_language', __d('news', 'Langue de Prévisualisation')) . '
         <div class="card card-body mb-3">';
     
         if ($topicimage !== '') {
-            if (!$imgtmp = theme_image('topics/' . $topicimage)) 
+            if (!$imgtmp = Theme::theme_image('topics/' . $topicimage)) {
                 $imgtmp = Config::get('npds.tipath') . $topicimage;
+            }
     
             $timage = $imgtmp;
     
-            if (file_exists($imgtmp))
+            if (file_exists($imgtmp)) {
                 $topiclogo = '<img class="img-fluid " src="' . $timage . '" align="right" alt="topic_logo" loading="lazy" title="' . $topictext . '" data-bs-toggle="tooltip" data-bs-placement="left" />';
+            }
         }
     
-        code_aff('<div class="d-flex"><div class="w-100 p-2 ps-0"><h3>' . $titre . '</h3></div><div class="align-self-center p-2 flex-shrink-1 h3">' . $topiclogo . '</div></div>', '<div class="text-muted">' . $hometext . '</div>', $bodytext, $notes);
+        Code::code_aff('<div class="d-flex"><div class="w-100 p-2 ps-0"><h3>' . $titre . '</h3></div><div class="align-self-center p-2 flex-shrink-1 h3">' . $topiclogo . '</div></div>', '<div class="text-muted">' . $hometext . '</div>', $bodytext, $notes);
     
         echo '<hr /><b>' . __d('news', 'Utilisateur') . '</b>' . $informant . '<br />';
     
@@ -158,8 +173,9 @@ class NewsAutomatedEdit extends AdminController
     
         $toplist = sql_query("SELECT topicid, topictext, topicadmin FROM topics ORDER BY topictext");
     
-        if ($radminsuper) 
+        if ($radminsuper) {
             echo '<option value="">' . __d('news', 'Tous les Sujets') . '</option>';
+        }
     
         while (list($topicid, $topics, $topicadmin) = sql_fetch_row($toplist)) {
             $affiche = false;
@@ -170,13 +186,15 @@ class NewsAutomatedEdit extends AdminController
                 $topicadminX = explode(',', $topicadmin);
     
                 for ($i = 0; $i < count($topicadminX); $i++) {
-                    if (trim($topicadminX[$i]) == $aid) $affiche = true;
+                    if (trim($topicadminX[$i]) == $aid) {
+                        $affiche = true;
+                    }
                 }
             }
     
             if ($affiche) {
                 $sel = $topicid == $topic ? 'selected="selected" ' : '';
-                echo '<option ' . $sel . ' value="' . $topicid . '">' . aff_langue($topics) . '</option>';
+                echo '<option ' . $sel . ' value="' . $topicid . '">' . Language::aff_langue($topics) . '</option>';
             }
         }
     
@@ -185,8 +203,9 @@ class NewsAutomatedEdit extends AdminController
                 </div>
             </div>';
     
-        SelectCategory($catid);
-        puthome($ihome);
+        $this->SelectCategory($catid);
+
+        $this->puthome($ihome);
     
         echo '
             <div class="mb-3 row">
@@ -195,14 +214,14 @@ class NewsAutomatedEdit extends AdminController
                     <textarea class="tin form-control" rows="25" id="hometext" name="hometext" >' . $hometext . '</textarea>
                 </div>
             </div>
-            ' . aff_editeur('hometext', '') . '
+            ' . Editeur::aff_editeur('hometext', '') . '
             <div class="mb-3 row">
                 <label class="col-form-label col-sm-12" for="bodytext">' . __d('news', 'Texte étendu') . '</label>
                 <div class="col-sm-12">
                     <textarea class="tin form-control" rows="25" id="bodytext" name="bodytext" >' . $bodytext . '</textarea>
                 </div>
             </div>
-            ' . aff_editeur('bodytext', '');
+            ' . Editeur::aff_editeur('bodytext', '');
     
         if ($aid != $informant) {
             echo '
@@ -212,7 +231,7 @@ class NewsAutomatedEdit extends AdminController
                     <textarea class="tin form-control" rows="7" id="notes" name="notes">' . $notes . '</textarea>
                 </div>
             </div>
-            ' . aff_editeur('notes', '');
+            ' . Editeur::aff_editeur('notes', '');
         }
     
         $dd_pub = substr($date_debval, 0, 10);
@@ -220,7 +239,7 @@ class NewsAutomatedEdit extends AdminController
         $dh_pub = substr($date_debval, 11, 5);
         $fh_pub = substr($date_finval, 11, 5);
     
-        publication($dd_pub, $fd_pub, $dh_pub, $fh_pub, $epur);
+        NewsPublication::publication($dd_pub, $fd_pub, $dh_pub, $fh_pub, $epur);
     
         echo '
             <div class="mb-3 row">
@@ -255,53 +274,7 @@ class NewsAutomatedEdit extends AdminController
             mem_y.checked ? "" : choixgroupe.style.display="none" ;
         ';
     
-        adminfoot('fv', $fv_parametres, $arg1, '');
-    }
-    
-    /**
-     * Undocumented function
-     *
-     * @param [type] $anid
-     * @param [type] $title
-     * @param [type] $hometext
-     * @param [type] $bodytext
-     * @param [type] $topic
-     * @param [type] $notes
-     * @param [type] $catid
-     * @param [type] $ihome
-     * @param [type] $informant
-     * @param [type] $members
-     * @param [type] $Mmembers
-     * @param [type] $date_debval
-     * @param [type] $date_finval
-     * @param [type] $epur
-     * @return void
-     */
-    public function autoSaveEdit($anid, $title, $hometext, $bodytext, $topic, $notes, $catid, $ihome, $informant, $members, $Mmembers, $date_debval, $date_finval, $epur)
-    {
-        $date_debval = !isset($date_debval) ? $dd_pub . ' ' . $dh_pub . ':01' : $date_debval;
-        $date_finval = !isset($date_finval) ? $fd_pub . ' ' . $fh_pub . ':01' : $date_finval;
-
-        if ($date_finval < $date_debval)
-            $date_finval = $date_debval;
-
-        $title = stripslashes(FixQuotes(str_replace('"', '&quot;', $title)));
-        $hometext = stripslashes(FixQuotes($hometext));
-        $bodytext = stripslashes(FixQuotes($bodytext));
-        $notes = stripslashes(FixQuotes($notes));
-    
-        if (($members == 1) and ($Mmembers == '')) 
-            $ihome = '-127';
-    
-        if (($members == 1) and (($Mmembers > 1) and ($Mmembers <= 127))) 
-            $ihome = $Mmembers;
-    
-        $result = sql_query("UPDATE autonews SET catid='$catid', title='$title', time=now(), hometext='$hometext', bodytext='$bodytext', topic='$topic', notes='$notes', ihome='$ihome', date_debval='$date_debval', date_finval='$date_finval', auto_epur='$epur' WHERE anid='$anid'");
-        
-        if (Config::get('npds.ultramode'))
-            ultramode();
-    
-        Header("Location: admin.php?op=autoEdit&anid=$anid");
+        Css::adminfoot('fv', $fv_parametres, $arg1, '');
     }
 
 }

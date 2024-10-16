@@ -2,13 +2,15 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Shared\Editeur\Support\Facades\Editeur;
 
 
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterAddHeaderFooter extends AdminController
 {
 
     /**
@@ -128,7 +130,7 @@ class Newsletter extends AdminController
         global $tiny_mce_relurl;
     
         $tiny_mce_relurl = 'false';
-        echo aff_editeur('xtext', 'false');
+        echo Editeur::aff_editeur('xtext', 'false');
     
         echo '
                     <input type="hidden" name="op" value="' . $va . '" />
@@ -152,7 +154,7 @@ class Newsletter extends AdminController
         var formulid = ["lnlheadfooter"];
         ';
     
-        adminfoot('fv', $fv_parametres, $arg1, '');
+        Css::adminfoot('fv', $fv_parametres, $arg1, '');
     }
     
 }

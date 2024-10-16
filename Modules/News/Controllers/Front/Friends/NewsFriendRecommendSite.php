@@ -2,7 +2,9 @@
 
 namespace Modules\News\Controllers\Front;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\FrontController;
+use Modules\Npds\Support\Facades\Spam;
 
 
 /**
@@ -100,7 +102,7 @@ class NewsFriendRecommendSite extends FrontController
                 <label for="fmail">' . __d('news', 'Email du destinataire') . '</label>
                 <span class="help-block text-end"><span class="muted" id="countcar_fmail"></span></span>
             </div>
-            ' . Q_spambot() . '
+            ' . Spam::Q_spambot() . '
             <div class="mb-3 row">
                 <div class="col-sm-8 ms-sm-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-lg fa-at"></i>&nbsp;' . __d('news', 'Envoyer') . '</button>
@@ -115,7 +117,7 @@ class NewsFriendRecommendSite extends FrontController
         inpandfieldlen("fname",100);
         inpandfieldlen("fmail",100);';
     
-        adminfoot('fv', '', $arg1, '');
+        Css::adminfoot('fv', '', $arg1, '');
     }
 
 }

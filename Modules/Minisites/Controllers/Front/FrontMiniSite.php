@@ -64,13 +64,26 @@ class FrontMiniSite extends FrontController
     public function index()
     {
         // App copyright ... don't remove !
-        $copyright = '<span class="blog_sname">' . Config::get('npds.sitename') . '</span>&nbsp;<span class="blog_npds">Npds&nbsp;HUB-BLOG&nbsp;<a href="http://www.npds.org">Npds</a></span>';
+        $copyright = '<span class="blog_sname">
+            ' . Config::get('npds.sitename') . '</span>
+            &nbsp;<span class="blog_npds">
+                Npds HUB-BLOG <a href="http://www.npds.org">Npds</a>
+            </span>';
 
         // Troll Control for security
         $affich = false;
 
         if (($op != '') and ($op)) {
-            if (preg_match('#^[a-z0-9_\.-]#i', $op) and !stristr($op, ".*://") and !stristr($op, "..") and !stristr($op, "../") and !stristr($op, "script") and !stristr($op, "cookie") and !stristr($op, "iframe") and  !stristr($op, "applet") and !stristr($op, "object") and !stristr($op, "meta")) {
+            if (preg_match('#^[a-z0-9_\.-]#i', $op) 
+            and !stristr($op, ".*://") 
+            and !stristr($op, "..") 
+            and !stristr($op, "../") 
+            and !stristr($op, "script") 
+            and !stristr($op, "cookie") 
+            and !stristr($op, "iframe") 
+            and  !stristr($op, "applet") 
+            and !stristr($op, "object") 
+            and !stristr($op, "meta")) {
                 
                 global $user, $super_admintest;
 
@@ -86,16 +99,17 @@ class FrontMiniSite extends FrontController
                     if ($userdata['mns'] == true) {
                         $affich = true;
 
-                        if (stristr($userdata['user_avatar'], "users_private"))
+                        if (stristr($userdata['user_avatar'], "users_private")) {
                             $direktori = '';
-                        else {
+                        } else {
                             global $theme;
 
                             $direktori = 'assets/images/forum/avatar/';
 
                             if (function_exists("theme_image")) {
-                                if (Theme::theme_image("forum/avatar/blank.gif"))
+                                if (Theme::theme_image("forum/avatar/blank.gif")) {
                                     $direktori = "themes/$theme/images/forum/avatar/";
+                                }
                             }
                         }
 
@@ -106,8 +120,9 @@ class FrontMiniSite extends FrontController
                     $userdataX = explode(':', $userX);
 
                     if (array_key_exists(1, $userdataX)) {
-                        if ($userdataX[1] == $op)
+                        if ($userdataX[1] == $op) {
                             $adminblog = true;
+                        }
                     }
 
                 } else {
@@ -119,7 +134,9 @@ class FrontMiniSite extends FrontController
 
                         $gX = Groupe::liste_group();
                         foreach ($gX as $g_id => $g_name) {
-                            if ($g_id == basename($op)) $gr_name = $g_name;
+                            if ($g_id == basename($op)) {
+                                $gr_name = $g_name;
+                            }
                         }
                     }
 
@@ -127,8 +144,9 @@ class FrontMiniSite extends FrontController
 
                     if (is_array($tabgp)) {
                         foreach ($tabgp as $auto) {
-                            if ($auto == basename($op))
+                            if ($auto == basename($op)) {
                                 $adminblog = true;
+                            }
                         }
                     }
                 }
@@ -186,8 +204,11 @@ class FrontMiniSite extends FrontController
                     <body>';
 
                 $fp = fopen($fic, "r");
-                if (filesize($fic) > 0)
+
+                if (filesize($fic) > 0) {
                     $Xcontent .= fread($fp, filesize($fic));
+                }
+
                 fclose($fp);
 
                 //compteur
@@ -213,9 +234,6 @@ class FrontMiniSite extends FrontController
                 if (strstr($Xcontent, '!blog!')) {
                     include("modules/blog/readnews.php");
 
-                    settype($startpage, 'integer');
-                    settype($action, 'string');
-
                     $content = Minisite::readnews($dir, $op, $per_page, $startpage, $action, $adminblog);
 
                     if (strstr($content, '!l_new_pages!')) {
@@ -231,8 +249,10 @@ class FrontMiniSite extends FrontController
                     if (file_exists($l_fic)) {
                         $fp = fopen($l_fic, 'r');
 
-                        if (filesize($l_fic) > 0)
+                        if (filesize($l_fic) > 0) {
                             $Hcontent = Minisite::convert_ressources(fread($fp, filesize($l_fic)));
+                        }
+
                         fclose($fp);
                     }
                 }
@@ -244,8 +264,10 @@ class FrontMiniSite extends FrontController
                     if (file_exists($l_fic)) {
                         $fp = fopen($l_fic, 'r');
 
-                        if (filesize($l_fic) > 0)
+                        if (filesize($l_fic) > 0) {
                             $Fcontent = Minisite::convert_ressources(fread($fp, filesize($l_fic)));
+                        }
+
                         fclose($fp);
                     }
                 }
@@ -277,7 +299,7 @@ class FrontMiniSite extends FrontController
                 echo substr($Xcontent, 0, $rupt);
                 echo aff_video_yt(substr($Xcontent, $rupt + 6));
 
-                if ($adminblog)
+                if ($adminblog) {
                     echo '
                     <script type="text/javascript">
                         //<![CDATA[
@@ -287,8 +309,9 @@ class FrontMiniSite extends FrontController
                             });
                         //]]>
                     </script>';
+                }
 
-                if (defined('CITRON'))
+                if (defined('CITRON')) {
                     echo '
                     <script type="text/javascript">
                         //<![CDATA[
@@ -300,7 +323,8 @@ class FrontMiniSite extends FrontController
                             //(tarteaucitron.job = tarteaucitron.job || []).push("gtag");/*uncomment the line*/
                         //]]
                     </script>';
-                    
+                }
+
                 echo '
                     <script type="text/javascript" src="assets/js/npds_adapt.js"></script>
                     </body>

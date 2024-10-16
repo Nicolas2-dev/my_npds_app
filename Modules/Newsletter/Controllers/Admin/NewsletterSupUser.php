@@ -2,13 +2,14 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
 
 
 /**
  * Undocumented class
  */
-class Newsletter extends AdminController
+class NewsletterSupUser extends AdminController
 {
 
     /**
@@ -131,7 +132,7 @@ class Newsletter extends AdminController
         </table>
         <br /><a href="javascript:history.go(-1)" class="btn btn-secondary">' . __d('newsletter', 'Retour en arrière') . '</a>';
     
-        adminfoot('', '', '', '');
+        Css::adminfoot('', '', '', '');
     }
 
 }

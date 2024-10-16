@@ -2,7 +2,11 @@
 
 namespace Modules\News\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Date;
+use Modules\Npds\Support\Facades\Language;
+use Modules\Users\Support\Facades\UserPopover;
 
 
 class NewSubmissions extends AdminController
@@ -91,11 +95,11 @@ class NewSubmissions extends AdminController
 
         $result = sql_query("SELECT qid, subject, timestamp, topic, uname FROM queue ORDER BY timestamp");
     
-        if (sql_num_rows($result) == 0)
+        if (sql_num_rows($result) == 0) {
             echo '
             <hr />
             <h3>' . __d('news', 'Pas de nouveaux Articles postés') . '</h3>';
-        else {
+        }  else {
             echo '
             <hr />
             <h3>' . __d('news', 'Nouveaux Articles postés') . '<span class="badge bg-danger float-end">' . sql_num_rows($result) . '</span></h3>
@@ -113,65 +117,71 @@ class NewSubmissions extends AdminController
     
             while (list($qid, $subject, $timestamp, $topic, $uname) = sql_fetch_row($result)) {
     
-                if ($topic < 1) 
+                if ($topic < 1) {
                     $topic = 1;
+                }
     
                 $affiche = false;
                 $result2 = sql_query("SELECT topicadmin, topictext, topicimage FROM topics WHERE topicid='$topic'");
                 list($topicadmin, $topictext, $topicimage) = sql_fetch_row($result2);
     
-                if ($radminsuper)
+                if ($radminsuper) {
                     $affiche = true;
-                else {
+                } else {
                     $topicadminX = explode(',', $topicadmin);
     
                     for ($i = 0; $i < count($topicadminX); $i++) {
-                        if (trim($topicadminX[$i]) == $aid) 
+                        if (trim($topicadminX[$i]) == $aid) {
                             $affiche = true;
+                        }
                     }
                 }
     
                 echo '
                 <tr>
-                    <td>' . userpopover($uname, '40', 2) . ' ' . $uname . '</td>
+                    <td>' . UserPopover::userpopover($uname, '40', 2) . ' ' . $uname . '</td>
                     <td>';
     
-                if ($subject == '') 
+                if ($subject == '') {
                     $subject = __d('news', 'Aucun Sujet');
+                }
     
-                $subject = aff_langue($subject);
+                $subject = Language::aff_langue($subject);
     
-                if ($affiche)
-                    echo '<img class=" " src="assets/images/topics/' . $topicimage . '" height="30" width="30" alt="avatar" />&nbsp;<a href="admin.php?op=topicedit&amp;topicid=' . $topic . '" class="adm_tooltip">' . aff_langue($topictext) . '</a></td>
+                if ($affiche) {
+                    echo '<img class=" " src="assets/images/topics/' . $topicimage . '" height="30" width="30" alt="avatar" />&nbsp;<a href="admin.php?op=topicedit&amp;topicid=' . $topic . '" class="adm_tooltip">' . Language::aff_langue($topictext) . '</a></td>
                     <td align="left"><a href="admin.php?op=DisplayStory&amp;qid=' . $qid . '">' . ucfirst($subject) . '</a></td>';
-                else
-                    echo aff_langue($topictext) . '</td>
+                } else {
+                    echo Language::aff_langue($topictext) . '</td>
                     <td><i>' . ucfirst($subject) . '</i></td>';
-    
+                }
+
                 echo '
-                    <td class="small">' . formatTimestamp($timestamp) . '</td>';
+                    <td class="small">' . Date::formatTimestamp($timestamp) . '</td>';
     
-                if ($affiche)
+                if ($affiche) {
                     echo '
                         <td><a class="" href="admin.php?op=DisplayStory&amp;qid=' . $qid . '"><i class="fa fa-edit fa-lg" title="' . __d('news', 'Editer') . '" data-bs-toggle="tooltip" ></i></a><a class="text-danger" href="admin.php?op=DeleteStory&amp;qid=' . $qid . '"><i class="fas fa-trash fa-lg ms-3" title="' . __d('news', 'Effacer') . '" data-bs-toggle="tooltip" ></i></a></td>
                     </tr>';
-                else
+                }  else {
                     echo '
                         <td>&nbsp;</td>
                     </tr>';
-    
+                }
+
                 $dummy++;
             }
     
-            if ($dummy < 1)
+            if ($dummy < 1) {
                 echo '<h3>' . __d('news', 'Pas de nouveaux Articles postés') . '</h3>';
-            else
+            } else {
                 echo '
                     </tbody>
                 </table>';
+            }
         }
     
-        adminfoot('', '', '', '');
+        Css::adminfoot('', '', '', '');
     }
 
 }
