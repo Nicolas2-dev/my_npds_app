@@ -19,7 +19,7 @@ class ReviewsKernel
      * @var array
      */
     public static $aliases = [
-        // 
+        'Reviews'        => 'Modules\Reviews\Support\Facades\Reviews',
     ];
 
     /**

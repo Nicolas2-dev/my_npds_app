@@ -19,7 +19,7 @@ class PushKernel
      * @var array
      */
     public static $aliases = [
-        // 
+        'Push'        => 'Modules\Push\Support\Facades\Push', 
     ];
 
     /**

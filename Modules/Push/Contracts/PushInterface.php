@@ -65,4 +65,19 @@ interface PushInterface {
      */
     public function links($ibid);
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $operation
+     * @return void
+     */
+    public function push_header($operation);
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function push_footer();    
+
 }
