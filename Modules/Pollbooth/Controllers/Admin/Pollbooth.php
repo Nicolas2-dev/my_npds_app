@@ -193,8 +193,9 @@ class Pollbooth extends AdminController
         $id = $object['pollID'];
     
         for ($i = 1; $i <= sizeof($optionText); $i++) {
-            if ($optionText[$i] != '')
+            if ($optionText[$i] != '') {
                 $optionText[$i] = FixQuotes($optionText[$i]);
+            }
     
             $result = sql_query("INSERT INTO poll_data (pollID, optionText, optionCount, voteID, pollType) VALUES ('$id', '$optionText[$i]', 0, '$i', '$poll_type')");
         }
@@ -252,7 +253,7 @@ class Pollbooth extends AdminController
             </div>
         </form>';
     
-        include('footer.php');
+        // include('footer.php');
     }
     
     /**
@@ -333,7 +334,7 @@ class Pollbooth extends AdminController
         </form>';
     
         //   adminfoot('','','','');
-        include('footer.php');
+        // include('footer.php');
     }
     
     /**
@@ -369,10 +370,11 @@ class Pollbooth extends AdminController
     
             $requi = '';
             for ($i = 1; $i <= Config::get('npds.maxOptions'); $i++) {
-                if ($i < 3) 
+                if ($i < 3) {
                     $requi = ' required="required" ';
-                else 
+                } else {
                     $requi = '';
+                }
     
                 list($optionText, $voteID, $pollType) = sql_fetch_row($result);
     
@@ -392,8 +394,9 @@ class Pollbooth extends AdminController
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="poll_type" name="poll_type" value="1"';
     
-            if ($pollType == "1") 
+            if ($pollType == "1") {
                 echo ' checked="checked"';
+            }
     
             echo ' />
                         <label class="form-check-label" for="poll_type">' . __d('pollbooth', 'Seulement aux membres') . '</label>
@@ -403,8 +406,9 @@ class Pollbooth extends AdminController
                     <div class="form-check text-danger">
                         <input class="form-check-input" type="checkbox" id="poll_close" name="poll_close" value="1"';
     
-            if ($pollClose == 1) 
+            if ($pollClose == 1) {
                 echo ' checked="checked"';
+            }
     
             echo ' />
                         <label class="form-check-label" for="poll_close">' . __d('pollbooth', 'Vote fermé') . '</label>
@@ -425,8 +429,9 @@ class Pollbooth extends AdminController
             }
     
             adminfoot('fv', '', $arg1, '');
-        } else
+        } else {
             header("location: admin.php?op=editpoll");
+        }
     }
     
     /**
@@ -445,8 +450,9 @@ class Pollbooth extends AdminController
         $poll_type = $poll_type + 128 * $poll_close;
     
         for ($i = 1; $i <= sizeof($optionText); $i++) {
-            if ($optionText[$i] != '')
+            if ($optionText[$i] != '') {
                 $optionText[$i] = FixQuotes($optionText[$i]);
+            }
     
             $result = sql_query("UPDATE poll_data SET optionText='$optionText[$i]', pollType='$poll_type' WHERE pollID='$pollID' and voteID='$i'");
         }

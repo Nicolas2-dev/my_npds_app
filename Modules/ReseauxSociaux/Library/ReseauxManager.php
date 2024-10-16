@@ -4,7 +4,6 @@ namespace Modules\ReseauxSociaux\Library;
 
 use Npds\Config\Config;
 use Modules\Npds\Support\Facades\Auth;
-use Modules\Users\Support\Facades\User;
 use Modules\ReseauxSociaux\Contracts\ReseauxInterface;
 
 /**

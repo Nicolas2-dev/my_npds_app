@@ -63,24 +63,26 @@ class Pollbooth extends FrontController
         $header = 0;
         
         if (!isset($pollID)) {
-            include('header.php');
+            // include('header.php');
             pollList();
         }
         
         settype($op, 'string');
         
         if (isset($forwarder)) {
-            if (isset($voteID))
+            if (isset($voteID)) {
                 pollCollector($pollID, $voteID, $forwarder);
-            else
+            } else {
                 Header("Location: $forwarder");
+            }
         
         } elseif ($op == 'results') {
             list($ibid, $pollClose) = pollSecur($pollID);
         
             if ($pollID == $ibid) {
-                if ($header != 1)
-                    include("header.php");
+                // if ($header != 1) {
+                //     include("header.php");
+                // }
         
                 echo '<h2>' . __d('pollbooth', 'Sondage') . '</h2><hr />';
         
@@ -91,25 +93,27 @@ class Pollbooth extends FrontController
                     echo $block_title;
         
                     pollboxbooth($pollID, $pollClose);
-                } else
+                } else {
                     PollMain_aff();
+                }
         
                 if (Config::get('npds.pollcomm')) {
                     if (file_exists("modules/comments/config/pollBoth.conf.php")) {
                         include("modules/comments/config/pollBoth.conf.php");
         
-                        if ($pollClose == 99)
+                        if ($pollClose == 99) {
                             $anonpost = 0;
+                        }
         
                         include("modules/comments/comments.php");
                     }
                 }
-            } else
+            } else {
                 Header("Location: $forwarder");
+            }
         }
         
-        include('footer.php');
-        
+        // include('footer.php');
     }
 
     /**
@@ -123,8 +127,6 @@ class Pollbooth extends FrontController
     public function pollCollector($pollID, $voteID, $forwarder)
     {
         // Specified the index and the name of the application for the table appli_log
-        
-        
         $al_id = 1;
         $al_nom = 'Poll';
 
@@ -140,10 +142,11 @@ class Pollbooth extends FrontController
 
             global $$cookieName;
 
-            if ($$cookieName == "1")
+            if ($$cookieName == "1") {
                 $voteValid = "0";
-            else
+            } else {
                 setcookie("$cookieName", "1", time() + 86400);
+            }
 
             global $user;
             if ($user) {
@@ -158,15 +161,17 @@ class Pollbooth extends FrontController
             if (Config::get('npds.setCookies') == "1") {
                 $ip = getip();
 
-                if (Config::get('npds.dns_verif'))
+                if (Config::get('npds.dns_verif')) {
                     $hostname = "OR al_hostname='" . @gethostbyaddr($ip) . "' ";
-                else
+                } else {
                     $hostname = "";
+                }
 
                 $sql = "SELECT al_id FROM appli_log WHERE al_id='$al_id' AND al_subid='$pollID' AND (al_ip='$ip' " . $hostname . $user_req . ")";
                 
-                if ($result = sql_fetch_row(sql_query($sql)))
+                if ($result = sql_fetch_row(sql_query($sql))) {
                     $voteValid = "0";
+                }
             }
 
             if ($voteValid == "1") {
@@ -189,8 +194,6 @@ class Pollbooth extends FrontController
      */
     public function pollList()
     {
-        
-
         $result = sql_query("SELECT pollID, pollTitle, voters FROM poll_desc ORDER BY timeStamp");
 
         echo '
@@ -224,8 +227,9 @@ class Pollbooth extends FrontController
      */
     public function pollResults(int $pollID): void
     {
-        if (!isset($pollID) or empty($pollID)) 
+        if (!isset($pollID) or empty($pollID)) {
             $pollID = 1;
+        }
 
         $result = sql_query("SELECT pollID, pollTitle, timeStamp FROM poll_desc WHERE pollID='$pollID'");
         list(, $pollTitle) = sql_fetch_row($result);
@@ -255,8 +259,9 @@ class Pollbooth extends FrontController
                 if ($sum) {
                     $percent = 100 * $optionCount / $sum;
                     $percentInt = (int)$percent;
-                } else
+                } else {
                     $percentInt = 0;
+                }
 
                 echo '
                 <div class="row">
@@ -290,11 +295,13 @@ class Pollbooth extends FrontController
     {
         global $boxTitle, $boxContent;
 
-        if (!isset($pollID)) 
+        if (!isset($pollID)) {
             $pollID = 1;
+        }
 
-        if (!isset($url)) 
+        if (!isset($url)) {
             $url = sprintf("pollBooth.php?op=results&amp;pollID=%d", $pollID);
+        }
 
         $boxContent = '
         <form action="pollBooth.php" method="post">
@@ -350,13 +357,15 @@ class Pollbooth extends FrontController
         $boxContent .= '<div><ul><li><a href="pollBooth.php">' . __d('pollbooth', 'Anciens sondages') . '</a></li>';
 
         if (Config::get('npds.pollcomm')) {
-            if (file_exists("modules/comments/config/pollBoth.conf.php"))
+            if (file_exists("modules/comments/config/pollBoth.conf.php")) {
                 include("modules/comments/config/pollBoth.conf.php");
+            }
 
             list($numcom) = sql_fetch_row(sql_query("SELECT COUNT(*) FROM posts WHERE forum_id='$forum' AND topic_id='$pollID' AND post_aff='1'"));
             $boxContent .= '<li>' . __d('pollbooth', 'Votes : ') . ' ' . $sum . '</li><li>' . __d('pollbooth', 'Commentaire(s) : ') . ' ' . $numcom . '</li>';
-        } else
+        } else {
             $boxContent .= '<li>' . __d('pollbooth', 'Votes : ') . ' ' . $sum . '</li>';
+        }
 
         $boxContent .= '</ul></div>';
 
@@ -371,8 +380,7 @@ class Pollbooth extends FrontController
      */
     public function PollMain_aff($pollID)
     {
-        $boxContent = '<p><strong><a href="pollBooth.php">' . __d('pollbooth', 'Anciens sondages') . '</a></strong></p>';
-        echo $boxContent;
+        echo '<p><strong><a href="pollBooth.php">' . __d('pollbooth', 'Anciens sondages') . '</a></strong></p>';
     }
 
 }

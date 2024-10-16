@@ -43,15 +43,17 @@ class PollboothManager implements PollboothInterface
             settype($id, "integer");
             list($ibid, $pollClose) = $this->pollSecur($id);
 
-            if ($ibid) 
+            if ($ibid) {
                 pollMain($ibid, $pollClose);
+            }
 
         } elseif ($result = sql_query("SELECT pollID FROM poll_data ORDER BY pollID DESC LIMIT 1")) {
             list($pollID) = sql_fetch_row($result);
             list($ibid, $pollClose) = $this->pollSecur($pollID);
 
-            if ($ibid) 
+            if ($ibid) {
                 pollMain($ibid, $pollClose);
+            }
         }
     }
 

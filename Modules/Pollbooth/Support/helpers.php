@@ -2,8 +2,6 @@
 
 use Modules\Pollbooth\Library\PollboothManager;
 
-
-
 if (! function_exists('PollNewest'))
 {
     /**

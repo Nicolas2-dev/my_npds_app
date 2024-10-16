@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\ReseauxSociaux\Support\Facades;
+namespace Modules\Push\Support\Facades;
 
-use Modules\ReseauxSociaux\Library\ReseauxManager;
+use Modules\Push\Library\PushManager;
 
 /**
  * Undocumented class
  */
-class Reseaux
+class Push
 {
     /**
      * Undocumented function
@@ -18,7 +18,7 @@ class Reseaux
      */
     public static function __callStatic($method, $parameters)
     {
-        $instance = ReseauxManager::getInstance();
+        $instance = PushManager::getInstance();
 
         return call_user_func_array(array($instance, $method), $parameters);
     }
