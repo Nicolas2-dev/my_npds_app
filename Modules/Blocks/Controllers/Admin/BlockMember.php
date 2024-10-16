@@ -23,7 +23,7 @@ class BlockMember extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'mainblock';
 
     /**
      * [$short_menu_admin description]
@@ -44,7 +44,7 @@ class BlockMember extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'mblock';
 
 
     /**
@@ -62,7 +62,7 @@ class BlockMember extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('blocks', 'Bloc Principal');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -83,33 +83,6 @@ class BlockMember extends AdminController
         return parent::after($result);
     }
 
-    /**
-     * [__construct description]
-     *
-     * @return  [type]  [return description]
-     */
-    // public function __construct()
-    // {
-        // $f_meta_nom = 'mblock';
-        // $f_titre = __d('blocks', 'Bloc Principal');
-        
-        // //==> controle droit
-        // admindroits($aid, $f_meta_nom);
-        // //<== controle droit
-        
-
-        // $hlpfile = "language/manuels/Config::get('npds.language')/mainblock.html";
-
-        // switch ($op) {
-        //     case 'mblock':
-        //         mblock();
-        //         break;
-        
-        //     case 'changemblock':
-        //         changemblock($title, $content);
-        //         break;
-        // }  
-    // }
 
     function mblock()
     {

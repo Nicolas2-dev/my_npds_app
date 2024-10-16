@@ -6,7 +6,7 @@ use Npds\Config\Config;
 use Modules\Npds\Core\AdminController;
 
 
-class AdminPolls extends AdminController
+class Pollbooth extends AdminController
 {
 /**
      * [$pdst description]
@@ -20,7 +20,7 @@ class AdminPolls extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'surveys';
 
     /**
      * [$short_menu_admin description]
@@ -41,7 +41,7 @@ class AdminPolls extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'create';
 
 
     /**
@@ -59,7 +59,7 @@ class AdminPolls extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('pollbooth', 'Les sondages');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -81,55 +81,13 @@ class AdminPolls extends AdminController
     }
 
     /**
-     * [__construct description]
+     * case 'create': => poll_createPoll();
+     * 
+     * Undocumented function
      *
-     * @return  [type]  [return description]
+     * @return void
      */
-    // public function __construct()
-    // {
-        // $f_meta_nom = 'create';
-        // $f_titre = __d('pollbooth', 'Les sondages');
-        
-        // //==> controle droit
-        // admindroits($aid, $f_meta_nom);
-        // //<== controle droit
-        
-
-        // $hlpfile = "language/manuels/Config::get('npds.language')/surveys.html";
-
-        // switch ($op) {
-        //     case 'create':
-        //         poll_createPoll();
-        //         break;
-        
-        //     case 'createPosted':
-        //         poll_createPosted();
-        //         break;
-        
-        //     case 'remove':
-        //         poll_removePoll();
-        //         break;
-        
-        //     case 'removePosted':
-        //         poll_removePosted();
-        //         break;
-        
-        //     case 'editpoll':
-        //         poll_editPoll();
-        //         break;
-        
-        //     case 'editpollPosted':
-        //         poll_editPollPosted();
-        //         break;
-        
-        //     case 'SendEditPoll':
-        //         poll_SendEditPoll();
-        //         break;
-        // }
-
-    // }
-
-    function poll_createPoll()
+    public function poll_createPoll()
     {
         global $id;
     
@@ -214,7 +172,14 @@ class AdminPolls extends AdminController
         adminfoot('fv', '', $arg1, '');
     }
     
-    function poll_createPosted()
+    /**
+     * case 'createPosted': => poll_createPosted();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function poll_createPosted()
     {
         global $pollTitle, $optionText, $poll_type;
     
@@ -237,7 +202,14 @@ class AdminPolls extends AdminController
         Header("Location: admin.php?op=adminMain");
     }
     
-    function poll_removePoll()
+    /**
+     * case 'remove': => poll_removePoll();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function poll_removePoll()
     {
         echo '
         <hr />
@@ -283,7 +255,14 @@ class AdminPolls extends AdminController
         include('footer.php');
     }
     
-    function poll_removePosted()
+    /**
+     * case 'removePosted': => poll_removePosted();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function poll_removePosted()
     {
         global $id;
     
@@ -308,7 +287,14 @@ class AdminPolls extends AdminController
         Header("Location: admin.php?op=create");
     }
     
-    function poll_editPoll()
+    /**
+     * case 'editpoll': => poll_editPoll();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function poll_editPoll()
     {
         $result = sql_query("SELECT pollID, pollTitle, timeStamp FROM poll_desc ORDER BY timeStamp");
 
@@ -350,7 +336,14 @@ class AdminPolls extends AdminController
         include('footer.php');
     }
     
-    function poll_editPollPosted()
+    /**
+     * case 'editpollPosted': => poll_editPollPosted();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function poll_editPollPosted()
     {
         global $id;
     
@@ -436,7 +429,14 @@ class AdminPolls extends AdminController
             header("location: admin.php?op=editpoll");
     }
     
-    function poll_SendEditPoll()
+    /**
+     * case 'SendEditPoll': => poll_SendEditPoll();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function poll_SendEditPoll()
     {
         global $pollTitle, $optionText, $poll_type, $pollID, $poll_close;
     

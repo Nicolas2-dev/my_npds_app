@@ -101,7 +101,7 @@ class AdminDashboard extends AdminController
         ->get();
 
 
-// vd($O, sql_num_rows($result), $admart);
+        // vd($O, sql_num_rows($result), $admart);
 
 
         $nbPages = ceil($nbre_articles / $admart);

@@ -75,7 +75,7 @@ class Newsletters extends FrontController
             <h2>' . __d('newsletter', 'La lettre') . '</h2>
             <hr />
             <p class="lead mb-2">' . __d('newsletter', 'Gestion de vos abonnements') . ' : <strong>' . $var . '</strong></p>
-            <form action="lnl.php" method="POST">
+                <form action="lnl.php" method="POST">
                 ' . Spam::Q_spambot() . '
                 <input type="hidden" name="email" value="' . $var . '" />
                 <input type="hidden" name="op" value="subscribeOK" />

@@ -24,7 +24,7 @@ class BlockAdmin extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'adminblock';
 
     /**
      * [$short_menu_admin description]
@@ -45,7 +45,7 @@ class BlockAdmin extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'ablock';
 
 
     /**
@@ -63,7 +63,7 @@ class BlockAdmin extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('blocks', 'Bloc Administration');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -83,33 +83,6 @@ class BlockAdmin extends AdminController
         // Leave to parent's method the Flight decisions.
         return parent::after($result);
     }
-
-    /**
-     * [__construct description]
-     *
-     * @return  [type]  [return description]
-     */
-    // public function __construct()
-    // {
-        // $f_meta_nom = 'ablock';
-        // $f_titre = __d('blocks', 'Bloc Administration');
-        
-        // //==> controle droit
-        // admindroits($aid, $f_meta_nom);
-        // //<== controle droit
-        
-        // $hlpfile = "language/manuels/Config::get('npds.language')/adminblock.html";
-
-        // switch ($op) {
-        //     case 'ablock':
-        //         ablock();
-        //         break;
-        
-        //     case 'changeablock':
-        //         changeablock($title, $content);
-        //         break;
-        // }
-    // }
 
     /**
      * [ablock description]

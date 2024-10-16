@@ -68,9 +68,9 @@ class BannerStats extends FrontController
         $result = sql_query("SELECT cid, name, passwd FROM bannerclient WHERE login='$login'");
         list($cid, $name, $passwd) = sql_fetch_row($result);
     
-        if ($login == '' and $pass == '' or $pass == '')
+        if ($login == '' and $pass == '' or $pass == '') {
             IncorrectLogin();
-        else {
+        } else {
             if ($pass == $passwd) {
                 header_page();
     
@@ -93,6 +93,7 @@ class BannerStats extends FrontController
                 $result = sql_query("SELECT bid, imptotal, impmade, clicks, date FROM banner WHERE cid='$cid'");
     
                 while (list($bid, $imptotal, $impmade, $clicks, $date) = sql_fetch_row($result)) {
+                    
                     $percent = $impmade == 0 ? '0' : substr(100 * $clicks / $impmade, 0, 5);
                     $left = $imptotal == 0 ? __d('banners', 'Illimité') : $imptotal - $impmade;
     

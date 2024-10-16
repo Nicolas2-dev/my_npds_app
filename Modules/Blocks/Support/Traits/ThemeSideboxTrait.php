@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Blocks\Library\Traits;
+namespace Modules\Blocks\Support\Traits;
 
 use Npds\Config\Config;
 use Modules\Npds\Support\Facades\Metalang;

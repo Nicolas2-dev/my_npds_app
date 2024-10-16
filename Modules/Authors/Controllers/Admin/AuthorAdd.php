@@ -4,6 +4,7 @@ namespace Modules\Authors\Controllers\Admin;
 
 use Modules\Authors\Models\Author;
 use Modules\Npds\Core\AdminController;
+use Modules\Npds\Support\Facades\Mailer;
 use Modules\Npds\Support\Facades\Password;
 use Modules\Authors\Support\Facades\Author as L_Author;
 
@@ -97,22 +98,24 @@ class AuthorAdd extends AdminController
 
         include_once('functions.php');
 
-        if (checkdnsmail($add_email) === false) {
+        if (Mailer::checkdnsmail($add_email) === false) {
             echo L_Author::error_handler(__d('authors', 'ERREUR : DNS ou serveur de mail incorrect') . '<br />');
         }
 
-        $AlgoCrypt = PASSWORD_BCRYPT;
-        $min_ms = 100;
-        $options = ['cost' => Password::getOptimalBcryptCostParameter($add_pwd, $AlgoCrypt, $min_ms)];
-        $hashpass = password_hash($add_pwd, $AlgoCrypt, $options);
-        $add_pwdX = crypt($add_pwd, $hashpass);
+        $AlgoCrypt  = PASSWORD_BCRYPT;
+        $min_ms     = 100;
+        $options    = ['cost' => Password::getOptimalBcryptCostParameter($add_pwd, $AlgoCrypt, $min_ms)];
+        $hashpass   = password_hash($add_pwd, $AlgoCrypt, $options);
+        $add_pwdX   = crypt($add_pwd, $hashpass);
 
         $result = sql_query("INSERT INTO authors VALUES ('$add_aid', '$add_name', '$add_url', '$add_email', '$add_pwdX', '1', '0', '$add_radminsuper')");
+        
         Author::updatedroits($add_aid);
 
         // Copie du fichier pour filemanager
-        if ($add_radminsuper or isset($ad_d_27)) // $ad_d_27 pas là ?
+        if ($add_radminsuper or isset($ad_d_27)) { 
             @copy("modules/f-manager/users/modele.admin.conf.php", "modules/f-manager/users/" . strtolower($add_aid) . ".conf.php");
+        }
 
         global $aid;
         Ecr_Log('security', "AddAuthor($add_aid) by AID : $aid", '');

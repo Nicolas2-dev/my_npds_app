@@ -106,8 +106,9 @@ class AuthorUpdate extends AdminController
         settype($chng_radminsuper, 'int');
         settype($ad_d_27, 'int');
 
-        if (!($chng_aid && $chng_name && $chng_email))
+        if (!($chng_aid && $chng_name && $chng_email)) {
             Header("Location: admin.php?op=mod_authors");
+        }
     
         if (Mailer::checkdnsmail($chng_email) === false) {
             echo L_Author::error_handler(__d('authors', 'ERREUR : DNS ou serveur de mail incorrect') . '<br />');
@@ -126,8 +127,9 @@ class AuthorUpdate extends AdminController
             Author::updatedroits($chng_aid);
         }
     
-        if (file_exists("modules/f-manager/users/" . strtolower($chng_aid) . ".conf.php") and $ad_d_27 != '27')
+        if (file_exists("modules/f-manager/users/" . strtolower($chng_aid) . ".conf.php") and $ad_d_27 != '27') {
             @unlink("modules/f-manager/users/" . strtolower($chng_aid) . ".conf.php");
+        }
     
         if (($chng_radminsuper or $ad_d_27 != '') and !file_exists("modules/f-manager/users/" . strtolower($chng_aid) . ".conf.php")) {
             @copy("modules/f-manager/users/modele.admin.conf.php", "modules/f-manager/users/" . strtolower($chng_aid) . ".conf.php");
@@ -138,11 +140,11 @@ class AuthorUpdate extends AdminController
                 echo L_Author::error_handler(__d('authors', 'Désolé, les nouveaux Mots de Passe ne correspondent pas. Cliquez sur retour et recommencez') . '<br />');
             }
     
-            $AlgoCrypt = PASSWORD_BCRYPT;
-            $min_ms = 100;
-            $options = ['cost' => Password::getOptimalBcryptCostParameter($chng_pwd, $AlgoCrypt, $min_ms)];
-            $hashpass = password_hash($chng_pwd, $AlgoCrypt, $options);
-            $chng_pwd = crypt($chng_pwd, $hashpass);
+            $AlgoCrypt  = PASSWORD_BCRYPT;
+            $min_ms     = 100;
+            $options    = ['cost' => Password::getOptimalBcryptCostParameter($chng_pwd, $AlgoCrypt, $min_ms)];
+            $hashpass   = password_hash($chng_pwd, $AlgoCrypt, $options);
+            $chng_pwd   = crypt($chng_pwd, $hashpass);
     
             if ($old_pwd) {
     

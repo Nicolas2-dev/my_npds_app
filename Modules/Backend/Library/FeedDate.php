@@ -82,7 +82,7 @@ class FeedDate {
    /**
     * Gets the date stored in this FeedDate as an ISO 8601 date.
     *
-    * @return a date in ISO 8601 format
+    * @return string a date in ISO 8601 format
     */
    function iso8601() {
       global $gmt;

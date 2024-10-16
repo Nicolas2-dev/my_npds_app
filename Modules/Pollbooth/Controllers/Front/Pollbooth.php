@@ -1,12 +1,19 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace Modules\Pollbooth\Controllers\Front;
 
-use App\Controllers\Core\FrontController;
+use Modules\Npds\Core\FrontController;
 
 
-class FrontPollbooth extends FrontController
+class Pollbooth extends FrontController
 {
+
+    /**
+     * [$pdst description]
+     *
+     * @var [type]
+     */
+    protected $pdst = 0;
 
 
     /**
@@ -16,12 +23,40 @@ class FrontPollbooth extends FrontController
      */
     public function __construct()
     {
-        // ----------------------------------------------------------------------------
-        // Specified the index and the name of the application for the table appli_log
-        $al_id = 1;
-        $al_nom = 'Poll';
+        parent::__construct();
     }
 
+    /**
+     * [before description]
+     *
+     * @return  [type]  [return description]
+     */
+    protected function before()
+    {
+        // Leave to parent's method the Flight decisions.
+        return parent::before();
+    }
+
+    /**
+     * [after description]
+     *
+     * @param   [type]  $result  [$result description]
+     *
+     * @return  [type]           [return description]
+     */
+    protected function after($result)
+    {
+        // Do some processing there, even deciding to stop the Flight, if case.
+
+        // Leave to parent's method the Flight decisions.
+        return parent::after($result);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function index()
     {
         global $header;
@@ -77,10 +112,21 @@ class FrontPollbooth extends FrontController
         
     }
 
-    // ----------------------------------------------------------------------------
-    function pollCollector($pollID, $voteID, $forwarder)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $pollID
+     * @param [type] $voteID
+     * @param [type] $forwarder
+     * @return void
+     */
+    public function pollCollector($pollID, $voteID, $forwarder)
     {
+        // Specified the index and the name of the application for the table appli_log
         
+        
+        $al_id = 1;
+        $al_nom = 'Poll';
 
         if ($voteID) {
             global $al_id, $al_nom;
@@ -136,7 +182,12 @@ class FrontPollbooth extends FrontController
         Header("Location: $forwarder");
     }
 
-    function pollList()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function pollList()
     {
         
 
@@ -165,7 +216,13 @@ class FrontPollbooth extends FrontController
         </div>';
     }
 
-    function pollResults(int $pollID): void
+    /**
+     * Undocumented function
+     *
+     * @param integer $pollID
+     * @return void
+     */
+    public function pollResults(int $pollID): void
     {
         if (!isset($pollID) or empty($pollID)) 
             $pollID = 1;
@@ -222,8 +279,14 @@ class FrontPollbooth extends FrontController
         }
     }
 
-    #autodoc pollboxbooth($pollID,$pollClose) : Construit le blocs sondages / code du mainfile avec autre présentation
-    function pollboxbooth($pollID, $pollClose)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $pollID
+     * @param [type] $pollClose
+     * @return void
+     */
+    public function pollboxbooth($pollID, $pollClose)
     {
         global $boxTitle, $boxContent;
 
@@ -300,7 +363,13 @@ class FrontPollbooth extends FrontController
         echo '<div class="card card-body">' . $boxContent . '</div>';
     }
 
-    function PollMain_aff($pollID)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $pollID
+     * @return void
+     */
+    public function PollMain_aff($pollID)
     {
         $boxContent = '<p><strong><a href="pollBooth.php">' . __d('pollbooth', 'Anciens sondages') . '</a></strong></p>';
         echo $boxContent;

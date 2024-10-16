@@ -22,7 +22,7 @@ class blockright extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'rightblocks';
 
     /**
      * [$short_menu_admin description]
@@ -43,7 +43,7 @@ class blockright extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'blocks';
 
 
     /**
@@ -61,7 +61,7 @@ class blockright extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('blocks', '');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -89,15 +89,6 @@ class blockright extends AdminController
      */
     // public function __construct()
     // {
-        // $f_meta_nom = 'blocks';
-
-        // //==> controle droit
-        // admindroits($aid, $f_meta_nom);
-        // //<== controle droit
-        
-
-        // $hlpfile = "language/manuels/Config::get('npds.language')/rightblocks.html";
-
         // settype($css, 'integer');
 
         // $Mmember = isset($Mmember) ? $Mmember : '';

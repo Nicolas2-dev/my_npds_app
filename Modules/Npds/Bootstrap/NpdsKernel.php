@@ -78,7 +78,7 @@ class NpdsKernel
      */
     public static function load_helper_metalang()
     {
-        require static::$module_path . 'Support/Metalang.php';
+        require static::$module_path . 'Support'. DS .'metalang.php';
     }
 
 }

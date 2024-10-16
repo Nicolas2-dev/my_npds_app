@@ -3,6 +3,7 @@
 namespace Modules\Authors\Controllers\Admin;
 
 use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Js;
 use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
 
@@ -106,10 +107,11 @@ class Authors extends AdminController
             <tbody>';
     
         while (list($a_aid, $name, $url, $email, $supadm) = sql_fetch_row($result)) {
-            if ($supadm == 1) 
+            if ($supadm == 1) {
                 $displayadmins .=  '<tr class="table-danger">';
-            else 
+            } else {
                 $displayadmins .=  '<tr>';
+            }
     
             $displayadmins .=  '
                 <td>' . $a_aid . '</td>
@@ -201,8 +203,8 @@ class Authors extends AdminController
     
         $arg1 = '
             var formulid = ["nou_adm"];
-            ' . auto_complete('admin', 'aid', 'authors', '', '0') . '
-            ' . auto_complete('adminname', 'name', 'authors', '', '0') . '
+            ' . Js::auto_complete('admin', 'aid', 'authors', '', '0') . '
+            ' . Js::auto_complete('adminname', 'name', 'authors', '', '0') . '
             inpandfieldlen("add_aid",30);
             inpandfieldlen("add_name",50);
             inpandfieldlen("add_email",254);

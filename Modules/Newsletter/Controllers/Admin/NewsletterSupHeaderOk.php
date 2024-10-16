@@ -1,11 +1,14 @@
 <?php
 
-namespace Modules\Authors\Controllers\Admin;
+namespace Modules\Newsletter\Controllers\Admin;
 
-use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
 
-class AuthorDelete extends AdminController
+
+/**
+ * Undocumented class
+ */
+class Newsletter extends AdminController
 {
 
     /**
@@ -20,7 +23,7 @@ class AuthorDelete extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "authors";
+    protected $hlpfile = 'lnl';
 
     /**
      * [$short_menu_admin description]
@@ -41,7 +44,7 @@ class AuthorDelete extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = 'mod_authors';
+    protected $f_meta_nom = 'lnl';
 
 
     /**
@@ -59,7 +62,7 @@ class AuthorDelete extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('authors', 'Administrateurs');
+        $this->f_titre = __d('newsletter', 'Petite Lettre D\'information');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -85,18 +88,11 @@ class AuthorDelete extends AdminController
      *
      * @return void
      */
-    public function deladmin()
+    public function Sup_HeaderOK()
     {
-        echo '
-        <hr />
-        <h3>' . __d('authors', 'Effacer l\'Administrateur') . ' : <span class="text-muted">' . $del_aid . '</span></h3>
-        <div class="alert alert-danger">
-        <p><strong>' . __d('authors', 'Etes-vous sûr de vouloir effacer') . ' ' . $del_aid . ' ? </strong></p>
-        <a href="admin.php?op=deladminconf&amp;del_aid=' . $del_aid . '" class="btn btn-danger btn-sm">' . __d('authors', 'Oui') . '</a>
-        &nbsp;<a href="admin.php?op=mod_authors" class="btn btn-secondary btn-sm">' . __d('authors', 'Non') . '</a>
-        </div>';
+        sql_query("DELETE FROM lnl_head_foot WHERE ref='$Headerid'");
 
-        Css::adminfoot('', '', '', '');
+        header("location: admin.php?op=lnl");
     }
-    
+
 }

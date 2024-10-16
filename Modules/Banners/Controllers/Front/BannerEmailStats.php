@@ -83,13 +83,15 @@ class BannerEmailStats extends FrontController
             } else {
                 $result = sql_query("SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM banner WHERE bid='$bid' AND cid='$cid'");
                 list($bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date) = sql_fetch_row($result);
+                
                 $percent = $impmade == 0 ? '0' : substr(100 * $clicks / $impmade, 0, 5);
     
                 if ($imptotal == 0) {
                     $left = __d('banners', 'Illimité');
                     $imptotal = __d('banners', 'Illimité');
-                } else
+                } else {
                     $left = $imptotal - $impmade;
+                }
     
                 $fecha = date(__d('banners', 'dateinternal'), time() + ((int) Config::get('npds.gmt') * 3600));
     

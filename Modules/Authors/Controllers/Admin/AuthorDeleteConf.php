@@ -88,6 +88,7 @@ class AuthorDeleteConf extends AdminController
     public function deladminconf()
     {
         sql_query("DELETE FROM authors WHERE aid='$del_aid'");
+        
         Author::deletedroits($chng_aid = $del_aid);
 
         sql_query("DELETE FROM publisujet WHERE aid='$del_aid'");

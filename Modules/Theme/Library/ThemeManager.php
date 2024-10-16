@@ -9,7 +9,7 @@ use Modules\Theme\Library\Traits\ThemeHeadTrait;
 use Modules\News\Support\Traits\ThemeStorieTrait;
 use Modules\Theme\Library\Traits\ThemeFooterTrait;
 use Modules\Theme\Library\Traits\ThemeHeaderTrait;
-use Modules\Blocks\Library\Traits\ThemeSideboxTrait;
+use Modules\Blocks\Support\Traits\ThemeSideboxTrait;
 use Modules\Theme\Library\Traits\ThemeOnloadBodyTrait;
 
 /**
