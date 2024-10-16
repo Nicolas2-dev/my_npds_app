@@ -1,29 +1,5 @@
 <?php
 
-/************************************************************************/
-/* DUNE by App                                                         */
-/* ===========================                                          */
-/*                                                                      */
-/* Collab WS-Pad 1.5 by Developpeur and Jpb                             */
-/*                                                                      */
-/* App Copyright (c) 2002-2024 by Philippe Brunier                     */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or modify */
-/* it under the terms of the GNU General Public License as published by */
-/* the Free Software Foundation; either version 3 of the License.       */
-/************************************************************************/
-/* pour définir le PAD courant via l'URL                                  */
-/* member='' ou '1' => PAD commun à tous les membres si $pad_membre=true  */
-/* member='2 . 126' => PAD du groupe (si le membre appartient au groupe)  */
-/* member='-1'      => PAD des admins (si un admin est connecté)          */
-/**************************************************************************/
-
-// For More security
-if (!stristr($_SERVER['PHP_SELF'], "modules.php")) 
-    die();
-
-if (strstr($ModPath, '..') || strstr($ModStart, '..') || stristr($ModPath, 'script') || stristr($ModPath, 'cookie') || stristr($ModPath, 'iframe') || stristr($ModPath, 'applet') || stristr($ModPath, 'object') || stristr($ModPath, 'meta') || stristr($ModStart, 'script') || stristr($ModStart, 'cookie') || stristr($ModStart, 'iframe') || stristr($ModStart, 'applet') || stristr($ModStart, 'object') || stristr($ModStart, 'meta'))
-    die();
 
 global $title, $user, $admin;
 // For More security

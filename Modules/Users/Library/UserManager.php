@@ -310,4 +310,20 @@ class UserManager implements UserInterface
         return $rang_img;
     }
 
+    // Admin
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $ibid
+     * @return void
+     */
+    public function error_handler($ibid)
+    {
+        echo '
+        <div class="alert alert-danger" align="center">' . __d('users', 'Merci d\'entrer l\'information en fonction des spécifications') . '<br />
+        <strong>' . $ibid . '</strong><br /><a class="btn btn-secondary" href="admin.php?op=mod_users" >' . __d('users', 'Retour en arrière') . '</a>
+        </div>';
+    }
+
 }

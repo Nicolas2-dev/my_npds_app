@@ -19,7 +19,7 @@ class Users extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'users';
 
     /**
      * [$short_menu_admin description]
@@ -40,7 +40,7 @@ class Users extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'mod_users';
 
 
     /**
@@ -58,7 +58,7 @@ class Users extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('users', 'Edition des Utilisateurs');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -80,279 +80,220 @@ class Users extends AdminController
     }
 
     /**
-     * [__construct description]
+     * Undocumented function
      *
-     * @return  [type]  [return description]
+     * @return void
      */
-    // public function __construct()
-    // {
-        // $f_meta_nom = 'mod_users';
-        // $f_titre = __d('users', 'Edition des Utilisateurs');
+    public function delUser()
+    {
+        echo '
+        <h3 class="text-danger mb-3">' . __d('users', 'Supprimer un utilisateur') . '</h3>
+        <div class="alert alert-danger lead">' . __d('users', 'Etes-vous sûr de vouloir effacer') . ' ' . __d('users', 'Utilisateur') . ' <strong>' . $chng_uid . '</strong> ? <br />
+            <a class="btn btn-danger mt-3" href="admin.php?op=delUserConf&amp;del_uid=' . $chng_uid . '&amp;referer=' . basename($referer) . '">' . __d('users', 'Oui') . '</a>';
         
-        // //==> controle droit
-        // admindroits($aid, $f_meta_nom);
-        // //<== controle droit
-        
-        // $hlpfile = "language/manuels/Config::get('npds.language')/users.html";
+        if (basename($referer) != "memberslist.php")
+            echo '<a class="btn btn-secondary mt-3" href="admin.php?op=mod_users">' . __d('users', 'Non') . '</a>';
+        else
+            echo '<a class="btn btn-secondary mt-3" href="memberslist.php">' . __d('users', 'Non') . '</a>';
 
-        // switch ($op) {
-        //     case 'extractUserCSV':
-        //         extractUserCSV();
-        //         break;
-        
-        //     case "modifyUser":
-        //         modifyUser($chng_uid);
-        //         break;
-        
-        //     case 'updateUser':
-        //         settype($add_user_viewemail, 'integer');
-        //         settype($add_is_visible, 'string');
-        //         settype($add_mns, 'integer');
-        //         settype($B1, 'string');
-        //         settype($raz_avatar, 'integer');
-        //         settype($add_send_email, 'integer');
-        
-        //         if (isset($add_group)) 
-        //             $add_group = implode(',', $add_group);
-        //         else 
-        //             $add_group = '';
-        
-        //         updateUser($chng_uid, $add_uname, $add_name, $add_url, $add_email, $add_femail, $add_user_from, $add_user_occ, $add_user_intrest, $add_user_viewemail, $add_avatar, $add_user_sig, $add_bio, $add_pass, $add_pass2, $add_level, $add_open_user, $add_group, $add_send_email, $add_is_visible, $add_mns, $C1, $C2, $C3, $C4, $C5, $C6, $C7, $C8, $M1, $M2, $T1, $T2, $B1, $raz_avatar, $chng_rank, $user_lnl);
-        //         break;
-        
-        //     case 'delUser':
-        //         global $hlpfile;
-        
-        //         include("header.php");
-        
-        //         GraphicAdmin($hlpfile);
-        
-        //         echo '
-        //         <h3 class="text-danger mb-3">' . __d('users', 'Supprimer un utilisateur') . '</h3>
-        //         <div class="alert alert-danger lead">' . __d('users', 'Etes-vous sûr de vouloir effacer') . ' ' . __d('users', 'Utilisateur') . ' <strong>' . $chng_uid . '</strong> ? <br />
-        //             <a class="btn btn-danger mt-3" href="admin.php?op=delUserConf&amp;del_uid=' . $chng_uid . '&amp;referer=' . basename($referer) . '">' . __d('users', 'Oui') . '</a>';
-                
-        //         if (basename($referer) != "memberslist.php")
-        //             echo '<a class="btn btn-secondary mt-3" href="admin.php?op=mod_users">' . __d('users', 'Non') . '</a>';
-        //         else
-        //             echo '<a class="btn btn-secondary mt-3" href="memberslist.php">' . __d('users', 'Non') . '</a>';
-        
-        //         echo '</div>';
-        //         include("footer.php");
-        //         break;
-        
-        //     case 'delUserConf':
-        //         $result = sql_query("SELECT uid, uname FROM users WHERE uid='$del_uid' or uname='$del_uid'");
-        //         list($del_uid, $del_uname) = sql_fetch_row($result);
-        
-        //         if ($del_uid != 1) {
-        //             sql_query("DELETE FROM users WHERE uid='$del_uid'");
-        //             sql_query("DELETE FROM users_status WHERE uid='$del_uid'");
-        //             sql_query("DELETE FROM users_extend WHERE uid='$del_uid'");
-        //             sql_query("DELETE FROM subscribe WHERE uid='$del_uid'");
-        
-        //             //  Changer les articles et reviews pour les affecter à un pseudo utilisateurs  ( 0 comme uid et ' ' comme uname )
-        //             sql_query("UPDATE stories SET informant=' ' WHERE informant='$del_uname'");
-        //             sql_query("UPDATE reviews SET reviewer=' ' WHERE reviewer='$del_uname'");
-        
-        //             include("modules/upload/upload.conf.php");
-        
-        //             if ($DOCUMENTROOT == '') {
-        //                 global $DOCUMENT_ROOT;
-        //                 if ($DOCUMENT_ROOT)
-        //                     $DOCUMENTROOT = $DOCUMENT_ROOT;
-        //                 else
-        //                     $DOCUMENTROOT = $_SERVER['DOCUMENT_ROOT'];
-        //             }
-        
-        //             $user_dir = $DOCUMENTROOT . $racine . '/storage/users_private/' . $del_uname;
-        
-        //             // Supprimer son ministe s'il existe
-        //             if (is_dir($user_dir . '/mns')) {
-        //                 $dir = opendir($user_dir . '/mns');
-        //                 while (false !== ($nom = readdir($dir))) {
-        //                     if ($nom != '.' && $nom != '..' && $nom != '')
-        //                         @unlink($user_dir . '/mns/' . $nom);
-        //                 }
-        //                 closedir($dir);
-        //                 @rmdir($user_dir . '/mns');
-        //             }
-        
-        //             // Mettre un fichier 'delete' dans sa home_directory si elle existe
-        //             if (is_dir($user_dir)) {
-        //                 $fp = fopen($user_dir . '/delete', 'w');
-        //                 fclose($fp);
-        //             }
-        
-        //             // Changer les posts, les commentaires, ... pour les affecter à un pseudo utilisateurs  ( 0 comme uid et ' ' comme uname)
-        //             sql_query("UPDATE posts SET poster_id='0' WHERE poster_id='$del_uid'");
-        
-        //             // Met à jour les modérateurs des forums
-        //             $pat = '#\b' . $del_uid . '\b#';
-        
-        //             $res = sql_query("SELECT forum_id, forum_moderator FROM forums");
-        
-        //             while ($row = sql_fetch_row($res)) {
-        //                 $tmp_moder = explode(',', $row[1]);
-        
-        //                 if (preg_match($pat, $row[1])) {
-        //                     unset($tmp_moder[array_search($del_uid, $tmp_moder)]);
-        //                     sql_query("UPDATE forums SET forum_moderator='" . implode(',', $tmp_moder) . "' WHERE forum_id='$row[0]'");
-        //                 }
-        //             }
-        
-        //             // Mise à jour du fichier badmailuser
-        //             $contents = '';
-        
-        //             $filename = "storage/users_private/usersbadmail.txt";
-        //             $handle = fopen($filename, "r");
-        //             if (filesize($filename) > 0)
-        //                 $contents = fread($handle, filesize($filename));
-        
-        //             fclose($handle);
-        
-        //             $re = '/#' . $del_uid . '\|(\d+)/m';
-        //             $maj = preg_replace($re, '', $contents);
-        
-        //             $file = fopen("storage/users_private/usersbadmail.txt", 'w');
-        //             fwrite($file, $maj);
-        //             fclose($file);
-        
-        //             global $aid;
-        //             Ecr_Log('security', "DeleteUser($del_uid) by AID : $aid", '');
-        //         }
-        
-        //         if ($referer != "memberslist.php")
-        //             Header("Location: admin.php?op=mod_users");
-        //         else
-        //             Header("Location: memberslist.php");
-        //         break;
-        
-        //     case 'addUser':
-        //         settype($add_user_viewemail, 'integer');
-        //         settype($add_is_visible, 'string');
-        //         settype($add_mns, 'integer');
-        //         settype($B1, 'string');
-        //         settype($raz_avatar, 'integer');
-        //         settype($add_send_email, 'integer');
-        
-        //         if (sql_num_rows(sql_query("SELECT uname FROM users WHERE uname='$add_uname'")) > 0) {
-        //             global $hlpfile;
-        
-        //             include("header.php");
-        
-        //             GraphicAdmin($hlpfile);
-        //             adminhead($f_meta_nom, $f_titre);
-        
-        //             echo error_handler('<i class="fa fa-exclamation me-2"></i>' . __d('users', 'ERREUR : cet identifiant est déjà utilisé') . '<br />');
-                    
-        //             adminfoot('', '', '', '');
-        
-        //             return;
-        //         }
-        //         if (!($add_uname && $add_email && $add_pass) or (preg_match('#[^a-zA-Z0-9_-]#', $add_uname))) {
-        //             global $hlpfile;
-        
-        //             include("header.php");
-        
-        //             GraphicAdmin($hlpfile);
-        //             adminhead($f_meta_nom, $f_titre);
-        
-        //             echo error_handler(__d('users', 'Vous devez remplir tous les Champs') . '<br />'); // ce message n'est pas très précis ..
-                    
-        //             adminfoot('', '', '', '');
-        
-        //             return;
-        //         }
-        
-        //         include_once('functions.php');
-        
-        //         if (checkdnsmail($add_email) === false) {
-        //             global $hlpfile, $f_meta_nom, $f_titre;
-        
-        //             include("header.php");
-        
-        //             GraphicAdmin($hlpfile);
-        //             adminhead($f_meta_nom, $f_titre);
-        
-        //             echo error_handler(__d('users', 'Erreur : DNS ou serveur de mail incorrect') . '<br />');
-                    
-        //             adminfoot('', '', '', '');
-                    
-        //             return;
-        //         }
-        
-        //         $AlgoCrypt = PASSWORD_BCRYPT;
-        //         $min_ms = 100;
-        //         $options = ['cost' => getOptimalBcryptCostParameter($add_pass, $AlgoCrypt, $min_ms)];
-        //         $hashpass = password_hash($add_pass, $AlgoCrypt, $options);
-        //         $add_pass = crypt($add_pass, $hashpass);
-        
-        //         if ($add_is_visible == '')
-        //             $add_is_visible = '1';
-        //         else
-        //             $add_is_visible = '0';
-        
-        //         $user_regdate = time() + ((int) Config::get('npds.gmt') * 3600);
-        //         $sql = 'INSERT INTO users ';
-        
-        //         $sql .= "(uid,name,uname,email,femail,url,user_regdate,user_from,user_occ,user_intrest,user_viewemail,user_avatar,user_sig,bio,pass,hashkey,send_email,is_visible,mns,theme) ";
-        //         $sql .= "VALUES (NULL,'$add_name','$add_uname','$add_email','$add_femail','$add_url','$user_regdate','$add_user_from','$add_user_occ','$add_user_intrest','$add_user_viewemail','$add_avatar','$add_user_sig','$add_bio','$add_pass','1','$add_send_email','$add_is_visible','$add_mns','Config::get('npds.Default_Theme')+Config::get('npds.Default_Skin')')";
-        //         $result = sql_query($sql);
-        //         list($usr_id) = sql_fetch_row(sql_query("SELECT uid FROM users WHERE uname='$add_uname'"));
-                
-        //         $result = sql_query("INSERT INTO users_extend VALUES ('$usr_id','$C1','$C2','$C3','$C4','$C5','$C6','$C7','$C8','$M1','$M2','$T1','$T2', '$B1')");
-                
-        //         if ($add_user_viewemail)
-        //             $attach = 1;
-        //         else
-        //             $attach = 0;
-        
-        //         if (isset($add_group)) 
-        //             $add_group = implode(',', $add_group);
-        //         else 
-        //             $add_group = '';
-        
-        //         $result = sql_query("INSERT INTO users_status VALUES ('$usr_id','0','$attach','$chng_rank','$add_level','1','$add_group')");
-        
-        //         Minisites($add_mns, $add_uname);
-        
-        //         global $aid;
-        //         Ecr_Log('security', "AddUser($add_name, $add_uname) by AID : $aid", '');
-        
-        //         Header("Location: admin.php?op=mod_users");
-        //         break;
-        
-        //     case 'unsubUser':
-        //         $result = sql_query("SELECT uid FROM users WHERE uid='$chng_uid' OR uname='$chng_uid'");
-        //         list($chng_uid) = sql_fetch_row($result);
-        
-        //         if ($chng_uid != 1) {
-        //             sql_query("DELETE FROM subscribe WHERE uid='$chng_uid'");
-        
-        //             global $aid;
-        //             Ecr_Log("security", "UnsubUser($chng_uid) by AID : $aid", "");
-        //         }
-        
-        //         Header("Location: admin.php?op=mod_users");
-        //         break;
-        //     case 'nonallowed_users':
-        //         nonallowedUsers();
-        //         break;
-        
-        //     case 'checkdnsmail_users':
-        //         checkdnsmailusers();
-        //         break;
-        
-        //     case 'mod_users':
-        //     default:
-        //         displayUsers();
-        //         break;
-        // }
+        echo '</div>';
+    }
 
-    // }
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function delUserConf()
+    {
+        $result = sql_query("SELECT uid, uname FROM users WHERE uid='$del_uid' or uname='$del_uid'");
+        list($del_uid, $del_uname) = sql_fetch_row($result);
 
-    function displayUsers()
+        if ($del_uid != 1) {
+            sql_query("DELETE FROM users WHERE uid='$del_uid'");
+            sql_query("DELETE FROM users_status WHERE uid='$del_uid'");
+            sql_query("DELETE FROM users_extend WHERE uid='$del_uid'");
+            sql_query("DELETE FROM subscribe WHERE uid='$del_uid'");
+
+            //  Changer les articles et reviews pour les affecter à un pseudo utilisateurs  ( 0 comme uid et ' ' comme uname )
+            sql_query("UPDATE stories SET informant=' ' WHERE informant='$del_uname'");
+            sql_query("UPDATE reviews SET reviewer=' ' WHERE reviewer='$del_uname'");
+
+            include("modules/upload/upload.conf.php");
+
+            if ($DOCUMENTROOT == '') {
+                global $DOCUMENT_ROOT;
+                if ($DOCUMENT_ROOT)
+                    $DOCUMENTROOT = $DOCUMENT_ROOT;
+                else
+                    $DOCUMENTROOT = $_SERVER['DOCUMENT_ROOT'];
+            }
+
+            $user_dir = $DOCUMENTROOT . $racine . '/storage/users_private/' . $del_uname;
+
+            // Supprimer son ministe s'il existe
+            if (is_dir($user_dir . '/mns')) {
+                $dir = opendir($user_dir . '/mns');
+                while (false !== ($nom = readdir($dir))) {
+                    if ($nom != '.' && $nom != '..' && $nom != '')
+                        @unlink($user_dir . '/mns/' . $nom);
+                }
+                closedir($dir);
+                @rmdir($user_dir . '/mns');
+            }
+
+            // Mettre un fichier 'delete' dans sa home_directory si elle existe
+            if (is_dir($user_dir)) {
+                $fp = fopen($user_dir . '/delete', 'w');
+                fclose($fp);
+            }
+
+            // Changer les posts, les commentaires, ... pour les affecter à un pseudo utilisateurs  ( 0 comme uid et ' ' comme uname)
+            sql_query("UPDATE posts SET poster_id='0' WHERE poster_id='$del_uid'");
+
+            // Met à jour les modérateurs des forums
+            $pat = '#\b' . $del_uid . '\b#';
+
+            $res = sql_query("SELECT forum_id, forum_moderator FROM forums");
+
+            while ($row = sql_fetch_row($res)) {
+                $tmp_moder = explode(',', $row[1]);
+
+                if (preg_match($pat, $row[1])) {
+                    unset($tmp_moder[array_search($del_uid, $tmp_moder)]);
+                    sql_query("UPDATE forums SET forum_moderator='" . implode(',', $tmp_moder) . "' WHERE forum_id='$row[0]'");
+                }
+            }
+
+            // Mise à jour du fichier badmailuser
+            $contents = '';
+
+            $filename = "storage/users_private/usersbadmail.txt";
+            $handle = fopen($filename, "r");
+            if (filesize($filename) > 0)
+                $contents = fread($handle, filesize($filename));
+
+            fclose($handle);
+
+            $re = '/#' . $del_uid . '\|(\d+)/m';
+            $maj = preg_replace($re, '', $contents);
+
+            $file = fopen("storage/users_private/usersbadmail.txt", 'w');
+            fwrite($file, $maj);
+            fclose($file);
+
+            global $aid;
+            Ecr_Log('security', "DeleteUser($del_uid) by AID : $aid", '');
+        }
+
+        if ($referer != "memberslist.php")
+            Header("Location: admin.php?op=mod_users");
+        else
+            Header("Location: memberslist.php");
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function addUser()
+    {
+        if (sql_num_rows(sql_query("SELECT uname FROM users WHERE uname='$add_uname'")) > 0) {
+            global $hlpfile;
+
+            include("header.php");
+
+            GraphicAdmin($hlpfile);
+            adminhead($f_meta_nom, $f_titre);
+
+            echo error_handler('<i class="fa fa-exclamation me-2"></i>' . __d('users', 'ERREUR : cet identifiant est déjà utilisé') . '<br />');
+            
+            adminfoot('', '', '', '');
+
+            return;
+        }
+        if (!($add_uname && $add_email && $add_pass) or (preg_match('#[^a-zA-Z0-9_-]#', $add_uname))) {
+            global $hlpfile;
+
+            include("header.php");
+
+            GraphicAdmin($hlpfile);
+            adminhead($f_meta_nom, $f_titre);
+
+            echo error_handler(__d('users', 'Vous devez remplir tous les Champs') . '<br />'); // ce message n'est pas très précis ..
+            
+            adminfoot('', '', '', '');
+
+            return;
+        }
+
+        include_once('functions.php');
+
+        if (checkdnsmail($add_email) === false) {
+            global $hlpfile, $f_meta_nom, $f_titre;
+
+            include("header.php");
+
+            GraphicAdmin($hlpfile);
+            adminhead($f_meta_nom, $f_titre);
+
+            echo error_handler(__d('users', 'Erreur : DNS ou serveur de mail incorrect') . '<br />');
+            
+            adminfoot('', '', '', '');
+            
+            return;
+        }
+
+        $AlgoCrypt = PASSWORD_BCRYPT;
+        $min_ms = 100;
+        $options = ['cost' => getOptimalBcryptCostParameter($add_pass, $AlgoCrypt, $min_ms)];
+        $hashpass = password_hash($add_pass, $AlgoCrypt, $options);
+        $add_pass = crypt($add_pass, $hashpass);
+
+        if ($add_is_visible == '')
+            $add_is_visible = '1';
+        else
+            $add_is_visible = '0';
+
+        $user_regdate = time() + ((int) Config::get('npds.gmt') * 3600);
+        $sql = 'INSERT INTO users ';
+
+        $sql .= "(uid,name,uname,email,femail,url,user_regdate,user_from,user_occ,user_intrest,user_viewemail,user_avatar,user_sig,bio,pass,hashkey,send_email,is_visible,mns,theme) ";
+        $sql .= "VALUES (NULL,'$add_name','$add_uname','$add_email','$add_femail','$add_url','$user_regdate','$add_user_from','$add_user_occ','$add_user_intrest','$add_user_viewemail','$add_avatar','$add_user_sig','$add_bio','$add_pass','1','$add_send_email','$add_is_visible','$add_mns','Config::get('npds.Default_Theme')+Config::get('npds.Default_Skin')')";
+        $result = sql_query($sql);
+        list($usr_id) = sql_fetch_row(sql_query("SELECT uid FROM users WHERE uname='$add_uname'"));
+        
+        $result = sql_query("INSERT INTO users_extend VALUES ('$usr_id','$C1','$C2','$C3','$C4','$C5','$C6','$C7','$C8','$M1','$M2','$T1','$T2', '$B1')");
+        
+        if ($add_user_viewemail)
+            $attach = 1;
+        else
+            $attach = 0;
+
+        if (isset($add_group)) 
+            $add_group = implode(',', $add_group);
+        else 
+            $add_group = '';
+
+        $result = sql_query("INSERT INTO users_status VALUES ('$usr_id','0','$attach','$chng_rank','$add_level','1','$add_group')");
+
+        Minisites($add_mns, $add_uname);
+
+        global $aid;
+        Ecr_Log('security', "AddUser($add_name, $add_uname) by AID : $aid", '');
+
+        Header("Location: admin.php?op=mod_users");
+    }
+
+    /**
+     * case 'mod_users': => displayUsers();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function displayUsers()
     {
         echo '
         <hr />
@@ -399,7 +340,12 @@ class Users extends AdminController
         adminfoot('', '', '', '');
     }
     
-    function extractUserCSV()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function extractUserCSV()
     {
         $MSos = get_os();
 
@@ -450,7 +396,13 @@ class Users extends AdminController
         Ecr_Log('security', "ExtractUserCSV() by AID : $aid", '');
     }
     
-    function modifyUser($chng_user)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $chng_user
+     * @return void
+     */
+    public function modifyUser($chng_user)
     {
         $result = sql_query("SELECT uid, uname, name, url, email, femail, user_from, user_occ, user_intrest, user_viewemail, user_avatar, user_sig, bio, pass, send_email, is_visible, mns, user_lnl FROM users WHERE uid='$chng_user' OR uname='$chng_user'");
         
@@ -476,15 +428,14 @@ class Users extends AdminController
         adminfoot('', '', '', '');
     }
     
-    function error_handler($ibid)
-    {
-        echo '
-        <div class="alert alert-danger" align="center">' . __d('users', 'Merci d\'entrer l\'information en fonction des spécifications') . '<br />
-        <strong>' . $ibid . '</strong><br /><a class="btn btn-secondary" href="admin.php?op=mod_users" >' . __d('users', 'Retour en arrière') . '</a>
-        </div>';
-    }
-    
-    function Minisites($chng_mns, $chng_uname)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $chng_mns
+     * @param [type] $chng_uname
+     * @return void
+     */
+    public function Minisites($chng_mns, $chng_uname)
     {
         // Création de la structure pour les MiniSites dans storage/users_private/$chng_uname
         if ($chng_mns) {
@@ -551,8 +502,62 @@ class Users extends AdminController
         }
     }
     
-    function updateUser($chng_uid, $chng_uname, $chng_name, $chng_url, $chng_email, $chng_femail, $chng_user_from, $chng_user_occ, $chng_user_intrest, $chng_user_viewemail, $chng_avatar, $chng_user_sig, $chng_bio, $chng_pass, $chng_pass2, $level, $open_user, $chng_groupe, $chng_send_email, $chng_is_visible, $chng_mns, $C1, $C2, $C3, $C4, $C5, $C6, $C7, $C8, $M1, $M2, $T1, $T2, $B1, $raz_avatar, $chng_rank, $chng_lnl)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $chng_uid
+     * @param [type] $chng_uname
+     * @param [type] $chng_name
+     * @param [type] $chng_url
+     * @param [type] $chng_email
+     * @param [type] $chng_femail
+     * @param [type] $chng_user_from
+     * @param [type] $chng_user_occ
+     * @param [type] $chng_user_intrest
+     * @param [type] $chng_user_viewemail
+     * @param [type] $chng_avatar
+     * @param [type] $chng_user_sig
+     * @param [type] $chng_bio
+     * @param [type] $chng_pass
+     * @param [type] $chng_pass2
+     * @param [type] $level
+     * @param [type] $open_user
+     * @param [type] $chng_groupe
+     * @param [type] $chng_send_email
+     * @param [type] $chng_is_visible
+     * @param [type] $chng_mns
+     * @param [type] $C1
+     * @param [type] $C2
+     * @param [type] $C3
+     * @param [type] $C4
+     * @param [type] $C5
+     * @param [type] $C6
+     * @param [type] $C7
+     * @param [type] $C8
+     * @param [type] $M1
+     * @param [type] $M2
+     * @param [type] $T1
+     * @param [type] $T2
+     * @param [type] $B1
+     * @param [type] $raz_avatar
+     * @param [type] $chng_rank
+     * @param [type] $chng_lnl
+     * @return void
+     */
+    public function updateUser($chng_uid, $chng_uname, $chng_name, $chng_url, $chng_email, $chng_femail, $chng_user_from, $chng_user_occ, $chng_user_intrest, $chng_user_viewemail, $chng_avatar, $chng_user_sig, $chng_bio, $chng_pass, $chng_pass2, $level, $open_user, $chng_groupe, $chng_send_email, $chng_is_visible, $chng_mns, $C1, $C2, $C3, $C4, $C5, $C6, $C7, $C8, $M1, $M2, $T1, $T2, $B1, $raz_avatar, $chng_rank, $chng_lnl)
     {
+        settype($add_user_viewemail, 'integer');
+        settype($add_is_visible, 'string');
+        settype($add_mns, 'integer');
+        settype($B1, 'string');
+        settype($raz_avatar, 'integer');
+        settype($add_send_email, 'integer');
+
+        if (isset($add_group)) 
+            $add_group = implode(',', $add_group);
+        else 
+            $add_group = '';
+
         if (sql_num_rows(sql_query("SELECT uname FROM users WHERE uid!='$chng_uid' AND uname='$chng_uname'")) > 0) {
 
             echo error_handler(__d('users', 'ERREUR : cet identifiant est déjà utilisé') . '<br />');
@@ -671,7 +676,34 @@ class Users extends AdminController
             Header("Location: memberslist.php");
     }
     
-    function nonallowedUsers()
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function unsubUser()
+    {
+        $result = sql_query("SELECT uid FROM users WHERE uid='$chng_uid' OR uname='$chng_uid'");
+        list($chng_uid) = sql_fetch_row($result);
+    
+        if ($chng_uid != 1) {
+            sql_query("DELETE FROM subscribe WHERE uid='$chng_uid'");
+    
+            global $aid;
+            Ecr_Log("security", "UnsubUser($chng_uid) by AID : $aid", "");
+        }
+    
+        Header("Location: admin.php?op=mod_users");
+    }
+
+    /**
+     *  case 'nonallowed_users': => nonallowedUsers();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function nonallowedUsers()
     {
         $newsuti = sql_query("SELECT u.uid, u.uname, u.name, u.user_regdate FROM users AS u LEFT JOIN users_status AS us ON u.uid = us.uid WHERE us.open='0' ORDER BY u.user_regdate DESC");
         
@@ -710,7 +742,14 @@ class Users extends AdminController
         adminfoot('', '', '', '');
     }
     
-    function checkdnsmailusers()
+    /**
+     * case 'checkdnsmail_users': =>checkdnsmailusers();
+     * 
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function checkdnsmailusers()
     {
         global $page, $end, $autocont;
 
