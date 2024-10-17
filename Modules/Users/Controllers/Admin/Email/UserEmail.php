@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Users\Controllers\Admin;
+namespace Modules\Users\Controllers\Admin\Email;
 
 use Modules\Npds\Support\Facades\Js;
 use Modules\Npds\Support\Facades\Css;
