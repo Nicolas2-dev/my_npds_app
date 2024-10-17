@@ -2,10 +2,11 @@
 
 namespace Modules\Module\Controllers\Admin;
 
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\AdminController;
 
 
-class AdminModules extends AdminController
+class Modules extends AdminController
 {
 
     /**
@@ -20,7 +21,7 @@ class AdminModules extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = 'modules';
 
     /**
      * [$short_menu_admin description]
@@ -41,7 +42,7 @@ class AdminModules extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'modules';
 
 
     /**
@@ -59,7 +60,7 @@ class AdminModules extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('module', 'Gestion, Installation Modules');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
@@ -80,24 +81,11 @@ class AdminModules extends AdminController
         return parent::after($result);
     }
 
-
     /**
-     * [__construct description]
+     * Undocumented function
      *
-     * @return  [type]  [return description]
+     * @return void
      */
-    // public function __construct()
-    // {
-    //     $f_meta_nom = 'modules';
-    //     $f_titre = __d('module', 'Gestion, Installation Modules');
-        
-    //     //==> controle droit
-    //     admindroits($aid, $f_meta_nom);
-    //     //<== controle droit
-        
-    //     $hlpfile = "language/manuels/Config::get('npds.language')/modules.html";
-    // }
-
     public function index()
     {
         $handle = opendir('modules');
@@ -105,8 +93,9 @@ class AdminModules extends AdminController
         $modlist = '';
         while (false !== ($file = readdir($handle))) {
             if (!@file_exists("modules/$file/kernel")) {
-                if (is_dir("modules/$file") and ($file != '.') and ($file != '..'))
+                if (is_dir("modules/$file") and ($file != '.') and ($file != '..')) {
                     $modlist .= "$file ";
+                }
             }
         }
         
@@ -116,15 +105,18 @@ class AdminModules extends AdminController
         $whatondb = sql_query("SELECT mnom FROM modules");
         
         while ($row = sql_fetch_row($whatondb)) {
-            if (!in_array($row[0], $modlist)) sql_query("DELETE FROM modules WHERE mnom='" . $row[0] . "'");
+            if (!in_array($row[0], $modlist)) {
+                sql_query("DELETE FROM modules WHERE mnom='" . $row[0] . "'");
+            }
         }
         
         foreach ($modlist as $value) {
             $queryexiste = sql_query("SELECT mnom FROM modules WHERE mnom='" . $value . "'");
             $moexiste = sql_num_rows($queryexiste);
         
-            if ($moexiste !== 1)
+            if ($moexiste !== 1) {
                 sql_query("INSERT INTO modules VALUES (NULL, '" . $value . "', '0')");
+            }
         }
 
         echo '
@@ -175,16 +167,7 @@ class AdminModules extends AdminController
                 </tbody>
             </table>';
         
-        adminfoot('', '', '', '');        
-    }
-
-    public function plugins()
-    {
-        if ($ModPath != '') {
-            if (file_exists("modules/$ModPath/$ModStart.php"))
-                include("modules/$ModPath/$ModStart.php");
-        } else
-            redirect_url(urldecode($ModStart));  
+        Css::adminfoot('', '', '', '');        
     }
 
 }
