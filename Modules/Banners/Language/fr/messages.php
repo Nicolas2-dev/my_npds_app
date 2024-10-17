@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  '' => '',
   '0=Tout le monde, 1=Membre seulement, 3=Administrateur seulement, 9=Désactiver' => '',
   'ATTENTION !!!' => '',
   'Administration des bannières' => '',

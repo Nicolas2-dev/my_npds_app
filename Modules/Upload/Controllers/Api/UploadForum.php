@@ -3,8 +3,12 @@
 namespace Modules\Upload\Controllers\Api;
 
 
+use Npds\Http\Request;
 use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Css;
 use Modules\Npds\Core\FrontController;
+use Modules\Npds\Support\Facades\Auth;
+use Modules\Npds\Support\Facades\Cookie;
 use Modules\Upload\Support\Facades\NpdsUpload;
 use Modules\Upload\Support\Traits\UploadMinegfTrait;
 
@@ -65,13 +69,8 @@ class UploadForum extends FrontController
      */
     public function index()
     {
-        $forum = $IdForum;
-
-        $inline_list['1'] = __d('upload', 'Oui');
-        $inline_list['0'] = __d('upload', 'Non');
-
         // Security
-        if (!$allow_upload_forum) {
+        if (!Config::get('forum.config.allow_upload_forum')) {
             Access_Error();
         }
 
@@ -79,19 +78,40 @@ class UploadForum extends FrontController
             Access_Error();
         }
 
-        // Entete
+        //
+        $this->upload_head();
 
+        //
+        $this->forum_moderateur();
+
+        //
+        $this->upload_action_type();
+
+        // 
+        $this->minigf();
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    private function upload_head()
+    {
+        // Entete
         ob_start();
 
-        $Titlesitename = __d('upload', 'Télécharg.');
+        $Titlesitename = __d('upload', 'Télécharghargement.');
 
         include("storage/meta/meta.php");
 
-        $userX = base64_decode($user);
-        $userdata = explode(':', $userX);
+        $user = Auth::check('user');
+
+        $userX      = base64_decode($user);
+        $userdata   = explode(':', $userX);
 
         if ($userdata[9] != '') {
-            if (!$file = @opendir("themes/$userdata[9]")) {
+            if (!@opendir(theme_path($userdata[9]))) {
                 $theme = Config::get('npds.Default_Theme');
             } else {
                 $theme = $userdata[9];
@@ -101,7 +121,8 @@ class UploadForum extends FrontController
         }
 
         if (isset($user)) {
-            global $cookie;
+            $cookie = Cookie::cookiedecode($user);
+            
             $skin = '';
 
             if (array_key_exists(11, $cookie)) {
@@ -109,68 +130,53 @@ class UploadForum extends FrontController
             }
         }
 
-        echo '<link rel="stylesheet" href="assets/shared/font-awesome/css/all.min.css" />';
+        echo '<link rel="stylesheet" href="'. site_url('assets/shared/font-awesome/css/all.min.css') .'" />';
 
         if ($skin != '') {
             echo '
-                <link rel="stylesheet" href="assets/skins/' . $skin . '/bootstrap.min.css" />
-                <link rel="stylesheet" href="assets/skins/' . $skin . '/extra.css" />';
+                <link rel="stylesheet" href="'. site_url('assets/skins/' . $skin . '/bootstrap.min.css') .'" />
+                <link rel="stylesheet" href="'. site_url('assets/skins/' . $skin . '/extra.css') .'" />';
         } else {
-            echo '<link rel="stylesheet" href="assets/shared/bootstrap/dist/css/bootstrap.min.css" />';
+            echo '<link rel="stylesheet" href="'. site_url('assets/shared/bootstrap/dist/css/bootstrap.min.css') .'" />';
         }
 
-        echo '<link rel="stylesheet" href="assets/shared/bootstrap-table/dist/bootstrap-table.min.css" />'; //hardcoded lol
+        echo '<link rel="stylesheet" href="'. site_url('assets/shared/bootstrap-table/dist/bootstrap-table.min.css') .'" />';
 
-        echo import_css($theme, '', '', '');
+        echo Css::import_css($theme, '', '', '');
 
         echo '
             </head>
         <body>';
+    }
 
-        // Moderator
-
-        $sql = "SELECT forum_moderator FROM forums WHERE forum_id = '$forum'";
-        if (!$result = sql_query($sql)) {
-            forumerror('0001');
-        }
-
-        $myrow      = sql_fetch_assoc($result);
-        $moderator  = get_moderator($myrow['forum_moderator']);
-        $moderator  = explode(' ', $moderator);
-
-        $Mmod = false;
-
-        for ($i = 0; $i < count($moderator); $i++) {
-            if (($userdata[1] == $moderator[$i])) {
-                $Mmod = true;
-                break;
-            }
-        }
-
-        $thanks_msg = '';
-
-        //settype($thanks_msg,'string');
-        settype($actiontype, 'string');
-        settype($visible_att, 'array');
-
-        if ($actiontype) {
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    private function upload_action_type()
+    {
+        //
+        if ($actiontype = Request::post('actiontype')) {
 
             switch ($actiontype) {
                 case 'delete':
-                    NpdsUpload::delete($del_att);
+                    NpdsUpload::delete(request::post('del_att'));
                     break;
 
                 case 'upload':
                     $thanks_msg = NpdsUpload::forum_upload();
+                    $this->set_thanks_msg($thanks_msg);
                     break;
 
                 case 'update':
-                    NpdsUpload::update_inline($inline_att);
+                    NpdsUpload::update_inline(request::post('inline_att'));
                     break;
 
                 case 'visible':
-                    if ($Mmod) {
-                        NpdsUpload::update_visibilite($visible_att, $visible_list);
+
+                    if ($this->get_mod()) {
+                        NpdsUpload::update_visibilite(request::post('visible_att'), request::post('visible_list'));
                     }
                     break;
             }

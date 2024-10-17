@@ -54,9 +54,9 @@ class FileUpload
      */
     public function init($dir, $forum, $apli)
     {
-        $this->upload_dir = $dir;
-        $this->IdForum = $forum;
-        $this->apli = $apli;
+        $this->upload_dir   = $dir;
+        $this->IdForum      = $forum;
+        $this->apli         = $apli;
     }
 
     /**
@@ -87,9 +87,16 @@ class FileUpload
 
         /*je ne trouve pas quand et ou cette variable défini ci dessus peut etre changé donc ne comprend pas les conditions ci dessous ?*/
         if ($this->Halt_On_Error == 'report') {
-            printf('<div class="alert alert-danger m-3 alert-dismissible fade show" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><h4 class="alert-heading">' . __d('upload', 'Attention') . '</h4> %s<br /><p class="mt-2 text-center"> %s </p>', $msg, '<strong>' . $reason . '</strong>');
+            printf('<div class="alert alert-danger m-3 alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <h4 class="alert-heading">' . __d('upload', 'Attention') . '</h4> %s
+                <br /><p class="mt-2 text-center"> %s </p>',
+                 $msg, '<strong>' . $reason . '</strong>');
         } else {
-            printf('<div class="alert alert-danger m-3" role="alert"> %s %s<br /><p class="mt-2 text-center"> %s </p></span>', '<h4 class="alert-heading">File management</h4>', $msg, '<strong>' . $reason . '</strong>');
+            printf('<div class="alert alert-danger m-3" role="alert">
+                 %s %s<br /><p class="mt-2 text-center"> %s </p></span>',
+                 '<h4 class="alert-heading">File management</h4>',
+                 $msg, '<strong>' . $reason . '</strong>');
         }
 
         if ($this->Halt_On_Error != 'report') {
@@ -154,6 +161,7 @@ class FileUpload
 
         if (isset($mimetypes[$suffix])) {
             $type = $mimetypes[$suffix];
+
         } elseif (empty($type) || ($type == 'application/octet-stream')) {
             $type = $mimetype_default;
         }
@@ -171,7 +179,7 @@ class FileUpload
         settype($log_filename, "string");
 
         if ($insert_base == true) {
-            //  insert attachment reference in database
+            // insert attachment reference in database
             $id = NpdsUpload::insertAttachment($this->apli, $IdPost, $IdTopic, $this->IdForum, $name, $this->upload_dir, $inline, $size, $type);
 
             if ($id <= 0) {
@@ -179,9 +187,9 @@ class FileUpload
                 return FALSE;
             }
 
-            //  copy temporary file to the upload directory
-            $dest_file = $rep . $this->upload_dir . "$id." . $this->apli . ".$name";
-            $copyfunc = (function_exists('move_uploaded_file')) ? 'move_uploaded_file' : 'copy';
+            // copy temporary file to the upload directory
+            $dest_file  = $rep . $this->upload_dir . "$id." . $this->apli . ".$name";
+            $copyfunc   = (function_exists('move_uploaded_file')) ? 'move_uploaded_file' : 'copy';
 
             if (! $copyfunc($src_file, $dest_file)) {
                 NpdsUpload::deleteAttachment($this->apli, $IdPost, $rep . $this->upload_dir, $id, $name);
@@ -194,7 +202,7 @@ class FileUpload
             $log_filename = $dest_file;
         } else {
             if ($this->apli == "minisite") {
-                //  copy temporary file to the upload directory
+                // copy temporary file to the upload directory
                 global $rep_upload_minisite;
 
                 $copyfunc = (function_exists('move_uploaded_file')) ? 'move_uploaded_file' : 'copy';
@@ -209,7 +217,7 @@ class FileUpload
                 $log_filename = $rep . $rep_upload_minisite . $name;
 
             } elseif ($this->apli == "editeur") {
-                //  copy temporary file to the upload directory
+                // copy temporary file to the upload directory
                 global $rep_upload_editeur;
 
                 $copyfunc = (function_exists('move_uploaded_file')) ? 'move_uploaded_file' : 'copy';
@@ -243,8 +251,8 @@ class FileUpload
         
         $this->errno = 0;
 
-        $att_size = 0;
-        $att_count = 0;
+        $att_size   = 0;
+        $att_count  = 0;
 
         if (is_string($pcfile) && !empty($pcfile) && !empty($pcfile_name)) {
             if ($pcfile == 'none') {
@@ -267,6 +275,7 @@ class FileUpload
 
             for ($i = 0; $i < $nfiles; $i++) {
                 if (!empty($pcfile[$i]) && (strtolower($pcfile[$i]) != 'none')) {
+
                     if ($this->uploadFile($IdPost, $IdTopic, $pcfile_name[$i], $pcfile_size[$i], $pcfile_type[$i], $pcfile[$i], DEFAULT_INLINE)) {
                         $att_size += $pcfile_size[$i];
                         $att_count++;
@@ -305,11 +314,9 @@ class FileUpload
      */
     public function isAllowedFile($filename, $mimetype)
     {
-        global $bn_allowed_extensions, $bn_allowed_mimetypes;
-        global $bn_banned_extensions, $bn_banned_mimetypes;
+        global $bn_allowed_extensions, $bn_allowed_mimetypes, $bn_banned_extensions, $bn_banned_mimetypes;
 
-        # First check allowed extensions
-        # ------------------------------
+        // First check allowed extensions
         $ext = strtolower(strrchr($filename, '.'));
 
         if (!empty($bn_allowed_extensions)) {
@@ -331,7 +338,7 @@ class FileUpload
             }
         }
 
-        //  Now deny banned extension
+        // Now deny banned extension
         if (!empty($bn_banned_extensions)) {
             $banned_extensions = explode(' ', $bn_banned_extensions);
 
@@ -344,10 +351,10 @@ class FileUpload
             }
         }
 
-        //  Now check mime-type
+        // Now check mime-type
         list($type, $subtype) = explode('/', $mimetype);
 
-        //  check allowed mime-types
+        // check allowed mime-types
         if (!empty($bn_allowed_mimetypes)) {
             $allowed_mimetypes = explode(' ', $bn_allowed_mimetypes);
 

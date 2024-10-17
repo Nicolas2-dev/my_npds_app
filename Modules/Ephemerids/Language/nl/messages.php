@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  '' => '',
   'Ajouter un éphéméride' => '',
   'Année' => '',
   'Description' => '',

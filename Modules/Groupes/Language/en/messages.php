@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  '' => '',
   'Accepter' => '',
   'Activer PAD du groupe' => '',
   'Activer bloc-note du groupe' => '',

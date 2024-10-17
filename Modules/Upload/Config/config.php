@@ -19,8 +19,6 @@ return [
      */
     'DOCUMENTROOT' => base_path(),
 
-    //'DOCUMENTROOT2' => null,
-
     /**
      * Autorise l'upload DANS le répertoire personnel du membre (true ou false)
      */
@@ -28,9 +26,9 @@ return [
  
     /**
      * Sous répertoire : n'utiliser que si votre App n'est pas directement dans la racine de votre site
-     * par exemple si : www.mon_site/App/.... alors $racine="app/" sinon $racine="";
+     * par exemple si : www.mon_site/app/.... alors $racine="app/" sinon $racine="";
      */
-    'racine' => 'app/',
+    'racine' => 'Modules',
 
     /**
      * Répertoire de téléchargement (avec le / terminal)

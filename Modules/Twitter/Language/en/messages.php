@@ -22,5 +22,6 @@ return array (
   'Réécriture d\'url avec mod_rewrite' => '',
   'Votre clef de consommateur' => '',
   'Votre clef secrète de consommateur' => '',
+  'npds_twitter' => '',
   'requis' => '',
 );

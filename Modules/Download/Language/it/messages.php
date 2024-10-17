@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  '' => '',
   'ATTENTION : êtes-vous sûr de vouloir supprimer ce fichier téléchargeable ?' => '',
   'Administrateurs' => '',
   'Affichage filtré pour' => '',
@@ -34,6 +33,7 @@ return array (
   'Groupes' => '',
   'ID' => '',
   'Information sur le fichier' => '',
+  'Les fichiers .zip sont décompactables avec un logiciel comme 7zip.<br />Les fichiers .tgz ou tar.gz sont plus spécifiquement orientés Linux (Gzip et Tar).' => '',
   'Les plus téléchargés' => '',
   'Les plus téléchargés, aucun résultat ...' => '',
   'Membres' => '',

@@ -54,10 +54,18 @@ class NpdsUploadManager implements UploadInterface
             $fic = $_FILES;
         }
 
-        $pcfile_name = $fic['pcfile']['name'];
-        $pcfile_type = $fic['pcfile']['type'];
-        $pcfile_size = $fic['pcfile']['size'];
-        $pcfile = $fic['pcfile']['tmp_name'];
+        $pcfile_name    = $fic['pcfile']['name'];
+        $pcfile_type    = $fic['pcfile']['type'];
+        $pcfile_size    = $fic['pcfile']['size'];
+        $pcfile         = $fic['pcfile']['tmp_name'];
+        $pcfile_error   = $fic['pcfile']['error'];
+
+
+        $_FILES['pcfile']['name'];
+        $_FILES['pcfile']['type'];
+        $_FILES['pcfile']['size'];
+        $_FILES['pcfile']['tmp_name'];
+        $_FILES['pcfile']['error'];
 
         $fu = new FileUpload;
         $fu->init($rep_upload_editeur, '', $apli);
@@ -65,13 +73,13 @@ class NpdsUploadManager implements UploadInterface
         $attachments = $fu->getUploadedFiles('', '');
 
         if (is_array($attachments)) {
-            $att_count = $attachments['att_count'];
-            $att_size = $attachments['att_size'];
+            // $att_count  = $attachments['att_count']; // not used
+            // $att_size   = $attachments['att_size']; // not used
 
             if (is_array($pcfile_name)) {
                 reset($pcfile_name);
-                $names = implode(', ', $pcfile_name);
-                $pcfile_name = $names;
+
+                $pcfile_name = implode(', ', $pcfile_name);
             }
             
             return ($path_upload_editeur . $pcfile_name);
@@ -87,8 +95,8 @@ class NpdsUploadManager implements UploadInterface
      */
     public function forum_upload()
     {
-        global $apli, $IdPost, $IdForum, $IdTopic, $pcfile, $pcfile_size, $pcfile_name, $pcfile_type, $att_count, $att_size, $total_att_count, $total_att_size;
-        global $MAX_FILE_SIZE, $MAX_FILE_SIZE_TOTAL, $mimetypes, $mimetype_default, $upload_table, $rep_upload_forum; // mine......
+        // global $apli, $IdPost, $IdForum, $IdTopic, $pcfile, $pcfile_size, $pcfile_name, $pcfile_type, $att_count, $att_size, $total_att_count, $total_att_size;
+        // global $MAX_FILE_SIZE, $MAX_FILE_SIZE_TOTAL, $mimetypes, $mimetype_default, $upload_table, $rep_upload_forum; // mine......
 
         list($sum) = sql_fetch_row(sql_query("SELECT SUM(att_size ) FROM $upload_table WHERE apli = '$apli' AND post_id = '$IdPost'"));
 
@@ -108,18 +116,19 @@ class NpdsUploadManager implements UploadInterface
             $fic = $_FILES;
         }
 
-        $pcfile_name = $fic['pcfile']['name'];
-        $pcfile_type = $fic['pcfile']['type'];
-        $pcfile_size = $fic['pcfile']['size'];
-        $pcfile = $fic['pcfile']['tmp_name'];
+        $pcfile_name    = $fic['pcfile']['name'];
+        $pcfile_type    = $fic['pcfile']['type'];
+        $pcfile_size    = $fic['pcfile']['size'];
+        $pcfile         = $fic['pcfile']['tmp_name'];
 
         $fu = new FileUpload;
         $fu->init($rep_upload_forum, $IdForum, $apli);
 
-        $att_count = 0;
-        $att_size = 0;
-        $total_att_count = 0;
-        $total_att_size = 0;
+        $att_count  = 0;
+        $att_size   = 0;
+
+        $total_att_count    = 0;
+        $total_att_size     = 0;
 
         $attachments = $fu->getUploadedFiles($IdPost, $IdTopic);
 
@@ -135,9 +144,14 @@ class NpdsUploadManager implements UploadInterface
             }
 
             $pcfile_size = $att_size;
-            $thanks_msg .= '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' . str_replace('{NAME}', '<strong>' . $pcfile_name . '</strong>', str_replace('{SIZE}', $pcfile_size, __d('upload', 'Fichier {NAME} bien reçu ({SIZE} octets transférés)'))) . '</div>';
-            $total_att_count += $att_count;
-            $total_att_size += $att_size;
+
+            $thanks_msg .= '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                ' . str_replace('{NAME}', '<strong>' . $pcfile_name . '</strong>',
+                 str_replace('{SIZE}', $pcfile_size, __d('upload', 'Fichier {NAME} bien reçu ({SIZE} octets transférés)'))) . '</div>';
+            
+            $total_att_count    += $att_count;
+            $total_att_size     += $att_size;
         }
         
         return $thanks_msg;
@@ -168,7 +182,7 @@ class NpdsUploadManager implements UploadInterface
      * @param [type] $post_id
      * @param integer $att_id
      * @param integer $Mmod
-     * @return void
+     * @return string
      */
     public function getAttachments($apli, $post_id, $att_id = 0, $Mmod = 0)
     {
@@ -195,57 +209,6 @@ class NpdsUploadManager implements UploadInterface
 
         return ($i == 0) ? '' : $att;
     }
-
-    /**
-     * Fonction permettant de créer une checkbox
-     *
-     * @param [type] $name
-     * @param integer $value
-     * @param [type] $current
-     * @param string $text
-     * @return void
-     */
-    public function getCheckBox($name, $value = 1, $current, $text = '')
-    {
-        return sprintf(
-            '<input type="checkbox" name="%s" value="%s"%s />%s',
-            $name,
-            $value,
-            ("$current" == "$value") ? ' checked="checked"' : '',
-            (empty($text)) ? '' : " $text"
-        );
-    }
-
-    /**
-     * Fonction permettant une liste de choix 
-     *
-     * @param [type] $name
-     * @param [type] $items
-     * @param string $selected
-     * @param integer $multiple
-     * @param string $onChange
-     * @return void
-     */
-    public function getListBox($name, $items, $selected = '', $multiple = 0, $onChange = '')
-    {
-        $oc = empty($onChange) ? '' : ' onchange="' . $onChange . '"';
-        $p = sprintf(
-            '<select class="form-select-sm" name="%s%s"%s%s>',
-            $name,
-            ($multiple == 1) ? '[]' : '',
-            ($multiple == 1) ? ' multiple' : '',
-            $oc
-        );
-
-        if (is_array($items)) {
-            foreach ($items as $k => $v) {
-                $p .= sprintf('<option value="%s"%s>%s</option>', $k, strcmp($selected, $k) ? '' : ' selected="selected"', $v);
-            }
-        }
-
-        return $p . '</select>';
-    }
-
 
     // Pour la class
 
@@ -369,94 +332,6 @@ class NpdsUploadManager implements UploadInterface
     }
 
     /**
-     * Retourne Le mode d affichage pour un attachement
-     * 
-     * 1   display as icon (link)
-     * 2   display as image
-     * 3   display as embedded HTML text or the source
-     * 4   display as embedded text, PRE-formatted
-     * 5   display as flash animation
-     * 
-     * @param [type] $att_type
-     * @param string $att_inline
-     * @return void
-     */
-    public function getAttDisplayMode($att_type, $att_inline = "A")
-    {
-        global $mime_dspfmt, $mimetype_default, $ext;
-
-        $this->load_mimetypes();
-
-        if ($att_inline) {
-            if (isset($mime_dspfmt[$att_type])) {
-                $display_mode = $mime_dspfmt[$att_type];
-            } else {
-                $display_mode = $mime_dspfmt[$mimetype_default];
-            }
-        } else {
-            $display_mode = ATT_DSP_LINK;
-        }
-
-        return $display_mode;
-    }
-
-    /**
-     * Retourne l'icon
-     *
-     * @param [type] $filename
-     * @return void
-     */
-    public function att_icon($filename)
-    {
-        global $att_icons, $att_icon_default,  $att_icon_multiple;
-
-        $this->load_mimetypes();
-
-        $suffix = strtoLower(substr(strrchr($filename, '.'), 1));
-
-        return (isset($att_icons[$suffix])) ? $att_icons[$suffix] : $att_icon_default;
-    }
-
-    // Partie Graphique
-
-    /**
-     * Controle la taille de l image a afficher
-     *
-     * @param [type] $size
-     * @return void
-     */
-    public function verifsize($size)
-    {
-        $width_max = 500;
-        $height_max = 500;
-
-        if ($size[0] == 0) {
-            $size[0] = ceil($width_max / 3);
-        }
-
-        if ($size[1] == 0) {
-            $size[1] = ceil($height_max / 3);
-        }
-
-        $width = $size[0];
-        $height = $size[1];
-
-        if ($width > $width_max) {
-            $imageProp = ($width_max * 100) / $width;
-            $height = ceil(($height * $imageProp) / 100);
-            $width = $width_max;
-        }
-
-        if ($height > $height_max) {
-            $imageProp = ($height_max * 100) / $height;
-            $width = ceil(($width * $imageProp) / 100);
-            $height = $height_max;
-        }
-
-        return ('width="' . $width . '" height="' . $height . '"');
-    }
-
-    /**
      * Retourne l'attachement
      *
      * @param [type] $apli
@@ -564,6 +439,98 @@ class NpdsUploadManager implements UploadInterface
         // ret retour eval
         return $ret;
     }
+
+
+
+    /**
+     * Retourne Le mode d affichage pour un attachement
+     * 
+     * 1   display as icon (link)
+     * 2   display as image
+     * 3   display as embedded HTML text or the source
+     * 4   display as embedded text, PRE-formatted
+     * 5   display as flash animation
+     * 
+     * @param [type] $att_type
+     * @param string $att_inline
+     * @return void
+     */
+    public function getAttDisplayMode($att_type, $att_inline = "A")
+    {
+        global $mime_dspfmt, $mimetype_default, $ext;
+
+        $this->load_mimetypes();
+
+        if ($att_inline) {
+            if (isset($mime_dspfmt[$att_type])) {
+                $display_mode = $mime_dspfmt[$att_type];
+            } else {
+                $display_mode = $mime_dspfmt[$mimetype_default];
+            }
+        } else {
+            $display_mode = ATT_DSP_LINK;
+        }
+
+        return $display_mode;
+    }
+
+    /**
+     * Retourne l'icon
+     *
+     * @param [type] $filename
+     * @return void
+     */
+    public function att_icon($filename)
+    {
+        global $att_icons, $att_icon_default,  $att_icon_multiple;
+
+        $this->load_mimetypes();
+
+        $suffix = strtoLower(substr(strrchr($filename, '.'), 1));
+
+        return (isset($att_icons[$suffix])) ? $att_icons[$suffix] : $att_icon_default;
+    }
+
+    // Partie Graphique
+
+    /**
+     * Controle la taille de l image a afficher
+     *
+     * @param [type] $size
+     * @return void
+     */
+    public function verifsize($size)
+    {
+        $width_max = 500;
+        $height_max = 500;
+
+        if ($size[0] == 0) {
+            $size[0] = ceil($width_max / 3);
+        }
+
+        if ($size[1] == 0) {
+            $size[1] = ceil($height_max / 3);
+        }
+
+        $width = $size[0];
+        $height = $size[1];
+
+        if ($width > $width_max) {
+            $imageProp = ($width_max * 100) / $width;
+            $height = ceil(($height * $imageProp) / 100);
+            $width = $width_max;
+        }
+
+        if ($height > $height_max) {
+            $imageProp = ($height_max * 100) / $height;
+            $width = ceil(($width * $imageProp) / 100);
+            $height = $height_max;
+        }
+
+        return ('width="' . $width . '" height="' . $height . '"');
+    }
+
+ 
 
     /**
      * Fonction d'affichage des fichier text directement 

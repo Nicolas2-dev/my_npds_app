@@ -19,7 +19,7 @@ class WspadKernel
      * @var array
      */
     public static $aliases = [
-        // 
+        'Wspad'   => 'Modules\Wspad\Support\Facades\Wspad',
     ];
 
     /**

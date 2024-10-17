@@ -32,7 +32,7 @@ define('ATT_DSP_SWF', '5');
 /**
  * 
  */
-define('_FILEUPLOAD', 1);
+// define('_FILEUPLOAD', 1);
 
 /**
  * 

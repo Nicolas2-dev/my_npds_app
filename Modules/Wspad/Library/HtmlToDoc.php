@@ -1,5 +1,7 @@
 <?php
 
+namespace Modules\Wspad\Library;
+
 /**
  * Convert HTML to MS Word file for PHP 4.2.x or earlier
  * @author Dale Attree
@@ -14,28 +16,44 @@
  * @name HTML_TO_DOC
  */
 
-class HTML_TO_DOC
+ /**
+  * Undocumented class
+  */
+class HtmlToDoc
 {
-    var $docFile = '';
 
-    var $title = '';
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    public $docFile = '';
 
-    var $htmlHead = '';
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    public $title = '';
 
-    var $htmlBody = '';
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    public $htmlHead = '';
+
+    /**
+     * Undocumented variable
+     *
+     * @var string
+     */
+    public $htmlBody = '';
 
 
     /**
-     * Constructor
-     *
-     * @return void
+     * Undocumented function
      */
-
-    public function HTML_TO_DOC()
-    {
-        self::__construct();
-    }
-
     public function __construct()
     {
         $this->title = "Untitled Document";
@@ -43,31 +61,31 @@ class HTML_TO_DOC
         $this->htmlBody = '';
     }
 
-    /*
-    function HTML_TO_DOC() {
-        $this->title="Untitled Document";
-        $this->htmlHead="";
-        $this->htmlBody="";
-    }
-    */
-
     /**
      * Set the document file name
      *
-     * @param String $docfile 
+     * @param [type] $docfile
+     * @return void
      */
-    function setDocFileName($docfile)
+    public function setDocFileName($docfile)
     {
         //echo 'setDocFileName Entered.<br>';
         $this->docFile = $docfile;
 
-        if (!preg_match("/\.doc$/i", $this->docFile))
+        if (!preg_match("/\.doc$/i", $this->docFile)) {
             $this->docFile .= ".doc";
+        }
 
         return;
     }
 
-    function setTitle($title)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $title
+     * @return void
+     */
+    public function setTitle($title)
     {
         //echo 'setTitle Entered.<br>';
         $this->title = $title;
@@ -76,9 +94,9 @@ class HTML_TO_DOC
     /**
      * Return header of MS Doc
      *
-     * @return String
+     * @return string
      */
-    function getHeader()
+    public function getHeader()
     {
         //echo 'getHeader Entered.<br>';
         $return  = <<<EOH
@@ -167,9 +185,9 @@ EOH;
     /**
      * Return Document footer
      *
-     * @return String
+     * @return string
      */
-    function getFotter()
+    public function getFotter()
     {
         //echo 'getFotter Entered.<br>';
         return "</body></html>";
@@ -178,12 +196,12 @@ EOH;
     /**
      * Create The MS Word Document from given HTML
      *
-     * @param String $html :: URL Name like http://www.example.com
-     * @param String $file :: Document File Name
-     * @param Boolean $download :: Wheather to download the file or save the file
-     * @return boolean 
+     * @param string $html :: URL Name like http://www.example.com
+     * @param string $file :: Document File Name
+     * @param bool $download :: Wheather to download the file or save the file
+     * @return bool 
      */
-    function createDocFromURL($url, $file, $download = false)
+    public function createDocFromURL($url, $file, $download = false)
     {
         //echo 'createDocFromURL Entered.<br>';
         if (!preg_match("/^http:/", $url))
@@ -201,17 +219,20 @@ EOH;
     /**
      * Create The MS Word Document from given HTML
      *
-     * @param String $html :: HTML Content or HTML File Name like path/to/html/file.html
-     * @param String $file :: Document File Name
-     * @param Boolean $download :: Wheather to download the file or save the file
-     * @return boolean 
+     * @param string $html :: HTML Content or HTML File Name like path/to/html/file.html
+     * @param string $file :: Document File Name
+     * @param bool $download :: Wheather to download the file or save the file
+     * @return bool 
      */
-    function createDoc($html, $file, $download = false)
+    public function createDoc($html, $file, $download = false)
     {
         //echo 'createDoc Entered.<br>';
 
-        if (is_file($html)) // ?? can not be too long $html est il juste ??? et pourquoi ???
+        // ?? can not be too long $html est il juste ??? 
+        // et pourquoi ???
+        if (is_file($html)) {
             $html = @file_get_contents($html);
+        }
 
         $this->_parseHtml($html);
         $this->setDocFileName($file);
@@ -222,24 +243,31 @@ EOH;
 
         if ($download) {
             //$this->write_file($this->docFile,$doc);
-            header("Cache-Control: "); // leave blank to avoid IE errors
-            header("Pragma: "); // leave blank to avoid IE errors
+            
+            // leave blank to avoid IE errors
+            header("Cache-Control: "); 
+
+            // leave blank to avoid IE errors
+            header("Pragma: "); 
+
             header("Content-type: application/octet-stream");
             header("Content-Disposition: attachment; filename=\"$this->docFile\"");
+
             echo $doc;
+
             return true;
-        } else
+        } else {
             return $this->write_file($this->docFile, $doc);
+        }
     }
 
     /**
      * Parse the html and remove <head></head> part if present into html
      *
-     * @param String $html
+     * @param string $html
      * @return void
-     * @access Private
      */
-    function _parseHtml($html)
+    private function _parseHtml($html)
     {
         //echo '_parseHtml Entered.<br>';
         $html = preg_replace("/<!DOCTYPE((.|\n)*?)>/ims", "", $html);
@@ -267,23 +295,24 @@ EOH;
     /**
      * Write the content int file
      *
-     * @param String $file :: File name to be save
-     * @param String $content :: Content to be write
+     * @param string $file :: File name to be save
+     * @param string $content :: Content to be write
      * @param [Optional] String $mode :: Write Mode
-     * @return void
-     * @access boolean True on success else false
+     * @return bool
      */
-    function write_file($file, $content, $mode = "w")
+    private function write_file($file, $content, $mode = "w")
     {
         //echo 'write_file entered!<br>';
         $fp = @fopen($file, $mode);
 
-        if (!is_resource($fp))
+        if (!is_resource($fp)) {
             return false;
+        }
 
         fwrite($fp, $content);
         fclose($fp);
         
         return true;
     }
+
 }

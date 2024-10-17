@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  '' => '',
   'Actuellement connecté en administrateur... Cette critique sera' => '',
   'Ajouter' => '',
   'Ajouter la critique N° : ' => '',

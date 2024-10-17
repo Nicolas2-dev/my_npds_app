@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  '' => '',
   'Abonnement' => '',
   'Afficher la liste des prospects' => '',
   'Ajouter' => '',
@@ -26,7 +25,6 @@ return array (
   'Fonctions' => '',
   'Format de données' => '',
   'Gestion de vos abonnements' => '',
-  'HED' => '',
   'La lettre' => '',
   'Liste des LNL envoyées' => '',
   'Liste des prospects' => '',
@@ -35,10 +33,7 @@ return array (
   'Merci d\'entrer l\'information en fonction des spécifications' => '',
   'Message d\'entête' => '',
   'Message de pied de page' => '',
-  'Modifier") . "</a>";
-        //                             } else {
-        //                                 $Xmessage = $message . "\\n\\n------------------------------------------------------------------\\n";
-        //                                 $Xmessage .= __d(\'newsletter' => '',
+  'Modifier' => '',
   'Nbre d\'envois effectués' => '',
   'Non' => '',
   'Oui' => '',
@@ -55,22 +50,7 @@ return array (
   'TEXTE' => '',
   'Texte' => '',
   'Tous les Utilisateurs' => '',
-  'Transmission LNL en cours") . \' => \' . $chartmp . \'<br /><br />App - Portal System
-        //                     </div>
-        //                 </div>
-        //                 </body>
-        //             </html>\';
-        //         break;
-        
-        //     default:
-        //         main();
-        //         break;
-        // }
-    // }
-
-    function error_handler($ibid)
-    {
-        echo "<p align=\\"center\\"><span class=\\"rouge\\">" . __d(\'newsletter' => '',
+  'Transmission LNL en cours' => '',
   'Type' => '',
   'Valider' => '',
   'Votre adresse Email' => '',

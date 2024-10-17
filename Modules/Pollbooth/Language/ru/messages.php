@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  '' => '',
   'ATTENTION : Le Sondage choisi va être supprimé IMMEDIATEMENT de la base de données !' => '',
   'Anciens sondages' => '',
   'Commentaire(s) : ' => '',

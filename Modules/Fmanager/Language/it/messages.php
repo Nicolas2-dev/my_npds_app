@@ -25,7 +25,9 @@ return array (
   'Impossible de renommer' => '',
   'Impossible de supprimer' => '',
   'Le fichier n\'existe pas' => '',
+  'Minisite' => '',
   'Ok' => '',
+  'Racine' => '',
   'Rafraîchir' => '',
   'Renommer' => '',
   'Renommer un fichier' => '',
@@ -37,6 +39,5 @@ return array (
   'Taille maximum d\'un fichier : ' => '',
   'Temps de cache (en seconde) des imagettes' => '',
   'Type de fichier interdit' => '',
-  'dateinternal' => '',
   'existe déjà' => '',
 );

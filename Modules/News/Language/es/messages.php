@@ -1,7 +1,6 @@
 <?php
 
 return array (
-  '' => '',
   '"dateinternal' => '',
   '(description ou nom complet du sujet)' => '',
   '(nom de l\'image + extension)' => '',
@@ -24,6 +23,7 @@ return array (
   'Article intéressant sur' => '',
   'Articles' => '',
   'Articles !' => '',
+  'Articles delete' => '',
   'Articles plus anciens' => '',
   'Articles programmés' => '',
   'Attention : ' => '',
@@ -87,14 +87,12 @@ return array (
   'Le nom de ce sujet existe déjà !' => '',
   'Les dernières nouvelles à propos de' => '',
   'Les spécialistes peuvent utiliser du HTML, mais attention aux erreurs' => '',
-  'Liens' => '',
   'Liens relatifs' => '',
   'Lire la suite...' => '',
   'Liste des articles' => '',
   'Lu' => '',
   'Mais ne titrez pas -un article-, ou -à lire-,...' => '',
   'Merci' => '',
-  'Merci d\'entrer l\'information en fonction des spécifications' => '',
   'Merci de nous avoir recommandé' => '',
   'Merci pour votre contribution.' => '',
   'Modifier l\'Article' => '',

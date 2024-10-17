@@ -2,6 +2,7 @@
 
 namespace Modules\Upload\Controllers\Api;
 
+use Npds\Http\Request;
 use Npds\Config\Config;
 use Modules\Npds\Core\FrontController;
 use Modules\Upload\Support\Facades\NpdsUpload;
@@ -54,53 +55,23 @@ class UploadEditeur extends FrontController
         return parent::after($result);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function index()
     {
-        $Titlesitename = __d('upload', 'Télécharg.');
+        // 
+        $this->upload_head();
 
-        include("storage/meta/meta.php");
+        //
+        $this->upload_action_type();
 
-        if ($url_upload_css) {
-            $url_upload_cssX = str_replace('style.css', Config::get('npds.language') ."-style.css", $url_upload_css);
+        //
+        $apli = Request::post('apli');
 
-            if (is_readable($url_upload . $url_upload_cssX)) {
-                $url_upload_css = $url_upload_cssX;
-            }
-
-            print("<link href=\"" . $url_upload . $url_upload_css . "\" title=\"default\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />\n");
-        }
-
-        echo "</head>\n";
-
-        if (isset($actiontype)) {
-
-            switch ($actiontype) {
-
-                case 'upload':
-                    $ret = NpdsUpload::editeur_upload();
-                    $js = '';
-
-                    if ($ret != '') {
-                        $suffix = strtoLower(substr(strrchr($ret, '.'), 1));
-
-                        if ($suffix == 'gif' or  $suffix == 'jpg' or  $suffix == 'jpeg' or $suffix == 'png') {
-                            $js .= "parent.tinymce.activeEditor.selection.setContent('<img class=\"img-fluid\" src=\"$ret\" alt=" . basename($ret) . " loading=\"lazy\" />');";
-                        } else {
-                            $js .= "parent.tinymce.activeEditor.selection.setContent('<a href=\"$ret\" target=\"_blank\">" . basename($ret) . "</a>');";
-                        }
-                    }
-
-                    echo "<script type=\"text/javascript\">
-                        //<![CDATA[
-                        " . $js . "
-                        top.tinymce.activeEditor.windowManager.close();
-                        //]]>
-                        </script>";
-                    die();
-                    break;
-            }
-        }
-
+        // code a placer dans une vue  !
         echo '
             <body topmargin="3" leftmargin="3" rightmargin="3">
                 <div class="card card-body mx-2 mt-3">
@@ -108,6 +79,7 @@ class UploadEditeur extends FrontController
                         <input type="hidden" name="apli" value="' . $apli . '" />';
 
         if (isset($groupe)) {
+            dump($groupe); // pour comprendre de ou vien ce groupe
             echo '<input type="hidden" name="groupe" value="' . $groupe . '" />';
         }
 
@@ -124,6 +96,73 @@ class UploadEditeur extends FrontController
                 </div>
             </body>
         </html>';        
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    private function upload_head()
+    {
+        $Titlesitename = __d('upload', 'Téléchargargement.');
+
+        include("storage/meta/meta.php");
+
+        $url_upload_css = Config::get('upload.url_upload_css');
+        $url_upload     = Config::get('upload.url_upload');
+
+        if ($url_upload_css) {
+            $url_upload_cssX = str_replace('style.css', Config::get('npds.language') ."-style.css", $url_upload_css);
+
+            if (is_readable($url_upload . $url_upload_cssX)) {
+                $url_upload_css = $url_upload_cssX;
+            }
+
+            print('<link href="' . site_url($url_upload . $url_upload_css) . '" title="default" rel="stylesheet" type="text/css" media="all" />'. "\n");
+        }
+
+        echo '</head>' ."\n";
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    private function upload_action_type()
+    {
+        $actiontype = Request::post('actiontype');
+
+        if (isset($actiontype)) {
+
+            if ($actiontype == 'upload') {
+
+                $ret = NpdsUpload::editeur_upload();
+
+                if ($ret != '') {
+                    $suffix = strtoLower(substr(strrchr($ret, '.'), 1));
+
+                    if ($suffix == 'gif' 
+                    or  $suffix == 'jpg' 
+                    or  $suffix == 'jpeg' 
+                    or $suffix == 'png') {
+                        $js = '<img class="img-fluid" src="'. $ret .'" alt="' . basename($ret) . '" loading="lazy" />';
+                    } else {
+                        $js = '<a href="'. $ret .'" target="_blank">' . basename($ret) . '</a>';
+                    }
+                }
+
+                echo '<script type="text/javascript">
+                        //<![CDATA[
+                            parent.tinymce.activeEditor.selection.setContent("' . $js . '")
+                            top.tinymce.activeEditor.windowManager.close();
+                         //]]>
+                    </script>';
+
+                return true;
+            }
+        }        
     }
 
 }

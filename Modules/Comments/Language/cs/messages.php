@@ -1,6 +1,7 @@
 <?php
 
 return array (
+  '' => '',
   'Activé' => '',
   'Adresse DNS de l\'utilisateur :' => '',
   'Adresse IP de l\'utilisateur :' => '',
@@ -24,6 +25,7 @@ return array (
   'Haut de page' => '',
   'Identifiant :' => '',
   'Les commentaires sont la propriété de leurs auteurs. Nous ne sommes pas responsables de leur contenu.' => '',
+  'Les derniers commentaires de' => '',
   'Localisation' => '',
   'Masquer ce commentaire' => '',
   'Message' => '',
