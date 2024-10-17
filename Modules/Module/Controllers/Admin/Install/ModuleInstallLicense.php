@@ -24,7 +24,7 @@ class ModuleInstall extends AdminController
      *
      * @var [type]
      */
-    protected $hlpfile = "";
+    protected $hlpfile = '';
 
     /**
      * [$short_menu_admin description]
@@ -45,7 +45,7 @@ class ModuleInstall extends AdminController
      *
      * @var [type]
      */
-    protected $f_meta_nom = '';
+    protected $f_meta_nom = 'modules';
 
 
     /**
@@ -63,7 +63,7 @@ class ModuleInstall extends AdminController
      */
     protected function before()
     {
-        $this->f_titre = __d('', '');
+        $this->f_titre = __d('module', 'Gestion, Installation Modules');
 
         // Leave to parent's method the Flight decisions.
         return parent::before();
