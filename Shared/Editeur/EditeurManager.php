@@ -3,6 +3,7 @@
 namespace Shared\Editeur;
 
 use Npds\Config\Config;
+use Modules\Npds\Support\Facades\Language;
 use Shared\Editeur\Contracts\EditeurInterface;
 
 /**
@@ -72,7 +73,7 @@ class EditeurManager implements EditeurInterface
                                 tinymce.init({
                                 selector: 'textarea.tin',
                                 mobile: {menubar: true},
-                                language : '" . language_iso(1, '', '') . "',";
+                                language : '" . Language::language_iso(1, '', '') . "',";
 
                         include(shared_path('Editeur/assets/tinymce/themes/advanced/npds.conf.php'));
 
