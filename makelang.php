@@ -19,8 +19,7 @@ $languages = array(
 );
 
 $workPaths = array(
-    'npds',
-    'app'
+    'App',
 );
 
 //
@@ -46,43 +45,52 @@ function phpGrep($q, $path) {
 }
 
 //
-if(is_dir(BASEPATH .'app'.DS.'Packages')) {
-    $path = str_replace('/', DS, BASEPATH .'app/Packages/*');
+if(is_dir(BASEPATH .'Packages')) {
+    $path = str_replace('/', DS, BASEPATH .'Packages/*');
 
     $dirs = glob($path , GLOB_ONLYDIR);
 
     foreach($dirs as $package) {
-        $workPaths[] = str_replace('/', DS, 'app/Packages/'.basename($package));
+        $workPaths[] = str_replace('/', DS, 'Packages/'.basename($package));
     }
 }
 
-if(is_dir(BASEPATH .'app'.DS.'Modules')) {
-    $path = str_replace('/', DS, BASEPATH .'app/Modules/*');
+if(is_dir(BASEPATH .'Modules')) {
+    $path = str_replace('/', DS, BASEPATH .'Modules/*');
 
     $dirs = glob($path , GLOB_ONLYDIR);
 
     foreach($dirs as $module) {
-        $workPaths[] = str_replace('/', DS, 'app/Modules/'.basename($module));
+        $workPaths[] = str_replace('/', DS, 'Modules/'.basename($module));
     }
 }
 
-if(is_dir(BASEPATH .'app'.DS.'Themes')) {
-    $path = str_replace('/', DS, BASEPATH .'app/Themes/Frontend/*');
+if(is_dir(BASEPATH .'Themes')) {
+    $path = str_replace('/', DS, BASEPATH .'Themes/Frontend/*');
 
     $dirs = glob($path , GLOB_ONLYDIR);
 
     foreach($dirs as $theme) {
-        $workPaths[] = str_replace('/', DS, 'app/Themes/Frontend/'.basename($theme));
+        $workPaths[] = str_replace('/', DS, 'Themes/Frontend/'.basename($theme));
     }
 
-    $path = str_replace('/', DS, BASEPATH .'app/Themes/Backend/*');
+    $path = str_replace('/', DS, BASEPATH .'Themes/Backend/*');
 
     $dirs = glob($path , GLOB_ONLYDIR);
 
     foreach($dirs as $theme) {
-        $workPaths[] = str_replace('/', DS, 'app/Themes/Backend/'.basename($theme));
+        $workPaths[] = str_replace('/', DS, 'Themes/Backend/'.basename($theme));
     }
+}
 
+if(is_dir(BASEPATH .'Shared')) {
+    $path = str_replace('/', DS, BASEPATH .'Shared/*');
+
+    $dirs = glob($path , GLOB_ONLYDIR);
+
+    foreach($dirs as $shared) {
+        $workPaths[] = str_replace('/', DS, 'Shared/'.basename($shared));
+    }
 }
 
 //
@@ -107,8 +115,7 @@ foreach($workPaths as $workPath) {
 
     if($workPath == 'app') {
         $pattern = '#__\(\'(.*)\'(?:,.*)?\)#smU';
-    }
-    else {
+    } else {
         $pattern = '#__d\(\'(?:.*)?\',.?\s?\'(.*)\'(?:,.*)?\)#smU';
     }
 
@@ -122,7 +129,11 @@ foreach($workPaths as $workPath) {
         if($workPath == 'app') {
             $testPath = substr($filePath, strlen(BASEPATH));
 
-            if(str_starts_with($testPath, 'app/Modules') || str_starts_with($testPath, 'app/Themes')) {
+            if(str_starts_with($testPath, 'Modules') 
+            || str_starts_with($testPath, 'Packages')
+            || str_starts_with($testPath, 'Themes')
+            || str_starts_with($testPath, 'Shared')
+            ) {
                 continue;
             }
         }
@@ -155,8 +166,7 @@ foreach($workPaths as $workPath) {
                 $oldData = include($langFile);
 
                 $oldData = is_array($oldData) ? $oldData : array();
-            }
-            else {
+            } else {
                 $oldData = array();
             }
 
@@ -166,12 +176,10 @@ foreach($workPaths as $workPath) {
 
                     if(!empty($value) && is_string($value)) {
                         $messages[$message] = $value;
-                    }
-                    else {
+                    } else {
                         $messages[$message] = '';
                     }
-                }
-                else {
+                } else {
                     $messages[$message] = '';
                 }
             }

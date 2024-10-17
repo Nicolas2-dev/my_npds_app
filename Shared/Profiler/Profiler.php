@@ -265,7 +265,7 @@ class Profiler
         $data = get_instance()->data();
 
         if (count($data) == 0) {
-            $output['controller'] = __d('system', 'No Controller data exists');
+            $output['controller'] = __d('profiler', 'No Controller data exists');
         } else {
             $output['controller'] = array();
 
@@ -282,7 +282,7 @@ class Profiler
 
         // GET variables
         if (count($_GET) == 0) {
-            $output['get'] = __d('system', 'No GET data exists');
+            $output['get'] = __d('profiler', 'No GET data exists');
         } else {
             $output['get'] = array();
 
@@ -301,7 +301,7 @@ class Profiler
 
         // POST variables
         if (count($_POST) == 0) {
-            $output['post'] = __d('system', 'No POST data exists');
+            $output['post'] = __d('profiler', 'No POST data exists');
         } else {
             $output['post'] = array();
 
@@ -418,7 +418,7 @@ class Profiler
      */
     public function display($fetch = false)
     {
-        Console::log(__d('system', 'Forensics - Profiler start gathering the information'));
+        Console::log(__d('profiler', 'Forensics - Profiler start gathering the information'));
 
         // Gather the information.
         $this->gatherFileData();
@@ -426,7 +426,7 @@ class Profiler
         $this->gatherSQLQueryData();
         $this->gatherFrameworkData();
 
-        Console::logSpeed(__d('system', 'Forensics - Profiler start displaying the information'));
+        Console::logSpeed(__d('profiler', 'Forensics - Profiler start displaying the information'));
 
         $this->gatherConsoleData();
         $this->gatherSpeedData();

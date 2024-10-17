@@ -282,43 +282,43 @@
         <tr>
             <td class="green" onclick="changeTab('console');">
                 <var><?= $logCount; ?></var>
-                <h4><?= __d('system', 'Console'); ?></h4>
+                <h4><?= __d('profiler', 'Console'); ?></h4>
             </td>
             <td class="blue" onclick="changeTab('speed');">
                 <var><?= $speedTotal; ?></var>
-                <h4><?= __d('system', 'Load Time'); ?></h4>
+                <h4><?= __d('profiler', 'Load Time'); ?></h4>
             </td>
             <td class="purple" onclick="changeTab('queries');">
-                <var><?= __d('system', '{0} Queries', $queryCount); ?></var>
-                <h4><?= __d('system', 'Database'); ?></h4>
+                <var><?= __d('profiler', '{0} Queries', $queryCount); ?></var>
+                <h4><?= __d('profiler', 'Database'); ?></h4>
             </td>
             <td class="orange" onclick="changeTab('memory');">
                 <var><?= $memoryUsed; ?></var>
-                <h4><?= __d('system', 'Memory Used'); ?></h4>
+                <h4><?= __d('profiler', 'Memory Used'); ?></h4>
             </td>
             <td class="red" onclick="changeTab('files');">
-                <var><?= __d('system', '{0} Files', $fileCount); ?></var>
-                <h4><?= __d('system', 'Included'); ?></h4>
+                <var><?= __d('profiler', '{0} Files', $fileCount); ?></var>
+                <h4><?= __d('profiler', 'Included'); ?></h4>
             </td>
             <td class="white" onclick="changeTab('variables');">
-                <var><?= __d('system', 'Variables'); ?></var>
-                <h4><?= __d('system', 'Server Headers'); ?></h4>
+                <var><?= __d('profiler', 'Variables'); ?></var>
+                <h4><?= __d('profiler', 'Server Headers'); ?></h4>
             </td>
         </tr>
     </table>
 
     <div id='pqp-console' class='pqp-box'>
         <?php if ($logCount == 0) { ?>
-            <h3><?= __d('system', 'This panel has no log items.'); ?></h3>
+            <h3><?= __d('profiler', 'This panel has no log items.'); ?></h3>
         <?php } else { ?>
             <table class='side' cellspacing='0'>
             <tr>
-                <td class='alt1'><var><?= $output['logs']['logCount']; ?></var> <h4><?= __d('system', 'Logs'); ?></h4></td>
-                <td class='alt2'><var><?= $output['logs']['errorCount']; ?></var> <h4><?= __d('system', 'Errors'); ?></h4></td>
+                <td class='alt1'><var><?= $output['logs']['logCount']; ?></var> <h4><?= __d('profiler', 'Logs'); ?></h4></td>
+                <td class='alt2'><var><?= $output['logs']['errorCount']; ?></var> <h4><?= __d('profiler', 'Errors'); ?></h4></td>
             </tr>
             <tr>
-                <td class='alt3'><var><?= $output['logs']['memoryCount']; ?></var> <h4><?= __d('system', 'Memory'); ?></h4></td>
-                <td class='alt4'><var><?= $output['logs']['speedCount']; ?></var> <h4><?= __d('system', 'Speed'); ?></h4></td>
+                <td class='alt3'><var><?= $output['logs']['memoryCount']; ?></var> <h4><?= __d('profiler', 'Memory'); ?></h4></td>
+                <td class='alt4'><var><?= $output['logs']['speedCount']; ?></var> <h4><?= __d('profiler', 'Speed'); ?></h4></td>
             </tr>
             </table>
             <table class='main' cellspacing='0'>
@@ -346,11 +346,11 @@
 
     <div id="pqp-speed" class="pqp-box">
         <?php if ($speedTotal == 0) { ?>
-            <h3><?= __d('system', 'This panel has no log items.'); ?></h3>
+            <h3><?= __d('profiler', 'This panel has no log items.'); ?></h3>
         <?php } else { ?>
             <table class='side' cellspacing='0'>
-                <tr><td><var><?= $output['speedTotals']['total']; ?></var><h4><?= __d('system', 'Load Time'); ?></h4></td></tr>
-                <tr><td class='alt'><var><?= $output['speedTotals']['allowed']; ?> s</var> <h4><?= __d('system', 'Max Execution Time'); ?></h4></td></tr>
+                <tr><td><var><?= $output['speedTotals']['total']; ?></var><h4><?= __d('profiler', 'Load Time'); ?></h4></td></tr>
+                <tr><td class='alt'><var><?= $output['speedTotals']['allowed']; ?> s</var> <h4><?= __d('profiler', 'Max Execution Time'); ?></h4></td></tr>
             </table>
 
             <table class='main' cellspacing='0'>
@@ -369,12 +369,12 @@
 
     <div id='pqp-queries' class='pqp-box'>
         <?php if($output['queryTotals']['count'] ==  0) { ?>
-            <h3><?= __d('system', 'This panel has no log items.'); ?></h3>
+            <h3><?= __d('profiler', 'This panel has no log items.'); ?></h3>
         <?php } else { ?>
             <table class='side' cellspacing='0'>
-            <tr><td><var><?= $output['queryTotals']['count'] ?></var><h4><?= __d('system', 'Total Queries'); ?></h4></td></tr>
-            <tr><td class='alt'><var><?= $output['queryTotals']['time'] ?></var> <h4><?= __d('system', 'Total Time'); ?></h4></td></tr>
-            <tr><td class='last'><var>0</var> <h4><?= __d('system', 'Duplicates'); ?></h4></td></tr>
+            <tr><td><var><?= $output['queryTotals']['count'] ?></var><h4><?= __d('profiler', 'Total Queries'); ?></h4></td></tr>
+            <tr><td class='alt'><var><?= $output['queryTotals']['time'] ?></var> <h4><?= __d('profiler', 'Total Time'); ?></h4></td></tr>
+            <tr><td class='last'><var>0</var> <h4><?= __d('profiler', 'Duplicates'); ?></h4></td></tr>
             </table>
 
                 <table class='main' cellspacing='0'>
@@ -385,11 +385,11 @@
                                 <?= $query['sql']; ?>
                                 <?php if(isset($query['explain'])) { ?>
                                 <em>
-                                    <?= __d('system', 'Possible keys: <b>{0}</b>', isset($query['explain']['possible_keys']) ? $query['explain']['possible_keys'] : ''); ?> &middot;
-                                    <?= __d('system', 'Key Used: <b>{0}</b>', isset($query['explain']['key']) ? $query['explain']['key'] : ''); ?> &middot;
-                                    <?= __d('system', 'Type: <b>{0}</b>', isset($query['explain']['type']) ? $query['explain']['type'] : ''); ?> &middot;
-                                    <?= __d('system', 'Rows: <b>{0}</b>', isset($query['explain']['rows']) ? $query['explain']['rows'] : ''); ?> &middot;
-                                    <?= __d('system', 'Speed: <b>{0}</b>', $query['time']); ?>
+                                    <?= __d('profiler', 'Possible keys: <b>{0}</b>', isset($query['explain']['possible_keys']) ? $query['explain']['possible_keys'] : ''); ?> &middot;
+                                    <?= __d('profiler', 'Key Used: <b>{0}</b>', isset($query['explain']['key']) ? $query['explain']['key'] : ''); ?> &middot;
+                                    <?= __d('profiler', 'Type: <b>{0}</b>', isset($query['explain']['type']) ? $query['explain']['type'] : ''); ?> &middot;
+                                    <?= __d('profiler', 'Rows: <b>{0}</b>', isset($query['explain']['rows']) ? $query['explain']['rows'] : ''); ?> &middot;
+                                    <?= __d('profiler', 'Speed: <b>{0}</b>', $query['time']); ?>
                                 </em>
                                 <?php } ?>
                             </td>
@@ -402,11 +402,11 @@
 
     <div id="pqp-memory" class="pqp-box">
         <?php if($output['logs']['memoryCount'] == 0) { ?>
-            <h3><?= __d('system', 'This panel has no log items.'); ?></h3>
+            <h3><?= __d('profiler', 'This panel has no log items.'); ?></h3>
         <?php } else { ?>
             <table class='side' cellspacing='0'>
-                <tr><td><var><?= $output['memoryTotals']['used']; ?></var><h4><?= __d('system', 'Memory Used'); ?></h4></td></tr>
-                <tr><td class='alt'><var><?= $output['memoryTotals']['total']; ?></var> <h4><?= __d('system', 'Total Available'); ?></h4></td></tr>
+                <tr><td><var><?= $output['memoryTotals']['used']; ?></var><h4><?= __d('profiler', 'Memory Used'); ?></h4></td></tr>
+                <tr><td class='alt'><var><?= $output['memoryTotals']['total']; ?></var> <h4><?= __d('profiler', 'Total Available'); ?></h4></td></tr>
             </table>
 
             <table class='main' cellspacing='0'>
@@ -425,9 +425,9 @@
 
     <div id='pqp-files' class='pqp-box'>
             <table class='side' cellspacing='0'>
-                <tr><td><var><?= $output['fileTotals']['count']; ?></var><h4><?= __d('system', 'Total Files'); ?></h4></td></tr>
-                <tr><td class='alt'><var><?= $output['fileTotals']['size']; ?></var> <h4><?= __d('system', 'Total Size'); ?></h4></td></tr>
-                <tr><td class='last'><var><?= $output['fileTotals']['largest']; ?></var> <h4><?= __d('system', 'Largest'); ?></h4></td></tr>
+                <tr><td><var><?= $output['fileTotals']['count']; ?></var><h4><?= __d('profiler', 'Total Files'); ?></h4></td></tr>
+                <tr><td class='alt'><var><?= $output['fileTotals']['size']; ?></var> <h4><?= __d('profiler', 'Total Size'); ?></h4></td></tr>
+                <tr><td class='last'><var><?= $output['fileTotals']['largest']; ?></var> <h4><?= __d('profiler', 'Largest'); ?></h4></td></tr>
             </table>
             <table class='main' cellspacing='0'>
                 <?php $class = ''; ?>
@@ -440,19 +440,19 @@
 
     <div id='pqp-variables' class='pqp-box'>
         <?php if(empty($output['variables'])) { ?>
-            <h3><?= __d('system', 'This panel has no log items.'); ?></h3>
+            <h3><?= __d('profiler', 'This panel has no log items.'); ?></h3>
         <?php } else { ?>
             <?php $sections = $output['variables']; ?>
             <?php foreach(array('controller', 'get', 'post', 'headers') as $section) { ?>
                 <?php
                     if ($section == 'controller') {
-                        $title = __d('system', 'Controller Data');
+                        $title = __d('profiler', 'Controller Data');
                     } else if ($section == 'get') {
-                        $title = __d('system', 'GET Variables');
+                        $title = __d('profiler', 'GET Variables');
                     } else if($section == 'post') {
-                        $title = __d('system', 'POST Variables');
+                        $title = __d('profiler', 'POST Variables');
                     } else if($section == 'headers') {
-                        $title = __d('system', 'Server Headers');
+                        $title = __d('profiler', 'Server Headers');
                     }
                 ?>
                 <h3 style="text-align: left; font-size: 16px; font-weight: bold; line-height: 40px;"><?= $title; ?></h3>
@@ -477,9 +477,9 @@
                 <div class="logo"><strong>Npds Console - Profiler</strong></div>
             </td>
             <td class="actions">
-                <a href="#" onclick="hideProfiler(); return false"><?= __d('system', 'Hide'); ?></a>
-                <a href="#" onclick="toggleDetails(); return false"><?= __d('system', 'Details'); ?></a>
-                <a class="heightToggle" href="#" onclick="toggleHeight(); return false"><?= __d('system', 'Height'); ?></a>
+                <a href="#" onclick="hideProfiler(); return false"><?= __d('profiler', 'Hide'); ?></a>
+                <a href="#" onclick="toggleDetails(); return false"><?= __d('profiler', 'Details'); ?></a>
+                <a class="heightToggle" href="#" onclick="toggleHeight(); return false"><?= __d('profiler', 'Height'); ?></a>
             </td>
         </tr>
     </table>
