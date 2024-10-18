@@ -2,6 +2,9 @@
 
 namespace Modules\Npds\Bootstrap;
 
+use Npds\Http\Request;
+use Npds\Config\Config;
+
 /**
  * Undocumented class
  */
@@ -44,6 +47,15 @@ class NpdsKernel
     ];
 
     /**
+     * Undocumented variable
+     *
+     * @var array
+     */
+    public static $boot_method = [
+        'test'
+    ];
+
+    /**
      * [$instance description]
      *
      * @var [type]
@@ -79,6 +91,33 @@ class NpdsKernel
     public static function load_helper_metalang()
     {
         require static::$module_path . 'Support'. DS .'metalang.php';
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function register_test(Request $request, NpdsKernel $kernel)
+    {
+        // dump(
+        //     Config::get('forum.config'), 
+        //     Config::get('forum.config.allow_upload_forum')
+        // );
+
+        echo $kernel->good();
+
+        echo '<br>Npds good look!!';
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return string
+     */
+    private function good()
+    {
+        echo ('<br>Npds vraimen good ce truc !!!');
     }
 
 }

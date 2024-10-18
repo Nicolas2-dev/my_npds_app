@@ -5,17 +5,23 @@
 /**
  * displays as link (icon)
  */
-define('ATT_DSP_LINK', '1');
+if (!defined('ATT_DSP_LINK')) {
+    define('ATT_DSP_LINK', '1');
+}
 
 /**
  * display inline as a picture, using <img> tag.
  */
-define('ATT_DSP_IMG', '2');
+if (!defined('ATT_DSP_IMG')) {
+    define('ATT_DSP_IMG', '2');
+}
 
 /**
  * display inline as HTML, e.g. banned tags are stripped.
  */
-define('ATT_DSP_HTML', '3'); 
+if (!defined('ATT_DSP_HTML')) {
+    define('ATT_DSP_HTML', '3'); 
+}
 
 /**
  * display inline as text, using <pre> tag.

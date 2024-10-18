@@ -6,7 +6,7 @@ use Npds\Events\Manager as Events;
 /**
  * Init database Mysqli Deprecated
  */
-Events::addListener('db_mysqli_deprecated', 'Modules\Npds\Controllers\Api\ApiDatabase@mysqli_deprecated');
+// Events::addListener('db_mysqli_deprecated', 'Modules\Npds\Controllers\Api\ApiDatabase@mysqli_deprecated');
 
 /**
  * Counptage des pages vues;

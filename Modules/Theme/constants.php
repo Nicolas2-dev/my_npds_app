@@ -1,3 +1,3 @@
 <?php
 
-define('CITRON','tarteaucitron');
+//define('CITRON','tarteaucitron');

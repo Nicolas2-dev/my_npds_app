@@ -68,6 +68,20 @@ foreach (glob(BASEPATH .'Config/*.php') as $path) {
     Config::set($key, require($path));
 }
 
+// provisoire car sa me les brise !!!
+global $dblink;
+
+// a supprimer par la suite
+if (Config::get('npds.mysql_i') == 1) {
+    include(shared_path('DatabaseNpds/mysqli.php'));
+} else {
+    include(shared_path('DatabaseNpds/mysql.php'));
+}
+
+// a supprimer par la suite
+$dblink = Mysql_Connexion();
+
+
 /** Load the Route Filters. */
 require APPPATH .'Routes/filters.php';
 
@@ -111,6 +125,8 @@ Events::initialize();
 
 /** Initialize the Sessions. */
 Session::initialize();
+
+//dump(Config::all());
 
 /** Execute the Request dispatching by Router. */
 $router->dispatch();

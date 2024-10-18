@@ -57,185 +57,185 @@ if (! function_exists('CacheManager'))
     }
 }
 
-if (! function_exists('Q_Select'))
-{
-    /**
-     * [Q_Select description]
-     *
-     * @param   [type]  $Xquery     [$Xquery description]
-     * @param   [type]  $retention  [$retention description]
-     *
-     * @return  [type]              [return description]
-     */
-    function Q_Select($Xquery, $retention = 3600)
-    {
-        global $SuperCache, $cache_obj;
+// if (! function_exists('Q_Select'))
+// {
+//     /**
+//      * [Q_Select description]
+//      *
+//      * @param   [type]  $Xquery     [$Xquery description]
+//      * @param   [type]  $retention  [$retention description]
+//      *
+//      * @return  [type]              [return description]
+//      */
+//     function Q_Select($Xquery, $retention = 3600)
+//     {
+//         global $SuperCache, $cache_obj;
 
-        if (($SuperCache) and ($cache_obj)) {
-            $row = $cache_obj->CachingQuery($Xquery, $retention);
+//         if (($SuperCache) and ($cache_obj)) {
+//             $row = $cache_obj->CachingQuery($Xquery, $retention);
 
-            return $row;
-        } else {
-            $result = @sql_query($Xquery);
-            $tab_tmp = array();
+//             return $row;
+//         } else {
+//             $result = @sql_query($Xquery);
+//             $tab_tmp = array();
 
-            while ($row = sql_fetch_assoc($result)) {
-                $tab_tmp[] = $row;
-            }
+//             while ($row = sql_fetch_assoc($result)) {
+//                 $tab_tmp[] = $row;
+//             }
 
-            return $tab_tmp;
-        }
-    }
-}
+//             return $tab_tmp;
+//         }
+//     }
+// }
 
-if (! function_exists('DBQ_Select'))
-{
-    /**
-     * [Q_Select description]
-     *
-     * @param   [type]  $Xquery     [$Xquery description]
-     * @param   [type]  $retention  [$retention description]
-     *
-     * @return  [type]              [return description]
-     */
-    function DBQ_Select($Xquery, $retention = 3600)
-    {
-        global $SuperCache, $cache_obj;
+// if (! function_exists('DBQ_Select'))
+// {
+//     /**
+//      * [Q_Select description]
+//      *
+//      * @param   [type]  $Xquery     [$Xquery description]
+//      * @param   [type]  $retention  [$retention description]
+//      *
+//      * @return  [type]              [return description]
+//      */
+//     function DBQ_Select($Xquery, $retention = 3600)
+//     {
+//         global $SuperCache, $cache_obj;
 
-        if (($SuperCache) and ($cache_obj)) {
-            $row = $cache_obj->CachingQuery($Xquery, $retention);
+//         if (($SuperCache) and ($cache_obj)) {
+//             $row = $cache_obj->CachingQuery($Xquery, $retention);
 
-            return $row;
-        } else {
-            // $tab_tmp = array();
+//             return $row;
+//         } else {
+//             // $tab_tmp = array();
 
-            // foreach($Xquery as $query)
-            // {
-            //     $tab_tmp[] = $query;
-            // }
+//             // foreach($Xquery as $query)
+//             // {
+//             //     $tab_tmp[] = $query;
+//             // }
 
-            // return $tab_tmp;
-            return $Xquery;
-        }
-    }
-}
+//             // return $tab_tmp;
+//             return $Xquery;
+//         }
+//     }
+// }
 
-if (! function_exists('PG_clean'))
-{
-    function PG_clean($request)
-    {
-        global $CACHE_CONFIG;
+// if (! function_exists('PG_clean'))
+// {
+//     function PG_clean($request)
+//     {
+//         global $CACHE_CONFIG;
 
-        $page = md5($request);
-        $dh = opendir($CACHE_CONFIG['data_dir']);
+//         $page = md5($request);
+//         $dh = opendir($CACHE_CONFIG['data_dir']);
 
-        while (false !== ($filename = readdir($dh))) {
-            if ($filename === '.' 
-            or $filename === '..' 
-            or (strpos($filename, $page) === FALSE)) {
-                continue;
-            }
+//         while (false !== ($filename = readdir($dh))) {
+//             if ($filename === '.' 
+//             or $filename === '..' 
+//             or (strpos($filename, $page) === FALSE)) {
+//                 continue;
+//             }
 
-            unlink($CACHE_CONFIG['data_dir'] . $filename);
-        }
+//             unlink($CACHE_CONFIG['data_dir'] . $filename);
+//         }
 
-        closedir($dh);
-    }
-}
+//         closedir($dh);
+//     }
+// }
 
-if (! function_exists('Q_Clean'))
-{
-    /**
-     * [Q_Clean description]
-     *
-     * @return  [type]  [return description]
-     */
-    function Q_Clean()
-    {
-        global $CACHE_CONFIG;
+// if (! function_exists('Q_Clean'))
+// {
+//     /**
+//      * [Q_Clean description]
+//      *
+//      * @return  [type]  [return description]
+//      */
+//     function Q_Clean()
+//     {
+//         global $CACHE_CONFIG;
 
-        $dh = opendir($CACHE_CONFIG['data_dir'] . "sql");
+//         $dh = opendir($CACHE_CONFIG['data_dir'] . "sql");
 
-        while (false !== ($filename = readdir($dh))) {
-            if ($filename === '.' 
-            or $filename === '..') {
-                continue;
-            }
+//         while (false !== ($filename = readdir($dh))) {
+//             if ($filename === '.' 
+//             or $filename === '..') {
+//                 continue;
+//             }
 
-            if (is_file($CACHE_CONFIG['data_dir'] . "sql/" . $filename)) {
-                unlink($CACHE_CONFIG['data_dir'] . "sql/" . $filename);
-            }
-        }
+//             if (is_file($CACHE_CONFIG['data_dir'] . "sql/" . $filename)) {
+//                 unlink($CACHE_CONFIG['data_dir'] . "sql/" . $filename);
+//             }
+//         }
 
-        closedir($dh);
+//         closedir($dh);
 
-        $fp = fopen($CACHE_CONFIG['data_dir'] . "sql/.htaccess", 'w');
-        @fputs($fp, "Deny from All");
-        fclose($fp);
-    }
-}
+//         $fp = fopen($CACHE_CONFIG['data_dir'] . "sql/.htaccess", 'w');
+//         @fputs($fp, "Deny from All");
+//         fclose($fp);
+//     }
+// }
 
-if (! function_exists('SC_clean'))
-{
-    /**
-     * [SC_clean description]
-     *
-     * @return  [type]  [return description]
-     */
-    function SC_clean()
-    {
-        global $CACHE_CONFIG;
+// if (! function_exists('SC_clean'))
+// {
+//     /**
+//      * [SC_clean description]
+//      *
+//      * @return  [type]  [return description]
+//      */
+//     function SC_clean()
+//     {
+//         global $CACHE_CONFIG;
 
-        $dh = opendir($CACHE_CONFIG['data_dir']);
+//         $dh = opendir($CACHE_CONFIG['data_dir']);
 
-        while (false !== ($filename = readdir($dh))) {
-            if ($filename === '.' 
-            or $filename === '..' 
-            or $filename === 'ultramode.txt' 
-            or $filename === 'net2zone.txt' 
-            or $filename === 'sql' 
-            or $filename === 'index.html') {
-                continue;
-            }
+//         while (false !== ($filename = readdir($dh))) {
+//             if ($filename === '.' 
+//             or $filename === '..' 
+//             or $filename === 'ultramode.txt' 
+//             or $filename === 'net2zone.txt' 
+//             or $filename === 'sql' 
+//             or $filename === 'index.html') {
+//                 continue;
+//             }
 
-            if (is_file($CACHE_CONFIG['data_dir'] . $filename)) {
-                unlink($CACHE_CONFIG['data_dir'] . $filename);
-            }
-        }
+//             if (is_file($CACHE_CONFIG['data_dir'] . $filename)) {
+//                 unlink($CACHE_CONFIG['data_dir'] . $filename);
+//             }
+//         }
         
-        closedir($dh);
-        Q_Clean();
-    }
-}
+//         closedir($dh);
+//         Q_Clean();
+//     }
+// }
 
-if (! function_exists('SC_infos'))
-{
-    /**
-     * [SC_infos description]
-     *
-     * @return  [type]  [return description]
-     */
-    function SC_infos()
-    {
-        global $SuperCache, $App_sc;
+// if (! function_exists('SC_infos'))
+// {
+//     /**
+//      * [SC_infos description]
+//      *
+//      * @return  [type]  [return description]
+//      */
+//     function SC_infos()
+//     {
+//         global $SuperCache, $App_sc;
 
-        $infos = '';
+//         $infos = '';
 
-        if ($SuperCache) {
-            /*
-            $infos = $App_sc ? '<span class="small">'.__d('npds', '.:Page >> Super-Cache:.').'</span>':'';
-            */
+//         if ($SuperCache) {
+//             /*
+//             $infos = $App_sc ? '<span class="small">'.__d('npds', '.:Page >> Super-Cache:.').'</span>':'';
+//             */
 
-            if ($App_sc) {
-                $infos = '<span class="small">' . __d('npds', '.:Page >> Super-Cache:.') . '</span>';
-            } else {
-                $infos = '<span class="small">' . __d('npds', '.:Page >> Super-Cache:.') . '</span>';
-            }
-        }
+//             if ($App_sc) {
+//                 $infos = '<span class="small">' . __d('npds', '.:Page >> Super-Cache:.') . '</span>';
+//             } else {
+//                 $infos = '<span class="small">' . __d('npds', '.:Page >> Super-Cache:.') . '</span>';
+//             }
+//         }
 
-        return $infos;
-    }
-}
+//         return $infos;
+//     }
+// }
 
 // Security
 
