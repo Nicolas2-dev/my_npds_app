@@ -6,6 +6,7 @@ use Npds\Http\Request;
 use Npds\Config\Config;
 use Npds\Cookie\Cookie;
 use Npds\Support\Facades\DB;
+
 /**
  * Undocumented class
  */
@@ -35,7 +36,6 @@ class ForumKernel
         'config_forum',
         'config_allow_upload_forum',
         'user_forum_access_create_cookie',
-        // 'test'
     ];
 
 
@@ -93,33 +93,6 @@ class ForumKernel
                 }
             }
         } 
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function register_test(Request $request, ForumKernel $kernel)
-    {
-        // dump(
-        //     Config::get('forum.config'), 
-        //     Config::get('forum.config.allow_upload_forum')
-        // );
-
-        echo $kernel->good();
-
-        echo 'good !!';
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return string
-     */
-    private function good()
-    {
-        echo ('vraimen good ce truc !!!');
     }
 
     /**

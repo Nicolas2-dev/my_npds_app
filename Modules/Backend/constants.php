@@ -6,6 +6,7 @@
 if (!defined('TIME_ZONE')) {
     define('TIME_ZONE', '');
 }
+
 /**
  * Version string.
  **/
