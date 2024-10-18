@@ -26,66 +26,92 @@ if (!defined('ATT_DSP_HTML')) {
 /**
  * display inline as text, using <pre> tag.
  */
-define('ATT_DSP_PLAINTEXT', '4'); 
+if (!defined('ATT_DSP_PLAINTEXT')) {
+    define('ATT_DSP_PLAINTEXT', '4'); 
+}
 
 /**
  * Embedded Macromedia Shockwave Flash
  */
-define('ATT_DSP_SWF', '5');
+if (!defined('ATT_DSP_SWF')) {
+    define('ATT_DSP_SWF', '5');
+}
 
 // \Modules\Upload\Library\FileUpload
 
 /**
  * 
  */
-// define('_FILEUPLOAD', 1);
+if (!defined('FILEUPLOAD')) {
+    define('FILEUPLOAD', 1);
+}
 
 /**
  * 
  */
-define('NO_FILE', -1);
+if (!defined('NO_FILE')) {
+    define('NO_FILE', -1);
+}
 
 /**
  * 
  */
-define('FILE_TOO_BIG', -2);
+if (!defined('FILE_TOO_BIG')) {
+    define('FILE_TOO_BIG', -2);
+}
 
 /**
  * 
  */
-define('INVALID_FILE_TYPE', -3);
+if (!defined('INVALID_FILE_TYPE')) {
+    define('INVALID_FILE_TYPE', -3);
+}
 
 /**
  * 
  */
-define('DB_ERROR', -4);
+if (!defined('DB_ERROR')) {
+    define('DB_ERROR', -4);
+}
 
 /**
  * 
  */
-define('COPY_ERROR', -5);
+if (!defined('COPY_ERROR')) {
+    define('COPY_ERROR', -5);
+}
 
 /**
  * 
  */
-define('ERR_FILE', -6);
+if (!defined('ERR_FILE')) {
+    define('ERR_FILE', -6);
+}
 
 /**
  * 
  */
-define('FILE_EMPTY', -7);
+if (!defined('FILE_EMPTY')) {
+    define('FILE_EMPTY', -7);
+}
 
 /**
  * 
  */
-define('ERR_ARG', -8);
+if (!defined('ERR_ARG')) {
+    define('ERR_ARG', -8);
+}
 
 /**
  * 
  */
-define('DEFAULT_INLINE', '1');
+if (!defined('DEFAULT_INLINE')) {
+    define('DEFAULT_INLINE', '1');
+}
 
 /**
  * 
  */
-define('U_MASK', '0766');
+if (!defined('U_MASK')) {
+    define('U_MASK', '0766');
+}

@@ -24,6 +24,15 @@ class AuthorsKernel
     ];
 
     /**
+     * Undocumented variable
+     *
+     * @var array
+     */
+    public static $boot_method = [
+        //
+    ];
+
+    /**
      * [$instance description]
      *
      * @var [type]

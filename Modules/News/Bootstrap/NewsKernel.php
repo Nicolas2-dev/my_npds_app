@@ -27,6 +27,15 @@ class NewsKernel
     ];
 
     /**
+     * Undocumented variable
+     *
+     * @var array
+     */
+    public static $boot_method = [
+        //
+    ];
+
+    /**
      * [$instance description]
      *
      * @var [type]
@@ -54,16 +63,6 @@ class NewsKernel
         }
 
         return static::$instance = new static($directory);
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function load_my_conf()
-    {
-        // dump('test news load my conf module '. static::$module_path); 
     }
 
 }

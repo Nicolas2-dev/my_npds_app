@@ -3,7 +3,6 @@
 namespace Modules\Npds\Bootstrap;
 
 use Npds\Http\Request;
-use Npds\Config\Config;
 
 /**
  * Undocumented class
@@ -53,7 +52,7 @@ class NpdsKernel
      */
     public static $boot_method = [
         'helper_metalang',
-        'test'
+        // 'test'
     ];
 
     /**

@@ -3,9 +3,12 @@
 /**
  * Time zone.
  **/
-define('TIME_ZONE', '');
-
+if (!defined('TIME_ZONE')) {
+    define('TIME_ZONE', '');
+}
 /**
  * Version string.
  **/
-define('FEEDCREATOR_VERSION', 'FeedCreator 2.0 for NPDS');
+if (!defined('FEEDCREATOR_VERSION')) {
+    define('FEEDCREATOR_VERSION', 'FeedCreator 2.0 for NPDS');
+}

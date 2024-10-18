@@ -32,7 +32,7 @@ class ThemeKernel
      * @var array
      */
     public static $boot_method = [
-        'test_theme'
+        // 'test_theme'
     ];
 
     /**

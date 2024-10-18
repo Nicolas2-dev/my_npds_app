@@ -1,3 +1,8 @@
 <?php
 
-//define('CITRON','tarteaucitron');
+/**
+ * 
+ */
+if (!defined('CITRON')) {
+    define('CITRON','tarteaucitron');
+}
