@@ -52,6 +52,7 @@ class NpdsKernel
      * @var array
      */
     public static $boot_method = [
+        'helper_metalang',
         'test'
     ];
 
@@ -88,7 +89,7 @@ class NpdsKernel
     /**
      * Load helpers metalang
      */
-    public static function load_helper_metalang()
+    public static function register_helper_metalang()
     {
         require static::$module_path . 'Support'. DS .'metalang.php';
     }
